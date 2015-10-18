@@ -7,4 +7,5 @@ edge/contour extraction
 lo/hi-pass filter
 morph to/from grid
 harris/hessian interest points
-
+text rendering
+svg
