@@ -1,11 +1,33 @@
 parallel lines
 rotated grids, centre pompidou
+text rendering
+svg
 illusions
 gestalt
-https://en.wikipedia.org/wiki/Pareidolia
+regular grids / height fields / wireframe
+blocks approach user...
+
 edge/contour extraction
 lo/hi-pass filter
 morph to/from grid
 harris/hessian interest points
-text rendering
-svg
+warp points (to/from grid)
+
+deepdream
+https://en.wikipedia.org/wiki/Pareidolia
+
+clouds / perlin noise / noise textures
+L-systems / plant geometry / fractals
+
+math. primitives (isocaeda/etc...)
+CGAL
+PCL
+VTK
+image filter masks
+volume rendering (fft)
+
+voronoi cells
+
+stereoscopy?
+
+tubelets/droplets / vector field from image data
