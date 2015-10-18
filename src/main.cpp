@@ -8,7 +8,7 @@ using std::cout;
 using std::endl;
 
 int main() {
-    cout << "* Études visuel *" << endl;
+    cout << "* Études audiovisuel *" << endl;
 
 	ofSetupOpenGL(1024,768, OF_WINDOW);
     ofRunApp(new ofApp());

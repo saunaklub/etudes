@@ -12,7 +12,9 @@ void ofApp::setup(){
 	// sized images you want and still use them to texture your box
 	// but we have to explicitly normalize our tex coords here
 	ofEnableNormalizedTexCoords();
-	
+
+    ofSetDataPathRoot("");
+    
 	// loads the OF logo from disk
 	ofLogo.load("of.png");
 	
