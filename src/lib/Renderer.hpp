@@ -4,7 +4,10 @@
 namespace etudes {
     class Renderer {
     public:
-        virtual void render();
+        Renderer() {};
+        virtual ~Renderer() {};
+        
+        virtual void render() = 0;
 
     private:
     };

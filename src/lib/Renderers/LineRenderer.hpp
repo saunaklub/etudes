@@ -6,7 +6,10 @@
 namespace etudes {
     class LineRenderer : public Renderer {
     public:
-        void render() override;
+        LineRenderer() {};
+        virtual ~LineRenderer() {};
+        
+        void render();
 
     private:
     };

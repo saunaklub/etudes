@@ -1,7 +1,11 @@
 #include <iostream>
 
+#include <ofGraphics.h>
+
 #include "LineRenderer.hpp"
 
-void render() {
-    
+namespace etudes {
+    void render() {
+        std::cout << "rendering.." << std::endl;
+    }
 }
