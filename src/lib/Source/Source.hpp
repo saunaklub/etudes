@@ -11,8 +11,9 @@ namespace etudes {
      *
      * @todo Think about a common representation which allows to treat
      * the value ranges of all inputs uniformly. For scalar values, we
-     * settled on [0, 1]. Can we think of other representations for
-     * non-scalar, structured, vector inputs?... Think...
+     * settled on [0, 1]. Can we / do we need to think of other
+     * representations for non-scalar, structured, vector
+     * inputs?... Think...
      */
     class Source {
     public:
