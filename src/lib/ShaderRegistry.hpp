@@ -1,11 +1,13 @@
 #ifndef _SHADERREGISTRY
 #define _SHADERREGISTRY
 
+#define GLFW_INCLUDE_GLCOREARB
+
 #include <string>
 #include <vector>
 #include <map>
 
-#include <GL/gl.h>
+#include <GLFW/glfw3.h>
 
 class ShaderRegistry {
     std::map<std::string, GLuint> m_mapShader;
