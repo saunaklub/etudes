@@ -1,7 +1,5 @@
 #include <iostream>
 
-#include <ofGraphics.h>
-
 #include "LineRenderer.hpp"
 
 namespace etudes {

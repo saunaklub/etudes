@@ -4,21 +4,25 @@ set(CLIENT  etudes-client)
 project(etudes)
 cmake_minimum_required(VERSION 3.0)
 
-set(openFrameworks_DIR $ENV{OPENFRAMEWORKS_ROOT}/cmake)
-find_package(openFrameworks REQUIRED)
+# can I set a list of packages in find_package?
+find_package(PkgConfig REQUIRED)
+find_package(OpenGL REQUIRED)
 
-add_executable(${CLIENT}
-    src/main.cpp
-    src/ofApp.cpp
-    )
+pkg_search_module(GLFW REQUIRED glfw3)
 
 target_include_directories(${CLIENT}
-    PUBLIC ${openFrameworks_INCLUDES})
+  ${GLFW_INCLUDE_DIRS})
 
 target_link_libraries(${CLIENT}
-    PUBLIC ${openFrameworks_LIBRARIES}
-    PUBLIC etudes)
+  PUBLIC ${GLFW_LIBRARIES}
+  PUBLIC ${OPENGL_LIBRARIES}
+  public etudes)
+
+add_executable(${CLIENT}
+  src/main.cpp
+  )
 
 add_library(${LIBRARY}
-    src/lib/Renderers/LineRenderer.cpp
-    )
+  src/lib/Renderers/LineRenderer.cpp
+  src/lib/ShaderRegistry.cpp
+  )

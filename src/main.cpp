@@ -1,17 +1,55 @@
-#include <iostream>
+//#define GLFW_INCLUDE_GLCOREARB for modern OpenGL usage; example is in old GL
+#include <GLFW/glfw3.h>
+#include <cstdio>
+#include <cstdlib>
 
-#include <ofMain.h>
+static void error_callback(int error, const char * description){
+  fputs(description,stderr);
+};
 
-#include "ofApp.h"
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+  if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+    glfwSetWindowShouldClose(window, GL_TRUE);
+}
 
-using std::cout;
-using std::endl;
+int main(){
 
-int main() {
-    cout << "* Études audiovisuel *" << endl;
+  glfwSetErrorCallback(error_callback); 
 
-	ofSetupOpenGL(1024,768, OF_WINDOW);
-    ofRunApp(new ofApp());
-        
-    return 0;
+  if(!glfwInit()) exit(EXIT_FAILURE);
+
+  auto window = glfwCreateWindow(640,480,"Project",NULL,NULL);
+
+  if(window == nullptr){
+    glfwTerminate();
+    exit(EXIT_FAILURE);
+  }
+
+  glfwMakeContextCurrent(window);
+  glfwSwapInterval(1);
+  glfwSetKeyCallback(window, key_callback);
+
+
+  
+  while (!glfwWindowShouldClose(window)) {
+    /*openGL functions taken from http://igorbarbosa.com/articles/how-to-use-opengl-freeglut-and-cmake/ and adapted to a very simple red triangle
+     */
+    
+    int width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+    glViewport(0, 0, width, height);
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    glBegin(GL_TRIANGLES);
+    glColor3f(1.f, 0.f, 0.f);
+    glVertex3f(-0.6f, -0.4f, 0.f);
+    glVertex3f(0.6f, -0.4f, 0.f);
+    glVertex3f(0.f, 0.6f, 0.f);
+    glEnd();
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+  }
+  glfwDestroyWindow(window);  
+  
+  return 0;
 }
