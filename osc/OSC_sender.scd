@@ -15,7 +15,7 @@ MIDIIn.connectAll;
 // SYNTHS DEFS
 (
 SynthDef(\LFOSaw,{
-arg controlBus,outputBus, freq,lfoFreq,gain;
+	arg controlBus,outputBus, freq,lfoFreq,gain;
 	var sig = Saw.ar(freq,1.0);
 	var lfo = SinOsc.kr(lfoFreq);
 
@@ -30,12 +30,12 @@ arg controlBus,outputBus, freq,lfoFreq,gain;
 
 (
 MIDIdef.cc(\quneoOneOne,{
-arg val, cc, chan;
+	arg val, cc, chan;
 	if(cc == 1){
-	[val,cc,chan].postln;
-	~lfoSynth.set(\lfoFreq, val.linexp(0,127,0.01,500));
+		[val,cc,chan].postln;
+		~lfoSynth.set(\lfoFreq, val.linexp(0,127,0.01,500));
 	}
-},1,1).add;
+},1,1);
 )
 
 MIDIdef.freeAll
@@ -59,7 +59,6 @@ MIDIdef.freeAll
 	}
 });
 )
-
 
 ~localServer.meter
 ~localServer.quit
