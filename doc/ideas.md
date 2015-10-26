@@ -21,6 +21,7 @@ L-systems / plant geometry / fractals
 
 zoom/pan hires texture:
 hubble/esa, microchip micsroscop
+http://hubblesite.org/newscenter/archive/releases/2007/16/image/a/warn/
 modulate HSV color shifts (fragment shader?)
 
 math. primitives (isocaeda/etc...)
