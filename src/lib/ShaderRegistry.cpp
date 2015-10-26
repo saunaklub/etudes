@@ -1,6 +1,9 @@
 #include <iostream>
 #include <fstream>
 
+#include <glbinding/gl/gl.h>
+using namespace gl;
+
 #include "ShaderRegistry.hpp"
 
 namespace {
@@ -48,7 +51,7 @@ GLuint ShaderRegistry::RegisterShader(std::string name,
   GLint status;
   glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
                 
-  if(status == GL_FALSE)	{
+  if(status == 0)	{
     GLint infoLogLength;
     glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
@@ -89,7 +92,7 @@ GLuint ShaderRegistry::RegisterProgram(std::string name,
   GLint status;
   glGetProgramiv(program, GL_LINK_STATUS, &status);
 
-  if(status == GL_FALSE)	{
+  if(status == 0)	{
     GLint infoLogLength;
     glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
 

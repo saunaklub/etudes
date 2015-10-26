@@ -17,16 +17,19 @@ add_library(${LIBRARY}
 
 set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
 
-# can I set a list of packages in find_package?
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(glbinding REQUIRED)
 
 pkg_search_module(GLFW REQUIRED glfw3)
 
 target_include_directories(${CLIENT}
-  PUBLIC ${GLFW_INCLUDE_DIRS})
+  PUBLIC ${GLFW_INCLUDE_DIRS}
+  PUBLIC ${GLBINDING_INCLUDES}
+  )
 
 target_link_libraries(${CLIENT}
   PUBLIC ${GLFW_LIBRARIES}
   PUBLIC ${OPENGL_LIBRARIES}
+  PUBLIC ${GLBINDING_LIBRARIES}
   )

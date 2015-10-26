@@ -1,22 +1,20 @@
 #ifndef _SHADERREGISTRY
 #define _SHADERREGISTRY
 
-#define GLFW_INCLUDE_GLCOREARB
-
-#include <string>
 #include <vector>
 #include <map>
+#include <string>
 
-#include <GLFW/glfw3.h>
+#include <glbinding/gl/gl.h>
 
 class ShaderRegistry {
-    std::map<std::string, GLuint> m_mapShader;
-    std::map<std::string, GLuint> m_mapProgram;
+    std::map<std::string, gl::GLuint> m_mapShader;
+    std::map<std::string, gl::GLuint> m_mapProgram;
     std::map<std::string, std::map<std::string, GLuint> > m_mapUniform;
 
 public:
     GLuint RegisterShader(std::string name,
-                          GLenum type,
+                          gl::GLenum type,
                           std::vector<std::string> paths);
 
     GLuint RegisterProgram(std::string name,

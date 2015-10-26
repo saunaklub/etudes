@@ -1,9 +1,13 @@
 #include <cstdlib>
 #include <cstdio>
 
-//#define GLFW_INCLUDE_GLCOREARB for modern OpenGL usage; example is
-//#in old GL
+#include <glbinding/gl/gl.h>
+#include <glbinding/Binding.h>
+
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+
+using namespace gl;
 
 static void error_callback(int error, const char * description) {
   fputs(description, stderr);
@@ -14,7 +18,7 @@ static void key_callback(
   int key, int scancode, int action, int mods) {
   if(key == GLFW_KEY_ESCAPE &&
      action == GLFW_PRESS)
-    glfwSetWindowShouldClose(window, GL_TRUE);
+    glfwSetWindowShouldClose(window, 1);
 }
 
 int main(){
@@ -30,6 +34,8 @@ int main(){
     exit(EXIT_FAILURE);
   }
 
+  glbinding::Binding::initialize();
+
   glfwMakeContextCurrent(window);
   glfwSwapInterval(1);
   glfwSetKeyCallback(window, key_callback);
@@ -42,7 +48,11 @@ int main(){
     
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
-    glViewport(0, 0, width, height);
+    glViewport(
+      0, 0,
+      static_cast<GLsizei>(width),
+      static_cast<GLsizei>(height)
+      );
 
     glClear(GL_COLOR_BUFFER_BIT);
     
