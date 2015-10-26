@@ -19,6 +19,10 @@ https://en.wikipedia.org/wiki/Pareidolia
 clouds / perlin noise / noise textures
 L-systems / plant geometry / fractals
 
+zoom/pan hires texture:
+hubble/esa, microchip micsroscop
+modulate HSV color shifts (fragment shader?)
+
 math. primitives (isocaeda/etc...)
 CGAL
 PCL
