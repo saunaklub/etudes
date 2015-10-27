@@ -3,11 +3,12 @@
 
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
+using namespace gl;
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-using namespace gl;
+#include "lib/Source/OSCSource.hpp"
 
 static void error_callback(int error, const char * description) {
   fputs(description, stderr);
@@ -40,6 +41,9 @@ int main(){
   glfwSwapInterval(1);
   glfwSetKeyCallback(window, key_callback);
 
+  etudes::OSCSource source(6666);
+  source.start();
+  
   while(!glfwWindowShouldClose(window)) {
     /*openGL functions taken from
      * http://igorbarbosa.com/articles/how-to-use-opengl-freeglut-and-cmake/
@@ -62,6 +66,8 @@ int main(){
     glVertex3f(0.6f, -0.4f, 0.f);
     glVertex3f(0.f, 0.6f, 0.f);
     glEnd();
+
+    
 
     glfwSwapBuffers(window);
     glfwPollEvents();

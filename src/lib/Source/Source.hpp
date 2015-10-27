@@ -1,6 +1,11 @@
 #ifndef _ETUDES_SOURCE
 #define _ETUDES_SOURCE
 
+#include <map>
+
+using std::map;
+using std::string;
+
 namespace etudes {
 
     /**
@@ -19,9 +24,26 @@ namespace etudes {
      */
     class Source {
     public:
+        typedef map<string, float> value_map;
         
+        Source();
+        virtual ~Source();
 
+        void start();
+        void stop();
+        
+        virtual void update() = 0;
+        
+        const value_map & getInputs();
+        float getInput(string);
+
+    protected:
+        virtual void doStart() = 0;
+        virtual void doStop()  = 0;
+        
     private:
+        bool m_bStarted;
+        value_map m_mapInputs;
     };
 }
 
