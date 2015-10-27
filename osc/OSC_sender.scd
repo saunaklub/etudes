@@ -1,8 +1,10 @@
 ~localServer = Server.supernova.local
-~localServer.boot
+~localServer.options.device = "Saffire"
+
+~localServer.reboot
 ~localServer.quit
 //NET ADDRESSES
-~patric =  NetAddr.new("192.168.2.5", 6000);
+~patric =  NetAddr.new("192.168.0.26", 6666);
 ~patric.sendMsg("/test",1.0);
 
 // BUSSES
