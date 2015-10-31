@@ -4,7 +4,7 @@
 #include <vector>
 
 class GLFWwindow;
-class Renderer;
+class Render;
 
 namespace etudes {
   class EtudesHost {
@@ -31,7 +31,8 @@ namespace etudes {
       GLFWwindow *window;
       bool quitLoop;
 
-      std::vector<Renderer*> renderers;
+      std::vector<Render*> renders;
+      std::vector<Render*>::const_iterator curRender;
   };
 }
 

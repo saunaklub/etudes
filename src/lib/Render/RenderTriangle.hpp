@@ -9,7 +9,7 @@ namespace etudes {
         RenderTriangle() {};
         virtual ~RenderTriangle() {};
         
-        void render();
+        void render() override;
 
     private:
     };

@@ -5,6 +5,9 @@ using namespace gl;
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#include "Render/Render.hpp"
+#include "Render/RenderTriangle.hpp"
+
 #include "Source/OSCSource.hpp"
 
 #include "EtudesHost.hpp"
@@ -22,13 +25,15 @@ namespace etudes {
             glfwSetWindowShouldClose(window, 1);
     }
 
-
     EtudesHost::EtudesHost() :
         window(NULL),
         quitLoop(false) {
     }
 
     EtudesHost::~EtudesHost() {
+        for(auto render : renders) {
+            delete render;
+        }
     }
 
     bool EtudesHost::initialise() {
@@ -67,6 +72,10 @@ namespace etudes {
     }
 
     bool EtudesHost::initRenderers() {
+        renders.push_back(new RenderTriangle());
+        curRender = renders.begin();
+
+        return true;
     }
 
     bool EtudesHost::loopIteration() {
@@ -99,8 +108,10 @@ namespace etudes {
             static_cast<GLsizei>(height)
             );
 
-        // call renderer
-
+        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        (*curRender)->render();
+        
         glfwSwapBuffers(window);
     }
 }

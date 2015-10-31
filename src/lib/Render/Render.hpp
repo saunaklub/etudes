@@ -4,9 +4,6 @@
 namespace etudes {
     class Render {
     public:
-        Render() {};
-        virtual ~Render() {};
-        
         virtual void render() = 0;
 
     private:
