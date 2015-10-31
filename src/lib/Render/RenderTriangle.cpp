@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "LineRenderer.hpp"
+#include "RenderTriangle.hpp"
 
 namespace etudes {
     void render() {

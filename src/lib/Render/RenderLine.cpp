@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "TemplateRenderer.hpp"
+#include "RenderLine.hpp"
 
 namespace etudes {
-    void render() {
+    void LineRender::render() {
         std::cout << "rendering.." << std::endl;
     }
 }

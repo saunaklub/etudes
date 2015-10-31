@@ -99,7 +99,7 @@ namespace etudes {
             static_cast<GLsizei>(height)
             );
 
-        // call all renderers
+        // call renderer
 
         glfwSwapBuffers(window);
     }
