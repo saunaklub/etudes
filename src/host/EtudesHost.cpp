@@ -24,19 +24,30 @@ namespace etudes {
 
 
     EtudesHost::EtudesHost() :
-        window(NULL) {
+        window(NULL),
+        quitLoop(false) {
     }
 
     EtudesHost::~EtudesHost() {
     }
 
     bool EtudesHost::initialise() {
+        bool success = true;
+
+        success &= initGLFW();
+        success &= initOSC();
+        success &= initRenderers();
+        
+        return success;
+    }
+
+    bool EtudesHost::initGLFW() {
         glfwSetErrorCallback(error_callback); 
 
         if(!glfwInit())
             exit(EXIT_FAILURE);
 
-        window = glfwCreateWindow(640, 480, "Project", NULL, NULL);
+        window = glfwCreateWindow(640, 480, "Études audiovisuel", NULL, NULL);
 
         if(window == nullptr){
             glfwTerminate();
@@ -48,12 +59,6 @@ namespace etudes {
         glfwMakeContextCurrent(window);
         glfwSwapInterval(1);
         glfwSetKeyCallback(window, key_callback);
-
-        return true;
-    }
-
-    bool EtudesHost::initGLFW() {
-
     }
     
     bool EtudesHost::initOSC() {
@@ -61,27 +66,41 @@ namespace etudes {
         source.start();
     }
 
+    bool EtudesHost::initRenderers() {
+    }
+
     bool EtudesHost::loopIteration() {
-        if(glfwWindowShouldClose(window)) {
-            glfwDestroyWindow(window);
+        processInput();
+        if(quitLoop)
             return false;
-        }
         
+        render();
+        
+        return true;
+    }
+
+    void EtudesHost::processInput() {
         // get input data
         glfwPollEvents();
 
-        // render all/active renderers
+        if(glfwWindowShouldClose(window)) {
+            glfwDestroyWindow(window);
+            quitLoop = true;
+        }
+    }
+
+    void EtudesHost::render() {
         int width, height;
         glfwGetFramebufferSize(window, &width, &height);
+        
         glViewport(
             0, 0,
             static_cast<GLsizei>(width),
             static_cast<GLsizei>(height)
             );
 
-        // swap
-        glfwSwapBuffers(window);
+        // call all renderers
 
-        return true;
+        glfwSwapBuffers(window);
     }
 }

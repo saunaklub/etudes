@@ -1,7 +1,10 @@
 #ifndef _ETUDES_ETUDESHOST
 #define _ETUDES_ETUDESHOST
 
+#include <vector>
+
 class GLFWwindow;
+class Renderer;
 
 namespace etudes {
   class EtudesHost {
@@ -20,8 +23,15 @@ namespace etudes {
     private:
       bool initGLFW();
       bool initOSC();
+      bool initRenderers();
+
+      void processInput();
+      void render();
 
       GLFWwindow *window;
+      bool quitLoop;
+
+      std::vector<Renderer*> renderers;
   };
 }
 
