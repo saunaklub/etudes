@@ -45,3 +45,9 @@ target_link_libraries(${CLIENT}
     PUBLIC ${GLFW_LIBRARIES}
     PUBLIC ${LIBRARY}
     )
+
+target_link_libraries(${LIBRARY}
+    PUBLIC ${LIBLO_LIBRARIES}
+    PUBLIC ${OPENGL_LIBRARIES}
+    PUBLIC ${GLBINDING_LIBRARIES}
+    )
