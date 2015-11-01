@@ -1,6 +1,3 @@
-#include <cstdlib>
-#include <cstdio>
-
 #include <EtudesHost.hpp>
 
 int main(){

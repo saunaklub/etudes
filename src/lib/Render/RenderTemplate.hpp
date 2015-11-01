@@ -9,7 +9,8 @@ namespace etudes {
         RenderTemplate() {};
         virtual ~RenderTemplate() {};
         
-        void render();
+        std::string name() override;
+        void render() override;
 
     private:
     };

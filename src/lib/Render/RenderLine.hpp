@@ -1,18 +1,19 @@
-#ifndef _ETUDES_LINERENDER
-#define _ETUDES_LINERENDER
+#ifndef _ETUDES_RENDERLINE
+#define _ETUDES_RENDERLINE
 
 #include "Render.hpp"
 
 namespace etudes {
-    class LineRender : public Render {
+    class RenderLine : public Render {
     public:
-        LineRender() {};
-        virtual ~LineRender() {};
+        RenderLine() {};
+        virtual ~RenderLine() {};
         
-        void render();
+        std::string name() override;
+        void render() override;
 
     private:
     };
 }
 
-#endif // _ETUDES_LINERENDER
+#endif // _ETUDES_RENDERLINE

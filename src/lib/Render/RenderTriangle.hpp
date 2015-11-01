@@ -9,6 +9,7 @@ namespace etudes {
         RenderTriangle() {};
         virtual ~RenderTriangle() {};
         
+        std::string name() override;
         void render() override;
 
     private:

@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include <glbinding/gl/gl.h>
 //#include <glbinding/Binding.h>
 using namespace gl;
@@ -17,5 +15,9 @@ namespace etudes {
         glVertex3f(0.f, 0.6f, 0.f);
 
         glEnd();
+    }
+
+    std::string RenderTriangle::name() {
+        return "RenderTriangle";
     }
 }
