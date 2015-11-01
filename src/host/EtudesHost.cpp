@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
@@ -79,6 +80,8 @@ namespace etudes {
         renders.push_back(new RenderLine());
         curRender = renders.begin();
 
+        printRender();
+
         return true;
     }
 
@@ -114,10 +117,12 @@ namespace etudes {
                 
             case GLFW_KEY_N:
                 nextRender();
+                printRender();
                 break;
 
             case GLFW_KEY_P:
                 prevRender();
+                printRender();
                 break;
             }
         }
@@ -133,6 +138,14 @@ namespace etudes {
         if(curRender == renders.begin())
             curRender = renders.end();
         curRender--;
+    }
+
+    void EtudesHost::printRender() {
+        int index = curRender - renders.begin();
+
+        std::cout << "Étude "
+                  << std::setfill('0') << std::setw(2) << index << ": "
+                  << (*curRender)->name() << std::endl;
     }
 
     void EtudesHost::render() {

@@ -33,6 +33,7 @@ namespace etudes {
       
       void nextRender();
       void prevRender();
+      void printRender();
 
       void render();
 
