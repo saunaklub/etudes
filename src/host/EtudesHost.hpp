@@ -9,6 +9,9 @@ class Render;
 namespace etudes {
   class EtudesHost {
     public:
+      friend void key_callback(GLFWwindow* window,
+                               int key, int scancode, int action, int mods);
+      
       EtudesHost();
       ~EtudesHost();
       
@@ -26,6 +29,11 @@ namespace etudes {
       bool initRenderers();
 
       void processInput();
+      void keyCallback(int, int, int, int);
+      
+      void nextRender();
+      void prevRender();
+
       void render();
 
       GLFWwindow *window;

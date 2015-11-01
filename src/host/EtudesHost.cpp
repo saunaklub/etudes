@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
 using namespace gl;
@@ -7,22 +9,22 @@ using namespace gl;
 
 #include "Render/Render.hpp"
 #include "Render/RenderTriangle.hpp"
+#include "Render/RenderLine.hpp"
 
 #include "Source/OSCSource.hpp"
 
 #include "EtudesHost.hpp"
 
 namespace etudes {
-    static void error_callback(int error, const char * description) {
-        fputs(description, stderr);
+    void error_callback(int error, const char * description) {
+        std::cerr << description << std::endl;
     };
 
-    static void key_callback(
+    void key_callback(
         GLFWwindow* window,
         int key, int scancode, int action, int mods) {
-        if(key == GLFW_KEY_ESCAPE &&
-           action == GLFW_PRESS)
-            glfwSetWindowShouldClose(window, 1);
+        static_cast<EtudesHost*>(glfwGetWindowUserPointer(window))
+            ->keyCallback(key, scancode, action, mods);
     }
 
     EtudesHost::EtudesHost() :
@@ -47,17 +49,18 @@ namespace etudes {
     }
 
     bool EtudesHost::initGLFW() {
-        glfwSetErrorCallback(error_callback); 
+        glfwSetErrorCallback(error_callback);
 
         if(!glfwInit())
             exit(EXIT_FAILURE);
 
         window = glfwCreateWindow(640, 480, "Études audiovisuel", NULL, NULL);
-
         if(window == nullptr){
             glfwTerminate();
             return false;
         }
+
+        glfwSetWindowUserPointer(window, this);        
 
         glbinding::Binding::initialize();
 
@@ -73,6 +76,7 @@ namespace etudes {
 
     bool EtudesHost::initRenderers() {
         renders.push_back(new RenderTriangle());
+        renders.push_back(new RenderLine());
         curRender = renders.begin();
 
         return true;
@@ -89,13 +93,46 @@ namespace etudes {
     }
 
     void EtudesHost::processInput() {
-        // get input data
         glfwPollEvents();
 
         if(glfwWindowShouldClose(window)) {
             glfwDestroyWindow(window);
             quitLoop = true;
         }
+    }
+
+    void EtudesHost::keyCallback(
+        int key, int scancode, int action, int mods) {
+
+        if(action == GLFW_PRESS) {
+            switch(key) {
+
+            case GLFW_KEY_ESCAPE:
+            case GLFW_KEY_Q:
+                glfwSetWindowShouldClose(window, 1);
+                break;
+                
+            case GLFW_KEY_N:
+                nextRender();
+                break;
+
+            case GLFW_KEY_P:
+                prevRender();
+                break;
+            }
+        }
+    }
+
+    void EtudesHost::nextRender() {
+        curRender++;
+        if(curRender == renders.end())
+            curRender = renders.begin();
+    }
+
+    void EtudesHost::prevRender() {
+        if(curRender == renders.begin())
+            curRender = renders.end();
+        curRender--;
     }
 
     void EtudesHost::render() {
