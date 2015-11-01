@@ -13,7 +13,7 @@ set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
 
 add_library(${LIBRARY}
     SHARED
-    src/lib/ShaderRegistry.cpp
+    src/lib/Shader/ShaderRegistry.cpp
     src/lib/Render/RenderTriangle.cpp
     src/lib/Render/RenderLine.cpp
     src/lib/Source/Source.cpp
