@@ -2,7 +2,7 @@
 #define _ETUDES_SOURCE
 
 #include <map>
-
+#include <string>
 using std::map;
 using std::string;
 
