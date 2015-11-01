@@ -26,7 +26,7 @@ namespace etudes {
     }
 
     EtudesHost::EtudesHost() :
-        window(NULL),
+        window(nullptr),
         quitLoop(false) {
     }
 
