@@ -2,10 +2,10 @@
 #include <glbinding/Binding.h>
 using namespace gl;
 
-#include "RenderLine.hpp"
+#include "EtudeLines.hpp"
 
 namespace etudes {
-    void RenderLine::render() {
+    void EtudeLines::draw() {
         glLineWidth(5);
         glColor3f(0.7, 0.0, 0.7);
 
@@ -15,7 +15,7 @@ namespace etudes {
         glEnd();
     }
 
-    std::string RenderLine::name() {
-        return "RenderLine";
+    std::string EtudeLines::name() {
+        return "Lines";
     }
 }

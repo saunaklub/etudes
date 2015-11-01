@@ -8,9 +8,8 @@ using namespace gl;
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include "Render/Render.hpp"
-#include "Render/RenderTriangle.hpp"
-#include "Render/RenderLine.hpp"
+#include "Etudes/EtudeTriangles.hpp"
+#include "Etudes/EtudeLines.hpp"
 
 #include "Source/OSCSource.hpp"
 
@@ -34,8 +33,8 @@ namespace etudes {
     }
 
     EtudesHost::~EtudesHost() {
-        for(auto render : renders) {
-            delete render;
+        for(auto etude : etudes) {
+            delete etude;
         }
     }
 
@@ -44,7 +43,7 @@ namespace etudes {
 
         success &= initGLFW();
         success &= initOSC();
-        success &= initRenderers();
+        success &= initEtudes();
         
         return success;
     }
@@ -75,12 +74,12 @@ namespace etudes {
         source.start();
     }
 
-    bool EtudesHost::initRenderers() {
-        renders.push_back(new RenderTriangle());
-        renders.push_back(new RenderLine());
-        curRender = renders.begin();
+    bool EtudesHost::initEtudes() {
+        etudes.push_back(new EtudeTriangles());
+        etudes.push_back(new EtudeLines());
+        curEtude = etudes.begin();
 
-        printRender();
+        printEtude();
 
         return true;
     }
@@ -116,36 +115,36 @@ namespace etudes {
                 break;
                 
             case GLFW_KEY_N:
-                nextRender();
-                printRender();
+                nextEtude();
+                printEtude();
                 break;
 
             case GLFW_KEY_P:
-                prevRender();
-                printRender();
+                prevEtude();
+                printEtude();
                 break;
             }
         }
     }
 
-    void EtudesHost::nextRender() {
-        curRender++;
-        if(curRender == renders.end())
-            curRender = renders.begin();
+    void EtudesHost::nextEtude() {
+        curEtude++;
+        if(curEtude == etudes.end())
+            curEtude = etudes.begin();
     }
 
-    void EtudesHost::prevRender() {
-        if(curRender == renders.begin())
-            curRender = renders.end();
-        curRender--;
+    void EtudesHost::prevEtude() {
+        if(curEtude == etudes.begin())
+            curEtude = etudes.end();
+        curEtude--;
     }
 
-    void EtudesHost::printRender() {
-        int index = curRender - renders.begin();
+    void EtudesHost::printEtude() {
+        int index = curEtude - etudes.begin();
 
         std::cout << "Étude "
                   << std::setfill('0') << std::setw(2) << index << ": "
-                  << (*curRender)->name() << std::endl;
+                  << (*curEtude)->name() << std::endl;
     }
 
     void EtudesHost::render() {
@@ -161,7 +160,7 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
-        (*curRender)->render();
+        (*curEtude)->draw();
         
         glfwSwapBuffers(window);
     }

@@ -4,7 +4,7 @@
 #include <vector>
 
 class GLFWwindow;
-class Render;
+class Etude;
 
 namespace etudes {
   class EtudesHost {
@@ -26,22 +26,22 @@ namespace etudes {
     private:
       bool initGLFW();
       bool initOSC();
-      bool initRenderers();
+      bool initEtudes();
 
       void processInput();
       void keyCallback(int, int, int, int);
       
-      void nextRender();
-      void prevRender();
-      void printRender();
+      void nextEtude();
+      void prevEtude();
+      void printEtude();
 
       void render();
 
       GLFWwindow *window;
       bool quitLoop;
 
-      std::vector<Render*> renders;
-      std::vector<Render*>::const_iterator curRender;
+      std::vector<Etude*> etudes;
+      std::vector<Etude*>::const_iterator curEtude;
   };
 }
 

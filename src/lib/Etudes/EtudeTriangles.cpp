@@ -2,11 +2,10 @@
 #include <glbinding/Binding.h>
 using namespace gl;
 
-
-#include "RenderTriangle.hpp"
+#include "EtudeTriangles.hpp"
 
 namespace etudes {
-    void RenderTriangle::render() {
+    void EtudeTriangles::draw() {
       glBegin(GL_TRIANGLES);
       
       glColor3f(1.f, 0.f, 0.f);
@@ -17,7 +16,7 @@ namespace etudes {
       glEnd();
     }
 
-    std::string RenderTriangle::name() {
-        return "RenderTriangle";
+    std::string EtudeTriangles::name() {
+        return "Triangles";
     }
 }
