@@ -1,5 +1,5 @@
 set(LIBRARY etudes)
-set(CLIENT  etudes-client)
+set(CLIENT  etudes-host)
 
 project(etudes)
 cmake_minimum_required(VERSION 3.0)
