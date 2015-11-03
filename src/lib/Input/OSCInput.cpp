@@ -44,8 +44,7 @@ namespace etudes {
             m_oscServer, NULL, "f",
             float_handler, this);
 
-        if(lo_server_thread_start(m_oscServer) < 0){return false;}
-	else {return true;}
+	return lo_server_thread_start(m_oscServer) == 0;
     }
 
     void OSCInput::doStop() {
