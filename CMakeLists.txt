@@ -17,8 +17,8 @@ add_library(${LIBRARY}
     src/lib/Etudes/EtudeTemplate.cpp
     src/lib/Etudes/EtudeTriangles.cpp
     src/lib/Etudes/EtudeLines.cpp
-    src/lib/Source/Source.cpp
-    src/lib/Source/OSCSource.cpp
+    src/lib/Input/Input.cpp
+    src/lib/Input/OSCInput.cpp
     )
 
 set_property(TARGET ${LIBRARY}

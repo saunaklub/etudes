@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 
-#include "OSCSource.hpp"
+#include "OSCInput.hpp"
 
 namespace {
     void error(int num, const char *msg, const char *path) {
@@ -29,14 +29,14 @@ namespace {
 
 namespace etudes {
     
-    OSCSource::OSCSource(int iPort) :
+    OSCInput::OSCInput(int iPort) :
         m_iPort(iPort) {
     }
 
-    OSCSource::~OSCSource() {
+    OSCInput::~OSCInput() {
     }
     
-    bool OSCSource::doStart() {
+    bool OSCInput::doStart() {
         m_oscServer = lo_server_thread_new(
             std::to_string(m_iPort).c_str(), error);
 
@@ -48,9 +48,9 @@ namespace etudes {
 	else {return true;}
     }
 
-    void OSCSource::doStop() {
+    void OSCInput::doStop() {
     }
 
-    void OSCSource::update() {
+    void OSCInput::update() {
     }
 }

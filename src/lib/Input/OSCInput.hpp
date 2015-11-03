@@ -1,14 +1,14 @@
 #ifndef _ETUDES_OSCSOURCE
 #define _ETUDES_OSCSOURCE
 
-#include "Source.hpp"
+#include "Input.hpp"
 #include <lo/lo.h>
 
 namespace etudes {
-    class OSCSource : public Source {
+    class OSCInput : public Input {
     public:
-        OSCSource(int iPort);
-        virtual ~OSCSource();
+        OSCInput(int iPort);
+        virtual ~OSCInput();
         
         void update();
         

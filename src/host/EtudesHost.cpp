@@ -11,7 +11,7 @@ using namespace gl;
 #include "Etudes/EtudeTriangles.hpp"
 #include "Etudes/EtudeLines.hpp"
 
-#include "Source/OSCSource.hpp"
+#include "Input/OSCInput.hpp"
 
 #include "EtudesHost.hpp"
 
@@ -71,7 +71,7 @@ namespace etudes {
     }
     
     bool EtudesHost::initOSC() {
-        etudes::OSCSource source(6666);
+        etudes::OSCInput source(6666);
         return source.start();
 	
     }

@@ -1,19 +1,19 @@
 #include <exception>
 
-#include "Source.hpp"
+#include "Input.hpp"
 
 namespace etudes {
     
-    Source::Source() :
+    Input::Input() :
         m_bStarted(false) {
     }
 
-    Source::~Source() {
+    Input::~Input() {
     }
 
-    bool Source::start() {
+    bool Input::start() {
         if(m_bStarted)
-            throw std::logic_error("Source already started");
+            throw std::logic_error("Input already started");
 
         bool success = doStart();
 
@@ -21,9 +21,9 @@ namespace etudes {
 	return success;
     }
 
-    void Source::stop() {
+    void Input::stop() {
         if(!m_bStarted)
-            throw std::logic_error("Source not started");
+            throw std::logic_error("Input not started");
 
         doStop();
 
@@ -31,11 +31,11 @@ namespace etudes {
     }
 
 
-    const Source::value_map & Source::getInputs() {
+    const Input::value_map & Input::getInputs() {
         return m_mapInputs;
     }
 
-    float Source::getInput(string key) {
+    float Input::getInput(string key) {
         return m_mapInputs[key];
     }
 

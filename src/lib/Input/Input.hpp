@@ -9,7 +9,7 @@ using std::string;
 namespace etudes {
 
     /**
-     * Source is the base class for all input data sources we want to
+     * Input is the base class for all input data sources we want to
      * map to the inputs of the different Renderers. Examples could be
      * OSC, MIDI, Network, sensor, webfeed, random input, there shall
      * be no restrictions.
@@ -22,12 +22,12 @@ namespace etudes {
      * claudio: Let's prepare a basic scalar OSC input, make a first 
      * working example and iterate. For the time being that will be enough...
      */
-    class Source {
+    class Input {
     public:
         typedef map<string, float> value_map;
         
-        Source();
-        virtual ~Source();
+        Input();
+        virtual ~Input();
 
         bool start();
         void stop();
