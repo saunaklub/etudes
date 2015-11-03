@@ -64,6 +64,7 @@ GLuint ShaderRegistry::RegisterShader(std::string name,
     case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
     case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
     case GL_COMPUTE_SHADER: strShaderType = "compute"; break;
+    default: break;
     }
 
     std::cerr << "Compile failure in " << strShaderType
