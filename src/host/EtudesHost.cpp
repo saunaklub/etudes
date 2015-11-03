@@ -67,11 +67,13 @@ namespace etudes {
         glfwMakeContextCurrent(window);
         glfwSwapInterval(1);
         glfwSetKeyCallback(window, key_callback);
+	return true;
     }
     
     bool EtudesHost::initOSC() {
         etudes::OSCSource source(6666);
-        source.start();
+        return source.start();
+	
     }
 
     bool EtudesHost::initEtudes() {

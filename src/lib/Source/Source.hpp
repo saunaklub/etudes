@@ -29,7 +29,7 @@ namespace etudes {
         Source();
         virtual ~Source();
 
-        void start();
+        bool start();
         void stop();
         
         virtual void update() = 0;
@@ -38,7 +38,7 @@ namespace etudes {
         float getInput(string);
 
     protected:
-        virtual void doStart() = 0;
+        virtual bool doStart() = 0;
         virtual void doStop()  = 0;
         
     private:

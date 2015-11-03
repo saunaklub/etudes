@@ -36,7 +36,7 @@ namespace etudes {
     OSCSource::~OSCSource() {
     }
     
-    void OSCSource::doStart() {
+    bool OSCSource::doStart() {
         m_oscServer = lo_server_thread_new(
             std::to_string(m_iPort).c_str(), error);
 
@@ -44,7 +44,8 @@ namespace etudes {
             m_oscServer, NULL, "f",
             float_handler, this);
 
-        lo_server_thread_start(m_oscServer);
+        if(lo_server_thread_start(m_oscServer) < 0){return false;}
+	else {return true;}
     }
 
     void OSCSource::doStop() {

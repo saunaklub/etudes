@@ -11,13 +11,14 @@ namespace etudes {
     Source::~Source() {
     }
 
-    void Source::start() {
+    bool Source::start() {
         if(m_bStarted)
             throw std::logic_error("Source already started");
 
-        doStart();
+        bool success = doStart();
 
-        m_bStarted = true;
+        m_bStarted = success;
+	return success;
     }
 
     void Source::stop() {

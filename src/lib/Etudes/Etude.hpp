@@ -8,7 +8,7 @@ namespace etudes {
     public:
         virtual void draw() = 0;
         virtual std::string name() = 0;
-
+      virtual ~Etude() {};
     private:
     };
 }

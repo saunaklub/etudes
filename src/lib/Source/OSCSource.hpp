@@ -12,7 +12,7 @@ namespace etudes {
         
         void update();
         
-        void doStart();
+        bool doStart();
         void doStop();
 
     private:
