@@ -14,10 +14,9 @@ which are concertedly modulated.
 
 ### Architecture
 
-Here a detailed description of the inner architecture of the études
-modules will be given, as well as a sketch of the overall processing
-toolchain and the other software / hardware components involved in our
-envisioned setup.
+Here a description of the inner architecture of the études modules is
+given, as well as a sketch of the overall processing toolchain and the
+other software / hardware components involved in our envisioned setup.
 
 #### High-level arrangement
 
@@ -49,11 +48,11 @@ components used inside the études project are:
 
 #### License
 
-All software components developed for the project will be released
-under terms of the GNU General Public License. The goal is to get a
-complete toolchain made of free software components. The only part
-which seems to be lacking right now is the sequencing
-software. Suggestions for free sequencers are very welcome!
+All software components developed for the project are released under
+terms of the GNU General Public License. The goal is to get a complete
+toolchain made of free software components. The only part which seems
+to be lacking right now is the sequencing software. Suggestions for
+free sequencers are very welcome!
 
 #### Team
 
