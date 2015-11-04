@@ -49,10 +49,10 @@ components used inside the études project are:
 #### License
 
 All software components developed for the project are released under
-terms of the GNU General Public License. The goal is to get a complete
-toolchain made of free software components. The only part which seems
-to be lacking right now is the sequencing software. Suggestions for
-free sequencers are very welcome!
+terms of the GNU General Public License 3.0. The goal is to get a
+complete toolchain made of free software components. The only part
+which seems to be lacking right now is the sequencing
+software. Suggestions for free sequencers are very welcome!
 
 #### Team
 
