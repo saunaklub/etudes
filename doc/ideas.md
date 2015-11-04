@@ -1,38 +1,62 @@
-parallel lines
-rotated grids, centre pompidou
-text rendering
-svg
-illusions
-gestalt
-regular grids / height fields / wireframe
-blocks approach user...
+##### parallel lines
 
-edge/contour extraction
-lo/hi-pass filter
-morph to/from grid
-harris/hessian interest points
-warp points (to/from grid)
+- rotated grids centre pompidou
 
-deepdream
+##### text rendering
+
+##### SVG
+
+##### illusions
+
+##### gestalt
+
+##### regular grids / height fields / wireframe
+
+##### blocks approach user...
+
+##### edge/contour extraction
+
+##### image filter masks
+
+##### harris/hessian interest points
+
+##### warp points (to/from grid)
+
+##### deepdream
+
 https://en.wikipedia.org/wiki/Pareidolia
 
-clouds / perlin noise / noise textures
-L-systems / plant geometry / fractals
+##### clouds / perlin noise / noise textures
 
-zoom/pan hires texture:
+##### L-systems / plant geometry / fractals
+
+http://algorithmicbotany.org/
+http://www.e-onsoftware.com/
+
+##### zoom/pan hires texture:
+
 hubble/esa, microchip micsroscop
 http://hubblesite.org/newscenter/archive/releases/2007/16/image/a/warn/
-modulate HSV color shifts (fragment shader?)
+http://zeptobars.ru/en/read/how-to-open-microchip-asic-what-inside
+http://zeptobars.ru/en/read/open-microchip-asic-what-inside-II-msp430-pic-z80
 
-math. primitives (isocaeda/etc...)
-CGAL
-PCL
-VTK
-image filter masks
-volume rendering (fft)
+##### modulate HSV color shifts (fragment shader?)
 
-voronoi cells
+##### math. primitives (isocaeda/etc...)
 
-stereoscopy?
+##### CGAL
 
-tubelets/droplets / vector field from image data
+- voronoi cells
+
+##### PCL
+
+##### VTK
+
+- volume rendering (fft)
+
+##### VFL
+
+- tubelets/droplets / vector field from image data
+- abuffer transparency
+
+##### stereoscopy
