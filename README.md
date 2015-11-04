@@ -74,7 +74,7 @@ support, please write to the **TODO** mailing list.
 
 We don't make any fuss about a coding style rulebook. If you want to
 contribute, have a look at the existing code and use some common sense
-to comply with what is already there. If the think things should be
+to comply with what is already there. If we feel things should be
 adjusted in a particular way before merging, we will kindly ask you to
 adapt you pull requests accordingly.
 
