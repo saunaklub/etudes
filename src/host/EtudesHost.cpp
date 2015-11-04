@@ -77,8 +77,8 @@ namespace etudes {
     }
 
     bool EtudesHost::initEtudes() {
-        etudes.push_back(new EtudeTriangles());
         etudes.push_back(new EtudeLines());
+        etudes.push_back(new EtudeTriangles());
         curEtude = etudes.begin();
 
         printEtude();
