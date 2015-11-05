@@ -50,6 +50,12 @@ http://zeptobars.ru/en/read/open-microchip-asic-what-inside-II-msp430-pic-z80
 
 ##### PCL
 
+##### depth camera input
+
+- remeshing
+- distortion
+- character animation
+
 ##### VTK
 
 - volume rendering (fft)
