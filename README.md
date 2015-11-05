@@ -19,7 +19,7 @@ overall a/v toolchain for our envisioned setup.
 
 #### High-level arrangement
 
-- Sequencing: Bitwig / Renoise / Live
+- Sequencing: Bitwig / Renoise / Live / radium
 - Transport: MIDI, OSC, DMX
 - Control data generation: IanniX, i-score
 - Live input sources: Controllers, Sensors, Audio
