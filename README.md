@@ -12,16 +12,15 @@ technical difficulties and stylistic properties of one creative
 graphical element, and the interplay with music and sound properties
 which are concertedly modulated.
 
-### Architecture
+### Toolchain
 
-Here a description of the inner architecture of the études modules is
-given, as well as a sketch of the overall processing toolchain and the
-other software / hardware components involved in our envisioned setup.
+The following soft- and hardware components are probably used in the
+overall a/v toolchain for our envisioned setup.
 
 #### High-level arrangement
 
-- Sequencing: Bitwig, Renoise, Live
-- Transport: MIDI / OSC
+- Sequencing: Bitwig / Renoise / Live
+- Transport: MIDI, OSC, DMX
 - Control data generation: IanniX, i-score
 - Live input sources: Controllers, Sensors, Audio
  
