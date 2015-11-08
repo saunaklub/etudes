@@ -55,7 +55,7 @@ software. Suggestions for free sequencers are very welcome!
 
 #### Team
 
-Patric Schmitz (<schmitz@ircam.fr>)<br>
+Patric Schmitz (<flavi0@openmailbox.org>)<br>
 Claudio Cabral (<cabral1349@gmail.com>)
 
 We are based in Paris right now, but being connected over the Internet
