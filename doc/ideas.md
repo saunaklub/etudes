@@ -25,6 +25,7 @@
 ##### deepdream
 
 https://en.wikipedia.org/wiki/Pareidolia
+http://tech.slashdot.org/story/15/11/15/2220213/averaging-inanimate-objects-together-produces-a-very-human-face
 
 ##### clouds / perlin noise / noise textures
 
