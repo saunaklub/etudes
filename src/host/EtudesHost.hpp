@@ -44,8 +44,9 @@ namespace etudes {
       bool loopIteration();
       
     private:
+      // @todo: use exceptions for error handling!
       bool initGLFW();
-      bool initOSC();
+      void initOSC();
       bool initEtudes();
 
       void processInput();

@@ -18,45 +18,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <exception>
+#ifndef _ETUDES_OSCINPUTROUTER
+#define _ETUDES_OSCINPUTROUTER
 
-#include "Input.hpp"
+#include "OSCInputRouter.hpp"
+#include <lo/lo.h>
 
 namespace etudes {
-    
-    Input::Input() :
-        m_bStarted(false) {
-    }
+    class OSCInputRouter {
+    public:
+        OSCInputRouter(int port);
+        virtual ~OSCInputRouter();
+        
+        void start();
+        void stop();
 
-    Input::~Input() {
-    }
+        void update();
+        
+    private:
+        int port;
+        lo_server_thread oscServer;
 
-    bool Input::start() {
-        if(m_bStarted)
-            throw std::logic_error("Input already started");
-
-        bool success = doStart();
-
-        m_bStarted = success;
-	return success;
-    }
-
-    void Input::stop() {
-        if(!m_bStarted)
-            throw std::logic_error("Input not started");
-
-        doStop();
-
-        m_bStarted = true;
-    }
-
-
-    const Input::value_map & Input::getInputs() {
-        return m_mapInputs;
-    }
-
-    float Input::getInput(string key) {
-        return m_mapInputs[key];
-    }
-
+        bool started;
+    };
 }
+
+#endif // _ETUDES_OSCINPUTROUTER

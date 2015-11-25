@@ -26,9 +26,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace etudes {
     class Etude {
     public:
+        virtual ~Etude() {};
+
         virtual void draw() = 0;
-        virtual std::string name() = 0;
-      virtual ~Etude() {};
+        virtual std::string whoami() = 0;
+        
     private:
     };
 }

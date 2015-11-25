@@ -31,7 +31,7 @@ namespace etudes {
         EtudeLines() {};
         virtual ~EtudeLines() {};
         
-        std::string name() override;
+        std::string whoami() override;
         void draw() override;
 
     private:

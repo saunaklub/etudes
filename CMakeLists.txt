@@ -7,6 +7,7 @@ cmake_minimum_required(VERSION 3.0)
 add_executable(${CLIENT}
     src/main.cpp
     src/host/EtudesHost.cpp
+    src/host/OSCInputRouter.cpp
     )
 
 set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
@@ -14,8 +15,8 @@ set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
 add_library(${LIBRARY}
     SHARED
     src/lib/Shader/ShaderRegistry.cpp
-    src/lib/Input/Input.cpp
-    src/lib/Input/OSCInput.cpp
+    src/lib/Receiver/Receiver.cpp
+    src/lib/Receiver/ReceiverRegistry.cpp
     src/lib/Render/RenderPrimitives.cpp
     src/lib/Render/ModulationFuncs.cpp
     src/lib/Etudes/EtudeTemplate.cpp

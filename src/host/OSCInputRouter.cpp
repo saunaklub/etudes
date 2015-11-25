@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <string>
 #include <iostream>
 
-#include "OSCInput.hpp"
+#include "OSCInputRouter.hpp"
 
 namespace {
     void error(int num, const char *msg, const char *path) {
@@ -49,27 +49,42 @@ namespace {
 
 namespace etudes {
     
-    OSCInput::OSCInput(int iPort) :
-        m_iPort(iPort) {
+    OSCInputRouter::OSCInputRouter(int port) :
+        port(port),
+        started(false) {
     }
 
-    OSCInput::~OSCInput() {
+    OSCInputRouter::~OSCInputRouter() {
     }
     
-    bool OSCInput::doStart() {
-        m_oscServer = lo_server_thread_new(
-            std::to_string(m_iPort).c_str(), error);
+    void OSCInputRouter::start() {
+        if(started)
+            throw std::logic_error("OSCInputRouter::start: already started");
+
+        oscServer = lo_server_thread_new(
+            std::to_string(port).c_str(), error);
 
         lo_server_thread_add_method(
-            m_oscServer, NULL, "f",
+            oscServer, NULL, "f",
             float_handler, this);
 
-	return lo_server_thread_start(m_oscServer) == 0;
+        if(lo_server_thread_start(oscServer) != 0)
+            throw(std::runtime_error(
+                    "OSCInputRouter::start: "
+                    "failed to start osc server thread"));
+
+        started = true;
     }
 
-    void OSCInput::doStop() {
+    void OSCInputRouter::stop() {
+        if(!started)
+            throw std::logic_error(
+                "OSCInputRouter::stop: osc server thread not running");
+
+        // @todo: tear down osc server thread!
+        //started = false;
     }
 
-    void OSCInput::update() {
+    void OSCInputRouter::update() {
     }
 }

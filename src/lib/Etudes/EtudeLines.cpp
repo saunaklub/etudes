@@ -42,7 +42,7 @@ namespace etudes {
             );
     }
 
-    std::string EtudeLines::name() {
+    std::string EtudeLines::whoami() {
         return "Lines";
     }
 }

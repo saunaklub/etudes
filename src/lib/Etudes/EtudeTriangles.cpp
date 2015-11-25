@@ -36,7 +36,7 @@ namespace etudes {
       glEnd();
     }
 
-    std::string EtudeTriangles::name() {
+    std::string EtudeTriangles::whoami() {
         return "Triangles";
     }
 }

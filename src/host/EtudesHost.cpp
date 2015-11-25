@@ -31,7 +31,7 @@ using namespace gl;
 #include "Etudes/EtudeTriangles.hpp"
 #include "Etudes/EtudeLines.hpp"
 
-#include "Input/OSCInput.hpp"
+#include "OSCInputRouter.hpp"
 
 #include "EtudesHost.hpp"
 
@@ -62,8 +62,9 @@ namespace etudes {
         bool success = true;
 
         success &= initGLFW();
-        success &= initOSC();
         success &= initEtudes();
+
+        initOSC();
         
         return success;
     }
@@ -90,10 +91,9 @@ namespace etudes {
 	return true;
     }
     
-    bool EtudesHost::initOSC() {
-        etudes::OSCInput source(6666);
-        return source.start();
-	
+    void EtudesHost::initOSC() {
+        etudes::OSCInputRouter oscRouter(6666);
+        oscRouter.start();
     }
 
     bool EtudesHost::initEtudes() {
@@ -166,7 +166,7 @@ namespace etudes {
 
         std::cout << "Étude "
                   << std::setfill('0') << std::setw(2) << index << ": "
-                  << (*curEtude)->name() << std::endl;
+                  << (*curEtude)->whoami() << std::endl;
     }
 
     void EtudesHost::render() {

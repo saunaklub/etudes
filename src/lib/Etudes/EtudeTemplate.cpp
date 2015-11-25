@@ -28,7 +28,7 @@ namespace etudes {
     void EtudeTemplate::draw() {
     }
 
-    std::string EtudeTemplate::name() {
+    std::string EtudeTemplate::whoami() {
         return "Template";
     }
 }

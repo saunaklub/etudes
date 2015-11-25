@@ -29,7 +29,7 @@ namespace etudes {
         EtudeTemplate() {};
         virtual ~EtudeTemplate() {};
         
-        std::string name() override;
+        std::string whoami() override;
         void draw() override;
 
     private:
