@@ -29,15 +29,31 @@ namespace etudes {
     using glm::pi;
     using glm::vec2;
     using glm::vec3;
+
+    EtudeLines::EtudeLines() {
+        registerInput("distance/amplitude");
+        registerInput("distance/frequency");
+    }
+
+    EtudeLines::~EtudeLines() {
+
+    }    
     
     void EtudeLines::draw() {
+        int numLines = 200;
 
+        float amp = getValue("distance/amplitude");
+        float freq = getValue("distance/frequency");
+        
         render.drawParallels(
-            vec2(-0.5, -0.5),
-            vec2( 0.5,  0.5),
-            50, 50,
-            funcConst(2),          // width
-            funcSin(0.01f, 0.005f, pi<float>()/20.0f), // distance
+            vec2(-1, -1),
+            vec2( 1,  1),
+            numLines, numLines,
+            funcConst(2), // width
+            // distance:
+            funcSin(amp,
+                    0.005f, // phase
+                    freq*2.0f*pi<float>()/numLines),
             funcConst(vec3(1,1,1)) // color
             );
     }

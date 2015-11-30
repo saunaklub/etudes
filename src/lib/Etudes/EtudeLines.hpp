@@ -28,8 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace etudes {
     class EtudeLines : public Etude {
     public:
-        EtudeLines() {};
-        virtual ~EtudeLines() {};
+        EtudeLines();
+        virtual ~EtudeLines();
         
         std::string whoami() override;
         void draw() override;
