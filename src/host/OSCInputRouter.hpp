@@ -37,7 +37,7 @@ namespace etudes {
         void start();
         void stop();
 
-        void update();
+        void update(std::string path, float value);
         
     private:
         const ReceiverRegistry& registry;        

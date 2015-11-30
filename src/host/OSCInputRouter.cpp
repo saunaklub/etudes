@@ -34,13 +34,9 @@ namespace {
     int float_handler(const char *path, const char *types, lo_arg ** argv,
                         int argc, void *data, void *user_data) {
 
-        std::cout << "path: " << path << std::endl;
-        for(int i = 0; i < argc; ++i) {
-            std::cout << "arg " << i
-                      << ": " << argv[i]->f
-                      << std::endl;
-        }
-        std::cout << std::endl;
+        etudes::OSCInputRouter* router =
+            static_cast<etudes::OSCInputRouter*>(user_data);
+        router->update(path, argv[0]->f);
 
         return 0;
     }
@@ -48,6 +44,10 @@ namespace {
 }
 
 namespace etudes {
+
+    using std::cout;
+    using std::cerr;
+    using std::endl;
     
     OSCInputRouter::OSCInputRouter(const ReceiverRegistry& registry,
                                    int port) :
@@ -87,6 +87,7 @@ namespace etudes {
         //started = false;
     }
 
-    void OSCInputRouter::update() {
+    void OSCInputRouter::update(std::string path, float value) {
+        cout << path << " : " << value << endl;
     }
 }
