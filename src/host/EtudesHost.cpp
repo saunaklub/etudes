@@ -53,9 +53,6 @@ namespace etudes {
     }
 
     EtudesHost::~EtudesHost() {
-        for(auto etude : etudes) {
-            delete etude;
-        }
     }
 
     bool EtudesHost::initialise() {
@@ -97,8 +94,8 @@ namespace etudes {
     }
 
     bool EtudesHost::initEtudes() {
-        etudes.emplace_back(new EtudeLines);
-        etudes.emplace_back(new EtudeTriangles);
+        etudes.emplace_back(std::make_shared<EtudeLines>());
+        etudes.emplace_back(std::make_shared<EtudeTriangles>());
         curEtude = etudes.begin();
 
         printEtude();

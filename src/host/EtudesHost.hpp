@@ -21,7 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef _ETUDES_ETUDESHOST
 #define _ETUDES_ETUDESHOST
 
+#include <memory>
 #include <vector>
+
+#include <Receiver/ReceiverRegistry.hpp>
 
 class GLFWwindow;
 class Etude;
@@ -61,8 +64,9 @@ namespace etudes {
       GLFWwindow *window;
       bool quitLoop;
 
-      std::vector<Etude*> etudes;
-      std::vector<Etude*>::const_iterator curEtude;
+      std::vector<std::shared_ptr<Etude>> etudes;
+      std::vector<std::shared_ptr<Etude>>::const_iterator curEtude;
+      ReceiverRegistry registry;
   };
 }
 
