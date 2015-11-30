@@ -12,6 +12,7 @@ namespace etudes {
 
         std::vector<std::string> getInputs() const;
         void setValue(std::string input, float value);
+        float getValue(std::string input) const;
 
     protected:
         Receiver() = default;

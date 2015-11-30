@@ -25,6 +25,16 @@ namespace etudes {
         mapInputs[input] = value;
     }
 
+    float Receiver::getValue(string input) const {
+        const auto pair = mapInputs.find(input);
+        if(pair == mapInputs.end())
+            throw logic_error(
+                string("Receiver::getValue: input ") + input +
+                " not registered");
+
+        return pair->second;
+    }
+
     void Receiver::registerInput(string input,
                                  float initialValue) {
         if(mapInputs.find(input) != mapInputs.end())

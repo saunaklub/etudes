@@ -1,6 +1,7 @@
 #include "ReceiverRegistry.hpp"
 
 namespace etudes {
+
     void ReceiverRegistry::registerReceiver(
         std::string name,
         std::shared_ptr<Receiver> receiver) {
@@ -12,4 +13,9 @@ namespace etudes {
 
         registry[name] = receiver;            
     }
+
+    std::shared_ptr<Receiver> ReceiverRegistry::getReceiver(std::string name) {
+        return registry[name];
+    }
+
 }
