@@ -48,8 +48,9 @@ namespace etudes {
     using std::cout;
     using std::cerr;
     using std::endl;
+    using std::string;
     
-    OSCInputRouter::OSCInputRouter(const ReceiverRegistry& registry,
+    OSCInputRouter::OSCInputRouter(ReceiverRegistry& registry,
                                    int port) :
         registry(registry),
         port(port),
@@ -88,6 +89,11 @@ namespace etudes {
     }
 
     void OSCInputRouter::update(std::string path, float value) {
-        cout << path << " : " << value << endl;
+        string receiver = path.substr(1, path.find('/', 1)-1);
+        string input = path.substr(path.find('/', 1) + 1,
+                                   path.size() - path.find('/', 1) - 1);
+
+        cout << receiver << " : " << input << " " << value << endl;
+        registry.getReceiver(receiver)->setValue(input, value);
     }
 }

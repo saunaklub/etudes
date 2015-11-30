@@ -25,6 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 
 #include <Receiver/ReceiverRegistry.hpp>
+#include <OSCInputRouter.hpp>
 
 class GLFWwindow;
 class Etude;
@@ -54,6 +55,9 @@ namespace etudes {
 
       void processInput();
       void keyCallback(int, int, int, int);
+
+      template<class T>
+      void makeEtude(std::string name);
       
       void nextEtude();
       void prevEtude();
@@ -66,7 +70,9 @@ namespace etudes {
 
       std::vector<std::shared_ptr<Etude>> etudes;
       std::vector<std::shared_ptr<Etude>>::const_iterator curEtude;
+
       ReceiverRegistry registry;
+      OSCInputRouter oscRouter;
   };
 }
 

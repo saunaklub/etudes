@@ -14,8 +14,14 @@ namespace etudes {
         registry[name] = receiver;            
     }
 
-    std::shared_ptr<Receiver> ReceiverRegistry::getReceiver(std::string name) {
-        return registry[name];
+    std::shared_ptr<Receiver>
+    ReceiverRegistry::getReceiver(std::string name) {
+        auto pair = registry.find(name);
+        if(pair == registry.end())
+            throw std::logic_error(
+                std::string("ReceiverRegistry::registerReceiver: ") +
+                name + " not registered");
+        return pair->second;
     }
 
 }

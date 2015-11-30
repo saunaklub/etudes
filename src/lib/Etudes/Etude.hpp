@@ -22,9 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _ETUDES_ETUDE
 
 #include <string>
+#include <Receiver/Receiver.hpp>
 
 namespace etudes {
-    class Etude {
+    class Etude : public Receiver {
     public:
         virtual ~Etude() {};
 

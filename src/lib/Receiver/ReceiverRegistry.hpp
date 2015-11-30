@@ -12,7 +12,9 @@ namespace etudes {
 
         void registerReceiver(std::string name,
                               std::shared_ptr<Receiver> receiver);
-        std::shared_ptr<Receiver> getReceiver(std::string name);
+
+        std::shared_ptr<Receiver>
+        getReceiver(std::string name);
 
     private:
         typedef std::map<std::string, std::shared_ptr<Receiver>> map_t;

@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace etudes {
     class OSCInputRouter {
     public:
-        OSCInputRouter(const ReceiverRegistry& registry,
+        OSCInputRouter(ReceiverRegistry &registry,
                        int port);
         virtual ~OSCInputRouter();
         
@@ -40,7 +40,7 @@ namespace etudes {
         void update(std::string path, float value);
         
     private:
-        const ReceiverRegistry& registry;        
+        ReceiverRegistry &registry;
 
         int port;
         lo_server_thread oscServer;

@@ -49,7 +49,8 @@ namespace etudes {
 
     EtudesHost::EtudesHost() :
         window(nullptr),
-        quitLoop(false) {
+        quitLoop(false),
+        oscRouter(registry, 6666) {
     }
 
     EtudesHost::~EtudesHost() {
@@ -85,17 +86,18 @@ namespace etudes {
         glfwMakeContextCurrent(window);
         glfwSwapInterval(1);
         glfwSetKeyCallback(window, key_callback);
-	return true;
+
+        return true;
     }
     
     void EtudesHost::initOSC() {
-        etudes::OSCInputRouter oscRouter(registry, 6666);
         oscRouter.start();
     }
 
     bool EtudesHost::initEtudes() {
-        etudes.emplace_back(std::make_shared<EtudeLines>());
-        etudes.emplace_back(std::make_shared<EtudeTriangles>());
+        makeEtude<EtudeLines>("lines");
+        makeEtude<EtudeTriangles>("triangles");
+
         curEtude = etudes.begin();
 
         printEtude();
@@ -144,6 +146,13 @@ namespace etudes {
                 break;
             }
         }
+    }
+
+    template<class T>
+    void EtudesHost::makeEtude(std::string name) {
+        auto p = std::make_shared<T>();
+        etudes.emplace_back(p);
+        registry.registerReceiver(name, p);
     }
 
     void EtudesHost::nextEtude() {
