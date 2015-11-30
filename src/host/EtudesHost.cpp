@@ -89,7 +89,7 @@ namespace etudes {
     }
     
     void EtudesHost::initOSC() {
-        etudes::OSCInputRouter oscRouter(6666);
+        etudes::OSCInputRouter oscRouter(registry, 6666);
         oscRouter.start();
     }
 

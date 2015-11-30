@@ -49,7 +49,9 @@ namespace {
 
 namespace etudes {
     
-    OSCInputRouter::OSCInputRouter(int port) :
+    OSCInputRouter::OSCInputRouter(const ReceiverRegistry& registry,
+                                   int port) :
+        registry(registry),
         port(port),
         started(false) {
     }

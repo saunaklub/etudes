@@ -21,13 +21,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef _ETUDES_OSCINPUTROUTER
 #define _ETUDES_OSCINPUTROUTER
 
-#include "OSCInputRouter.hpp"
 #include <lo/lo.h>
+
+#include <Receiver/ReceiverRegistry.hpp>
+#include "OSCInputRouter.hpp"
+
 
 namespace etudes {
     class OSCInputRouter {
     public:
-        OSCInputRouter(int port);
+        OSCInputRouter(const ReceiverRegistry& registry,
+                       int port);
         virtual ~OSCInputRouter();
         
         void start();
@@ -36,6 +40,8 @@ namespace etudes {
         void update();
         
     private:
+        const ReceiverRegistry& registry;        
+
         int port;
         lo_server_thread oscServer;
 
