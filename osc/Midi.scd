@@ -1,10 +1,12 @@
+MIDIClient.init;
+MIDIIn.connectAll;
+
 if (~midiBus == nil) {~midiBus = Array.newClear(128)};
 128.do{
 	arg i;
 	if(~midiBus[i] == nil) {~midiBus[i]= Bus.control(s,1)}
 };
 
-MIDIIn.connectAll;
 
 MIDIdef.cc(\midiCC,{
 	arg val, cc, chan;
