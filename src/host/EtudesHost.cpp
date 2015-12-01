@@ -79,6 +79,7 @@ namespace etudes {
             return false;
         }
 
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         glfwSetWindowUserPointer(window, this);        
 
         glbinding::Binding::initialize();
