@@ -94,6 +94,6 @@ namespace etudes {
                                    path.size() - path.find('/', 1) - 1);
 
         cout << receiver << " : " << input << " " << value << endl;
-        registry.getReceiver(receiver)->setValue(input, value);
+        registry.getReceiver(receiver).setValue(input, value);
     }
 }
