@@ -41,9 +41,9 @@ overall a/v toolchain for our envisioned setup.
 The project is written in C++11 and OpenGL 3.3+. Additional software
 components used inside the études project are:
 
-- CMake
-- liblo
-- glm
+- [CMake](https://cmake.org/)
+- [liblo](http://liblo.sourceforge.net/)
+- [glm](http://glm.g-truc.net/)
 
 ## Libraries to consider
 
