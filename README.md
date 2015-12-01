@@ -45,6 +45,11 @@ components used inside the études project are:
 - liblo
 - glm
 
+## Libraries to consider
+
+[Jamoma](http://jamoma.org/)
+[libmapper](https://github.com/libmapper/libmapper)
+
 #### License
 
 All software components developed for the project are released under
