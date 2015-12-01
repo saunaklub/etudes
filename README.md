@@ -48,7 +48,7 @@ components used inside the études project are:
 ## Libraries to consider
 
 - [Jamoma](http://jamoma.org/)
-- [libmapper](https://github.com/libmapper/libmapper)
+- [libmapper](http://libmapper.github.io/)
 
 #### License
 
