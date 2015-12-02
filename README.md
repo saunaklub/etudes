@@ -38,14 +38,15 @@ overall a/v toolchain for our envisioned setup.
 
 ### Development
 
-The project is written in C++11 and OpenGL 3.3+. Additional software
-components used inside the études project are:
+The project is written in C++11 and OpenGL 3.3+.
+
+#### Dependencies
 
 - [CMake](https://cmake.org/)
 - [liblo](http://liblo.sourceforge.net/)
 - [glm](http://glm.g-truc.net/)
 
-#### Libraries to consider
+Libraries to consider
 
 - [Jamoma](http://jamoma.org/)
 - [libmapper](http://libmapper.github.io/)
