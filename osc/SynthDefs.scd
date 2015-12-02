@@ -1,19 +1,17 @@
 //FUNCS
 (
-	~main = Task({
+	~main = {
 		~sinOsc = {
-			SinOsc.kr(\freq.kr(440),0,\mul.kr(1),\add.kr(0));
+			SinOsc.ar(\freq.ar(440),0,\mul.ar(1),\add.ar(0));
 		};
 
 		~lfSaw = {
-			LFSaw.kr(\freq.kr(440),0,\mul.kr(300),\add.kr(0));
+			LFSaw.ar(\freq.ar(440),0,\mul.ar(300),\add.ar(0));
 		};
 
-		~lfPulse = {
-			LFPulse.kr(\freq.kr(440),\width.kr(0.5),\mul.kr(1),\add.kr(0));
-		};
+		~lfPulse = {LFPulse.ar(\freq.ar(439), 0, \width.ar(0.5),\mul.ar(0.05),\add.ar(0))};
 
-		~noise2 = {LFPulse.ar(\freq.ar(300),\width.ar(0.5),\mul.ar(1)) * \amp.ar(0.05)};
+		~noise2 = {LFPulse.ar(\freq.ar(300), 0, \width.ar(0.5),\mul.ar(0.05))};
 
 		~noise ={
 
@@ -40,27 +38,20 @@
 
 		//NDEFS
 		Ndef('sinOsc1', ~sinOsc).set('freq', 300, 'mul', 300,'add', 35);
-		0.5.wait;
 		Ndef('sinOsc2', ~sinOsc).set('freq', 300, 'mul', 0.5,'add', 0.5);
-		0.5.wait;
 		Ndef('sinOsc3', ~sinOsc).set('freq', 300, 'mul', 0.5,'add', 0.5);
-		0.5.wait;
 		Ndef('lfSaw1', ~lfSaw).set('freq', 1, 'mul', 100,'add', 1);
-		0.5.wait;
-		Ndef('lfPulse1', ~lfPulse).set('freq', 100, 'mul', 50,'add', 0);
-		0.5.wait;
+		Ndef('lfPulse1', ~lfPulse).set('freq', 300, 'mul', 50,'add', 200);
 		Ndef('noise2', ~noise2).set('freq', 300, 'mul', 1,'add', 0);
-		0.5.wait;
 		// NDEF ROUTING
 
-
-		Ndef('sinosc1') <>>.freq Ndef('sinosc2');
-		Ndef('lfsaw') <>>.freq Ndef('sinosc3');
-		Ndef('sinosc3') <>>.width Ndef('lfPulse1'); 
-		Ndef('sinosc2') <>>.width Ndef('noise2');
-
-		Ndef('lfPulse1') <>>.freq Ndef('noise2');
-	}).play;
+		Ndef('sinOsc1').map(\freq, Ndef('sinOsc2'));
+		Ndef('lfSaw').map(\freq, Ndef('sinOsc3'));
+		Ndef('sinOsc3').map(\width, Ndef('lfPulse1')); 
+		Ndef('sinOsc2').map(\width, Ndef('noise2'));
+		Ndef('noise2').map(\freq,Ndef('lfPulse1'))
+	};
+	~main.value;
 )
 
 Ndef('noise2').play(0,2)
