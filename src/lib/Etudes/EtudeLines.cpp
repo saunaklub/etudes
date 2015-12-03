@@ -18,10 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include <cmath>
 #include <iostream>
-
-#include <glm/gtc/constants.hpp>
 
 #include "Render/ModulationFuncs.hpp"
 
@@ -49,10 +46,14 @@ namespace etudes {
         float amp = getValue("distance/amplitude");
         float freq = getValue("distance/frequency");
 
-        auto dist = funcConst(0.1);
-        auto width = funcSinT(20, 20, 2.0f*pi<float>());
-        auto color = funcSinK(vec3(0,0.7,1));
+        auto dist = funcConst(0.05);
+        auto width = funcSin(5, 5, 1.0, 0.2);
 
+        float gCenter = 0.7f;
+        float gAmplit = 0.3f;
+        auto color = funcSin(vec3(0, 0.7, gCenter),
+                             vec3(0, 0, gAmplit),
+                             2, 0.1f);
 
         render.drawParallels(
             vec2(0.5, -1),

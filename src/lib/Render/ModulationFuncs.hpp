@@ -22,17 +22,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _MODULATION_FUNCS
 
 #include <cmath>
+#include <glm/gtc/constants.hpp>
+#include <glm/vec3.hpp>
 
 #include <functional>
 #include <chrono>
 #include <iostream>
 
 namespace {
-    std::chrono::high_resolution_clock modClock;
-    std::chrono::high_resolution_clock::time_point t0 = modClock.now();
+    using std::chrono::steady_clock;
+    using std::chrono::duration_cast;
+    using std::chrono::microseconds;
+
+    steady_clock modClock;
+    steady_clock::time_point t0 = modClock.now();
 
     long microSeconds() {
-        std::chrono::duration_cast<std::chrono::microseconds>
+        duration_cast<microseconds>
             (modClock.now() - t0);
     }
 
@@ -52,21 +58,25 @@ namespace etudes {
         };
     }
 
+    /**
+     * Generic sinusoidal modulation function. Maps a real-valued
+     * position or index to a sin function oscillating in space and
+     * time, think wave equation.
+     *
+     * @param base Base value around which it oscillation occurs.
+     * @param amp Amplitude of the oscillation.
+     * @param omega Time frequency (Hz).
+     * @param lambda Space frequency ("1/position").
+     * @param phi Initial phase.
+     */
     template<class T>
-    function<T(int)> funcSinK(T base, float amp,
-                             float omega, float phi=0) {
-        return [=](int k) {
-            return base + amp*sin(k*omega + phi);
-        };
-    }
-
-    template<class T>
-    function<T(int)> funcSinT(T base, T amp,
-                              float omega,
-                              float phi=0) {
-        return [=](int k) {
-            double t = seconds();
-            return base + amp*sin(omega*t + phi);
+    function<T(float)> funcSin(T base, T amp,
+                               float omega, float lambda=0,
+                               float phi=0) {
+        return [=](float k) {
+            return base + amp*sinf(2.0f*glm::pi<float>()
+                                   * (k*lambda + seconds()*omega)
+                                   + phi);
         };
     }
 }

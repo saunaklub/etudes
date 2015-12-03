@@ -37,6 +37,8 @@ namespace etudes {
         vec2 p0, vec2 p1,
         float width, vec3 color) {
 
+        glEnable(GL_LINE_SMOOTH);
+
         glLineWidth(width);
         glColor3f(color.r,
                   color.g,
