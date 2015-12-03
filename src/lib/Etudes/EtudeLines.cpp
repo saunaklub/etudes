@@ -18,6 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
+#include <cmath>
+#include <iostream>
+
 #include <glm/gtc/constants.hpp>
 
 #include "Render/ModulationFuncs.hpp"
@@ -31,8 +34,9 @@ namespace etudes {
     using glm::vec3;
 
     EtudeLines::EtudeLines() {
-        registerInput("distance/amplitude");
-        registerInput("distance/frequency");
+        registerInput("width", 5.0f);
+        registerInput("distance/amplitude", 0.1f);
+        registerInput("distance/frequency", 0.01f);
     }
 
     EtudeLines::~EtudeLines() {
@@ -44,17 +48,19 @@ namespace etudes {
 
         float amp = getValue("distance/amplitude");
         float freq = getValue("distance/frequency");
-        
+
+        auto dist = funcConst(0.1);
+        auto width = funcSinT(20, 20, 2.0f*pi<float>());
+        auto color = funcSinK(vec3(0,0.7,1));
+
+
         render.drawParallels(
-            vec2(-1, -1),
-            vec2( 1,  1),
+            vec2(0.5, -1),
+            vec2(0.5,  1),
             numLines, numLines,
-            funcConst(2), // width
-            // distance:
-            funcSin(amp,
-                    0.005f, // phase
-                    freq*2.0f*pi<float>()/numLines),
-            funcConst(vec3(1,1,1)) // color
+            width,
+            dist,
+            color
             );
     }
 

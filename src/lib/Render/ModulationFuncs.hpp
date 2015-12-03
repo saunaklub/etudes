@@ -21,8 +21,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef _MODULATION_FUNCS
 #define _MODULATION_FUNCS
 
-#include <functional>
 #include <cmath>
+
+#include <functional>
+#include <chrono>
+#include <iostream>
+
+namespace {
+    std::chrono::high_resolution_clock modClock;
+    std::chrono::high_resolution_clock::time_point t0 = modClock.now();
+
+    long microSeconds() {
+        std::chrono::duration_cast<std::chrono::microseconds>
+            (modClock.now() - t0);
+    }
+
+    double seconds() {
+        return microSeconds() / 1000000.0;
+    }
+}
 
 namespace etudes {
     using std::function;
@@ -36,11 +53,24 @@ namespace etudes {
     }
 
     template<class T>
-    function<T(int)> funcSin(T t, float a, float omega, float phi=0) {
+    function<T(int)> funcSinK(T base, float amp,
+                             float omega, float phi=0) {
         return [=](int k) {
-            return t + a*sin(k*omega + phi);
+            return base + amp*sin(k*omega + phi);
+        };
+    }
+
+    template<class T>
+    function<T(int)> funcSinT(T base, T amp,
+                              float omega,
+                              float phi=0) {
+        return [=](int k) {
+            double t = seconds();
+            return base + amp*sin(omega*t + phi);
         };
     }
 }
+
+
 
 #endif
