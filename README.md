@@ -35,6 +35,9 @@ overall a/v toolchain for our envisioned setup.
 - Effects, layering, composition: [veejay](http://veejayhq.net/)
 - Projection mapping: [MapMap](http://www.mapmap.info/tiki-index.php) / [lpmt](http://hv-a.com/lpmt/)
 
+#### High-level Overview
+
+![Etudes architectural overview](https://raw.githubusercontent.com/saunaklub/etudes/master/doc/diagrams/workflow.png)
 
 ### Development
 
