@@ -1,4 +1,6 @@
-#include <exception>
+#include <iostream>
+
+#include <Util/Logging.hpp>
 
 #include "Receiver.hpp"
 
@@ -18,9 +20,9 @@ namespace etudes {
 
     void Receiver::setValue(string input, float value) {
         if(mapInputs.find(input) == mapInputs.end())
-            throw logic_error(
-                string("Receiver::setValue: input ") + input +
-                " not registered");
+            log(warning,
+                string("Receiver::setValue: input ")
+                + input + " not registered");
 
         mapInputs[input] = value;
     }
@@ -28,9 +30,9 @@ namespace etudes {
     float Receiver::getValue(string input) const {
         const auto pair = mapInputs.find(input);
         if(pair == mapInputs.end())
-            throw logic_error(
-                string("Receiver::getValue: input ") + input +
-                " not registered");
+            log(warning,
+                string("Receiver::getValue: input ")
+                + input + " not registered");
 
         return pair->second;
     }
@@ -38,9 +40,9 @@ namespace etudes {
     void Receiver::registerInput(string input,
                                  float initialValue) {
         if(mapInputs.find(input) != mapInputs.end())
-            throw logic_error(
-                string("Receiver::registerInput: ") + input +
-                " already registered");
+            log(warning,
+                string("Receiver::registerInput: ") +
+                input + " already registered");
                 
         mapInputs[input] = initialValue;
     }

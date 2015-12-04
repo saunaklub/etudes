@@ -14,6 +14,7 @@ set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
 
 add_library(${LIBRARY}
     SHARED
+    src/lib/Util/Logging.cpp
     src/lib/Shader/ShaderRegistry.cpp
     src/lib/Receiver/Receiver.cpp
     src/lib/Receiver/ReceiverRegistry.cpp
