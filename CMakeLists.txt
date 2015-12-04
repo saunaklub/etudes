@@ -25,8 +25,7 @@ add_library(${LIBRARY}
     src/lib/Etudes/EtudeLines.cpp
     )
 
-set_property(TARGET ${LIBRARY}
-    PROPERTY CXX_STANDARD 14)
+set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)

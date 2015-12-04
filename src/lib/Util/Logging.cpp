@@ -1,6 +1,9 @@
+#include <string>
 #include <iostream>
 
 #include <Util/Logging.hpp>
+
+using namespace std::literals::string_literals;
 
 namespace etudes {
     using std::string;
@@ -11,16 +14,16 @@ namespace etudes {
     void log(LogLevel level, std::string message) {
         switch(level) {
         case error:
-            cerr << string("ERROR: ") + message << endl;
+            cerr << "ERROR: "s + message << endl;
             break;
         case warning:
-            cerr << string("WARNING: ") + message << endl;
+            cerr << "WARNING: "s + message << endl;
             break;
         case info:
-            cerr << string("INFO: ") + message << endl;
+            cerr << "INFO: "s + message << endl;
             break;
         case debug:
-            cerr << string("DEBUG: ") + message << endl;
+            cerr << "DEBUG: "s + message << endl;
             break;
         }
     }

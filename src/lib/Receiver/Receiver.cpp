@@ -4,6 +4,8 @@
 
 #include "Receiver.hpp"
 
+using namespace std::literals::string_literals;
+
 namespace etudes {
     using std::logic_error;
     using std::string;
@@ -21,8 +23,7 @@ namespace etudes {
     void Receiver::setValue(string input, float value) {
         if(mapInputs.find(input) == mapInputs.end())
             log(warning,
-                string("Receiver::setValue: input ")
-                + input + " not registered");
+                "Receiver::setValue: input "s + input + " not registered");
 
         mapInputs[input] = value;
     }
@@ -31,8 +32,7 @@ namespace etudes {
         const auto pair = mapInputs.find(input);
         if(pair == mapInputs.end())
             log(warning,
-                string("Receiver::getValue: input ")
-                + input + " not registered");
+                "Receiver::getValue: input "s + input + " not registered");
 
         return pair->second;
     }
@@ -41,8 +41,7 @@ namespace etudes {
                                  float initialValue) {
         if(mapInputs.find(input) != mapInputs.end())
             log(warning,
-                string("Receiver::registerInput: ") +
-                input + " already registered");
+                "Receiver::registerInput: "s + input + " already registered");
                 
         mapInputs[input] = initialValue;
     }

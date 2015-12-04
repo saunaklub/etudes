@@ -1,20 +1,20 @@
 /*
 
-Études Audiovisuel - graphical elements for audiovisual composition
-Copyright (C) 2015 Patric Schmitz, Claudio Cabral
+  Études Audiovisuel - graphical elements for audiovisual composition
+  Copyright (C) 2015 Patric Schmitz, Claudio Cabral
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
@@ -24,134 +24,141 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <glbinding/gl/gl.h>
 using namespace gl;
 
+#include <Util/Logging.hpp>
 #include "ShaderRegistry.hpp"
 
+using namespace std::literals::string_literals;
+
 namespace {
-  void readFileIntoString(std::string filename, std::string &result) {
-    std::ifstream file(filename);
-    if(file) {
-      // get size of file
-      file.seekg(0, std::ios::end);
-      std::streampos length = file.tellg();
-      file.seekg(0, std::ios::beg);
+    void readFileIntoString(std::string filename, std::string &result) {
+        std::ifstream file(filename);
+        if(file) {
+            // get size of file
+            file.seekg(0, std::ios::end);
+            std::streampos length = file.tellg();
+            file.seekg(0, std::ios::beg);
 
-      std::vector<char> buffer(length);
-      file.read(&buffer[0],length);
+            std::vector<char> buffer(length);
+            file.read(&buffer[0],length);
                         
-      result = std::string(buffer.begin(), buffer.end());
+            result = std::string(buffer.begin(), buffer.end());
+        }
     }
-  }
 }
 
-GLuint ShaderRegistry::RegisterShader(std::string name,
-                                      GLenum type,
-                                      std::vector<std::string> paths) {
+namespace etudes {
 
-  // Logger::outputDebugString(String("Registering shader: ") + name);
+    GLuint ShaderRegistry::RegisterShader(
+        std::string name,
+        GLenum type,
+        std::vector<std::string> paths) {
+
+        log(debug, "Registering shader: "s + name);
                 
-  // create gl shader object
-  GLuint shader = glCreateShader(type);
+        // create gl shader object
+        GLuint shader = glCreateShader(type);
 
-  std::string sShader;
-  std::string sShaderCombined;
-  for(std::string &path: paths) {
-    // read data from path
-    readFileIntoString(path, sShader);
-    sShaderCombined += sShader;
-  }
+        std::string sShader;
+        std::string sShaderCombined;
+        for(std::string &path: paths) {
+            // read data from path
+            readFileIntoString(path, sShader);
+            sShaderCombined += sShader;
+        }
 
-  const char* strShaderData = sShaderCombined.c_str();
-  glShaderSource(shader, 1, &strShaderData, NULL);
+        const char* strShaderData = sShaderCombined.c_str();
+        glShaderSource(shader, 1, &strShaderData, NULL);
 
-  // vstr::out() << "Shader source:" << std::endl
-  // 			<< strShaderData << std::endl << std::endl;
+        log(debug, "Shader source:\n"s + strShaderData + "\n");
                 
-  glCompileShader(shader);
+        glCompileShader(shader);
 
-  GLint status;
-  glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+        GLint status;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
                 
-  if(status == 0)	{
-    GLint infoLogLength;
-    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
+        if(status == 0)	{
+            GLint infoLogLength;
+            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-    GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-    glGetShaderInfoLog(shader, infoLogLength, NULL, strInfoLog);
+            GLchar *strInfoLog = new GLchar[infoLogLength + 1];
+            glGetShaderInfoLog(shader, infoLogLength, NULL, strInfoLog);
 
-    const char *strShaderType = NULL;
-    switch(type) {
-    case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
-    case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
-    case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
-    case GL_COMPUTE_SHADER: strShaderType = "compute"; break;
-    default: break;
-    }
+            const char *strShaderType = NULL;
+            switch(type) {
+            case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
+            case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
+            case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
+            case GL_COMPUTE_SHADER: strShaderType = "compute"; break;
+            default: break;
+            }
 
-    std::cerr << "Compile failure in " << strShaderType
-              << " shader: " << name << std::endl
-              << strInfoLog << std::endl;
+            std::cerr << "Compile failure in " << strShaderType
+                      << " shader: " << name << std::endl
+                      << strInfoLog << std::endl;
                         
-    delete[] strInfoLog;
-  }
+            delete[] strInfoLog;
+        }
 
-  m_mapShader[name] = shader;
-  return shader;
-}
+        m_mapShader[name] = shader;
+        return shader;
+    }
 
-GLuint ShaderRegistry::RegisterProgram(std::string name,
-                                       std::vector<std::string> shader_names) {
+    GLuint ShaderRegistry::RegisterProgram(
+        std::string name,
+        std::vector<std::string> shader_names) {
                 
-  // Logger::outputDebugString(String("Registering program: ") + name);
+        log(debug, "Registering program: "s + name);
                 
-  GLuint program = glCreateProgram();
+        GLuint program = glCreateProgram();
 
-  for(auto & shaderName : shader_names)
-    glAttachShader(program,m_mapShader[shaderName]);
+        for(auto & shaderName : shader_names)
+            glAttachShader(program,m_mapShader[shaderName]);
 
-  glLinkProgram(program);
+        glLinkProgram(program);
 
-  GLint status;
-  glGetProgramiv(program, GL_LINK_STATUS, &status);
+        GLint status;
+        glGetProgramiv(program, GL_LINK_STATUS, &status);
 
-  if(status == 0)	{
-    GLint infoLogLength;
-    glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
+        if(status == 0)	{
+            GLint infoLogLength;
+            glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-    GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-    glGetProgramInfoLog(program, infoLogLength, NULL, strInfoLog);
-    std::cerr << "Linker failure: " << strInfoLog << std::endl;
-    delete[] strInfoLog;
-  }
+            GLchar *strInfoLog = new GLchar[infoLogLength + 1];
+            glGetProgramInfoLog(program, infoLogLength, NULL, strInfoLog);
+            std::cerr << "Linker failure: " << strInfoLog << std::endl;
+            delete[] strInfoLog;
+        }
 
-  for(size_t iLoop = 0; iLoop < shader_names.size(); iLoop++)
-    glDetachShader(program, m_mapShader[shader_names[iLoop]]);
+        for(size_t iLoop = 0; iLoop < shader_names.size(); iLoop++)
+            glDetachShader(program, m_mapShader[shader_names[iLoop]]);
 
-  m_mapProgram[name] = program;
-  return program;
-}
+        m_mapProgram[name] = program;
+        return program;
+    }
 
-GLuint ShaderRegistry::RegisterUniform(std::string program_name,
-                                       std::string uniform_name) {
-  GLuint location = glGetUniformLocation(GetProgram(program_name),
-                                         uniform_name.c_str());
-  m_mapUniform[program_name][uniform_name] = location;
-  return location;		
-}
+    GLuint ShaderRegistry::RegisterUniform(std::string program_name,
+                                           std::string uniform_name) {
+        GLuint location = glGetUniformLocation(GetProgram(program_name),
+                                               uniform_name.c_str());
+        m_mapUniform[program_name][uniform_name] = location;
+        return location;		
+    }
 
-GLuint ShaderRegistry::GetProgram(std::string name) {
-  std::map<std::string, GLuint>::iterator it = m_mapProgram.find(name);
+    GLuint ShaderRegistry::GetProgram(std::string name) {
+        std::map<std::string, GLuint>::iterator it = m_mapProgram.find(name);
 
-  if(it == m_mapProgram.end()) {
-    /* Logger::outputDebugString(
-       String("Program ") + name +
-       " not found in ShaderRegistry!");*/
-    return ~0;
-  }
+        if(it == m_mapProgram.end()) {
+            log(debug, "Program "s + name +
+                " not found in ShaderRegistry!");
+            return ~0;
+        }
                 
-  return it->second;
-}
+        return it->second;
+    }
 
-GLuint ShaderRegistry::GetUniform(std::string program_name,
-                                  std::string uniform_name) {
-  return m_mapUniform[program_name][uniform_name];
+    GLuint ShaderRegistry::GetUniform(std::string program_name,
+                                      std::string uniform_name) {
+        return m_mapUniform[program_name][uniform_name];
+    }
+
 }

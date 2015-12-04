@@ -38,7 +38,7 @@ overall a/v toolchain for our envisioned setup.
 
 ### Development
 
-The project is written in C++11 and OpenGL 3.3+.
+The project is written in C++14 and OpenGL 3.3+.
 
 #### Dependencies
 
