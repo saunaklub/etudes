@@ -31,9 +31,15 @@ namespace etudes {
     using glm::vec3;
 
     EtudeLines::EtudeLines() {
-        registerInput("width", 5.0f);
+        registerInput("distance/base", 0.1f);
         registerInput("distance/amplitude", 0.1f);
-        registerInput("distance/frequency", 0.01f);
+        registerInput("distance/omega", 0.01f);
+        registerInput("distance/lambda", 0.01f);
+
+        registerInput("width/base", 0.1f);
+        registerInput("width/amplitude", 0.1f);
+        registerInput("width/omega", 0.01f);
+        registerInput("width/lambda", 0.01f);
     }
 
     EtudeLines::~EtudeLines() {
@@ -43,21 +49,28 @@ namespace etudes {
     void EtudeLines::draw() {
         int numLines = 200;
 
-        float amp = getValue("distance/amplitude");
-        float freq = getValue("distance/frequency");
+        float dist_b = getValue("distance/base");
+        float dist_a = getValue("distance/amplitude");
+        float dist_o = getValue("distance/omega");
+        float dist_l = getValue("distance/lambda");
 
-        auto dist = funcConst(0.05);
-        auto width = funcSin(5, 5, 1.0, 0.2);
+        float width_b = getValue("width/base");
+        float width_a = getValue("width/amplitude");
+        float width_o = getValue("width/omega");
+        float width_l = getValue("width/lambda");
+
+        auto dist  = funcSin(dist_b, dist_a, dist_o, dist_l);
+        auto width = funcSin(width_b, width_a, width_o, width_l);
 
         float gCenter = 0.7f;
         float gAmplit = 0.3f;
         auto color = funcSin(vec3(0, 0.7, gCenter),
                              vec3(0, 0, gAmplit),
-                             2, 0.1f);
+                             0, 0.1);
 
         render.drawParallels(
-            vec2(0.5, -1),
-            vec2(0.5,  1),
+            vec2(0, -1),
+            vec2(0,  1),
             numLines, numLines,
             width,
             dist,
