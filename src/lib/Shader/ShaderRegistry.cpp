@@ -18,6 +18,8 @@
 
 */
 
+#include <vector>
+
 #include <iostream>
 #include <fstream>
 
@@ -80,23 +82,23 @@ namespace etudes {
             GLint infoLogLength;
             glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-            GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-            glGetShaderInfoLog(shader, infoLogLength, NULL, strInfoLog);
+            std::vector<GLchar> sInfoLog;
+            sInfoLog.reserve(infoLogLength+1);
+            glGetShaderInfoLog(shader, infoLogLength,
+                               NULL, &sInfoLog.front());
 
-            const char *strShaderType = NULL;
+            std::string sShaderType;
             switch(type) {
-            case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
-            case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
-            case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
-            case GL_COMPUTE_SHADER: strShaderType = "compute"; break;
+            case GL_VERTEX_SHADER: sShaderType = "vertex"; break;
+            case GL_GEOMETRY_SHADER: sShaderType = "geometry"; break;
+            case GL_FRAGMENT_SHADER: sShaderType = "fragment"; break;
+            case GL_COMPUTE_SHADER: sShaderType = "compute"; break;
             default: break;
             }
 
-            std::cerr << "Compile failure in " << strShaderType
+            std::cerr << "Compile failure in " << sShaderType
                       << " shader: " << name << std::endl
-                      << strInfoLog << std::endl;
-                        
-            delete[] strInfoLog;
+                      << &sInfoLog.front() << std::endl;
         }
 
         m_mapShader[name] = shader;
@@ -123,10 +125,13 @@ namespace etudes {
             GLint infoLogLength;
             glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
 
-            GLchar *strInfoLog = new GLchar[infoLogLength + 1];
-            glGetProgramInfoLog(program, infoLogLength, NULL, strInfoLog);
-            std::cerr << "Linker failure: " << strInfoLog << std::endl;
-            delete[] strInfoLog;
+            std::vector<GLchar> sInfoLog;
+            sInfoLog.reserve(infoLogLength+1);
+
+            glGetProgramInfoLog(program, infoLogLength,
+                                NULL, &sInfoLog.front());
+
+            std::cerr << "Linker failure: " << &sInfoLog.front() << std::endl;
         }
 
         for(size_t iLoop = 0; iLoop < shader_names.size(); iLoop++)
