@@ -52,8 +52,8 @@ namespace etudes {
     using std::sin;
 
     template<class T>
-    function<T(int)> funcConst(T t) {
-        return [=](int) {
+    function<T(float)> funcConst(T t) {
+        return [=](float) {
             return t;
         };
     }
@@ -70,9 +70,11 @@ namespace etudes {
      * @param phi Initial phase.
      */
     template<class T>
-    function<T(float)> funcSin(T base, T amp,
-                               float omega, float lambda=0,
-                               float phi=0) {
+    function<T(float)> funcSin(
+        T base, T amp,
+        float omega, float lambda=0,
+        float phi=0) {
+
         return [=](float k) {
             return base + amp*sinf(2.0f*glm::pi<float>()
                                    * (k*lambda + seconds()*omega)
