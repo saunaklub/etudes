@@ -83,7 +83,6 @@ namespace etudes {
 
     void OSCInputRouter::stop() {
         if(!started)
-
             throw std::logic_error(
                 "OSCInputRouter::stop: osc server thread not running");
 
