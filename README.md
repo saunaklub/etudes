@@ -17,7 +17,7 @@ which are concertedly modulated.
 The following soft- and hardware components are probably used in the
 overall a/v toolchain for our envisioned setup.
 
-#### High-level arrangement
+#### Sequencing and Arrangement
 
 - Sequencing: [Bitwig](http://www.bitwig.com/en/bitwig-studio.html) / [Renoise](http://www.renoise.com/) / [Live](https://www.ableton.com/en/live/) / [radium](http://users.notam02.no/~kjetism/radium/index.php)
 - Transport: [MIDI](http://www.midi.org/techspecs/index.php), [OSC](http://opensoundcontrol.org/), [DMX](https://en.wikipedia.org/wiki/DMX512)
