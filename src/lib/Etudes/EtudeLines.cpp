@@ -31,15 +31,15 @@ namespace etudes {
     using glm::vec3;
 
     EtudeLines::EtudeLines() {
-        registerInput("distance/base", 0.1f);
-        registerInput("distance/amplitude", 0.1f);
-        registerInput("distance/omega", 0.01f);
-        registerInput("distance/lambda", 0.01f);
+        registerInput("distance/base",      {0.1f});
+        registerInput("distance/amplitude", {0.1f});
+        registerInput("distance/omega",     {0.01f});
+        registerInput("distance/lambda",    {0.01f});
 
-        registerInput("width/base", 0.1f);
-        registerInput("width/amplitude", 0.1f);
-        registerInput("width/omega", 0.01f);
-        registerInput("width/lambda", 0.01f);
+        registerInput("width/base",      {0.1f});
+        registerInput("width/amplitude", {0.1f});
+        registerInput("width/omega",     {0.01f});
+        registerInput("width/lambda",    {0.01f});
     }
 
     EtudeLines::~EtudeLines() {
@@ -49,15 +49,15 @@ namespace etudes {
     void EtudeLines::draw() {
         int numLines = 200;
 
-        float dist_b = getValue("distance/base");
-        float dist_a = getValue("distance/amplitude");
-        float dist_o = getValue("distance/omega");
-        float dist_l = getValue("distance/lambda");
+        float dist_b = getValue<float>("distance/base");
+        float dist_a = getValue<float>("distance/amplitude");
+        float dist_o = getValue<float>("distance/omega");
+        float dist_l = getValue<float>("distance/lambda");
 
-        float width_b = getValue("width/base");
-        float width_a = getValue("width/amplitude");
-        float width_o = getValue("width/omega");
-        float width_l = getValue("width/lambda");
+        float width_b = getValue<float>("width/base");
+        float width_a = getValue<float>("width/amplitude");
+        float width_o = getValue<float>("width/omega");
+        float width_l = getValue<float>("width/lambda");
 
         auto dist  = funcSin(dist_b, dist_a, dist_o, dist_l);
         auto width = funcSin(width_b, width_a, width_o, width_l);

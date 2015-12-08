@@ -1,3 +1,5 @@
+#include <Receiver/Receiver.hpp>
+
 #include "ReceiverRegistry.hpp"
 
 namespace etudes {

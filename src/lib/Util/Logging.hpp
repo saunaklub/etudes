@@ -18,20 +18,23 @@
 
 */
 
-#ifndef _ETUDES_LOGGING
-#define _ETUDES_LOGGING
+#ifndef ETUDES_LOGGING
+#define ETUDES_LOGGING
 
 #include <string>
 
 namespace etudes {
-    enum LogLevel {
-        error,
-        warning,
-        info,
-        debug
-    };
+    namespace logging {
 
-    void log(LogLevel level, std::string message);
+        enum LogLevel {
+            error,
+            warning,
+            info,
+            debug
+        };
+
+        void log(LogLevel level, std::string message);
+    }
 }
 
-#endif // _ETUDES_LOGGING
+#endif // ETUDES_LOGGING

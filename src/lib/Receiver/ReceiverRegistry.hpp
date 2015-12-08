@@ -1,12 +1,14 @@
-#ifndef _ETUDES_RECEIVERREGISTRY
-#define _ETUDES_RECEIVERREGISTRY
+#ifndef ETUDES_RECEIVERREGISTRY
+#define ETUDES_RECEIVERREGISTRY
 
 #include <memory>
+#include <map>
 #include <string>
-
-#include "Receiver.hpp"
+#include <iostream>
 
 namespace etudes {
+    class Receiver;
+
     class ReceiverRegistry {
     public:
 
@@ -21,4 +23,4 @@ namespace etudes {
     };
 }
 
-#endif // _ETUDES_RECEIVERREGISTRY
+#endif // ETUDES_RECEIVERREGISTRY

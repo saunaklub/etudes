@@ -55,7 +55,7 @@ namespace etudes {
         GLenum type,
         std::vector<std::string> paths) {
 
-        log(debug, "Registering shader: "s + name);
+        log(logging::debug, "Registering shader: "s + name);
 
         // create gl shader object
         GLuint shader = glCreateShader(type);
@@ -71,7 +71,7 @@ namespace etudes {
         const char* strShaderData = sShaderCombined.c_str();
         glShaderSource(shader, 1, &strShaderData, NULL);
 
-        log(debug, "Shader source:\n"s + strShaderData + "\n");
+        log(logging::debug, "Shader source:\n"s + strShaderData + "\n");
 
         glCompileShader(shader);
 
@@ -109,7 +109,7 @@ namespace etudes {
         std::string name,
         std::vector<std::string> shader_names) {
 
-        log(debug, "Registering program: "s + name);
+        log(logging::debug, "Registering program: "s + name);
 
         GLuint program = glCreateProgram();
 
@@ -153,7 +153,7 @@ namespace etudes {
         std::map<std::string, GLuint>::iterator it = m_mapProgram.find(name);
 
         if(it == m_mapProgram.end()) {
-            log(debug, "Program "s + name +
+            log(logging::debug, "Program "s + name +
                 " not found in ShaderRegistry!");
             return ~0;
         }
