@@ -18,8 +18,8 @@
 
 */
 
-#ifndef _ETUDES_ETUDE
-#define _ETUDES_ETUDE
+#ifndef ETUDES_ETUDE
+#define ETUDES_ETUDE
 
 #include <string>
 #include <Receiver/Receiver.hpp>
@@ -36,4 +36,4 @@ namespace etudes {
     };
 }
 
-#endif // _ETUDES_ETUDE
+#endif // ETUDES_ETUDE

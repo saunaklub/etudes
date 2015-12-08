@@ -18,8 +18,8 @@
 
 */
 
-#ifndef _ETUDES_RENDERPRIMITIVES
-#define _ETUDES_RENDERPRIMITIVES
+#ifndef ETUDES_RENDERPRIMITIVES
+#define ETUDES_RENDERPRIMITIVES
 
 #include <functional>
 
@@ -48,4 +48,4 @@ namespace etudes {
     };
 }
 
-#endif // _ETUDES_RENDERPRIMITIVES
+#endif // ETUDES_RENDERPRIMITIVES

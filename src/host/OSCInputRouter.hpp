@@ -18,8 +18,8 @@
 
 */
 
-#ifndef _ETUDES_OSCINPUTROUTER
-#define _ETUDES_OSCINPUTROUTER
+#ifndef ETUDES_OSCINPUTROUTER
+#define ETUDES_OSCINPUTROUTER
 
 #include <lo/lo.h>
 
@@ -49,4 +49,4 @@ namespace etudes {
     };
 }
 
-#endif // _ETUDES_OSCINPUTROUTER
+#endif // ETUDES_OSCINPUTROUTER

@@ -18,8 +18,8 @@
 
 */
 
-#ifndef _ETUDES_ETUDETRIANGLES
-#define _ETUDES_ETUDETRIANGLES
+#ifndef ETUDES_ETUDETRIANGLES
+#define ETUDES_ETUDETRIANGLES
 
 #include "Etude.hpp"
 
@@ -36,4 +36,4 @@ namespace etudes {
     };
 }
 
-#endif // _ETUDES_ETUDETRIANGLES
+#endif // ETUDES_ETUDETRIANGLES

@@ -18,8 +18,8 @@
 
 */
 
-#ifndef _MODULATION_FUNCS
-#define _MODULATION_FUNCS
+#ifndef MODULATION_FUNCS
+#define MODULATION_FUNCS
 
 #include <cmath>
 #include <glm/gtc/constants.hpp>

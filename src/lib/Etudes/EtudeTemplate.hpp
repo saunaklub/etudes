@@ -18,8 +18,8 @@
 
 */
 
-#ifndef _ETUDES_ETUDETEMPLATE
-#define _ETUDES_ETUDETEMPLATE
+#ifndef ETUDES_ETUDETEMPLATE
+#define ETUDES_ETUDETEMPLATE
 
 #include "Etude.hpp"
 
@@ -36,4 +36,4 @@ namespace etudes {
     };
 }
 
-#endif // _ETUDES_ETUDETEMPLATE
+#endif // ETUDES_ETUDETEMPLATE

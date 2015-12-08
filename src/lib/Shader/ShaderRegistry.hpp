@@ -18,8 +18,8 @@
 
 */
 
-#ifndef _SHADERREGISTRY
-#define _SHADERREGISTRY
+#ifndef SHADERREGISTRY
+#define SHADERREGISTRY
 
 #include <vector>
 #include <map>
@@ -53,4 +53,4 @@ namespace etudes {
 
 }
 
-#endif // _SHADERREGISTRY
+#endif // SHADERREGISTRY

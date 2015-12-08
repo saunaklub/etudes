@@ -18,8 +18,8 @@
 
 */
 
-#ifndef _ETUDES_ETUDESHOST
-#define _ETUDES_ETUDESHOST
+#ifndef ETUDES_ETUDESHOST
+#define ETUDES_ETUDESHOST
 
 #include <memory>
 #include <vector>
@@ -76,4 +76,4 @@ namespace etudes {
     };
 }
 
-#endif // _ETUDES_ETUDESHOST
+#endif // ETUDES_ETUDESHOST

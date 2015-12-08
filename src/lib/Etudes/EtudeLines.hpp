@@ -18,8 +18,8 @@
 
 */
 
-#ifndef _ETUDES_ETUDELINES
-#define _ETUDES_ETUDELINES
+#ifndef ETUDES_ETUDELINES
+#define ETUDES_ETUDELINES
 
 #include <Render/RenderPrimitives.hpp>
 
@@ -39,4 +39,4 @@ namespace etudes {
     };
 }
 
-#endif // _ETUDES_ETUDELINES
+#endif // ETUDES_ETUDELINES
