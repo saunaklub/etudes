@@ -21,16 +21,18 @@
 #include <string>
 #include <iostream>
 
+#include <Util/Logging.hpp>
 #include <Receiver/Receiver.hpp>
 
 #include "OSCInputRouter.hpp"
 
+using namespace std::literals::string_literals;
+
 namespace {
     void error(int num, const char *msg, const char *path) {
-        std::cerr << "liblo error " << num
-                  << "at " << path
-                  << ": " << msg
-                  << std::endl;
+        log(etudes::logging::error,
+            "liblo error "s + std::to_string(num) +
+            "at "s + path + ": "s + msg);
     }
 
     int float_handler(const char *path, const char *types, lo_arg ** argv,
@@ -38,7 +40,19 @@ namespace {
 
         etudes::OSCInputRouter* router =
             static_cast<etudes::OSCInputRouter*>(user_data);
-        router->update(path, argv[0]->f);
+
+        std::vector<float> values;
+        for(int arg = 0 ; arg < argc ; ++arg) {
+            if(types[arg] != 'f') {
+                log(etudes::logging::warning,
+                    "OSC handler: unexpected argument type: "s + types[arg]);
+                continue;
+            }
+
+            values.emplace_back(argv[arg]->f);
+        }
+
+        router->update(path, std::move(values));
 
         return 0;
     }
@@ -92,12 +106,18 @@ namespace etudes {
         //started = false;
     }
 
-    void OSCInputRouter::update(std::string path, float value) {
+    void OSCInputRouter::update(std::string path,
+                                std::vector<float> values) {
         string receiver = path.substr(1, path.find('/', 1)-1);
         string input = path.substr(path.find('/', 1) + 1,
                                    path.size() - path.find('/', 1) - 1);
 
-        cout << receiver << " : " << input << " " << value << endl;
-        registry.getReceiver(receiver).setValue(input, {value});
+        cout << receiver << " : " << input;
+        for(auto &v : values)
+            cout << v << " ";
+        cout << endl;
+
+        registry.getReceiver(receiver).setValue(input, std::move(values));
     }
+
 }

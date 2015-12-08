@@ -37,7 +37,8 @@ namespace etudes {
         void start();
         void stop();
 
-        void update(std::string path, float value);
+        void update(std::string path,
+                    std::vector<float> values);
 
     private:
         ReceiverRegistry &registry;
