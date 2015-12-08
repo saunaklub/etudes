@@ -14,19 +14,19 @@ MIDIdef.cc(\midiCC,{
 	~midiBus[cc].set(val/127);
 });
 
-MIDIdef.noteOn(\noteIn, {
-	arg vel = 0, nn = 0;
-	// [nn,channel].postln;
-	// ~midiKeyboard[nn] =Synth(\FM, [\freq, nn.midicps]);
-});
-
-
-MIDIdef.noteOff(\noteIn, {
-	arg nn = 0, channel = 0;
-	//[nn,channel].postln;
-
-	~midiKeyboard[nn].set(\gate,0);
-	~midiKeyboard[nn] = nil;
-});
+//MIDIdef.noteOn(\noteIn, {
+//	arg vel = 0, nn = 0;
+//	// [nn,channel].postln;
+//	// ~midiKeyboard[nn] =Synth(\FM, [\freq, nn.midicps]);
+//});
+//
+//
+//MIDIdef.noteOff(\noteIn, {
+//	arg nn = 0, channel = 0;
+//	//[nn,channel].postln;
+//
+//	~midiKeyboard[nn].set(\gate,0);
+//	~midiKeyboard[nn] = nil;
+//});
 
 
