@@ -18,7 +18,7 @@ namespace etudes {
         Receiver() = default;
         void registerInput(std::string input,
                            float initialValue = 0.0f);
-        
+
     private:
         input_map_t mapInputs;
     };

@@ -28,7 +28,7 @@
 #include <glbinding/gl/gl.h>
 
 namespace etudes {
-    
+
     class ShaderRegistry {
         std::map<std::string, gl::GLuint> m_mapShader;
         std::map<std::string, gl::GLuint> m_mapProgram;

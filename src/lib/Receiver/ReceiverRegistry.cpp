@@ -11,7 +11,7 @@ namespace etudes {
                 std::string("ReceiverRegistry::registerReceiver: ") +
                 name + " already registered");
 
-        registry[name] = receiver;            
+        registry[name] = receiver;
     }
 
     Receiver &ReceiverRegistry::getReceiver(std::string name) {

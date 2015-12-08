@@ -42,7 +42,7 @@ namespace {
 
             std::vector<char> buffer(length);
             file.read(&buffer[0],length);
-                        
+
             result = std::string(buffer.begin(), buffer.end());
         }
     }
@@ -56,7 +56,7 @@ namespace etudes {
         std::vector<std::string> paths) {
 
         log(debug, "Registering shader: "s + name);
-                
+
         // create gl shader object
         GLuint shader = glCreateShader(type);
 
@@ -72,13 +72,13 @@ namespace etudes {
         glShaderSource(shader, 1, &strShaderData, NULL);
 
         log(debug, "Shader source:\n"s + strShaderData + "\n");
-                
+
         glCompileShader(shader);
 
         GLint status;
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-                
-        if(status == 0)	{
+
+        if(status == 0) {
             GLint infoLogLength;
             glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 
@@ -108,9 +108,9 @@ namespace etudes {
     GLuint ShaderRegistry::RegisterProgram(
         std::string name,
         std::vector<std::string> shader_names) {
-                
+
         log(debug, "Registering program: "s + name);
-                
+
         GLuint program = glCreateProgram();
 
         for(auto & shaderName : shader_names)
@@ -121,7 +121,7 @@ namespace etudes {
         GLint status;
         glGetProgramiv(program, GL_LINK_STATUS, &status);
 
-        if(status == 0)	{
+        if(status == 0) {
             GLint infoLogLength;
             glGetProgramiv(program, GL_INFO_LOG_LENGTH, &infoLogLength);
 
@@ -146,7 +146,7 @@ namespace etudes {
         GLuint location = glGetUniformLocation(GetProgram(program_name),
                                                uniform_name.c_str());
         m_mapUniform[program_name][uniform_name] = location;
-        return location;		
+        return location;
     }
 
     GLuint ShaderRegistry::GetProgram(std::string name) {
@@ -157,7 +157,7 @@ namespace etudes {
                 " not found in ShaderRegistry!");
             return ~0;
         }
-                
+
         return it->second;
     }
 

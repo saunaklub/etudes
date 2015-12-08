@@ -10,7 +10,7 @@ namespace etudes {
     using std::cout;
     using std::cerr;
     using std::endl;
-    
+
     void log(LogLevel level, std::string message) {
         switch(level) {
         case error:

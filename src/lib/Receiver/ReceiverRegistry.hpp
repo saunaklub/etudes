@@ -17,7 +17,7 @@ namespace etudes {
     private:
         typedef std::map<std::string, std::shared_ptr<Receiver>> map_t;
 
-        map_t registry;              
+        map_t registry;
     };
 }
 

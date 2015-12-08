@@ -10,7 +10,7 @@ namespace etudes {
     using std::logic_error;
     using std::string;
     using std::vector;
-    
+
     vector<string> Receiver::getInputs() const {
         vector<string> out;
 
@@ -42,7 +42,7 @@ namespace etudes {
         if(mapInputs.find(input) != mapInputs.end())
             log(warning,
                 "Receiver::registerInput: "s + input + " already registered");
-                
+
         mapInputs[input] = initialValue;
     }
 }
