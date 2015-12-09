@@ -18,22 +18,32 @@
 
 */
 
-#ifndef ETUDES_ETUDELINES
-#define ETUDES_ETUDELINES
+#ifndef ETUDES_LOGGING
+#define ETUDES_LOGGING
 
-#include "Etude.hpp"
+#include <string>
+
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+
+using namespace std::literals::string_literals;
 
 namespace etudes {
-    class EtudeLines : public Etude {
-    public:
-        EtudeLines();
-        virtual ~EtudeLines();
+    namespace logging {
 
-        std::string whoami() override;
-        void draw() override;
+        enum LogLevel {
+            info,
+            warning,
+            error,
+            debug,
+            excessive
+        };
 
-    private:
-    };
+        void log(LogLevel level, std::string message);
+
+        std::string to_string(const glm::vec2 &vec);
+        std::string to_string(const glm::vec3 &vec);
+    }
 }
 
-#endif // ETUDES_ETUDELINES
+#endif // ETUDES_LOGGING

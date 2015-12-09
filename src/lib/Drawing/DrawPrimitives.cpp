@@ -26,7 +26,7 @@ using namespace gl;
 
 #include <Util/Logging.hpp>
 
-#include "RenderPrimitives.hpp"
+#include "DrawPrimitives.hpp"
 
 namespace etudes {
     using std::function;
@@ -42,9 +42,8 @@ namespace etudes {
 
     typedef std::vector<float> vec;
 
-    void RenderPrimitives::drawLine(
-        vec2 p0, vec2 p1,
-        float width, vec3 color) {
+    void drawLine(vec2 p0, vec2 p1,
+                  float width, vec3 color) {
 
         log(logging::excessive,
             "drawLine called with: "s +
@@ -66,12 +65,11 @@ namespace etudes {
         glEnd();
     }
 
-    void RenderPrimitives::drawParallels(
-        vec2 centerp0, vec2 centerp1,
-        int leftRepeat, int rightRepeat,
-        function<float(int)> funcWidth,
-        function<float(int)> funcDistance,
-        function<vec3(int)>  funcColor) {
+    void drawParallels(vec2 centerp0, vec2 centerp1,
+                       int leftRepeat, int rightRepeat,
+                       function<float(int)> funcWidth,
+                       function<float(int)> funcDistance,
+                       function<vec3(int)>  funcColor) {
 
         // draw center line
         drawLine(
@@ -110,4 +108,5 @@ namespace etudes {
             }
         }
     }
+    
 }

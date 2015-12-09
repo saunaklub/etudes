@@ -20,8 +20,10 @@
 
 #include <iostream>
 
-#include <Render/ModulationFuncs.hpp>
 #include <Util/Utilities.hpp>
+
+#include <Drawing/ModulationFuncs.hpp>
+#include <Drawing/DrawPrimitives.hpp>
 
 #include "EtudeLines.hpp"
 
@@ -79,7 +81,7 @@ namespace etudes {
         auto width = funcSin(width_b, width_a, width_o, width_l);
         auto color = funcSin(color_b, color_a, color_o, color_l);
 
-        render.drawParallels(
+        drawParallels(
             vec2(0, -1),
             vec2(0,  1),
             count, count,

@@ -18,8 +18,8 @@ add_library(${LIBRARY}
     src/lib/Shader/ShaderRegistry.cpp
     src/lib/Receiver/Receiver.cpp
     src/lib/Receiver/ReceiverRegistry.cpp
-    src/lib/Render/RenderPrimitives.cpp
-    src/lib/Render/ModulationFuncs.cpp
+    src/lib/Drawing/DrawPrimitives.cpp
+    src/lib/Drawing/ModulationFuncs.cpp
     src/lib/Etudes/EtudeTemplate.cpp
     src/lib/Etudes/EtudeTriangles.cpp
     src/lib/Etudes/EtudeLines.cpp

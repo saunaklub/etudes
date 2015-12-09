@@ -18,8 +18,8 @@
 
 */
 
-#ifndef ETUDES_RENDERPRIMITIVES
-#define ETUDES_RENDERPRIMITIVES
+#ifndef ETUDES_DRAWPRIMITIVES
+#define ETUDES_DRAWPRIMITIVES
 
 #include <functional>
 
@@ -27,22 +27,16 @@
 
 namespace etudes {
 
-    class RenderPrimitives {
-    public:
-        void drawLine(glm::vec2 p0, glm::vec2 p1,
-                      float width,
-                      glm::vec3 color);
+    void drawLine(glm::vec2 p0, glm::vec2 p1,
+                  float width,
+                  glm::vec3 color);
 
-        void drawParallels(
-            glm::vec2 centerp0, glm::vec2 centerp1,
-            int leftRepeat, int rightRepeat,
-            std::function<float(int)> funcWidth,
-            std::function<float(int)> funcDistance,
-            std::function<glm::vec3(int)> funcColor);
-
-    private:
-    };
-
+    void drawParallels(
+        glm::vec2 centerp0, glm::vec2 centerp1,
+        int leftRepeat, int rightRepeat,
+        std::function<float(int)> funcWidth,
+        std::function<float(int)> funcDistance,
+        std::function<glm::vec3(int)> funcColor);
 }
 
-#endif // ETUDES_RENDERPRIMITIVES
+#endif // ETUDES_DRAWPRIMITIVES
