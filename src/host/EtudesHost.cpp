@@ -31,7 +31,7 @@ using namespace gl;
 #include "Etudes/EtudeTriangles.hpp"
 #include "Etudes/EtudeLines.hpp"
 
-#include "OSCInputRouter.hpp"
+#include "OSCInput.hpp"
 
 #include "EtudesHost.hpp"
 
@@ -50,7 +50,7 @@ namespace etudes {
     EtudesHost::EtudesHost() :
         window(nullptr),
         quitLoop(false),
-        oscRouter(registry, 6666) {
+        oscInput(registry, 6666) {
     }
 
     EtudesHost::~EtudesHost() {
@@ -92,7 +92,7 @@ namespace etudes {
     }
 
     void EtudesHost::initOSC() {
-        oscRouter.start();
+        oscInput.start();
     }
 
     bool EtudesHost::initEtudes() {

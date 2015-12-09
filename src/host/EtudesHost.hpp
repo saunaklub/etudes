@@ -25,7 +25,7 @@
 #include <vector>
 
 #include <Receiver/ReceiverRegistry.hpp>
-#include <OSCInputRouter.hpp>
+#include <OSCInput.hpp>
 
 class GLFWwindow;
 class Etude;
@@ -72,7 +72,7 @@ namespace etudes {
         std::vector<std::shared_ptr<Etude>>::const_iterator curEtude;
 
         ReceiverRegistry registry;
-        OSCInputRouter oscRouter;
+        OSCInput oscInput;
     };
 }
 
