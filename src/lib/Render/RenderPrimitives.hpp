@@ -26,26 +26,23 @@
 #include <glm/glm.hpp>
 
 namespace etudes {
-    using std::function;
-
-    using glm::vec2;
-    using glm::vec3;
 
     class RenderPrimitives {
     public:
-        void drawLine(vec2 p0, vec2 p1,
+        void drawLine(glm::vec2 p0, glm::vec2 p1,
                       float width,
-                      vec3 color);
+                      glm::vec3 color);
 
         void drawParallels(
-            vec2 centerp0, vec2 centerp1,
+            glm::vec2 centerp0, glm::vec2 centerp1,
             int leftRepeat, int rightRepeat,
-            function<float(int)> funcWidth,
-            function<float(int)> funcDistance,
-            function<vec3(int)>  funcColor);
+            std::function<float(int)> funcWidth,
+            std::function<float(int)> funcDistance,
+            std::function<glm::vec3(int)> funcColor);
 
     private:
     };
+
 }
 
 #endif // ETUDES_RENDERPRIMITIVES

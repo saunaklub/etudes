@@ -20,26 +20,37 @@
 
 #include <iostream>
 
-#include "Render/ModulationFuncs.hpp"
+#include <Render/ModulationFuncs.hpp>
+#include <Util/Utilities.hpp>
 
 #include "EtudeLines.hpp"
-
 
 namespace etudes {
     using glm::pi;
     using glm::vec2;
     using glm::vec3;
 
-    EtudeLines::EtudeLines() {
-        registerInput("distance/base",      {0.1f});
-        registerInput("distance/amplitude", {0.1f});
-        registerInput("distance/omega",     {0.01f});
-        registerInput("distance/lambda",    {0.01f});
+    typedef std::vector<float> svec;
 
-        registerInput("width/base",      {0.1f});
-        registerInput("width/amplitude", {0.1f});
-        registerInput("width/omega",     {0.01f});
-        registerInput("width/lambda",    {0.01f});
+    using logging::to_string;
+
+    EtudeLines::EtudeLines() {
+        registerInput("count", {100.0f});
+
+        registerInput("distance/base",      {0.1f});
+        registerInput("distance/amplitude", {0.0f});
+        registerInput("distance/omega",     {0.0f});
+        registerInput("distance/lambda",    {0.0f});
+
+        registerInput("width/base",      {5.0f});
+        registerInput("width/amplitude", {0.0f});
+        registerInput("width/omega",     {0.0f});
+        registerInput("width/lambda",    {0.0f});
+
+        registerInput("color/base",      {0.5f, 0.5f, 0.5f});
+        registerInput("color/amplitude", {0.0f, 0.0f, 0.0f});
+        registerInput("color/omega",     {0.0f});
+        registerInput("color/lambda",    {0.0f});
     }
 
     EtudeLines::~EtudeLines() {
@@ -47,7 +58,7 @@ namespace etudes {
     }
 
     void EtudeLines::draw() {
-        int numLines = 200;
+        int count = getValue<float>("count");
 
         float dist_b = getValue<float>("distance/base");
         float dist_a = getValue<float>("distance/amplitude");
@@ -59,22 +70,20 @@ namespace etudes {
         float width_o = getValue<float>("width/omega");
         float width_l = getValue<float>("width/lambda");
 
+        vec3 color_b = to_vec3(getValue<svec>("color/base"));
+        vec3 color_a = to_vec3(getValue<svec>("color/amplitude"));
+        float color_o = getValue<float>("color/omega");
+        float color_l = getValue<float>("color/lambda");
+
         auto dist  = funcSin(dist_b, dist_a, dist_o, dist_l);
         auto width = funcSin(width_b, width_a, width_o, width_l);
-
-        float gCenter = 0.7f;
-        float gAmplit = 0.3f;
-        auto color = funcSin(vec3(0, 0.7, gCenter),
-                             vec3(0, 0, gAmplit),
-                             0, 0.1);
+        auto color = funcSin(color_b, color_a, color_o, color_l);
 
         render.drawParallels(
             vec2(0, -1),
             vec2(0,  1),
-            numLines, numLines,
-            width,
-            dist,
-            color
+            count, count,
+            width, dist, color
             );
     }
 

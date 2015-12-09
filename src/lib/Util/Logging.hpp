@@ -23,6 +23,11 @@
 
 #include <string>
 
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+
+using namespace std::literals::string_literals;
+
 namespace etudes {
     namespace logging {
 
@@ -34,6 +39,9 @@ namespace etudes {
         };
 
         void log(LogLevel level, std::string message);
+
+        std::string to_string(const glm::vec2 &vec);
+        std::string to_string(const glm::vec3 &vec);
     }
 }
 

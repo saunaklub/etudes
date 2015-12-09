@@ -18,9 +18,13 @@
 
 */
 
+#include <string>
+
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
 using namespace gl;
+
+#include <Util/Logging.hpp>
 
 #include "RenderPrimitives.hpp"
 
@@ -33,9 +37,21 @@ namespace etudes {
     using glm::vec2;
     using glm::vec3;
 
+    using std::to_string;
+    using logging::to_string;
+
+    typedef std::vector<float> vec;
+
     void RenderPrimitives::drawLine(
         vec2 p0, vec2 p1,
         float width, vec3 color) {
+
+        // log(logging::debug,
+        //     "drawLine called with: "s +
+        //     to_string(p0) + " "s +
+        //     to_string(p1) + " "s +
+        //     to_string(width) + " "s +
+        //     to_string(color));
 
         glEnable(GL_LINE_SMOOTH);
 
