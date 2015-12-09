@@ -46,12 +46,12 @@ namespace etudes {
         vec2 p0, vec2 p1,
         float width, vec3 color) {
 
-        // log(logging::debug,
-        //     "drawLine called with: "s +
-        //     to_string(p0) + " "s +
-        //     to_string(p1) + " "s +
-        //     to_string(width) + " "s +
-        //     to_string(color));
+        log(logging::excessive,
+            "drawLine called with: "s +
+            to_string(p0) + " "s +
+            to_string(p1) + " "s +
+            to_string(width) + " "s +
+            to_string(color));
 
         glEnable(GL_LINE_SMOOTH);
 

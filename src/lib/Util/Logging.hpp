@@ -32,10 +32,11 @@ namespace etudes {
     namespace logging {
 
         enum LogLevel {
-            error,
-            warning,
             info,
-            debug
+            warning,
+            error,
+            debug,
+            excessive
         };
 
         void log(LogLevel level, std::string message);
