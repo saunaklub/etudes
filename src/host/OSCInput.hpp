@@ -18,21 +18,21 @@
 
 */
 
-#ifndef ETUDES_OSCINPUTROUTER
-#define ETUDES_OSCINPUTROUTER
+#ifndef ETUDES_OSCINPUT
+#define ETUDES_OSCINPUT
 
 #include <lo/lo.h>
 
 #include <Receiver/ReceiverRegistry.hpp>
-#include "OSCInputRouter.hpp"
+#include "OSCInput.hpp"
 
 
 namespace etudes {
-    class OSCInputRouter {
+    class OSCInput {
     public:
-        OSCInputRouter(ReceiverRegistry &registry,
+        OSCInput(ReceiverRegistry &registry,
                        int port);
-        virtual ~OSCInputRouter();
+        virtual ~OSCInput();
 
         void start();
         void stop();
@@ -50,4 +50,4 @@ namespace etudes {
     };
 }
 
-#endif // ETUDES_OSCINPUTROUTER
+#endif // ETUDES_OSCINPUT

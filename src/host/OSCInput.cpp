@@ -24,7 +24,7 @@
 #include <Util/Logging.hpp>
 #include <Receiver/Receiver.hpp>
 
-#include "OSCInputRouter.hpp"
+#include "OSCInput.hpp"
 
 using namespace std::literals::string_literals;
 
@@ -38,8 +38,8 @@ namespace {
     int float_handler(const char *path, const char *types, lo_arg ** argv,
                       int argc, void *data, void *user_data) {
 
-        etudes::OSCInputRouter* router =
-            static_cast<etudes::OSCInputRouter*>(user_data);
+        etudes::OSCInput* router =
+            static_cast<etudes::OSCInput*>(user_data);
 
         std::vector<float> values;
         for(int arg = 0 ; arg < argc ; ++arg) {
@@ -66,21 +66,21 @@ namespace etudes {
     using std::endl;
     using std::string;
 
-    OSCInputRouter::OSCInputRouter(ReceiverRegistry& registry,
+    OSCInput::OSCInput(ReceiverRegistry& registry,
                                    int port) :
         registry(registry),
         port(port),
         started(false) {
     }
 
-    OSCInputRouter::~OSCInputRouter() {
+    OSCInput::~OSCInput() {
         if(lo_server_thread_stop(oscServer) == 0)
             lo_server_thread_free(oscServer);
     }
 
-    void OSCInputRouter::start() {
+    void OSCInput::start() {
         if(started)
-            throw std::logic_error("OSCInputRouter::start: already started");
+            throw std::logic_error("OSCInput::start: already started");
 
         oscServer = lo_server_thread_new(
             std::to_string(port).c_str(), error);
@@ -91,22 +91,22 @@ namespace etudes {
 
         if(lo_server_thread_start(oscServer) != 0)
             throw(std::runtime_error(
-                      "OSCInputRouter::start: "
+                      "OSCInput::start: "
                       "failed to start osc server thread"));
 
         started = true;
     }
 
-    void OSCInputRouter::stop() {
+    void OSCInput::stop() {
         if(!started)
             throw std::logic_error(
-                "OSCInputRouter::stop: osc server thread not running");
+                "OSCInput::stop: osc server thread not running");
 
         // @todo: tear down osc server thread!
         //started = false;
     }
 
-    void OSCInputRouter::update(std::string path,
+    void OSCInput::update(std::string path,
                                 std::vector<float> values) {
         string receiver = path.substr(1, path.find('/', 1)-1);
         string input = path.substr(path.find('/', 1) + 1,
