@@ -32,6 +32,7 @@ namespace etudes {
     namespace logging {
 
         enum LogLevel {
+            none,
             info,
             warning,
             error,

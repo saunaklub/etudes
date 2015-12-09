@@ -24,6 +24,9 @@ namespace etudes {
             case debug:
                 cerr << "DEBUG: "s + message << endl;
                 break;
+            case excessive:
+                cerr << message << endl;
+                break;
             }
         }
 

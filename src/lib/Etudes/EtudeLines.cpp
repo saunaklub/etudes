@@ -18,8 +18,10 @@
 
 */
 
+#include <string>
 #include <iostream>
 
+#include <Util/Logging.hpp>
 #include <Util/Utilities.hpp>
 
 #include <Drawing/ModulationFuncs.hpp>
@@ -34,10 +36,9 @@ namespace etudes {
 
     typedef std::vector<float> svec;
 
-    using logging::to_string;
-
     EtudeLines::EtudeLines() {
         registerInput("count", {100.0f});
+        registerInput("angle", {pi<float>()/2.0f});
 
         registerInput("distance/base",      {0.1f});
         registerInput("distance/amplitude", {0.0f});
@@ -60,33 +61,35 @@ namespace etudes {
     }
 
     void EtudeLines::draw() {
-        int count = getValue<float>("count");
+        auto dist_b = getValue<float>("distance/base");
+        auto dist_a = getValue<float>("distance/amplitude");
+        auto dist_o = getValue<float>("distance/omega");
+        auto dist_l = getValue<float>("distance/lambda");
 
-        float dist_b = getValue<float>("distance/base");
-        float dist_a = getValue<float>("distance/amplitude");
-        float dist_o = getValue<float>("distance/omega");
-        float dist_l = getValue<float>("distance/lambda");
+        auto width_b = getValue<float>("width/base");
+        auto width_a = getValue<float>("width/amplitude");
+        auto width_o = getValue<float>("width/omega");
+        auto width_l = getValue<float>("width/lambda");
 
-        float width_b = getValue<float>("width/base");
-        float width_a = getValue<float>("width/amplitude");
-        float width_o = getValue<float>("width/omega");
-        float width_l = getValue<float>("width/lambda");
-
-        vec3 color_b = to_vec3(getValue<svec>("color/base"));
-        vec3 color_a = to_vec3(getValue<svec>("color/amplitude"));
-        float color_o = getValue<float>("color/omega");
-        float color_l = getValue<float>("color/lambda");
+        auto color_b = to_vec3(getValue<svec>("color/base"));
+        auto color_a = to_vec3(getValue<svec>("color/amplitude"));
+        auto color_o = getValue<float>("color/omega");
+        auto color_l = getValue<float>("color/lambda");
 
         auto dist  = funcSin(dist_b, dist_a, dist_o, dist_l);
         auto width = funcSin(width_b, width_a, width_o, width_l);
         auto color = funcSin(color_b, color_a, color_o, color_l);
 
-        drawParallels(
-            vec2(0, -1),
-            vec2(0,  1),
-            count, count,
-            width, dist, color
-            );
+        auto count = getValue<float>("count");
+        auto angle = getValue<float>("angle");
+
+        auto p0 = vec2(2.0f*cos(angle),
+                       2.0f*sin(angle));
+        auto p1 = -p0;
+
+        drawParallels(p0, p1,
+                      count, count,
+                      width, dist, color);
     }
 
     std::string EtudeLines::whoami() {

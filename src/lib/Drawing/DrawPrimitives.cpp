@@ -45,7 +45,7 @@ namespace etudes {
     void drawLine(vec2 p0, vec2 p1,
                   float width, vec3 color) {
 
-        log(logging::excessive,
+        log(logging::none,
             "drawLine called with: "s +
             to_string(p0) + " "s +
             to_string(p1) + " "s +
@@ -108,5 +108,5 @@ namespace etudes {
             }
         }
     }
-    
+
 }
