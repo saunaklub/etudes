@@ -8,7 +8,7 @@
 
 ~lfPulse = {LFPulse.ar(\freq.ar(439), 0, \width.ar(0.5),\mul.ar(0.05),\add.ar(0))};
 
-~noise2 = {LFPulse.ar(\freq.ar(300), 0, \width.ar(0.5),\mul.ar(0.05))};
+~noise = {LFPulse.ar(\freq.ar(300), 0, \width.ar(0.5),\mul.ar(0.05))};
 
 ~env_follower = {
 	var sig, outArray, low, high,mid;
@@ -21,7 +21,7 @@
 	high = PeakFollower.kr(high);
 	outArray = [low, mid, high];
 };
-~noise ={
+~noiseRef ={
 
 	var sig, env, lfpulse, lfsaw, sinosc1, sinosc2, sinosc3;
 
