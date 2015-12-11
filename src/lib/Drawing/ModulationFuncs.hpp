@@ -1,20 +1,20 @@
 /*
 
-  Études Audiovisuel - graphical elements for audiovisual composition
-  Copyright (C) 2015 Patric Schmitz, Claudio Cabral
+   Études Audiovisuel - graphical elements for audiovisual composition
+   Copyright (C) 2015 Patric Schmitz, Claudio Cabral
 
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+   You should have received a copy of the GNU General Public License
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 */
 
@@ -30,21 +30,21 @@
 #include <iostream>
 
 namespace {
-    typedef std::chrono::steady_clock modClock;
+    typedef std::chrono::steady_clock clock_t;
     using std::chrono::duration_cast;
     using std::chrono::duration;
     using std::chrono::microseconds;
 
-    auto t0 = modClock::now();
+    auto t0 = clock_t::now();
 
     long microSeconds() {
-	auto t1 = modClock::now(); 
-	auto diff =  duration_cast<duration<long>>(t1 - t0);
-	return duration_cast<microseconds>(diff).count();
+        auto t1 = clock_t::now(); 
+        auto diff =  duration_cast<duration<long>>(t1 - t0);
+        return duration_cast<microseconds>(diff).count();
     }
 
     float seconds() {
-	return microSeconds() / 1000000.0;
+        return microSeconds() / 1000000.0;
     }
 }
 
@@ -53,11 +53,11 @@ namespace etudes {
     using std::sin;
 
     template<class T>
-	function<T(float)> funcConst(T t) {
-	    return [=](float) {
-		return t;
-	    };
-	}
+        function<T(float)> funcConst(T t) {
+            return [=](float) {
+                return t;
+            };
+        }
 
     /**
      * Generic sinusoidal modulation function. Maps a real-valued
@@ -71,17 +71,17 @@ namespace etudes {
      * @param phi Initial phase.
      */
     template<class T>
-	function<T(float)> funcSin(
-		T base, T amp,
-		float omega, float lambda=0,
-		float phi=0) {
+        function<T(float)> funcSin(
+                T base, T amp,
+                float omega, float lambda=0,
+                float phi=0) {
 
-	    return [=](float k) {
-		return base + amp*sinf(2.0f*glm::pi<float>()
-			* (k*lambda + seconds()*omega)
-			+ phi);
-	    };
-	}
+            return [=](float k) {
+                return base + amp*sinf(2.0f*glm::pi<float>()
+                        * (k*lambda + seconds()*omega)
+                        + phi);
+            };
+        }
 }
 
 
