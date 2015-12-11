@@ -30,20 +30,21 @@
 #include <iostream>
 
 namespace {
-    using std::chrono::steady_clock;
+    typedef std::chrono::steady_clock modClock;
     using std::chrono::duration_cast;
+    using std::chrono::duration;
     using std::chrono::microseconds;
 
-    steady_clock modClock;
-    steady_clock::time_point t0 = modClock.now();
+    auto t0 = modClock::now();
 
-     long microSeconds() {
-        duration_cast<microseconds>
-            (modClock.now() - t0);
+    long microSeconds() {
+	auto t1 = modClock::now(); 
+	auto diff =  duration_cast<duration<long>>(t1 - t0);
+	return duration_cast<microseconds>(diff).count();
     }
 
     float seconds() {
-        return microSeconds() / 1000000.0;
+	return microSeconds() / 1000000.0;
     }
 }
 
@@ -52,11 +53,11 @@ namespace etudes {
     using std::sin;
 
     template<class T>
-    function<T(float)> funcConst(T t) {
-        return [=](float) {
-            return t;
-        };
-    }
+	function<T(float)> funcConst(T t) {
+	    return [=](float) {
+		return t;
+	    };
+	}
 
     /**
      * Generic sinusoidal modulation function. Maps a real-valued
@@ -70,17 +71,17 @@ namespace etudes {
      * @param phi Initial phase.
      */
     template<class T>
-    function<T(float)> funcSin(
-        T base, T amp,
-        float omega, float lambda=0,
-        float phi=0) {
+	function<T(float)> funcSin(
+		T base, T amp,
+		float omega, float lambda=0,
+		float phi=0) {
 
-        return [=](float k) {
-            return base + amp*sinf(2.0f*glm::pi<float>()
-                                   * (k*lambda + seconds()*omega)
-                                   + phi);
-        };
-    }
+	    return [=](float k) {
+		return base + amp*sinf(2.0f*glm::pi<float>()
+			* (k*lambda + seconds()*omega)
+			+ phi);
+	    };
+	}
 }
 
 
