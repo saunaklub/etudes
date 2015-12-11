@@ -37,12 +37,12 @@ namespace {
     steady_clock modClock;
     steady_clock::time_point t0 = modClock.now();
 
-    long microSeconds() {
-        return duration_cast<microseconds>
+     long microSeconds() {
+        duration_cast<microseconds>
             (modClock.now() - t0);
     }
 
-    double seconds() {
+    float seconds() {
         return microSeconds() / 1000000.0;
     }
 }
