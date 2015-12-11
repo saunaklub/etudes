@@ -27,7 +27,7 @@
 #include <Receiver/ReceiverRegistry.hpp>
 #include <OSCInput.hpp>
 
-class GLFWwindow;
+struct GLFWwindow;
 class Etude;
 
 namespace etudes {
