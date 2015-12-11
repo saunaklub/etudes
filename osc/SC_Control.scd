@@ -15,8 +15,7 @@
 					~midiBus[116].get({arg v;~patric.sendMsg("/lines/distance/base",v.linlin(0,1,0,0.02));});
 					~midiBus[27].get({arg v;~patric.sendMsg("/lines/angle",v);});
 					0.016.wait;
-				}
-			});
+				});
 			s.wait;
 		);
 	}
