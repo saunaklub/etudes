@@ -11,6 +11,9 @@ add_executable(${CLIENT}
     )
 
 set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall" )
+set( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall" )
+set( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall" )
 
 add_library(${LIBRARY}
     SHARED
