@@ -38,7 +38,7 @@ namespace {
     steady_clock::time_point t0 = modClock.now();
 
     long microSeconds() {
-        duration_cast<microseconds>
+        return duration_cast<microseconds>
             (modClock.now() - t0);
     }
 

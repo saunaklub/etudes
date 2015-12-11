@@ -27,6 +27,8 @@ namespace etudes {
             case excessive:
                 cerr << message << endl;
                 break;
+	    default:
+		break;
             }
         }
 
