@@ -42,7 +42,7 @@ namespace {
         return duration_cast<microseconds>(diff).count();
     }
 
-    float seconds() {
+    double seconds() {
         return microSeconds() / 1000000.0;
     }
 }
