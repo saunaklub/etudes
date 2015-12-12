@@ -33,14 +33,20 @@ add_library(${LIBRARY}
 
 set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
 
-find_package(PkgConfig REQUIRED)
+find_package(PkgConfig)
+if(PkgConfig_FOUND)
+    pkg_search_module(LIBLO REQUIRED liblo)
+else(PkgConfig_FOUND)
+
+endif(PkgConfig_FOUND)
+
+
 find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 find_package(glfw CONFIG NAMES glfw glfw3)
 message("${glfw_CONSIDERED_CONFIGS}")
 
-pkg_search_module(LIBLO REQUIRED liblo)
 
 target_include_directories(${CLIENT}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
