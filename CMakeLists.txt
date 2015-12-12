@@ -37,7 +37,8 @@ find_package(PkgConfig)
 if(PkgConfig_FOUND)
     pkg_search_module(LIBLO REQUIRED liblo)
 else(PkgConfig_FOUND)
-
+    set(LIBLO_INCLUDE_DIRS "" CACHE STRING)
+    set(LIBLO_LIBRARIES "" CACHE STRING)
 endif(PkgConfig_FOUND)
 
 
