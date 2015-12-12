@@ -11,9 +11,12 @@ add_executable(${CLIENT}
     )
 
 set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
-set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall" )
-set( CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall" )
-set( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall" )
+
+set(CMAKE_VERBOSE_MAKEFILE 1)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 add_library(${LIBRARY}
     SHARED
@@ -34,8 +37,9 @@ find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
+find_package(glfw CONFIG NAMES glfw glfw3)
+message("${glfw_CONSIDERED_CONFIGS}")
 
-pkg_search_module(GLFW REQUIRED glfw3)
 pkg_search_module(LIBLO REQUIRED liblo)
 
 target_include_directories(${CLIENT}
