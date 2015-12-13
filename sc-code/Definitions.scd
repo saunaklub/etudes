@@ -16,7 +16,8 @@
 ~noise = {
     LFPulse.ar(
         \freq.ar(300), 0, \width.ar(0.5),
-        \mul.ar(0.05))
+        \mul.ar(0.05)
+    )
 };
 
 ~input = { SoundIn.ar(\bus.kr(0)) };
@@ -56,10 +57,9 @@
         mul:\modWidthFreq.ar(50)
     );
 
-    sig = LFPulse.ar(
-        \baseFreq.ar(75) + lfpulse,
-        width:sinosc2,
-        mul:2, add:-1) * \amp.ar(0.05);
+    sig = LFPulse.ar( \baseFreq.ar(75) + lfpulse,
+    width:sinosc2,
+    mul:2, add:-1) * \amp.ar(0.05);
 
     env = EnvGen.ar(Env.adsr(0.01, 0, 1, 0.1));
 
