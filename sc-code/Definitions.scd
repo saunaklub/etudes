@@ -10,6 +10,8 @@
 
 ~noise = {LFPulse.ar(\freq.ar(300), 0, \width.ar(0.5),\mul.ar(0.05))};
 
+~input = {SoundIn.ar(\bus.kr(0))};
+
 ~env_follower = {
 	var sig, outArray, low, high,mid;
 	sig = \in.ar(0);
@@ -20,7 +22,9 @@
 	mid = PeakFollower.kr(mid);
 	high = PeakFollower.kr(high);
 	outArray = [low, mid, high];
+    outArray;
 };
+
 ~noiseRef ={
 
 	var sig, env, lfpulse, lfsaw, sinosc1, sinosc2, sinosc3;
@@ -42,6 +46,8 @@
 	sig * env;
 };
 
-~converter = {A2K.kr(Ndef('noise'))};
+~converter = {A2K.kr(\in.ar(0))};
+
+~whiteNoise = {WhiteNoise.ar(\amp.ar(1))};
 
 ~mapFunc = {arg in,min,max;LinLin.kr(in,0,1,min,max);};
