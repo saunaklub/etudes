@@ -45,9 +45,7 @@ endif(PkgConfig_FOUND)
 find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
-find_package(glfw CONFIG NAMES glfw glfw3)
-message("${glfw_CONSIDERED_CONFIGS}")
-
+find_package(glfw REQUIRED CONFIG NAMES glfw glfw3)
 
 target_include_directories(${CLIENT}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
