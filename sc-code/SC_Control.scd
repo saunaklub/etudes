@@ -1,6 +1,6 @@
 (
 	~init = Task({
-		~myPath = "/Users/claudiocabral/Projetos/etudes/osc/";
+		~myPath = "/Users/claudiocabral/Projetos/etudes/sc-code/";
 		1.wait;
 		(~myPath ++"Server.scd").load;
 		1.wait;
@@ -10,12 +10,12 @@
 			(~myPath ++"Definitions.scd").load; 
 			s.wait;
 			~oscUpdate = Task({
-
-					//	Ndef('converter').bus.get({arg v; v.postln;});
-					~midiBus[116].get({arg v;~patric.sendMsg("/lines/distance/base",v.linlin(0,1,0,0.02));});
+                loop{
+					~midiBus[116].get({arg v;~patric.sendMsg("/lines/distance/amplitude",v.linlin(0,1,0,0.02));});
 					~midiBus[27].get({arg v;~patric.sendMsg("/lines/angle",v);});
 					0.016.wait;
-				});
+				};
+            });
 			s.wait;
 		);
 	}
