@@ -114,7 +114,7 @@ namespace etudes {
 
         cout << receiver << " : " << input;
         for(auto &v : values)
-            cout << v << " ";
+            cout << " " << v << " ";
         cout << endl;
 
         registry.getReceiver(receiver).setValue(input, std::move(values));
