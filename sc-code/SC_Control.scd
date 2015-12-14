@@ -39,11 +39,11 @@ s.options.device = "Saffire";
             Ndef('sinOsc3').map(\freq, Ndef('lfsaw'));
             Ndef('lfPulse1').map(\width, Ndef('sinOsc3')); 
             Ndef('noise').map(\width, Ndef('sinOsc2'));
-            Ndef('noise').map(\freq,Ndef('lfPulse1'))
+            Ndef('noise').map(\freq,Ndef('lfPulse1'));
             
             // MIDI MAP
-            Ndef(\lfPulse1).map(\add, Ndef('mapper',{~midiBus[116].kr(1) * 300}))
-            Ndef(\lfPulse1).map(\freq, Ndef('mapper2',{~midiBus[27].ar(1) * 300}))
+            Ndef(\lfPulse1).map(\add, Ndef('mapper',{~midiBus[116].kr(1) * 300}));
+            Ndef(\lfPulse1).map(\freq, Ndef('mapper2',{~midiBus[27].ar(1) * 300}));
 
             "done".postln;
         });
