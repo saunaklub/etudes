@@ -1,15 +1,15 @@
 ~sinOsc = {
-    SinOsc.ar(\freq.ar(440), 0, \mul.ar(1), \add.ar(0));
+    SinOsc.kr(\freq.kr(440), 0, \mul.kr(1), \add.kr(0));
 };
 
 ~lfSaw = {
-    LFSaw.ar(\freq.ar(440), 0, \mul.ar(300), \add.ar(0));
+    LFSaw.kr(\freq.kr(440), 0, \mul.kr(300), \add.kr(0));
 };
 
 ~lfPulse = {
-    LFPulse.ar(
-        \freq.ar(439), 0,\width.ar(0.5),
-        \mul.ar(0.05), \add.ar(0)
+    LFPulse.kr(
+        \freq.kr(439), 0,\width.kr(0.5),
+        \mul.kr(0.05), \add.kr(0)
     )
 };
 
@@ -20,7 +20,7 @@
     )
 };
 
-~input = { SoundIn.ar(\bus.kr(0)) };
+~input = { SoundIn.kr(\bus.kr(0)) };
 
 ~env_follower = {
     var sig, outArray;

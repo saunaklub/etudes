@@ -43,7 +43,7 @@ s.options.device = "Saffire";
             
             // MIDI MAP
             Ndef(\lfPulse1).map(\add, Ndef('mapper',{~midiBus[116].kr(1) * 300}));
-            Ndef(\lfPulse1).map(\freq, Ndef('mapper2',{~midiBus[27].ar(1) * 300}));
+            Ndef(\lfPulse1).map(\freq, Ndef('mapper2',{~midiBus[27].kr(1) * 300}));
 
             "done".postln;
         });
