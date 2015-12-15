@@ -20,9 +20,9 @@
     )
 };
 
-~input = { SoundIn.kr(\bus.kr(0)) };
+~input = { SoundIn.ar(\bus.kr(0)) };
 
-~env_follower = {
+~envFollower = {
     var sig, outArray;
     var low, mid, high;
 
@@ -31,9 +31,9 @@
     low = LPF.ar(sig, \low_freq.kr(100));
     mid = BPF.ar(sig, \mid_freq.kr(1000), \rq.kr(2));
     high = HPF.ar(sig, \high_freq.kr(5000));
-    low = PeakFollower.kr(low);
-    mid = PeakFollower.kr(mid);
-    high = PeakFollower.kr(high);
+    low = PeakFollower.kr(low, \decay.kr(0.5));
+    mid = PeakFollower.kr(mid, \decay.kr(0.5));
+    high = PeakFollower.kr(high, \decay.kr(0.5));
 
     outArray = [low, mid, high];
 
@@ -58,8 +58,8 @@
     );
 
     sig = LFPulse.ar( \baseFreq.ar(75) + lfpulse,
-    width:sinosc2,
-    mul:2, add:-1) * \amp.ar(0.05);
+		width:sinosc2,
+		mul:2, add:-1) * \amp.ar(0.05);
 
     env = EnvGen.ar(Env.adsr(0.01, 0, 1, 0.1));
 

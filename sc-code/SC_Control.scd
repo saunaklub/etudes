@@ -1,23 +1,27 @@
-s.options.device = "Saffire";
-
+//s.options.device = "Saffire";
 (
-    ~init = Task({
-        ~myPath = "/Users/claudiocabral/Projetos/etudes/sc-code/";
-        1.wait;
-        (~myPath ++"Server.scd").load;
-        1.wait;
-        s.waitForBoot({
-            (~myPath ++ "Midi.scd").load;
+~init = Task({
+    // @todo working directory or a SC_CODE_DIR environment
+    // variable
+    ~myPath = "/Users/claudiocabral/Projetos/etudes/sc-code/";
+
+    1.wait;
+    (~myPath ++ "Server.scd").loadRelative;
+    1.wait;
+    s.waitForBoot(
+        {
+            (~myPath ++ "Midi.scd").loadRelative;
             s.wait;
-            (~myPath ++"Definitions.scd").load; 
+            (~myPath ++ "Definitions.scd").loadRelative;
             s.wait;
             ~oscUpdate = Task({
                 loop{
-                    ~midiBus[116].get({arg v;~patric.sendMsg("/lines/distance/amplitude",v.linlin(0,1,0,0.02));});
-                    ~midiBus[27].get({arg v;~patric.sendMsg("/lines/angle",v);});
+                    ~midiBus[116].get({ arg v; ~patric.sendMsg("/lines/distance/amplitude", v.linlin(0,1,0,0.02)); });
+                    ~midiBus[27].get({ arg v; ~patric.sendMsg("/lines/angle",v); });
                     0.016.wait;
                 };
-            });
+            }
+            );
             0.5.wait;
 
             //NDEFS
@@ -37,24 +41,24 @@ s.options.device = "Saffire";
             // NDEF ROUTING
             Ndef('sinOsc2').map(\freq, Ndef('sinOsc1'));
             Ndef('sinOsc3').map(\freq, Ndef('lfsaw'));
-            Ndef('lfPulse1').map(\width, Ndef('sinOsc3')); 
+            Ndef('lfPulse1').map(\width, Ndef('sinOsc3'));
             Ndef('noise').map(\width, Ndef('sinOsc2'));
             Ndef('noise').map(\freq,Ndef('lfPulse1'));
-            
+
             // MIDI MAP
             Ndef(\lfPulse1).map(\add, Ndef('mapper',{~midiBus[116].kr(1) * 300}));
             Ndef(\lfPulse1).map(\freq, Ndef('mapper2',{~midiBus[27].kr(1) * 300}));
 
             "done".postln;
         });
-    });
+});
 
-    ~init.play;
+~init.play;
 )
 
 // CONTROL AREA
 ~oscUpdate.play(doReset:true)
-~oscUpdate.stop 
+~oscUpdate.stop
 
 Ndef(\noise).play(0,2)
 Ndef(\noise).stop
