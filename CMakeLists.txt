@@ -38,7 +38,6 @@ find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 find_package(glfw CONFIG NAMES glfw glfw3)
-message("${glfw_CONSIDERED_CONFIGS}")
 
 pkg_search_module(LIBLO REQUIRED liblo)
 
