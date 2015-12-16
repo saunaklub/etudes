@@ -47,6 +47,8 @@ http://zeptobars.ru/en/read/open-microchip-asic-what-inside-II-msp430-pic-z80
 
 ##### n-D standing wave hypersurfaces
 
+##### mirrored sonogram LUT modulation
+
 ##### CGAL
 
 - voronoi cells
