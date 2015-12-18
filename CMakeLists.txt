@@ -12,8 +12,6 @@ add_executable(${CLIENT}
 
 set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
 
-set(CMAKE_VERBOSE_MAKEFILE 1)
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
@@ -33,19 +31,11 @@ add_library(${LIBRARY}
 
 set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
 
-find_package(PkgConfig)
-if(PkgConfig_FOUND)
-    pkg_search_module(LIBLO REQUIRED liblo)
-else(PkgConfig_FOUND)
-    set(LIBLO_INCLUDE_DIRS "" CACHE STRING "")
-    set(LIBLO_LIBRARIES "" CACHE STRING "")
-endif(PkgConfig_FOUND)
-
-
 find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 find_package(glfw REQUIRED NAMES glfw glfw3)
+find_package(liblo REQUIRED)
 
 target_include_directories(${CLIENT}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
@@ -61,7 +51,6 @@ target_include_directories(${LIBRARY}
     )
 
 target_link_libraries(${CLIENT}
-    PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${GLBINDING_LIBRARIES}
     PUBLIC ${GLFW3_LIBRARY}
@@ -69,7 +58,7 @@ target_link_libraries(${CLIENT}
     )
 
 target_link_libraries(${LIBRARY}
-    PUBLIC ${LIBLO_LIBRARIES}
+    PUBLIC ${LIBLO_LIBRARY}
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${GLBINDING_LIBRARIES}
     PUBLIC ${GLM_LIBRARIES}
