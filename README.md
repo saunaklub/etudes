@@ -51,6 +51,8 @@ The project is written in C++14 and OpenGL 3.3+.
 - [GLFW](http://www.glfw.org/)
 - [liblo](http://liblo.sourceforge.net/)
 
+Note that liblo requires [this](https://github.com/flv0/liblo) branch to compile
+
 Libraries to consider
 
 - [Jamoma](http://jamoma.org/)
