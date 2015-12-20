@@ -1,11 +1,11 @@
 // THIS FILE IS FOR TESTING SC CODE IT MAYBE FILLED WITH GARBAGE
 
 
-Ndef(\envFollow,~env_follower);
-Ndef(\whiteNoise, ~whiteNoise);
+Ndef(\envFollow,Fdef(\env_follower));
+Ndef(\whiteNoise, Fdef(\whiteNoise));
 Ndef('whiteNoise')<>>Ndef('envFollow');
 (
-b = Task({
+Tdef(\getEnvellope, {
 	loop{
 		Ndef('envFollow').bus.subBus(0,1).get({
 			|v|

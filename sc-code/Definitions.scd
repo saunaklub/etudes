@@ -1,28 +1,28 @@
-~sinOsc = {
+Fdef(\sinOsc, {
     SinOsc.kr(\freq.kr(440), 0, \mul.kr(1), \add.kr(0));
-};
+});
 
-~lfSaw = {
+Fdef(\lfSaw, {
     LFSaw.kr(\freq.kr(440), 0, \mul.kr(300), \add.kr(0));
-};
+});
 
-~lfPulse = {
+Fdef(\lfPulse, {
     LFPulse.kr(
         \freq.kr(439), 0,\width.kr(0.5),
         \mul.kr(0.05), \add.kr(0)
     )
-};
+});
 
-~noise = {
+Fdef(\noise, {
     LFPulse.ar(
         \freq.ar(300), 0, \width.ar(0.5),
         \mul.ar(0.05)
     )
-};
+});
 
-~input = { SoundIn.ar(\bus.kr(0)) };
+Fdef(\input, { SoundIn.ar(\bus.kr(0)) });
 
-~envFollower = {
+Fdef(\envFollower, {
     var sig, outArray;
     var low, mid, high;
 
@@ -38,9 +38,9 @@
     outArray = [low, mid, high];
 
     outArray;
-};
+});
 
-~noiseRef = {
+Fdef(\noiseRef, {
     var sig, env;
     var lfpulse, lfsaw;
     var sinosc1, sinosc2, sinosc3;
@@ -64,13 +64,13 @@
     env = EnvGen.ar(Env.adsr(0.01, 0, 1, 0.1));
 
     sig * env;
-};
+});
 
-~converter = { A2K.kr(\in.ar(0)) };
+Fdef(\converter, { A2K.kr(\in.ar(0)) });
 
-~whiteNoise = { WhiteNoise.ar(\amp.ar(1)) };
+Fdef(\whiteNoise, { WhiteNoise.ar(\amp.ar(1)) });
 
-~mapFunc = {
+Fdef(\mapFunc, {
     arg in, min, max;
     LinLin.kr(in,0,1,min,max);
-};
+});
