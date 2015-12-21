@@ -4,10 +4,14 @@
 #include <vector>
 #include <glm/vec3.hpp>
 
+#ifdef DEBUG
+#define EDB(x) std::cout << std::fixed << #x ": " << x << std::endl
+#else
+#define EDB(x)
+#endif
+
 namespace etudes {
-    glm::vec3 to_vec3(const std::vector<float> &vec) {
-        return glm::vec3(vec[0], vec[1], vec[2]);
-    }
+    glm::vec3 to_vec3(const std::vector<float> &vec);
 }
 
 #endif // ETUDES_UTILITIES
