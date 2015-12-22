@@ -14,26 +14,17 @@
         (~myPath ++ "Definitions.scd").load;
         s.sync;
 
-        Tdef(\oscUpdate, {
-            loop{
-                ~midiBus[116].get({ arg v; ~patric.sendMsg("/lines/distance/amplitude", v.linlin(0,1,0,0.02)); });
-                ~midiBus[27].get({ arg v; ~patric.sendMsg("/lines/angle",v); });
-                0.016.wait;
-            }
-        });
-
-        s.sync;
 
         //NDEFS
-        Ndef('sinOsc1', Fdef(\sinOsc)).set('freq', 300, 'mul', 300,'add', 35);
+        Ndef('sinOsc1', Fdef(\sinOsc)).set('freq', 0.3, 'mul', 300,'add', 35);
         s.sync;
-        Ndef('sinOsc2', Fdef(\sinOsc)).set('freq', 300, 'mul', 0.5,'add', 0.5);
+        Ndef('sinOsc2', Fdef(\sinOsc)).set('freq', 0.1, 'mul', 0.5,'add', 0.5);
         s.sync;
-        Ndef('sinOsc3', Fdef(\sinOsc)).set('freq', 300, 'mul', 0.5,'add', 0.5);
+        Ndef('sinOsc3', Fdef(\sinOsc)).set('freq', 0.1, 'mul', 0.5,'add', 0.5);
         s.sync;
-        Ndef('lfSaw1', Fdef(\lfSaw)).set('freq', 1, 'mul', 100,'add', 1);
+        Ndef('lfSaw1', Fdef(\lfSaw)).set('freq', 1, 'mul', 100,'add', 0);
         s.sync;
-        Ndef('lfPulse1', Fdef(\lfPulse)).set('freq', 300, 'mul', 50,'add', 100);
+        Ndef('lfPulse1', Fdef(\lfPulse)).set('freq', 3, 'mul', 50,'add', 100);
         s.sync;
         Ndef('noise', Fdef(\noise)).set('freq', 300, 'mul', 2,'add', -1);
         s.sync;
@@ -56,11 +47,47 @@
         Ndef(\lfPulse1).map(\freq, Ndef('mapper2',{~midiBus[27].kr(1) * 300}));
         s.sync;
 
+        Tdef(\oscUpdate, {
+            loop{
+                Ndef(\sinOsc1).bus.get({
+                    arg v; 
+                    ~etudes.sendMsg(
+                        "/lines/angle", v.linlin(-265,335,0,4pi)
+                    ); 
+                });
+                Ndef(\sinOsc2).bus.get({
+                    arg v; 
+                    ~etudes.sendMsg(
+                        "/lines/distance/omega", v.linlin(0,1,0,2pi)
+                    ); 
+                });
+                Ndef(\sinOsc3).bus.get({
+                    arg v; 
+                    ~etudes.sendMsg(
+                        "/lines/distance/amplitude", v.linlin(0,1,0.02,0)
+                    ); 
+                });
+                Ndef(\LFSaw1).bus.get({
+                    arg v; 
+                    ~etudes.sendMsg(
+                        "/lines/count", v.linlin(-100,100,100, 300)
+                    ); 
+                });
+                Ndef(\lfPulse1).bus.get({
+                    arg v; 
+                    ~etudes.sendMsg(
+                        "/lines/width/amplitude", v.linlin(0,1,0,0.02)
+                    ); 
+                });
+                (1/60).wait;
+            }
+        });
+
+        s.sync;
         "done".postln;
     });
     Tdef(\init).play;
 )
-
 // CONTROL AREA
 Tdef(\oscUpdate).play(doReset:true)
 Tdef(\oscUpdate).stop
