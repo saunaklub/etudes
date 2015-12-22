@@ -1,3 +1,5 @@
+#include <exception>
+#include <stdexcept>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -6,6 +8,8 @@
 #include <Util/Utilities.hpp>
 
 #include "Configuration.hpp"
+
+using namespace std::string_literals;
 
 namespace etudes {
     using YAML::Node;
@@ -27,7 +31,12 @@ namespace etudes {
         Node node = Clone(*config);
         auto field = fields.begin();
         for(; field < fields.end() ; ++field) {
-            node = node[*field];
+            if(node[*field])
+                node = node[*field];
+            else
+                throw std::invalid_argument(
+                    "Configuration: field "s + *field +
+                    " not found in configuration path " + path);
         }
 
         return node.as<T>();
