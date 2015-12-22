@@ -16,9 +16,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+    add_definitions("-DDEBUG")
+endif()
+
 add_library(${LIBRARY}
     SHARED
+    src/lib/Util/Utilities.cpp
     src/lib/Util/Logging.cpp
+    src/lib/Util/Configuration.cpp
     src/lib/Shader/ShaderRegistry.cpp
     src/lib/Receiver/Receiver.cpp
     src/lib/Receiver/ReceiverRegistry.cpp
@@ -36,6 +42,7 @@ find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 find_package(glfw CONFIG NAMES glfw glfw3)
+find_package(yaml-cpp REQUIRED)
 
 pkg_search_module(LIBLO REQUIRED liblo)
 
@@ -50,6 +57,7 @@ target_include_directories(${CLIENT}
 target_include_directories(${LIBRARY}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
     PUBLIC ${GLM_INCLUDE_DIRS}
+    PUBLIC ${YAML_CPP_INCLUDE_DIR}
     )
 
 target_link_libraries(${CLIENT}
@@ -61,6 +69,7 @@ target_link_libraries(${CLIENT}
     )
 
 target_link_libraries(${LIBRARY}
+    PUBLIC yaml-cpp
     PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${GLBINDING_LIBRARIES}

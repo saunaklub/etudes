@@ -27,6 +27,8 @@
 #include <Receiver/ReceiverRegistry.hpp>
 #include <OSCInput.hpp>
 
+#include <Util/Configuration.hpp>
+
 struct GLFWwindow;
 class Etude;
 
@@ -73,6 +75,8 @@ namespace etudes {
 
         ReceiverRegistry registry;
         OSCInput oscInput;
+
+        Configuration config;
     };
 }
 
