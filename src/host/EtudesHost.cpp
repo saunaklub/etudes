@@ -28,10 +28,12 @@ using namespace gl;
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include "Etudes/EtudeTriangles.hpp"
-#include "Etudes/EtudeLines.hpp"
+#include <Util/Configuration.hpp>
 
-#include "OSCInput.hpp"
+#include <Etudes/EtudeTriangles.hpp>
+#include <Etudes/EtudeLines.hpp>
+
+#include <OSCInput.hpp>
 
 #include "EtudesHost.hpp"
 
@@ -59,6 +61,8 @@ namespace etudes {
     bool EtudesHost::initialise() {
         bool success = true;
 
+        config.read("configuration/host.yml");
+
         success &= initGLFW();
         success &= initEtudes();
 
@@ -73,7 +77,11 @@ namespace etudes {
         if(!glfwInit())
             exit(EXIT_FAILURE);
 
-        window = glfwCreateWindow(640, 480, "Études audiovisuel", NULL, NULL);
+        window = glfwCreateWindow(
+            config.getValue<int>("host/window/size_x"),
+            config.getValue<int>("host/window/size_y"),
+            "Études audiovisuel", NULL, NULL);
+
         if(window == nullptr){
             glfwTerminate();
             return false;
