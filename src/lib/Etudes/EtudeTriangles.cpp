@@ -25,6 +25,7 @@ using namespace gl;
 #include "EtudeTriangles.hpp"
 
 namespace etudes {
+
     void EtudeTriangles::draw() {
         glBegin(GL_TRIANGLES);
 
@@ -36,7 +37,4 @@ namespace etudes {
         glEnd();
     }
 
-    std::string EtudeTriangles::whoami() {
-        return "Triangles";
-    }
 }

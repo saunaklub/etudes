@@ -78,8 +78,8 @@ namespace etudes {
             exit(EXIT_FAILURE);
 
         window = glfwCreateWindow(
-            config.getValue<int>("host/window/size_x"),
-            config.getValue<int>("host/window/size_y"),
+            config.getValue<int>("window/size_x"),
+            config.getValue<int>("window/size_y"),
             "Études audiovisuel", NULL, NULL);
 
         if(window == nullptr){
@@ -180,8 +180,8 @@ namespace etudes {
         int index = curEtude - etudes.begin();
 
         std::cout << "Étude "
-                  << std::setfill('0') << std::setw(2) << index << ": "
-                  << (*curEtude)->whoami() << std::endl;
+                  << std::setfill('0') << std::setw(2) << index
+                  << std::endl;
     }
 
     void EtudesHost::render() {

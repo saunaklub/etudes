@@ -25,10 +25,8 @@ using namespace gl;
 #include "EtudeTemplate.hpp"
 
 namespace etudes {
+
     void EtudeTemplate::draw() {
     }
 
-    std::string EtudeTemplate::whoami() {
-        return "Template";
-    }
 }

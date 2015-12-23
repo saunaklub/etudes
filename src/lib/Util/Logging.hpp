@@ -22,6 +22,7 @@
 #define ETUDES_LOGGING
 
 #include <string>
+#include <iostream>
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
@@ -40,10 +41,39 @@ namespace etudes {
             excessive
         };
 
-        void log(LogLevel level, std::string message);
+        template <typename T>
+        void log(LogLevel level, const T &object);
 
         std::string to_string(const glm::vec2 &vec);
         std::string to_string(const glm::vec3 &vec);
+
+        template <typename T>
+        void log(LogLevel level, const T &object) {
+            using std::cout;
+            using std::cerr;
+            using std::endl;
+
+            switch(level) {
+            case error:
+                cerr << "ERROR: " << object << endl;
+                break;
+            case warning:
+                cerr << "WARNING: " << object << endl;
+                break;
+            case info:
+                cerr << "INFO: " << object << endl;
+                break;
+            case debug:
+                cerr << "DEBUG: " << object << endl;
+                break;
+            case excessive:
+                cerr << object << endl;
+                break;
+            default:
+                break;
+            }
+        }
+
     }
 }
 

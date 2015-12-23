@@ -26,10 +26,13 @@ add_library(${LIBRARY}
     src/lib/Util/Logging.cpp
     src/lib/Util/Configuration.cpp
     src/lib/Shader/ShaderRegistry.cpp
+    src/lib/Factories/EtudeFactory.cpp
     src/lib/Receiver/Receiver.cpp
     src/lib/Receiver/ReceiverRegistry.cpp
     src/lib/Drawing/DrawPrimitives.cpp
     src/lib/Drawing/ModulationFuncs.cpp
+    src/lib/Elements/ElementLine.cpp
+    src/lib/Etudes/Etude.cpp
     src/lib/Etudes/EtudeTemplate.cpp
     src/lib/Etudes/EtudeTriangles.cpp
     src/lib/Etudes/EtudeLines.cpp

@@ -13,12 +13,6 @@ namespace etudes {
         typedef std::vector<float> vec_t;
         typedef std::map<std::string, vec_t> input_map_t;
 
-        enum InputType {
-            Float1D,
-            Float2D,
-            Float3D,
-        };
-
         std::vector<std::string> getInputs() const;
         void setValue(std::string input, vec_t value);
 

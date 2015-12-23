@@ -21,18 +21,23 @@
 #ifndef ETUDES_ETUDE
 #define ETUDES_ETUDE
 
+#include <memory>
 #include <string>
+
 #include <Receiver/Receiver.hpp>
+#include <Elements/Element.hpp>
 
 namespace etudes {
     class Etude : public Receiver {
     public:
         virtual ~Etude() {};
 
-        virtual void draw() = 0;
-        virtual std::string whoami() = 0;
+        virtual void draw();
+
+        void addElement(std::unique_ptr<Element> element);
 
     private:
+        std::vector<std::unique_ptr<Element>> elements;
     };
 }
 

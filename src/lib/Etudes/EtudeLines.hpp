@@ -24,16 +24,17 @@
 #include "Etude.hpp"
 
 namespace etudes {
+
     class EtudeLines : public Etude {
     public:
         EtudeLines();
         virtual ~EtudeLines();
 
-        std::string whoami() override;
         void draw() override;
 
     private:
     };
+    
 }
 
 #endif // ETUDES_ETUDELINES

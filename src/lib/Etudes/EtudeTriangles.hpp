@@ -29,7 +29,6 @@ namespace etudes {
         EtudeTriangles() {};
         virtual ~EtudeTriangles() {};
 
-        std::string whoami() override;
         void draw() override;
 
     private:
