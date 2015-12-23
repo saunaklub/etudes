@@ -32,7 +32,7 @@
         // NDEF ROUTING
         Ndef('sinOsc2').map(\freq, Ndef('sinOsc1'));
         s.sync;
-        Ndef('sinOsc3').map(\freq, Ndef('lfsaw'));
+        Ndef('sinOsc3').map(\freq, Ndef('lfSaw1'));
         s.sync;
         Ndef('lfPulse1').map(\width, Ndef('sinOsc3'));
         s.sync;

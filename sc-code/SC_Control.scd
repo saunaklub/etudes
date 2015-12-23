@@ -61,7 +61,7 @@
                 Ndef(\sinOsc3).bus.get({
                     arg v; 
                     ~etudes.sendMsg(
-                        "/lines/distance/amplitude", v.linlin(0,1,0.02,0)
+                        "/lines/distance/base", v.linlin(0,1,0.02,0)
                     ); 
                 });
                 Ndef(\LFSaw1).bus.get({
