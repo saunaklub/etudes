@@ -1,14 +1,17 @@
 //s.options.device = "Saffire";
 (
     Tdef(\init, {
+        // @todo working directory or a SC_CODE_DIR environment
+        // variable
+        ~myPath = "/Users/claudiocabral/Projetos/etudes/sc-code/";
 
-        ("Server.scd").loadRelative;
+        (~myPath ++ "Server.scd").load;
 
         s.bootSync;
 
-        ("Midi.scd").loadRelative;
+        (~myPath ++ "Midi.scd").load;
         s.sync;
-        ("Definitions.scd").loadRelative;
+        (~myPath ++ "Definitions.scd").load;
         s.sync;
 
 
