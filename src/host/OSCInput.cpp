@@ -117,7 +117,12 @@ namespace etudes {
             cout << " " << v << " ";
         cout << endl;
 
-        registry.getReceiver(receiver).setValue(input, std::move(values));
+        try {
+            registry.getReceiver(receiver).setValue(input, std::move(values));
+        }
+        catch(std::invalid_argument e) {
+            cerr << e.what() << endl;
+        }
     }
 
 }
