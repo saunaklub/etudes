@@ -111,10 +111,11 @@ namespace etudes {
         std::list<std::string> etudes =
             hostConfig.getValue<std::list<std::string>>("etudes");
         for(auto &etude : etudes) {
-            EtudeFactory::makeEtude(etudesConfig.getNode(etude));
+            registry[etude] =
+                EtudeFactory::makeEtude(etudesConfig.getNode(etude));
         }
 
-        // curEtude = registry.begin();
+        curEtude = registry.begin();
 
         return true;
     }
@@ -185,7 +186,7 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // curEtude->second->draw();
+        curEtude->second->draw();
 
         glfwSwapBuffers(window);
     }
