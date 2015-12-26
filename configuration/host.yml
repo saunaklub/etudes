@@ -4,5 +4,4 @@ window:
   fullscreen: true
 
 etudes:
-  lines
-  triangle
+  - lines

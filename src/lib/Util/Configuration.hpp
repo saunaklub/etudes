@@ -14,6 +14,7 @@ namespace etudes {
 
         template <typename T>
         T getValue(std::string path);
+        YAML::Node getNode(std::string path);
 
         private:
         std::vector<std::string> parseFields(std::string path);

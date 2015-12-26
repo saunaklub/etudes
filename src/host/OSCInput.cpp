@@ -66,8 +66,7 @@ namespace etudes {
     using std::endl;
     using std::string;
 
-    OSCInput::OSCInput(ReceiverRegistry& registry,
-                                   int port) :
+    OSCInput::OSCInput(const etude_map_t& registry, int port) :
         registry(registry),
         port(port),
         started(false) {
@@ -107,7 +106,7 @@ namespace etudes {
     }
 
     void OSCInput::update(std::string path,
-                                std::vector<float> values) {
+                          std::vector<float> values) {
         string receiver = path.substr(1, path.find('/', 1)-1);
         string input = path.substr(path.find('/', 1) + 1,
                                    path.size() - path.find('/', 1) - 1);
@@ -117,7 +116,9 @@ namespace etudes {
             cout << " " << v << " ";
         cout << endl;
 
-        registry.getReceiver(receiver).setValue(input, std::move(values));
+        auto iter = registry.find(receiver);
+        if(iter != registry.end())
+            iter->second->setValue(input, std::move(values));
     }
 
 }

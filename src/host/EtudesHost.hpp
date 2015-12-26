@@ -23,8 +23,8 @@
 
 #include <memory>
 #include <vector>
+#include <map>
 
-#include <Receiver/ReceiverRegistry.hpp>
 #include <OSCInput.hpp>
 
 #include <Util/Configuration.hpp>
@@ -58,25 +58,20 @@ namespace etudes {
         void processInput();
         void keyCallback(int, int, int, int);
 
-        template<class T>
-        void makeEtude(std::string name);
-
         void nextEtude();
         void prevEtude();
-        void printEtude();
 
         void render();
 
         GLFWwindow *window;
         bool quitLoop;
 
-        std::vector<std::shared_ptr<Etude>> etudes;
-        std::vector<std::shared_ptr<Etude>>::const_iterator curEtude;
-
-        ReceiverRegistry registry;
+        std::map<std::string, std::unique_ptr<Etude>> registry;
+        std::map<std::string, std::unique_ptr<Etude>>::const_iterator curEtude;
         OSCInput oscInput;
 
-        Configuration config;
+        Configuration hostConfig;
+        Configuration etudesConfig;
     };
 }
 

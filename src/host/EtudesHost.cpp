@@ -30,6 +30,8 @@ using namespace gl;
 
 #include <Util/Configuration.hpp>
 
+#include <Factories/EtudeFactory.hpp>
+
 #include <Etudes/EtudeTriangles.hpp>
 #include <Etudes/EtudeLines.hpp>
 
@@ -38,6 +40,7 @@ using namespace gl;
 #include "EtudesHost.hpp"
 
 namespace etudes {
+
     void error_callback(int error, const char * description) {
         std::cerr << description << std::endl;
     };
@@ -61,7 +64,8 @@ namespace etudes {
     bool EtudesHost::initialise() {
         bool success = true;
 
-        config.read("configuration/host.yml");
+        hostConfig.read("configuration/host.yml");
+        etudesConfig.read("configuration/etudes.yml");
 
         success &= initGLFW();
         success &= initEtudes();
@@ -78,8 +82,8 @@ namespace etudes {
             exit(EXIT_FAILURE);
 
         window = glfwCreateWindow(
-            config.getValue<int>("window/size_x"),
-            config.getValue<int>("window/size_y"),
+            hostConfig.getValue<int>("window/size_x"),
+            hostConfig.getValue<int>("window/size_y"),
             "Études audiovisuel", NULL, NULL);
 
         if(window == nullptr){
@@ -104,12 +108,13 @@ namespace etudes {
     }
 
     bool EtudesHost::initEtudes() {
-        makeEtude<EtudeLines>("lines");
-        makeEtude<EtudeTriangles>("triangles");
+        std::list<std::string> etudes =
+            hostConfig.getValue<std::list<std::string>>("etudes");
+        for(auto &etude : etudes) {
+            EtudeFactory::makeEtude(etudesConfig.getNode(etude));
+        }
 
-        curEtude = etudes.begin();
-
-        printEtude();
+        // curEtude = registry.begin();
 
         return true;
     }
@@ -146,42 +151,25 @@ namespace etudes {
 
             case GLFW_KEY_N:
                 nextEtude();
-                printEtude();
                 break;
 
             case GLFW_KEY_P:
                 prevEtude();
-                printEtude();
                 break;
             }
         }
     }
 
-    template<class T>
-    void EtudesHost::makeEtude(std::string name) {
-        auto p = std::make_shared<T>();
-        etudes.emplace_back(p);
-        registry.registerReceiver(name, p);
-    }
-
     void EtudesHost::nextEtude() {
         curEtude++;
-        if(curEtude == etudes.end())
-            curEtude = etudes.begin();
+        if(curEtude == registry.end())
+            curEtude = registry.begin();
     }
 
     void EtudesHost::prevEtude() {
-        if(curEtude == etudes.begin())
-            curEtude = etudes.end();
+        if(curEtude == registry.begin())
+            curEtude = registry.end();
         curEtude--;
-    }
-
-    void EtudesHost::printEtude() {
-        int index = curEtude - etudes.begin();
-
-        std::cout << "Étude "
-                  << std::setfill('0') << std::setw(2) << index
-                  << std::endl;
     }
 
     void EtudesHost::render() {
@@ -197,8 +185,9 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        (*curEtude)->draw();
+        // curEtude->second->draw();
 
         glfwSwapBuffers(window);
     }
+
 }

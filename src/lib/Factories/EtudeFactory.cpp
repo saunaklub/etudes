@@ -1,6 +1,8 @@
 #include <string>
 
+#include <Util/Utilities.hpp>
 #include <Util/Logging.hpp>
+
 #include <Etudes/Etude.hpp>
 
 #include "EtudeFactory.hpp"
@@ -15,11 +17,15 @@ namespace etudes {
     EtudeFactory::makeEtude(const Node &node) {
         std::unique_ptr<Etude> product;
 
-        std::string type = node["type"].as<std::string>();
-        // special etudes
-
-        // else
-        product = makeEtudeDefault(node);
+        if(node["type"]) {
+            // special etudes
+            std::string type = node["type"].as<std::string>();
+            EDB(type);
+        }
+        else {
+            // else
+            product = makeEtudeDefault(node);
+        }
 
         return product;
     }
@@ -28,12 +34,11 @@ namespace etudes {
     EtudeFactory::makeEtudeDefault(const Node &node) {
         std::unique_ptr<Etude> product = std::make_unique<Etude>();
 
-        log(LogLevel::debug, "Creating default Etude");
-
+        log(LogLevel::debug, "Creating default etude");
         log(LogLevel::excessive, node["elements"]);
 
-        std::list<Node> elements =
-            node["elements"].as<std::list<Node>>();
+        std::map<std::string, Node> elements =
+            node["elements"].as<std::map<std::string, Node>>();
 
         return product;
     }

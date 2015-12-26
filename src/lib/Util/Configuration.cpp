@@ -24,8 +24,7 @@ namespace etudes {
     void Configuration::write(std::string file) {
     }
 
-    template <typename T>
-    T Configuration::getValue(std::string path) {
+    Node Configuration::getNode(std::string path) {
         std::vector<std::string> fields = parseFields(path);
 
         Node node = Clone(*config);
@@ -38,8 +37,12 @@ namespace etudes {
                     "Configuration: field "s + *field +
                     " not found in configuration path " + path);
         }
+        return node;
+    }
 
-        return node.as<T>();
+    template <typename T>
+    T Configuration::getValue(std::string path) {
+        return getNode(path).as<T>();
     }
 
     std::vector<std::string> Configuration::parseFields(std::string path) {
@@ -55,5 +58,7 @@ namespace etudes {
     }
 
     template std::string Configuration::getValue<std::string>(std::string path);
+    template std::list<std::string>
+    Configuration::getValue<std::list<std::string>>(std::string path);
     template int Configuration::getValue<int>(std::string path);
 }
