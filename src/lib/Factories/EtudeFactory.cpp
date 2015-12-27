@@ -22,7 +22,6 @@ namespace etudes {
         if(node["type"]) {
             // special etudes
             std::string type = node["type"].as<std::string>();
-            EDB(type);
         }
         else {
             // else
@@ -43,7 +42,8 @@ namespace etudes {
             node["elements"].as<std::map<std::string, Node>>();
 
         for(auto &element : elements)
-            product->addElement(ElementFactory::makeElement(element.second));
+            product->addElement(element.first,
+                                ElementFactory::makeElement(element.second));
 
         product->registerInputs();
 

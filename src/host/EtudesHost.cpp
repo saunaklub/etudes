@@ -68,7 +68,7 @@ namespace etudes {
     EtudesHost::EtudesHost() :
         window(nullptr),
         quitLoop(false),
-        oscInput(registry, 6666) {
+        oscInput(etudes, 6666) {
     }
 
     EtudesHost::~EtudesHost() {
@@ -126,14 +126,14 @@ namespace etudes {
     }
 
     bool EtudesHost::initEtudes() {
-        std::list<std::string> etudes =
+        std::list<std::string> etudelist =
             hostConfig.getValue<std::list<std::string>>("etudes");
-        for(auto &etude : etudes) {
-            registry[etude] =
+        for(auto &etude : etudelist) {
+            etudes[etude] =
                 EtudeFactory::makeEtude(etudesConfig.getNode(etude));
         }
 
-        curEtude = registry.begin();
+        currentEtude = etudes.begin();
 
         return true;
     }
@@ -180,15 +180,15 @@ namespace etudes {
     }
 
     void EtudesHost::nextEtude() {
-        curEtude++;
-        if(curEtude == registry.end())
-            curEtude = registry.begin();
+        currentEtude++;
+        if(currentEtude == etudes.end())
+            currentEtude = etudes.begin();
     }
 
     void EtudesHost::prevEtude() {
-        if(curEtude == registry.begin())
-            curEtude = registry.end();
-        curEtude--;
+        if(currentEtude == etudes.begin())
+            currentEtude = etudes.end();
+        currentEtude--;
     }
 
     void EtudesHost::render() {
@@ -204,7 +204,7 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        curEtude->second->draw();
+        currentEtude->second->draw();
 
         glfwSwapBuffers(window);
     }

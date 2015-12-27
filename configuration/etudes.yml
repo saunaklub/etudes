@@ -1,4 +1,6 @@
 line:
   elements:
-    line1:
+    lines:
       type: line
+      values:
+        color/base: 1, 0, 0

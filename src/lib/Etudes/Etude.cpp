@@ -10,18 +10,19 @@ namespace etudes {
 
     void Etude::registerInputs() {
         for(auto &element : elements) {
-            element->registerInputs();
+            element.second->registerInputs();
         }
     }
 
     void Etude::draw() {
         for(auto &element : elements) {
-            element->draw();
+            element.second->draw();
         }
     }
 
-    void Etude::addElement(std::unique_ptr<Element> element) {
-        elements.push_back(std::move(element));
+    void Etude::addElement(std::string name,
+                           std::unique_ptr<Element> element) {
+        elements[name] = std::move(element);
     }
 
 }

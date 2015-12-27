@@ -35,10 +35,11 @@ namespace etudes {
         void registerInputs() override;
         virtual void draw();
 
-        void addElement(std::unique_ptr<Element> element);
+        void addElement(std::string name, std::unique_ptr<Element> element);
 
     private:
-        std::vector<std::unique_ptr<Element>> elements;
+        typedef std::map<std::string, std::unique_ptr<Element>> element_map_t;
+        element_map_t elements;
     };
 }
 

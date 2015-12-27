@@ -50,6 +50,8 @@ namespace etudes {
         bool loopIteration();
 
     private:
+        typedef std::map<std::string, std::unique_ptr<Etude>> etude_map_t;
+
         // @todo: use exceptions for error handling!
         bool initGLFW();
         void initOSC();
@@ -66,8 +68,9 @@ namespace etudes {
         GLFWwindow *window;
         bool quitLoop;
 
-        std::map<std::string, std::unique_ptr<Etude>> registry;
-        std::map<std::string, std::unique_ptr<Etude>>::const_iterator curEtude;
+        etude_map_t etudes;
+        etude_map_t::const_iterator currentEtude;
+
         OSCInput oscInput;
 
         Configuration hostConfig;
