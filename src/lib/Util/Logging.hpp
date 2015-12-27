@@ -27,6 +27,8 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
+#include <Util/Utilities.hpp>
+
 using namespace std::literals::string_literals;
 
 namespace etudes {
@@ -41,19 +43,20 @@ namespace etudes {
             excessive
         };
 
-        template <typename T>
-        void log(LogLevel level, const T &object);
+        extern LogLevel logLevelMax;
 
-        std::string to_string(const glm::vec2 &vec);
-        std::string to_string(const glm::vec3 &vec);
+        void setLogLevel(LogLevel loglevel);
 
         template <typename T>
-        void log(LogLevel level, const T &object) {
+        void log(LogLevel logLevel, const T &object) {
             using std::cout;
             using std::cerr;
             using std::endl;
 
-            switch(level) {
+            if(logLevel > logLevelMax)
+                return;
+
+            switch(logLevel) {
             case error:
                 cerr << "ERROR: " << object << endl;
                 break;
@@ -73,6 +76,9 @@ namespace etudes {
                 break;
             }
         }
+
+        std::string to_string(const glm::vec2 &vec);
+        std::string to_string(const glm::vec3 &vec);
 
     }
 }

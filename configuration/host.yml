@@ -3,5 +3,8 @@ window:
   size_y: 600
   fullscreen: true
 
+logging:
+  loglevel: excessive
+
 etudes:
-  - lines
+  - line

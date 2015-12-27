@@ -39,6 +39,19 @@ using namespace gl;
 
 #include "EtudesHost.hpp"
 
+namespace {
+    using etudes::logging::LogLevel;
+
+    std::map<std::string, LogLevel> logLevelMap = {
+        {"none", LogLevel::none},
+        {"info", LogLevel::info},
+        {"warning", LogLevel::warning},
+        {"error", LogLevel::error},
+        {"debug", LogLevel::debug},
+        {"excessive", LogLevel::excessive}
+    };
+}
+
 namespace etudes {
 
     void error_callback(int error, const char * description) {
@@ -66,6 +79,11 @@ namespace etudes {
 
         hostConfig.read("configuration/host.yml");
         etudesConfig.read("configuration/etudes.yml");
+
+        std::string logLevel =
+            hostConfig.getValue<std::string>("logging/loglevel");
+
+        logging::setLogLevel(logLevelMap[logLevel]);
 
         success &= initGLFW();
         success &= initEtudes();
