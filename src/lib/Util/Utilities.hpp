@@ -2,6 +2,7 @@
 #define ETUDES_UTILITIES
 
 #include <vector>
+#include <iostream>
 #include <glm/vec3.hpp>
 
 #ifdef DEBUG

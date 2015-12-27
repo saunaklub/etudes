@@ -3,6 +3,8 @@
 #include <Util/Utilities.hpp>
 #include <Util/Logging.hpp>
 
+#include <Factories/ElementFactory.hpp>
+
 #include <Etudes/Etude.hpp>
 
 #include "EtudeFactory.hpp"
@@ -39,6 +41,9 @@ namespace etudes {
 
         std::map<std::string, Node> elements =
             node["elements"].as<std::map<std::string, Node>>();
+
+        for(auto &element : elements)
+            product->addElement(ElementFactory::makeElement(element.second));
 
         return product;
     }
