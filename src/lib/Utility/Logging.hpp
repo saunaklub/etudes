@@ -27,7 +27,7 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
-#include <Util/Utilities.hpp>
+#include <Utility/Utility.hpp>
 
 using namespace std::literals::string_literals;
 

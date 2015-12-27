@@ -1,6 +1,6 @@
 #include <glm/gtc/constants.hpp>
 
-#include <Util/Utilities.hpp>
+#include <Utility/Utility.hpp>
 
 #include <Drawing/ModulationFuncs.hpp>
 #include <Drawing/DrawPrimitives.hpp>
@@ -10,7 +10,6 @@
 namespace etudes {
     using glm::pi;
     using glm::vec2;
-//    using glm::vec3;
 
     typedef std::vector<float> vecf;
 

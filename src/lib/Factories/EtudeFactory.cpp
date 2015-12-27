@@ -1,11 +1,11 @@
 #include <string>
 
-#include <Util/Utilities.hpp>
-#include <Util/Logging.hpp>
+#include <Utility/Utility.hpp>
+#include <Utility/Logging.hpp>
 
 #include <Factories/ElementFactory.hpp>
 
-#include <Etudes/Etude.hpp>
+#include <Receiver/Etude.hpp>
 
 #include "EtudeFactory.hpp"
 

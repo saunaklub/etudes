@@ -5,7 +5,7 @@
 #include <vector>
 #include <map>
 
-#include <Util/Logging.hpp>
+#include <Utility/Logging.hpp>
 
 namespace etudes {
     class Receiver {

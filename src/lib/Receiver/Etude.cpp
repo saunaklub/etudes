@@ -1,6 +1,6 @@
 #include <string>
 
-#include <Util/Logging.hpp>
+#include <Utility/Logging.hpp>
 
 #include "Etude.hpp"
 

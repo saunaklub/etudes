@@ -1,5 +1,5 @@
-#ifndef ETUDES_UTILITIES
-#define ETUDES_UTILITIES
+#ifndef ETUDES_UTILITY
+#define ETUDES_UTILITY
 
 #include <vector>
 #include <iostream>
@@ -15,4 +15,4 @@ namespace etudes {
     glm::vec3 to_vec3(const std::vector<float> &vec);
 }
 
-#endif // ETUDES_UTILITIES
+#endif // ETUDES_UTILITY

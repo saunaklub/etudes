@@ -28,12 +28,9 @@ using namespace gl;
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include <Util/Configuration.hpp>
+#include <Utility/Configuration.hpp>
 
 #include <Factories/EtudeFactory.hpp>
-
-#include <Etudes/EtudeTriangles.hpp>
-#include <Etudes/EtudeLines.hpp>
 
 #include <OSCInput.hpp>
 
@@ -126,9 +123,9 @@ namespace etudes {
     }
 
     bool EtudesHost::initEtudes() {
-        std::list<std::string> etudelist =
+        std::list<std::string> etudeList =
             hostConfig.getValue<std::list<std::string>>("etudes");
-        for(auto &etude : etudelist) {
+        for(auto &etude : etudeList) {
             etudes[etude] =
                 EtudeFactory::makeEtude(etudesConfig.getNode(etude));
         }

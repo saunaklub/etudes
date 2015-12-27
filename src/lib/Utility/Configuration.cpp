@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sstream>
 
-#include <Util/Utilities.hpp>
+#include <Utility/Utility.hpp>
 
 #include "Configuration.hpp"
 

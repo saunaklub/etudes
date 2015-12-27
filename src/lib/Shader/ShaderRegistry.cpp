@@ -26,7 +26,7 @@
 #include <glbinding/gl/gl.h>
 using namespace gl;
 
-#include <Util/Logging.hpp>
+#include <Utility/Logging.hpp>
 #include "ShaderRegistry.hpp"
 
 using namespace std::literals::string_literals;

@@ -27,7 +27,7 @@
 
 #include <OSCInput.hpp>
 
-#include <Util/Configuration.hpp>
+#include <Utility/Configuration.hpp>
 
 struct GLFWwindow;
 class Etude;

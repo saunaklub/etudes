@@ -25,7 +25,8 @@
 
 #include <lo/lo.h>
 
-#include <Etudes/Etude.hpp>
+#include <Receiver/Etude.hpp>
+
 #include "OSCInput.hpp"
 
 

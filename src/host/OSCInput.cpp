@@ -21,7 +21,7 @@
 #include <string>
 #include <iostream>
 
-#include <Util/Logging.hpp>
+#include <Utility/Logging.hpp>
 #include <Receiver/Receiver.hpp>
 
 #include "OSCInput.hpp"
