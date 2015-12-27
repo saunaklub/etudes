@@ -45,6 +45,8 @@ namespace etudes {
         for(auto &element : elements)
             product->addElement(ElementFactory::makeElement(element.second));
 
+        product->registerInputs();
+
         return product;
     }
 

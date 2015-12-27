@@ -5,13 +5,16 @@
 #include "Etude.hpp"
 
 namespace etudes {
+
     using logging::LogLevel;
 
-    void Etude::draw() {
-        // logging::log(LogLevel::excessive,
-        //              "drawing number of elements: "s +
-        //              std::to_string(elements.size()));
+    void Etude::registerInputs() {
+        for(auto &element : elements) {
+            element->registerInputs();
+        }
+    }
 
+    void Etude::draw() {
         for(auto &element : elements) {
             element->draw();
         }
