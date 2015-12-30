@@ -30,11 +30,14 @@
 #include <Utility/Configuration.hpp>
 
 struct GLFWwindow;
-class Etude;
 
 namespace etudes {
+    class Etude;
+
     class EtudesHost {
     public:
+        using etude_map_t = std::map<std::string, std::unique_ptr<Etude>>;
+
         friend void key_callback(GLFWwindow* window,
                                  int key, int scancode, int action, int mods);
 
@@ -50,8 +53,6 @@ namespace etudes {
         bool loopIteration();
 
     private:
-        typedef std::map<std::string, std::unique_ptr<Etude>> etude_map_t;
-
         // @todo: use exceptions for error handling!
         bool initGLFW();
         void initOSC();

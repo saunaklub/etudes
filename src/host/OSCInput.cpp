@@ -22,7 +22,7 @@
 #include <iostream>
 
 #include <Utility/Logging.hpp>
-#include <Receiver/Receiver.hpp>
+#include <Receiver/Etude.hpp>
 
 #include "OSCInput.hpp"
 
@@ -66,8 +66,8 @@ namespace etudes {
     using std::endl;
     using std::string;
 
-    OSCInput::OSCInput(const etude_map_t& registry, int port) :
-        registry(registry),
+    OSCInput::OSCInput(const etude_map_t &etudes, int port) :
+        etudes(etudes),
         port(port),
         started(false) {
     }
@@ -116,8 +116,8 @@ namespace etudes {
             cout << " " << v << " ";
         cout << endl;
 
-        auto iter = registry.find(receiver);
-        if(iter != registry.end())
+        auto iter = etudes.find(receiver);
+        if(iter != etudes.end())
             iter->second->setValue(input, std::move(values));
     }
 

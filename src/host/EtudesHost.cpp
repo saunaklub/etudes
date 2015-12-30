@@ -28,10 +28,12 @@ using namespace gl;
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#include <Utility/Logging.hpp>
 #include <Utility/Configuration.hpp>
 
 #include <Factories/EtudeFactory.hpp>
 
+#include <Receiver/Etude.hpp>
 #include <OSCInput.hpp>
 
 #include "EtudesHost.hpp"

@@ -24,21 +24,21 @@
 #include <memory>
 #include <string>
 
-#include <Receiver/Receiver.hpp>
-#include <Elements/Element.hpp>
+#include <Receiver/Element.hpp>
 
 namespace etudes {
-    class Etude : public Receiver {
+    class Etude : public Element {
     public:
         virtual ~Etude() {};
 
         void registerInputs() override;
-        virtual void draw();
+        void draw() override;
 
         void addElement(std::string name, std::unique_ptr<Element> element);
 
     private:
         typedef std::map<std::string, std::unique_ptr<Element>> element_map_t;
+
         element_map_t elements;
     };
 }
