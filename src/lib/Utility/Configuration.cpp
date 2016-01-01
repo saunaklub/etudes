@@ -12,13 +12,22 @@
 using namespace std::string_literals;
 
 namespace etudes {
+    using std::cerr;
+    using std::endl;
     using YAML::Node;
     using YAML::LoadFile;
+    using YAML::BadFile;
     using YAML::Clone;
 
     void Configuration::read(std::string file) {
-        config = std::make_unique<Node>();
-        *config = LoadFile(file);
+        try {
+            config = std::make_unique<Node>();
+            *config = LoadFile(file);
+        } catch (BadFile e) {
+            cerr << 
+                "Unable to load file at relative path " << 
+                file << endl;
+        }
     }
 
     void Configuration::write(std::string file) {
