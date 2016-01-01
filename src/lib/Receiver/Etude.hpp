@@ -24,7 +24,7 @@
 #include <memory>
 #include <string>
 
-#include <Receiver/Element.hpp>
+#include <Elements/Element.hpp>
 
 namespace etudes {
     class Etude : public Element {
