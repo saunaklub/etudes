@@ -4,7 +4,6 @@
 
 #include <Utility/Utility.hpp>
 
-#include <Elements/Element.hpp>
 #include <Elements/ElementLine.hpp>
 
 #include "ElementFactory.hpp"
