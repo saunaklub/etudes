@@ -38,8 +38,8 @@ namespace {
     auto t0 = clock_t::now();
 
     long microSeconds() {
-        auto diff =  duration_cast<duration<long>>(clock_t::now() - t0);
-        return duration_cast<microseconds>(diff).count();
+        auto diff =  duration_cast<microseconds>(clock_t::now() - t0);
+        return diff.count();
     }
 
     double seconds() {
