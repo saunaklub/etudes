@@ -24,8 +24,8 @@ namespace etudes {
             config = std::make_unique<Node>();
             *config = LoadFile(file);
         } catch (BadFile e) {
-            cerr << 
-                "Unable to load file at relative path " << 
+            cerr <<
+                "Unable to load file at relative path " <<
                 file << endl;
         }
     }
