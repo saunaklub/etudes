@@ -33,7 +33,7 @@ using namespace gl;
 
 #include <Factories/EtudeFactory.hpp>
 
-#include <Receiver/Etude.hpp>
+#include <Receivers/Etude.hpp>
 #include <OSCInput.hpp>
 
 #include "EtudesHost.hpp"

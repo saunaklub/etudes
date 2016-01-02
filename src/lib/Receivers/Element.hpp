@@ -1,7 +1,7 @@
 #ifndef ETUDES_ELEMENT
 #define ETUDES_ELEMENT
 
-#include <Receiver/Receiver.hpp>
+#include <Receivers/Receiver.hpp>
 
 namespace etudes {
     class Element : public Receiver {

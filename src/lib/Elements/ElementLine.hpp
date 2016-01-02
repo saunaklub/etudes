@@ -1,7 +1,7 @@
 #ifndef ETUDES_ELEMENTLINE
 #define ETUDES_ELEMENTLINE
 
-#include <Elements/Element.hpp>
+#include <Receivers/Element.hpp>
 
 namespace etudes {
     class ElementLine : public Element {

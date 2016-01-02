@@ -22,7 +22,7 @@
 #include <iostream>
 
 #include <Utility/Logging.hpp>
-#include <Receiver/Etude.hpp>
+#include <Receivers/Etude.hpp>
 
 #include "OSCInput.hpp"
 

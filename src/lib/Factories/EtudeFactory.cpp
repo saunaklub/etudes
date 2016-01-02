@@ -5,7 +5,7 @@
 
 #include <Factories/ElementFactory.hpp>
 
-#include <Receiver/Etude.hpp>
+#include <Receivers/Etude.hpp>
 
 #include "EtudeFactory.hpp"
 

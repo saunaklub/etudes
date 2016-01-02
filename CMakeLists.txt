@@ -28,8 +28,8 @@ add_library(${LIBRARY}
     src/lib/Shader/ShaderRegistry.cpp
     src/lib/Factories/ElementFactory.cpp
     src/lib/Factories/EtudeFactory.cpp
-    src/lib/Receiver/Receiver.cpp
-    src/lib/Receiver/Etude.cpp
+    src/lib/Receivers/Receiver.cpp
+    src/lib/Receivers/Etude.cpp
     src/lib/Drawing/DrawPrimitives.cpp
     src/lib/Drawing/ModulationFuncs.cpp
     src/lib/Elements/ElementLine.cpp
