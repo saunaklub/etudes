@@ -5,7 +5,7 @@ project(etudes)
 cmake_minimum_required(VERSION 3.0)
 
 add_executable(${CLIENT}
-    src/main.cpp
+    src/host/main.cpp
     src/host/EtudesHost.cpp
     src/host/OSCInput.cpp
     )
