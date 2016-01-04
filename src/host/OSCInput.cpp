@@ -66,6 +66,8 @@ namespace etudes {
     using std::endl;
     using std::string;
 
+    using logging::LogLevel;
+
     OSCInput::OSCInput(const etude_map_t &etudes, int port) :
         etudes(etudes),
         port(port),
@@ -107,16 +109,13 @@ namespace etudes {
 
     void OSCInput::update(std::string path,
                           std::vector<float> values) {
-        string receiver = path.substr(1, path.find('/', 1)-1);
-        string input = path.substr(path.find('/', 1) + 1,
-                                   path.size() - path.find('/', 1) - 1);
+        string etude = splitStringFirst(path);
+        string input = splitStringRest(path);
 
-        cout << receiver << " : " << input;
-        for(auto &v : values)
-            cout << " " << v << " ";
-        cout << endl;
+        logging::log(LogLevel::excessive, etude + ": " + input);
+        logging::log(LogLevel::excessive, values);
 
-        auto iter = etudes.find(receiver);
+        auto iter = etudes.find(etude);
         if(iter != etudes.end())
             iter->second->setValue(input, std::move(values));
     }

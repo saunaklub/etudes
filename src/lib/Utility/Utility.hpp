@@ -14,6 +14,9 @@
 namespace etudes {
     glm::vec3 to_vec3(const std::vector<float> &vec);
 
+    std::string splitStringFirst(std::string str, char separator='/');
+    std::string splitStringRest(std::string str, char separator='/');
+
     template <typename T>
     std::ostream &operator<<(std::ostream &os,
                              const std::vector<T> &container) {
