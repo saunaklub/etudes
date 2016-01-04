@@ -75,7 +75,6 @@ namespace etudes {
         OSCInput oscInput;
 
         Configuration hostConfig;
-        Configuration etudesConfig;
     };
 }
 

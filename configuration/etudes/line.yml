@@ -1,0 +1,5 @@
+elements:
+  lines:
+    type: line
+    defaults:
+      color/base: 1, 0, 0

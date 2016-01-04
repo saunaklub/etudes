@@ -77,7 +77,6 @@ namespace etudes {
         bool success = true;
 
         hostConfig.read("configuration/host.yml");
-        etudesConfig.read("configuration/etudes.yml");
 
         std::string logLevel =
             hostConfig.getValue<std::string>("logging/loglevel");
@@ -127,9 +126,12 @@ namespace etudes {
     bool EtudesHost::initEtudes() {
         std::list<std::string> etudeList =
             hostConfig.getValue<std::list<std::string>>("etudes");
+
         for(auto &etude : etudeList) {
+            Configuration etudesConfig;
+            etudesConfig.read("configuration/etudes/" + etude + ".yml");
             etudes[etude] =
-                EtudeFactory::makeEtude(etudesConfig.getNode(etude));
+                EtudeFactory::makeEtude(etudesConfig.getNode(""));
         }
 
         currentEtude = etudes.begin();
