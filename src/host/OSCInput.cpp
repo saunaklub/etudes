@@ -61,11 +61,7 @@ namespace {
 
 namespace etudes {
 
-    using std::cout;
-    using std::cerr;
-    using std::endl;
     using std::string;
-
     using logging::LogLevel;
 
     OSCInput::OSCInput(const etude_map_t &etudes, int port) :
