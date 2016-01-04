@@ -10,12 +10,6 @@ namespace etudes {
     using std::string;
     using logging::LogLevel;
 
-    void Etude::registerInputs() {
-        for(auto &element : elements) {
-            element.second->registerInputs();
-        }
-    }
-
     void Etude::draw() {
         for(auto &element : elements) {
             element.second->draw();

@@ -28,6 +28,8 @@ namespace etudes {
             product = makeEtudeDefault(node);
         }
 
+        product->registerInputs();
+
         return product;
     }
 
@@ -44,8 +46,6 @@ namespace etudes {
         for(auto &element : elements)
             product->addElement(element.first,
                                 ElementFactory::makeElement(element.second));
-
-        product->registerInputs();
 
         return product;
     }
