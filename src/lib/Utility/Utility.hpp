@@ -13,6 +13,16 @@
 
 namespace etudes {
     glm::vec3 to_vec3(const std::vector<float> &vec);
+
+    template <typename T>
+    std::ostream &operator<<(std::ostream &os,
+                             const std::vector<T> &container) {
+        for(auto &e : container)
+            os << " " << e << " ";
+        os << std::endl;
+
+        return os;
+    }
 }
 
 #endif // ETUDES_UTILITY
