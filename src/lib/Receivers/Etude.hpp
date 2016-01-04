@@ -36,6 +36,8 @@ namespace etudes {
 
         void addElement(std::string name, std::unique_ptr<Element> element);
 
+        void dispatchValue(std::string input, vec_t value);
+
     private:
         typedef std::map<std::string, std::unique_ptr<Element>> element_map_t;
 

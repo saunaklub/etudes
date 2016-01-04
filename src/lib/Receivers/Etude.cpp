@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <string>
 
 #include <Utility/Logging.hpp>
@@ -6,6 +7,7 @@
 
 namespace etudes {
 
+    using std::string;
     using logging::LogLevel;
 
     void Etude::registerInputs() {
@@ -25,4 +27,22 @@ namespace etudes {
         elements[name] = std::move(element);
     }
 
+    void Etude::dispatchValue(std::string path, vec_t value) {
+        auto inputs = getInputs();
+        if(std::find(inputs.begin(), inputs.end(), path) != inputs.end()) {
+            setValue(path, value);
+            return;
+        }
+
+        string prefix = splitStringFirst(path);
+        if(elements.find(prefix) != elements.end()) {
+            elements[prefix]->setValue(splitStringRest(path), value);
+            return;
+        }
+
+        logging::log(
+            LogLevel::warning,
+            "Etude::dispatchValue: Unable to dispatch message with path: " +
+            path);
+    }
 }

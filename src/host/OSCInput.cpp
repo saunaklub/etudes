@@ -113,7 +113,7 @@ namespace etudes {
 
         auto iter = etudes.find(etude);
         if(iter != etudes.end())
-            iter->second->setValue(input, std::move(values));
+            iter->second->dispatchValue(input, std::move(values));
     }
 
 }
