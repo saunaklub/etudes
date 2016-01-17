@@ -21,6 +21,7 @@
 #include <string>
 #include <iostream>
 
+#include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 #include <Receivers/Etude.hpp>
 

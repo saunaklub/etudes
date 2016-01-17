@@ -11,8 +11,8 @@ namespace etudes {
     }
 
     std::string splitStringRest(std::string str, char separator) {
-        return str.substr(str.find(separator, 1) + 1,
-                          str.size() - str.find(separator, 1) - 1);
+        return str.substr(str.find(separator, 1),
+                          str.size() - str.find(separator, 1));
     }
 
 }
