@@ -23,18 +23,21 @@
 
 #include <memory>
 #include <vector>
+#include <map>
 
-#include <Receiver/ReceiverRegistry.hpp>
 #include <OSCInput.hpp>
 
-#include <Util/Configuration.hpp>
+#include <Utility/Configuration.hpp>
 
 struct GLFWwindow;
-class Etude;
 
 namespace etudes {
+    class Etude;
+
     class EtudesHost {
     public:
+        using etude_map_t = std::map<std::string, std::unique_ptr<Etude>>;
+
         friend void key_callback(GLFWwindow* window,
                                  int key, int scancode, int action, int mods);
 
@@ -58,25 +61,20 @@ namespace etudes {
         void processInput();
         void keyCallback(int, int, int, int);
 
-        template<class T>
-        void makeEtude(std::string name);
-
         void nextEtude();
         void prevEtude();
-        void printEtude();
 
         void render();
 
         GLFWwindow *window;
         bool quitLoop;
 
-        std::vector<std::shared_ptr<Etude>> etudes;
-        std::vector<std::shared_ptr<Etude>>::const_iterator curEtude;
+        etude_map_t etudes;
+        etude_map_t::const_iterator currentEtude;
 
-        ReceiverRegistry registry;
         OSCInput oscInput;
 
-        Configuration config;
+        Configuration hostConfig;
     };
 }
 

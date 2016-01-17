@@ -18,22 +18,29 @@
 
 */
 
-#ifndef ETUDES_ETUDETRIANGLES
-#define ETUDES_ETUDETRIANGLES
+#ifndef ETUDES_ETUDE
+#define ETUDES_ETUDE
 
-#include "Etude.hpp"
+#include <memory>
+#include <string>
+
+#include <Receivers/Element.hpp>
 
 namespace etudes {
-    class EtudeTriangles : public Etude {
+    class Etude : public Element {
     public:
-        EtudeTriangles() {};
-        virtual ~EtudeTriangles() {};
+        virtual ~Etude() {};
 
-        std::string whoami() override;
         void draw() override;
 
+        void addElement(std::string name, std::unique_ptr<Element> element);
+        void dispatchValue(std::string input, vec_t value);
+
     private:
+        typedef std::map<std::string, std::unique_ptr<Element>> element_map_t;
+
+        element_map_t elements;
     };
 }
 
-#endif // ETUDES_ETUDETRIANGLES
+#endif // ETUDES_ETUDE

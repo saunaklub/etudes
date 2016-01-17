@@ -28,16 +28,31 @@ using namespace gl;
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
-#include <Util/Configuration.hpp>
+#include <Utility/Logging.hpp>
+#include <Utility/Configuration.hpp>
 
-#include <Etudes/EtudeTriangles.hpp>
-#include <Etudes/EtudeLines.hpp>
+#include <Factories/EtudeFactory.hpp>
 
+#include <Receivers/Etude.hpp>
 #include <OSCInput.hpp>
 
 #include "EtudesHost.hpp"
 
+namespace {
+    using etudes::logging::LogLevel;
+
+    std::map<std::string, LogLevel> logLevelMap = {
+        {"none", LogLevel::none},
+        {"info", LogLevel::info},
+        {"warning", LogLevel::warning},
+        {"error", LogLevel::error},
+        {"debug", LogLevel::debug},
+        {"excessive", LogLevel::excessive}
+    };
+}
+
 namespace etudes {
+
     void error_callback(int error, const char * description) {
         std::cerr << description << std::endl;
     };
@@ -52,7 +67,7 @@ namespace etudes {
     EtudesHost::EtudesHost() :
         window(nullptr),
         quitLoop(false),
-        oscInput(registry, 6666) {
+        oscInput(etudes, 6666) {
     }
 
     EtudesHost::~EtudesHost() {
@@ -61,7 +76,12 @@ namespace etudes {
     bool EtudesHost::initialise() {
         bool success = true;
 
-        config.read("configuration/host.yml");
+        hostConfig.read("configuration/host.yml");
+
+        std::string logLevel =
+            hostConfig.getValue<std::string>("logging/loglevel");
+
+        logging::setLogLevel(logLevelMap[logLevel]);
 
         success &= initGLFW();
         success &= initEtudes();
@@ -78,8 +98,8 @@ namespace etudes {
             exit(EXIT_FAILURE);
 
         window = glfwCreateWindow(
-            config.getValue<int>("host/window/size_x"),
-            config.getValue<int>("host/window/size_y"),
+            hostConfig.getValue<int>("window/size_x"),
+            hostConfig.getValue<int>("window/size_y"),
             "Études audiovisuel", NULL, NULL);
 
         if(window == nullptr){
@@ -104,12 +124,17 @@ namespace etudes {
     }
 
     bool EtudesHost::initEtudes() {
-        makeEtude<EtudeLines>("lines");
-        makeEtude<EtudeTriangles>("triangles");
+        std::list<std::string> etudeList =
+            hostConfig.getValue<std::list<std::string>>("etudes");
 
-        curEtude = etudes.begin();
+        for(auto &etude : etudeList) {
+            Configuration etudesConfig;
+            etudesConfig.read("configuration/etudes/" + etude + ".yml");
+            etudes[etude] =
+                EtudeFactory::makeEtude(etudesConfig.getNode(""));
+        }
 
-        printEtude();
+        currentEtude = etudes.begin();
 
         return true;
     }
@@ -146,42 +171,25 @@ namespace etudes {
 
             case GLFW_KEY_N:
                 nextEtude();
-                printEtude();
                 break;
 
             case GLFW_KEY_P:
                 prevEtude();
-                printEtude();
                 break;
             }
         }
     }
 
-    template<class T>
-    void EtudesHost::makeEtude(std::string name) {
-        auto p = std::make_shared<T>();
-        etudes.emplace_back(p);
-        registry.registerReceiver(name, p);
-    }
-
     void EtudesHost::nextEtude() {
-        curEtude++;
-        if(curEtude == etudes.end())
-            curEtude = etudes.begin();
+        currentEtude++;
+        if(currentEtude == etudes.end())
+            currentEtude = etudes.begin();
     }
 
     void EtudesHost::prevEtude() {
-        if(curEtude == etudes.begin())
-            curEtude = etudes.end();
-        curEtude--;
-    }
-
-    void EtudesHost::printEtude() {
-        int index = curEtude - etudes.begin();
-
-        std::cout << "Étude "
-                  << std::setfill('0') << std::setw(2) << index << ": "
-                  << (*curEtude)->whoami() << std::endl;
+        if(currentEtude == etudes.begin())
+            currentEtude = etudes.end();
+        currentEtude--;
     }
 
     void EtudesHost::render() {
@@ -197,8 +205,9 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        (*curEtude)->draw();
+        currentEtude->second->draw();
 
         glfwSwapBuffers(window);
     }
+
 }

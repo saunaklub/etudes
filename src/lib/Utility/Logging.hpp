@@ -22,9 +22,12 @@
 #define ETUDES_LOGGING
 
 #include <string>
+#include <iostream>
 
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
+
+#include <Utility/Utility.hpp>
 
 using namespace std::literals::string_literals;
 
@@ -40,10 +43,43 @@ namespace etudes {
             excessive
         };
 
-        void log(LogLevel level, std::string message);
+        extern LogLevel logLevelMax;
+
+        void setLogLevel(LogLevel loglevel);
+
+        template <typename T>
+        void log(LogLevel logLevel, const T &object) {
+            using std::cout;
+            using std::cerr;
+            using std::endl;
+
+            if(logLevel > logLevelMax)
+                return;
+
+            switch(logLevel) {
+            case error:
+                cerr << "ERROR: " << object << endl;
+                break;
+            case warning:
+                cerr << "WARNING: " << object << endl;
+                break;
+            case info:
+                cerr << "INFO: " << object << endl;
+                break;
+            case debug:
+                cerr << "DEBUG: " << object << endl;
+                break;
+            case excessive:
+                cerr << object << endl;
+                break;
+            default:
+                break;
+            }
+        }
 
         std::string to_string(const glm::vec2 &vec);
         std::string to_string(const glm::vec3 &vec);
+
     }
 }
 

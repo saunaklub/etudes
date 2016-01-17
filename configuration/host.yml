@@ -1,5 +1,11 @@
-host:
-  window:
-    size_x: 600
-    size_y: 600
+window:
+  size_x: 600
+  size_y: 600
+  fullscreen: true
 
+logging:
+  loglevel: debug
+
+etudes:
+  - line
+  - grid

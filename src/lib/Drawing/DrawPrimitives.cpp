@@ -24,7 +24,7 @@
 #include <glbinding/Binding.h>
 using namespace gl;
 
-#include <Util/Logging.hpp>
+#include <Utility/Logging.hpp>
 
 #include "DrawPrimitives.hpp"
 

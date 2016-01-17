@@ -1,0 +1,24 @@
+elements:
+  lines1:
+    type: line
+    defaults:
+      /width/base: [3]
+      /distance/base: [0.1]
+      /distance/amplitude: [0.05]
+      /distance/omega: [.5]
+      /distance/lambda: [.15]
+      /color/base: [1.0, 0.5, 0.5]
+      /color/amplitude: [0.0, 0.1, -0.1]
+      /color/omega: [1.0]
+  lines2:
+    type: line
+    defaults:
+      /angle: [1.57079632679489661922]
+      /width/base: [3]
+      /distance/base: [0.08]
+      /distance/amplitude: [0.05]
+      /distance/omega: [1]
+      /distance/lambda: [.1]
+      /color/base: [0.0, 0.5, 0.5]
+      /color/amplitude: [0.0, 0.1, 0.0]
+      /color/omega: [1.0]

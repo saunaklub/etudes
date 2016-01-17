@@ -5,7 +5,7 @@ project(etudes)
 cmake_minimum_required(VERSION 3.0)
 
 add_executable(${CLIENT}
-    src/main.cpp
+    src/host/main.cpp
     src/host/EtudesHost.cpp
     src/host/OSCInput.cpp
     )
@@ -22,17 +22,17 @@ endif()
 
 add_library(${LIBRARY}
     SHARED
-    src/lib/Util/Utilities.cpp
-    src/lib/Util/Logging.cpp
-    src/lib/Util/Configuration.cpp
+    src/lib/Utility/Utility.cpp
+    src/lib/Utility/Logging.cpp
+    src/lib/Utility/Configuration.cpp
     src/lib/Shader/ShaderRegistry.cpp
-    src/lib/Receiver/Receiver.cpp
-    src/lib/Receiver/ReceiverRegistry.cpp
+    src/lib/Factories/ElementFactory.cpp
+    src/lib/Factories/EtudeFactory.cpp
+    src/lib/Receivers/Receiver.cpp
+    src/lib/Receivers/Etude.cpp
     src/lib/Drawing/DrawPrimitives.cpp
     src/lib/Drawing/ModulationFuncs.cpp
-    src/lib/Etudes/EtudeTemplate.cpp
-    src/lib/Etudes/EtudeTriangles.cpp
-    src/lib/Etudes/EtudeLines.cpp
+    src/lib/Elements/ElementLine.cpp
     )
 
 set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)

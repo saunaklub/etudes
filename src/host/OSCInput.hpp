@@ -21,17 +21,22 @@
 #ifndef ETUDES_OSCINPUT
 #define ETUDES_OSCINPUT
 
+#include <memory>
+#include <map>
+
 #include <lo/lo.h>
 
-#include <Receiver/ReceiverRegistry.hpp>
 #include "OSCInput.hpp"
 
 
 namespace etudes {
+    class Etude;
+
     class OSCInput {
     public:
-        OSCInput(ReceiverRegistry &registry,
-                       int port);
+        using etude_map_t = std::map<std::string, std::unique_ptr<Etude>>;
+
+        OSCInput(const etude_map_t &receivers, int port);
         virtual ~OSCInput();
 
         void start();
@@ -41,7 +46,7 @@ namespace etudes {
                     std::vector<float> values);
 
     private:
-        ReceiverRegistry &registry;
+        const etude_map_t &etudes;
 
         int port;
         lo_server_thread oscServer;

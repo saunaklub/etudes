@@ -21,8 +21,9 @@
 #include <string>
 #include <iostream>
 
-#include <Util/Logging.hpp>
-#include <Receiver/Receiver.hpp>
+#include <Utility/Utility.hpp>
+#include <Utility/Logging.hpp>
+#include <Receivers/Etude.hpp>
 
 #include "OSCInput.hpp"
 
@@ -61,14 +62,11 @@ namespace {
 
 namespace etudes {
 
-    using std::cout;
-    using std::cerr;
-    using std::endl;
     using std::string;
+    using logging::LogLevel;
 
-    OSCInput::OSCInput(ReceiverRegistry& registry,
-                                   int port) :
-        registry(registry),
+    OSCInput::OSCInput(const etude_map_t &etudes, int port) :
+        etudes(etudes),
         port(port),
         started(false) {
     }
@@ -107,22 +105,16 @@ namespace etudes {
     }
 
     void OSCInput::update(std::string path,
-                                std::vector<float> values) {
-        string receiver = path.substr(1, path.find('/', 1)-1);
-        string input = path.substr(path.find('/', 1) + 1,
-                                   path.size() - path.find('/', 1) - 1);
+                          std::vector<float> values) {
+        string etude = splitStringFirst(path);
+        string input = splitStringRest(path);
 
-        cout << receiver << " : " << input;
-        for(auto &v : values)
-            cout << " " << v << " ";
-        cout << endl;
+        logging::log(LogLevel::excessive, etude + ": " + input);
+        logging::log(LogLevel::excessive, values);
 
-        try {
-            registry.getReceiver(receiver).setValue(input, std::move(values));
-        }
-        catch(std::invalid_argument e) {
-            cerr << e.what() << endl;
-        }
+        auto iter = etudes.find(etude);
+        if(iter != etudes.end())
+            iter->second->dispatchValue(input, std::move(values));
     }
 
 }
