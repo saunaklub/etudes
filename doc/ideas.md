@@ -75,3 +75,4 @@ http://zeptobars.ru/en/read/open-microchip-asic-what-inside-II-msp430-pic-z80
 ##### assorted links
 
 expressive 2015 http://expressive.richardt.name/2015/
+https://en.wikipedia.org/wiki/Patterns_in_nature
