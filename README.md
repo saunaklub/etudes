@@ -84,7 +84,7 @@ project, please do not hesitate to get in touch with us!
 Bug tracking, pull requests, and discussion about specific issues
 happens on GitHub. For more general user and developer discussion and
 support, please write to the **TODO** mailing list. We are also
-regularly in #etudes on the FreeNode IRC network, come over and hang
+regularly in #etudes on the FreeNode IRC network. Come over and hang
 out for a while, we are always happy about visitors!
 
 We don't make any fuss about a coding style rulebook. If you want to
