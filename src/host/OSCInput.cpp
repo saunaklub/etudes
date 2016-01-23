@@ -86,6 +86,9 @@ namespace etudes {
         lo_server_thread_add_method(
             oscServer, NULL, "f",
             float_handler, this);
+        lo_server_thread_add_method(
+            oscServer, NULL, "fff",
+            float_handler, this);
 
         if(lo_server_thread_start(oscServer) != 0)
             throw(std::runtime_error(
