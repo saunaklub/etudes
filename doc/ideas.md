@@ -2,6 +2,20 @@
 
 - rotated grids centre pompidou
 
+##### tiles and symmetry groups
+
+https://en.wikipedia.org/wiki/Truchet_tiles
+https://en.wikipedia.org/wiki/Girih_tiles
+https://en.wikipedia.org/wiki/Aperiodic_tiling
+https://en.wikipedia.org/wiki/Penrose_tiling
+https://en.wikipedia.org/wiki/List_of_aperiodic_sets_of_tiles
+https://en.wikipedia.org/wiki/Quasicrystal
+https://en.wikipedia.org/wiki/Islamic_geometric_patterns
+https://en.wikipedia.org/wiki/Wallpaper_group
+
+http://www.clarku.edu/~djoyce/wallpaper/seventeen.html
+http://www.geom.uiuc.edu/
+
 ##### text rendering
 
 ##### SVG
@@ -76,3 +90,4 @@ http://zeptobars.ru/en/read/open-microchip-asic-what-inside-II-msp430-pic-z80
 
 expressive 2015 http://expressive.richardt.name/2015/
 https://en.wikipedia.org/wiki/Patterns_in_nature
+https://en.wikipedia.org/wiki/Mathematics_and_art
