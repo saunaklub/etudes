@@ -16,7 +16,7 @@ namespace etudes {
     using YAML::Node;
 
     std::unique_ptr<Etude>
-    EtudeFactory::makeEtude(const Node &node) {
+    EtudeFactory::makeEtude(std::string name, const Node &node) {
         std::unique_ptr<Etude> product;
 
         if(node["type"]) {
@@ -24,7 +24,7 @@ namespace etudes {
             std::string type = node["type"].as<std::string>();
         }
         else {
-            // else
+            log(LogLevel::debug, "Creating default etude '" + name + "'");
             product = makeEtudeDefault(node);
         }
 
@@ -37,7 +37,6 @@ namespace etudes {
     EtudeFactory::makeEtudeDefault(const Node &node) {
         std::unique_ptr<Etude> product = std::make_unique<Etude>();
 
-        log(LogLevel::debug, "Creating default etude");
         log(LogLevel::excessive, node["elements"]);
 
         std::map<std::string, Node> elements =

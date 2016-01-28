@@ -12,7 +12,7 @@ namespace etudes {
     class EtudeFactory {
     public:
         static std::unique_ptr<Etude>
-        makeEtude(const YAML::Node &config);
+        makeEtude(std::string name, const YAML::Node &config);
 
     private:
         static std::unique_ptr<Etude>

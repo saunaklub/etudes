@@ -21,6 +21,8 @@
 #include <iostream>
 #include <iomanip>
 
+#include <yaml-cpp/yaml.h>
+
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
 using namespace gl;
@@ -39,6 +41,8 @@ using namespace gl;
 #include "EtudesHost.hpp"
 
 namespace {
+    using YAML::Node;
+
     using etudes::logging::LogLevel;
 
     std::map<std::string, LogLevel> logLevelMap = {
@@ -128,10 +132,12 @@ namespace etudes {
             hostConfig.getValue<std::list<std::string>>("etudes");
 
         for(auto &etude : etudeList) {
-            Configuration etudesConfig;
-            etudesConfig.read("configuration/etudes/" + etude + ".yml");
+            Configuration etudeConfig;
+            etudeConfig.read("configuration/etudes/" + etude + ".yml");
+
+            Node node = etudeConfig.getNode("");
             etudes[etude] =
-                EtudeFactory::makeEtude(etudesConfig.getNode(""));
+                EtudeFactory::makeEtude(etude, node);
         }
 
         currentEtude = etudes.begin();
