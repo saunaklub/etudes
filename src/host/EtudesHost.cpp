@@ -98,8 +98,8 @@ namespace etudes {
             exit(EXIT_FAILURE);
 
         window = glfwCreateWindow(
-            hostConfig.getValue<int>("window/size_x"),
-            hostConfig.getValue<int>("window/size_y"),
+            hostConfig.getValue<int>("window/width"),
+            hostConfig.getValue<int>("window/height"),
             "Études audiovisuel", NULL, NULL);
 
         if(window == nullptr){

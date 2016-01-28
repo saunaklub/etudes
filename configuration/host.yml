@@ -1,6 +1,6 @@
 window:
-  size_x: 600
-  size_y: 600
+  width:  600
+  height: 600
   fullscreen: true
 
 logging:
