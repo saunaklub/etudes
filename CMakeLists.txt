@@ -20,6 +20,10 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     add_definitions("-DDEBUG")
 endif()
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    add_definitions("-DLINUX")
+endif()
+
 add_library(${LIBRARY}
     SHARED
     src/lib/Utility/Utility.cpp
