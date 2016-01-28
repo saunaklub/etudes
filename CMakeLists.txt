@@ -42,7 +42,7 @@ find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 find_package(glfw CONFIG NAMES glfw glfw3)
-find_package(yaml-cpp REQUIRED)
+find_package(yaml-cpp)
 
 pkg_search_module(LIBLO REQUIRED liblo)
 
