@@ -42,8 +42,8 @@ find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 find_package(glfw CONFIG NAMES glfw glfw3)
-find_package(yaml-cpp)
 
+pkg_search_module(YAML_CPP REQUIRED yaml-cpp)
 pkg_search_module(LIBLO REQUIRED liblo)
 
 target_include_directories(${CLIENT}
@@ -57,7 +57,7 @@ target_include_directories(${CLIENT}
 target_include_directories(${LIBRARY}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
     PUBLIC ${GLM_INCLUDE_DIRS}
-    PUBLIC ${YAML_CPP_INCLUDE_DIR}
+    PUBLIC ${YAML_CPP_INCLUDE_DIRS}
     )
 
 target_link_libraries(${CLIENT}
@@ -69,7 +69,7 @@ target_link_libraries(${CLIENT}
     )
 
 target_link_libraries(${LIBRARY}
-    PUBLIC yaml-cpp
+    PUBLIC ${YAML_CPP_LIBRARIES}
     PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${GLBINDING_LIBRARIES}
