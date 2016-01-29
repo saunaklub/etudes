@@ -33,10 +33,12 @@ struct GLFWwindow;
 
 namespace etudes {
     class Etude;
+    class VideoOutput;
 
     class EtudesHost {
     public:
         using etude_map_t = std::map<std::string, std::unique_ptr<Etude>>;
+        using output_vec_t = std::vector<std::unique_ptr<VideoOutput>>;
 
         friend void key_callback(GLFWwindow* window,
                                  int key, int scancode, int action, int mods);
@@ -65,12 +67,16 @@ namespace etudes {
         void prevEtude();
 
         void render();
+        void renderOutputs();
+        void renderScreen();
 
         GLFWwindow *window;
         bool quitLoop;
 
         etude_map_t etudes;
         etude_map_t::const_iterator currentEtude;
+
+        output_vec_t videoOutputs;
 
         OSCInput oscInput;
 

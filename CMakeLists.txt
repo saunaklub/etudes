@@ -8,6 +8,8 @@ add_executable(${CLIENT}
     src/host/main.cpp
     src/host/EtudesHost.cpp
     src/host/IO/OSCInput.cpp
+    src/host/IO/VideoOutput.cpp
+    src/host/IO/VideoOutputV4L2.cpp
     )
 
 set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)

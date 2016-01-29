@@ -32,12 +32,11 @@ using namespace gl;
 
 #include <Utility/Logging.hpp>
 #include <Utility/Configuration.hpp>
-
 #include <Factories/EtudeFactory.hpp>
-
 #include <Receivers/Etude.hpp>
 
 #include <IO/OSCInput.hpp>
+#include <IO/VideoOutputV4L2.hpp>
 
 #include "EtudesHost.hpp"
 
@@ -139,6 +138,16 @@ namespace etudes {
             Node node = etudeConfig.getNode("");
             etudes[etude] =
                 EtudeFactory::makeEtude(etude, node);
+
+#ifdef LINUX
+            if(node["output"] && node["output"]["enabled"].as<bool>()) {
+                log(LogLevel::debug,
+                    "Creating video output for '" + etude + "'");
+                videoOutputs.push_back(
+                    std::make_unique<VideoOutputV4L2>(etudes[etude].get())
+                    );
+            }
+#endif
         }
 
         currentEtude = etudes.begin();
@@ -200,6 +209,16 @@ namespace etudes {
     }
 
     void EtudesHost::render() {
+        renderOutputs();
+        renderScreen();
+    }
+
+    void EtudesHost::renderOutputs() {
+        for(auto &output : videoOutputs)
+            output->render();
+    }
+
+    void EtudesHost::renderScreen() {
         int width, height;
         glfwGetFramebufferSize(window, &width, &height);
 
