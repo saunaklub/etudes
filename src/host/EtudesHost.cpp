@@ -36,7 +36,8 @@ using namespace gl;
 #include <Factories/EtudeFactory.hpp>
 
 #include <Receivers/Etude.hpp>
-#include <OSCInput.hpp>
+
+#include <IO/OSCInput.hpp>
 
 #include "EtudesHost.hpp"
 

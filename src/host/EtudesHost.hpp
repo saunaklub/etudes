@@ -25,7 +25,7 @@
 #include <vector>
 #include <map>
 
-#include <OSCInput.hpp>
+#include <IO/OSCInput.hpp>
 
 #include <Utility/Configuration.hpp>
 

@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.0)
 add_executable(${CLIENT}
     src/host/main.cpp
     src/host/EtudesHost.cpp
-    src/host/OSCInput.cpp
+    src/host/IO/OSCInput.cpp
     )
 
 set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
