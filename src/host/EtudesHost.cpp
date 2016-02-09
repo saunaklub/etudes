@@ -143,9 +143,13 @@ namespace etudes {
             if(node["output"] && node["output"]["enabled"].as<bool>()) {
                 log(LogLevel::debug,
                     "Creating video output for '" + etude + "'");
-                videoOutputs.push_back(
-                    std::make_unique<VideoOutputV4L2>(etudes[etude].get())
-                    );
+                std::unique_ptr<VideoOutput> out =
+                    std::make_unique<VideoOutputV4L2>(
+                        etudes[etude].get(),
+                        node["output"]["width"].as<int>(),
+                        node["output"]["height"].as<int>());
+                out->createOutput(node["output"]["name"].as<std::string>());
+                videoOutputs.push_back(std::move(out));
             }
 #endif
         }
