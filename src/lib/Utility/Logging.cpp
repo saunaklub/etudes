@@ -18,7 +18,7 @@ namespace etudes {
                 ", "s + std::to_string(vec[2]) + ")"s;
         }
 
-        void setLogLevel(LogLevel logLevel) {
+        void setLogLevelMax(LogLevel logLevel) {
             logLevelMax = logLevel;
         }
     }

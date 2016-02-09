@@ -85,7 +85,7 @@ namespace etudes {
         std::string logLevel =
             hostConfig.getValue<std::string>("logging/loglevel");
 
-        logging::setLogLevel(logLevelMap[logLevel]);
+        logging::setLogLevelMax(logLevelMap[logLevel]);
 
         success &= initGLFW();
         success &= initEtudes();

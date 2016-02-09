@@ -44,11 +44,10 @@ namespace etudes {
         };
 
         extern LogLevel logLevelMax;
-
-        void setLogLevel(LogLevel loglevel);
+        void setLogLevelMax(LogLevel loglevel);
 
         template <typename T>
-        void log(LogLevel logLevel, const T &object) {
+        void log(LogLevel logLevel, const T &object, bool newline=true) {
             using std::cout;
             using std::cerr;
             using std::endl;
@@ -56,30 +55,44 @@ namespace etudes {
             if(logLevel > logLevelMax)
                 return;
 
+            std::ostream *os;
+            std::string prefix = "";
+
             switch(logLevel) {
+            case none:
+                os =  nullptr;
+                break;
             case error:
-                cerr << "ERROR: " << object << endl;
+                os =  &cerr;
+                prefix = "ERROR: ";
                 break;
             case warning:
-                cerr << "WARNING: " << object << endl;
+                os =  &cerr;
+                prefix = "WARNING: ";
                 break;
             case info:
-                cerr << "INFO: " << object << endl;
+                os =  &cout;
+                prefix = "INFO: ";
                 break;
             case debug:
-                cerr << "DEBUG: " << object << endl;
+                os =  &cout;
+                prefix = "DEBUG: ";
                 break;
             case excessive:
-                cerr << object << endl;
+                os =  &cout;
                 break;
             default:
                 break;
+            }
+
+            if(os) {
+                (*os) << prefix << object;
+                if(newline) (*os) << endl;
             }
         }
 
         std::string to_string(const glm::vec2 &vec);
         std::string to_string(const glm::vec3 &vec);
-
     }
 }
 
