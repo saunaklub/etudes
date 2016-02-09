@@ -70,4 +70,5 @@ namespace etudes {
     template std::list<std::string>
     Configuration::getValue<std::list<std::string>>(std::string path);
     template int Configuration::getValue<int>(std::string path);
+    template bool Configuration::getValue<bool>(std::string path);
 }

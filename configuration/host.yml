@@ -4,7 +4,8 @@ window:
   fullscreen: true
 
 logging:
-  loglevel: excessive
+  logLevel: excessive
+  framerate: false
 
 etudes:
   - line

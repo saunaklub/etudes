@@ -71,7 +71,8 @@ namespace etudes {
     EtudesHost::EtudesHost() :
         window(nullptr),
         quitLoop(false),
-        oscInput(etudes, 6666) {
+        oscInput(etudes, 6666),
+        logFramerate(false) {
     }
 
     EtudesHost::~EtudesHost() {
@@ -83,9 +84,10 @@ namespace etudes {
         hostConfig.read("configuration/host.yml");
 
         std::string logLevel =
-            hostConfig.getValue<std::string>("logging/loglevel");
+            hostConfig.getValue<std::string>("logging/logLevel");
 
         logging::setLogLevelMax(logLevelMap[logLevel]);
+        logFramerate = hostConfig.getValue<bool>("logging/framerate");
 
         success &= initGLFW();
         success &= initEtudes();
@@ -160,11 +162,17 @@ namespace etudes {
     }
 
     bool EtudesHost::loopIteration() {
+        long t0 = microSeconds();
+
         processInput();
         if(quitLoop)
             return false;
 
         render();
+
+        if(logFramerate)
+            log(LogLevel::excessive, "rendering at " +
+                std::to_string(1000000.0/(microSeconds()-t0)) + " fps");
 
         return true;
     }

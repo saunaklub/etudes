@@ -81,6 +81,7 @@ namespace etudes {
         OSCInput oscInput;
 
         Configuration hostConfig;
+        bool logFramerate;
     };
 }
 
