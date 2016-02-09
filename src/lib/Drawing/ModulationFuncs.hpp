@@ -26,26 +26,9 @@
 #include <glm/vec3.hpp>
 
 #include <functional>
-#include <chrono>
 #include <iostream>
 
-namespace {
-    typedef std::chrono::steady_clock clock_t;
-    using std::chrono::duration_cast;
-    using std::chrono::duration;
-    using std::chrono::microseconds;
-
-    auto t0 = clock_t::now();
-
-    long microSeconds() {
-        auto diff =  duration_cast<microseconds>(clock_t::now() - t0);
-        return diff.count();
-    }
-
-    double seconds() {
-        return microSeconds() / 1000000.0;
-    }
-}
+#include <Utility/Utility.hpp>
 
 namespace etudes {
     using std::function;
@@ -82,7 +65,5 @@ namespace etudes {
             };
         }
 }
-
-
 
 #endif

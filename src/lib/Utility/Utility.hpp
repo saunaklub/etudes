@@ -17,6 +17,9 @@ namespace etudes {
     std::string splitStringFirst(std::string str, char separator='/');
     std::string splitStringRest(std::string str, char separator='/');
 
+    long microSeconds();
+    double seconds();
+
     template <typename T>
     std::ostream &operator<<(std::ostream &os,
                              const std::vector<T> &container) {

@@ -1,6 +1,24 @@
+#include <chrono>
+
 #include "Utility.hpp"
 
 namespace etudes {
+
+    typedef std::chrono::steady_clock clock_t;
+    using std::chrono::duration_cast;
+    using std::chrono::duration;
+    using std::chrono::microseconds;
+
+    auto t0 = clock_t::now();
+
+    long microSeconds() {
+        auto diff =  duration_cast<microseconds>(clock_t::now() - t0);
+        return diff.count();
+    }
+
+    double seconds() {
+        return microSeconds() / 1000000.0;
+    }
 
     glm::vec3 to_vec3(const std::vector<float> &vec) {
         return glm::vec3(vec[0], vec[1], vec[2]);
