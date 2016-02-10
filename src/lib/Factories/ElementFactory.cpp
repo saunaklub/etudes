@@ -6,6 +6,7 @@
 #include <Utility/Utility.hpp>
 
 #include <Elements/Lines.hpp>
+#include <Elements/Particles.hpp>
 
 #include "ElementFactory.hpp"
 
@@ -17,6 +18,7 @@ namespace etudes {
     std::map<std::string, ElementFactory::creation_t>
     ElementFactory::creationMap = {
         {"line", ElementFactory::createElement<Lines>},
+        {"particles", ElementFactory::createElement<Particles>}
     };
 
     std::unique_ptr<Element>

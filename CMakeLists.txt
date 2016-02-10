@@ -39,6 +39,7 @@ add_library(${LIBRARY}
     src/lib/Drawing/DrawPrimitives.cpp
     src/lib/Drawing/ModulationFuncs.cpp
     src/lib/Elements/Lines.cpp
+    src/lib/Elements/Particles.cpp
     )
 
 set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)

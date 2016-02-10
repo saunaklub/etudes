@@ -4,9 +4,10 @@ window:
   fullscreen: true
 
 logging:
-  logLevel: excessive
+  logLevel: debug
   framerate: false
 
 etudes:
   - line
   - grid
+  - particles

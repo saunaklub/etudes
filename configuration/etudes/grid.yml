@@ -1,11 +1,10 @@
 output:
-  enabled: true
+  enabled: false
   name: /dev/video1
-  width:  800
+  width:  600
   height: 600
 
 elements:
-
   lines1:
     type: line
     defaults:
@@ -17,7 +16,6 @@ elements:
       /color/base: [1.0, 0.5, 0.5]
       /color/amplitude: [0.0, 0.1, -0.1]
       /color/omega: [1.0]
-
   lines2:
     type: line
     defaults:
