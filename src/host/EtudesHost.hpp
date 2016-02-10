@@ -37,7 +37,8 @@ namespace etudes {
 
     class EtudesHost {
     public:
-        using etude_map_t = std::map<std::string, std::unique_ptr<Etude>>;
+        using etudes_t =
+            std::vector<std::pair<std::string, std::unique_ptr<Etude>>>;
         using output_vec_t = std::vector<std::unique_ptr<VideoOutput>>;
 
         friend void key_callback(GLFWwindow* window,
@@ -73,8 +74,8 @@ namespace etudes {
         GLFWwindow *window;
         bool quitLoop;
 
-        etude_map_t etudes;
-        etude_map_t::const_iterator currentEtude;
+        etudes_t etudes;
+        etudes_t::const_iterator currentEtude;
 
         output_vec_t videoOutputs;
 

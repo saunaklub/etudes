@@ -138,8 +138,8 @@ namespace etudes {
             etudeConfig.read("configuration/etudes/" + etude + ".yml");
 
             Node node = etudeConfig.getNode("");
-            etudes[etude] =
-                EtudeFactory::makeEtude(etude, node);
+            etudes.push_back(
+                std::make_pair(etude, EtudeFactory::makeEtude(etude, node)));
 
 #ifdef LINUX
             if(node["output"] && node["output"]["enabled"].as<bool>()) {
@@ -147,7 +147,7 @@ namespace etudes {
                     "Creating video output for '" + etude + "'");
                 std::unique_ptr<VideoOutput> out =
                     std::make_unique<VideoOutputV4L2>(
-                        etudes[etude].get(),
+                        etudes.back().second.get(),
                         node["output"]["width"].as<int>(),
                         node["output"]["height"].as<int>());
                 out->createOutput(node["output"]["name"].as<std::string>());

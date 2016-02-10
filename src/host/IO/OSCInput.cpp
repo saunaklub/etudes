@@ -18,6 +18,7 @@
 
 */
 
+#include <algorithm>
 #include <string>
 #include <iostream>
 
@@ -65,7 +66,7 @@ namespace etudes {
     using std::string;
     using logging::LogLevel;
 
-    OSCInput::OSCInput(const etude_map_t &etudes, int port) :
+    OSCInput::OSCInput(const etudes_t &etudes, int port) :
         etudes(etudes),
         port(port),
         started(false) {
@@ -115,7 +116,10 @@ namespace etudes {
         logging::log(LogLevel::excessive, etude + ": " + input);
         logging::log(LogLevel::excessive, values);
 
-        auto iter = etudes.find(etude);
+        auto iter = std::find_if(etudes.begin(), etudes.end(),
+                                 [&](const auto &e)  {
+                                     return(e.first == etude);
+                                 });
         if(iter != etudes.end())
             iter->second->dispatchValue(input, std::move(values));
     }

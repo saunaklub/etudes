@@ -34,9 +34,10 @@ namespace etudes {
 
     class OSCInput {
     public:
-        using etude_map_t = std::map<std::string, std::unique_ptr<Etude>>;
+        using etudes_t =
+            std::vector<std::pair<std::string, std::unique_ptr<Etude>>>;
 
-        OSCInput(const etude_map_t &receivers, int port);
+        OSCInput(const etudes_t &etudes, int port);
         virtual ~OSCInput();
 
         void start();
@@ -46,7 +47,7 @@ namespace etudes {
                     std::vector<float> values);
 
     private:
-        const etude_map_t &etudes;
+        const etudes_t &etudes;
 
         int port;
         lo_server_thread oscServer;
