@@ -5,7 +5,7 @@
 #include <Drawing/ModulationFuncs.hpp>
 #include <Drawing/DrawPrimitives.hpp>
 
-#include "ElementLine.hpp"
+#include "Lines.hpp"
 
 namespace etudes {
     using glm::pi;
@@ -13,7 +13,7 @@ namespace etudes {
 
     typedef std::vector<float> vecf;
 
-    void ElementLine::registerInputs() {
+    void Lines::registerInputs() {
         registerInput("/count", {100.0f});
         registerInput("/angle", {pi<float>()/2.0f});
 
@@ -32,7 +32,7 @@ namespace etudes {
         registerInput("/color/lambda",    {0.0f});
     }
 
-    void ElementLine::draw() {
+    void Lines::draw() {
         auto dist_b = getValue<float>("/distance/base");
         auto dist_a = getValue<float>("/distance/amplitude");
         auto dist_o = getValue<float>("/distance/omega");

@@ -38,7 +38,7 @@ add_library(${LIBRARY}
     src/lib/Receivers/Etude.cpp
     src/lib/Drawing/DrawPrimitives.cpp
     src/lib/Drawing/ModulationFuncs.cpp
-    src/lib/Elements/ElementLine.cpp
+    src/lib/Elements/Lines.cpp
     )
 
 set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)

@@ -23,8 +23,14 @@ namespace etudes {
 
         static std::map<std::string, creation_t> creationMap;
 
-        static std::unique_ptr<Element>
-        makeLineElement(const YAML::Node &config);
+        template <typename T> static
+        std::unique_ptr<Element>
+        createElement(const YAML::Node &node) {
+            std::unique_ptr<Element> product =
+                std::make_unique<T>();
+            return product;
+        }
+
     };
 }
 

@@ -1,10 +1,10 @@
-#ifndef ETUDES_ELEMENTLINE
-#define ETUDES_ELEMENTLINE
+#ifndef ETUDES_LINES
+#define ETUDES_LINES
 
 #include <Receivers/Element.hpp>
 
 namespace etudes {
-    class ElementLine : public Element {
+    class Lines : public Element {
     public:
         void registerInputs() override;
         void draw() override;
@@ -13,4 +13,4 @@ namespace etudes {
     };
 }
 
-#endif // ETUDES_ELEMENTLINE
+#endif // ETUDES_LINES
