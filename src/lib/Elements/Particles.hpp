@@ -14,15 +14,27 @@
 namespace etudes {
     class Particles : public Element {
     public:
+        Particles();
+
         void registerInputs() override;
+
         void init() override;
+        void update() override;
         void draw() override;
 
     private:
         std::unique_ptr<ShaderRegistry> registry;
 
         gl::GLuint vao, vbo;
-        std::vector<glm::vec2> particles;
+
+        int count;
+        glm::vec2 center;
+
+        std::vector<glm::vec2> positions;
+        std::vector<glm::vec2> velocities;
+
+        std::random_device randDev;
+        std::mt19937 randGen;
     };
 }
 

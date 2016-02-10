@@ -9,26 +9,38 @@ using glm::vec2;
 
 namespace etudes {
 
+    using vecf = std::vector<float>;
+
+    Particles::Particles() :
+        randGen(randDev()) {
+    }
+
     void Particles::registerInputs() {
         registerInput("/count", {100});
         registerInput("/center", {0, 0});
     }
 
     void Particles::init() {
-        particles.resize(getValue<float>("/count"));
+        count = getValue<float>("/count");
+        center = to_vec2(getValue<vecf>("/center"));
+
+        positions.resize(count);
+        velocities.resize(count);
 
         std::normal_distribution<float> distN(0.0f, 0.2f);
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        for(auto &p : particles) {
-            p = vec2(distN(gen), distN(gen));
+        for(auto &p : positions) {
+            p = center + vec2(distN(randGen),
+                              distN(randGen));
+        }
+        for(auto &v : velocities) {
+            v = vec2(0, 0);
         }
 
         registry = std::make_unique<ShaderRegistry>();
         registry->registerShader("ident", GL_VERTEX_SHADER,
-                                 {"src/lib/Shader/ident.vert"});
+                                 {"resources/shader/ident.vert"});
         registry->registerShader("white", GL_FRAGMENT_SHADER,
-                                 {"src/lib/Shader/white.frag"});
+                                 {"resources/shader/white.frag"});
         registry->registerProgram("simple", {"ident", "white"});
 
         glGenVertexArrays(1, &vao);
@@ -37,9 +49,8 @@ namespace etudes {
         glGenBuffers(1, &vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER,
-                     particles.size() * sizeof(vec2),
-                     &particles[0],
-                     GL_STATIC_DRAW);
+                     positions.size() * sizeof(vec2),
+                     NULL, GL_STATIC_DRAW);
 
         GLint attribPosition =
             glGetAttribLocation(registry->getProgram("simple"), "position");
@@ -47,10 +58,46 @@ namespace etudes {
         glEnableVertexAttribArray(attribPosition);
     }
 
+    void Particles::update() {
+        float distMin = std::numeric_limits<float>::max();
+        size_t indexMin = 0;
+        for(size_t index = 0 ; index < positions.size() ; ++index) {
+            float product = dot(positions[index], positions[index]);
+            if(product < distMin) {
+                distMin = product;
+                indexMin = index;
+            }
+        }
+        vec2 gbest = positions[indexMin];
+
+        // update velocities and positions
+        std::uniform_real_distribution<float> distU;
+        for(size_t index = 0 ; index < positions.size() ; ++index) {
+            float rand1 = distU(randGen);
+            float rand2 = distU(randGen);
+
+            vec2 ibest(0, 0);
+            vec2 deltaV = 0.01f *
+                (rand1 * (ibest - positions[index]) +
+                 rand2 * (gbest - positions[index]));
+
+            velocities[index] += deltaV;
+            positions[index] += velocities[index];
+        }
+
+        glBindVertexArray(vao);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferSubData(GL_ARRAY_BUFFER,
+                        0, positions.size() * sizeof(vec2),
+                        &positions[0]);
+    }
+
     void Particles::draw() {
         glBindVertexArray(vao);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
         glPointSize(10.0f);
-        glDrawArrays(GL_POINTS, 0, particles.size());
+        glDrawArrays(GL_POINTS, 0, positions.size());
     }
 
 }
