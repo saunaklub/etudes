@@ -31,6 +31,7 @@ namespace etudes {
     public:
         virtual ~Etude() {};
 
+        void registerInputs() override;
         void draw() override;
 
         void addElement(std::string name, std::unique_ptr<Element> element);

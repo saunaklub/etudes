@@ -13,7 +13,7 @@ namespace etudes {
         typedef std::vector<float> vec_t;
         typedef std::map<std::string, vec_t> input_map_t;
 
-        virtual void registerInputs() {};
+        virtual void registerInputs() = 0;
 
         std::vector<std::string> getInputs() const;
         void setValue(std::string input, vec_t value);
