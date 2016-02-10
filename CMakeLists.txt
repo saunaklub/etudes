@@ -31,7 +31,7 @@ add_library(${LIBRARY}
     src/lib/Utility/Utility.cpp
     src/lib/Utility/Logging.cpp
     src/lib/Utility/Configuration.cpp
-    src/lib/Shader/ShaderRegistry.cpp
+    src/lib/Utility/ShaderRegistry.cpp
     src/lib/Factories/ElementFactory.cpp
     src/lib/Factories/EtudeFactory.cpp
     src/lib/Receivers/Receiver.cpp

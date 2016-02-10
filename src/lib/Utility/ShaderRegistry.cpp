@@ -50,7 +50,7 @@ namespace {
 
 namespace etudes {
 
-    GLuint ShaderRegistry::RegisterShader(
+    GLuint ShaderRegistry::registerShader(
         std::string name,
         GLenum type,
         std::vector<std::string> paths) {
@@ -105,7 +105,7 @@ namespace etudes {
         return shader;
     }
 
-    GLuint ShaderRegistry::RegisterProgram(
+    GLuint ShaderRegistry::registerProgram(
         std::string name,
         std::vector<std::string> shader_names) {
 
@@ -141,15 +141,15 @@ namespace etudes {
         return program;
     }
 
-    GLuint ShaderRegistry::RegisterUniform(std::string program_name,
+    GLuint ShaderRegistry::registerUniform(std::string program_name,
                                            std::string uniform_name) {
-        GLuint location = glGetUniformLocation(GetProgram(program_name),
+        GLuint location = glGetUniformLocation(getProgram(program_name),
                                                uniform_name.c_str());
         m_mapUniform[program_name][uniform_name] = location;
         return location;
     }
 
-    GLuint ShaderRegistry::GetProgram(std::string name) {
+    GLuint ShaderRegistry::getProgram(std::string name) {
         std::map<std::string, GLuint>::iterator it = m_mapProgram.find(name);
 
         if(it == m_mapProgram.end()) {
@@ -161,7 +161,7 @@ namespace etudes {
         return it->second;
     }
 
-    GLuint ShaderRegistry::GetUniform(std::string program_name,
+    GLuint ShaderRegistry::getUniform(std::string program_name,
                                       std::string uniform_name) {
         return m_mapUniform[program_name][uniform_name];
     }
