@@ -50,6 +50,8 @@ namespace {
 
 namespace etudes {
 
+    using logging::LogLevel;
+
     GLuint ShaderRegistry::registerShader(
         std::string name,
         GLenum type,
@@ -71,7 +73,7 @@ namespace etudes {
         const char* strShaderData = sShaderCombined.c_str();
         glShaderSource(shader, 1, &strShaderData, NULL);
 
-        log(logging::debug, "Shader source:\n"s + strShaderData + "\n");
+        log(logging::excessive, "Shader source:\n"s + strShaderData + "\n");
 
         glCompileShader(shader);
 
@@ -109,7 +111,7 @@ namespace etudes {
         std::string name,
         std::vector<std::string> shader_names) {
 
-        log(logging::debug, "Registering program: "s + name);
+        log(logging::debug, "Registering shader program: "s + name);
 
         GLuint program = glCreateProgram();
 
@@ -131,7 +133,8 @@ namespace etudes {
             glGetProgramInfoLog(program, infoLogLength,
                                 NULL, &sInfoLog.front());
 
-            std::cerr << "Linker failure: " << &sInfoLog.front() << std::endl;
+            log(LogLevel::error, "Linker failure: " +
+                std::string(&sInfoLog.front()));
         }
 
         for(size_t iLoop = 0; iLoop < shader_names.size(); iLoop++)
