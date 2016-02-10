@@ -13,6 +13,12 @@ namespace etudes {
     void Etude::registerInputs() {
     }
 
+    void Etude::init() {
+        for(auto &element : elements) {
+            element.second->init();
+        }
+    }
+
     void Etude::draw() {
         for(auto &element : elements) {
             element.second->draw();

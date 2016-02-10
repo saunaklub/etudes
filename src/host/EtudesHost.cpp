@@ -140,6 +140,7 @@ namespace etudes {
             Node node = etudeConfig.getNode("");
             etudes.push_back(
                 std::make_pair(etude, EtudeFactory::makeEtude(etude, node)));
+            etudes.back().second->init();
 
 #ifdef LINUX
             if(node["output"] && node["output"]["enabled"].as<bool>()) {
