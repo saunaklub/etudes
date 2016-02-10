@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
 #ifdef DEBUG
@@ -12,6 +13,7 @@
 #endif
 
 namespace etudes {
+    glm::vec2 to_vec2(const std::vector<float> &vec);
     glm::vec3 to_vec3(const std::vector<float> &vec);
 
     std::string splitStringFirst(std::string str, char separator='/');

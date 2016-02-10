@@ -20,6 +20,10 @@ namespace etudes {
         return microSeconds() / 1000000.0;
     }
 
+    glm::vec2 to_vec2(const std::vector<float> &vec) {
+        return glm::vec2(vec[0], vec[1]);
+    }
+
     glm::vec3 to_vec3(const std::vector<float> &vec) {
         return glm::vec3(vec[0], vec[1], vec[2]);
     }
