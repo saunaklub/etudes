@@ -19,6 +19,12 @@ namespace etudes {
         }
     }
 
+    void Etude::update() {
+        for(auto &element : elements) {
+            element.second->update();
+        }
+    }
+
     void Etude::draw() {
         for(auto &element : elements) {
             element.second->draw();

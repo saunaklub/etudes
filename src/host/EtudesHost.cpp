@@ -222,6 +222,9 @@ namespace etudes {
     }
 
     void EtudesHost::render() {
+        for(auto &e : etudes)
+            e.second->update();
+
         renderOutputs();
         renderScreen();
     }

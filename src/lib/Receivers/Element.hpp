@@ -7,6 +7,7 @@ namespace etudes {
     class Element : public Receiver {
     public:
         virtual void init() {};
+        virtual void update() {};
         virtual void draw() = 0;
 
     private:
