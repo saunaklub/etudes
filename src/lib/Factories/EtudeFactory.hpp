@@ -3,20 +3,19 @@
 
 #include <memory>
 
-#include <yaml-cpp/yaml.h>
-
 namespace etudes {
 
     class Etude;
+    class Configuration;
 
     class EtudeFactory {
     public:
         static std::unique_ptr<Etude>
-        makeEtude(std::string name, const YAML::Node &config);
+        makeEtude(std::string name, const Configuration &config);
 
     private:
         static std::unique_ptr<Etude>
-        makeEtudeDefault(const YAML::Node &config);
+        makeEtudeDefault(const Configuration &config);
     };
 
 }

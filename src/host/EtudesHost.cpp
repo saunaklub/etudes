@@ -84,10 +84,10 @@ namespace etudes {
         hostConfig.read("configuration/host.yml");
 
         std::string logLevel =
-            hostConfig.getValue<std::string>("logging/logLevel");
+            hostConfig.getValue<std::string>("logging:logLevel");
 
         logging::setLogLevelMax(logLevelMap[logLevel]);
-        logFramerate = hostConfig.getValue<bool>("logging/framerate");
+        logFramerate = hostConfig.getValue<bool>("logging:framerate");
 
         success &= initGLFW();
         success &= initEtudes();
@@ -104,8 +104,8 @@ namespace etudes {
             exit(EXIT_FAILURE);
 
         window = glfwCreateWindow(
-            hostConfig.getValue<int>("window/width"),
-            hostConfig.getValue<int>("window/height"),
+            hostConfig.getValue<int>("window:width"),
+            hostConfig.getValue<int>("window:height"),
             "Études audiovisuel", NULL, NULL);
 
         if(window == nullptr){
@@ -137,22 +137,26 @@ namespace etudes {
             Configuration etudeConfig;
             etudeConfig.read("configuration/etudes/" + etude + ".yml");
 
-            Node node = etudeConfig.getNode("");
             etudes.push_back(
-                std::make_pair(etude, EtudeFactory::makeEtude(etude, node)));
+                std::make_pair(
+                    etude, EtudeFactory::makeEtude(etude, etudeConfig)));
             etudes.back().second->init();
 
 #ifdef LINUX
-            if(node["output"] && node["output"]["enabled"].as<bool>()) {
-                log(LogLevel::debug,
-                    "Creating video output for '" + etude + "'");
-                std::unique_ptr<VideoOutput> out =
-                    std::make_unique<VideoOutputV4L2>(
-                        etudes.back().second.get(),
-                        node["output"]["width"].as<int>(),
-                        node["output"]["height"].as<int>());
-                out->createOutput(node["output"]["name"].as<std::string>());
-                videoOutputs.push_back(std::move(out));
+            if(etudeConfig.hasValue("output")) {
+                if(!etudeConfig.hasValue("output:enabled") ||
+                   etudeConfig.getValue<bool>("output:enabled")) {
+                    log(LogLevel::debug,
+                        "Creating video output for '" + etude + "'");
+                    std::unique_ptr<VideoOutput> out =
+                        std::make_unique<VideoOutputV4L2>(
+                            etudes.back().second.get(),
+                            etudeConfig.getValue<int>("output:width"),
+                            etudeConfig.getValue<int>("output:height"));
+                    out->createOutput(
+                        etudeConfig.getValue<std::string>("output:name"));
+                    videoOutputs.push_back(std::move(out));
+                }
             }
 #endif
         }

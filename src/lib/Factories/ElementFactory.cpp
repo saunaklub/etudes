@@ -1,9 +1,8 @@
 #include <functional>
 
-#include <yaml-cpp/yaml.h>
-
-#include <Utility/Logging.hpp>
 #include <Utility/Utility.hpp>
+#include <Utility/Logging.hpp>
+#include <Utility/Configuration.hpp>
 
 #include <Elements/Lines.hpp>
 #include <Elements/Particles.hpp>
@@ -12,7 +11,6 @@
 
 namespace etudes {
 
-    using YAML::Node;
     using logging::LogLevel;
 
     std::map<std::string, ElementFactory::creation_t>
@@ -22,21 +20,20 @@ namespace etudes {
     };
 
     std::unique_ptr<Element>
-    ElementFactory::makeElement(const Node &node) {
+    ElementFactory::makeElement(const Configuration &config) {
         std::unique_ptr<Element> product;
 
-        std::string type = node["type"].as<std::string>();
-        product = creationMap[type](node);
+        std::string type = config.getValue<std::string>("type");
+        product = creationMap[type](config);
 
         product->registerInputs();
 
-        if(node["defaults"]) {
-            std::map<std::string, Node> defaults =
-                node["defaults"].as<std::map<std::string, Node>>();
-            for(auto &d : defaults) {
+        if(config.hasValue("defaults")) {
+            log(LogLevel::debug, config);
+            for(auto &child : config.getChildren("defaults")) {
                 product->setValue(
-                    d.first,
-                    d.second.as<std::vector<float>>());
+                    child, config.getValue<std::vector<float>>(
+                        "defaults:" + child));
             }
         }
 

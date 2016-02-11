@@ -5,19 +5,45 @@
 #include <iostream>
 #include <sstream>
 
+#include <yaml-cpp/yaml.h>
+
 #include <Utility/Utility.hpp>
+#include <Utility/Logging.hpp>
 
 #include "Configuration.hpp"
 
 using namespace std::string_literals;
 
+namespace {
+    std::vector<std::string> parseFields(std::string path) {
+        std::istringstream ssPath(path);
+        std::string field;
+        std::vector<std::string> fields;
+
+        while(std::getline(ssPath, field, ':')) {
+            fields.push_back(field);
+        }
+
+        return fields;
+    }
+}
+
 namespace etudes {
+
     using std::cerr;
     using std::endl;
+
     using YAML::Node;
     using YAML::LoadFile;
     using YAML::BadFile;
     using YAML::Clone;
+
+    using logging::LogLevel;
+
+    Configuration::Configuration(const Node &node) :
+        config(std::make_unique<Node>(node)) {
+    }
+
 
     void Configuration::read(std::string file) {
         try {
@@ -30,10 +56,42 @@ namespace etudes {
         }
     }
 
-    void Configuration::write(std::string file) {
+    void Configuration::write(std::string file) const {
     }
 
-    Node Configuration::getNode(std::string path) {
+    bool Configuration::hasValue(std::string path) const {
+        if(getNode(path).IsNull()) {
+            return false;
+        }
+        return true;
+    }
+
+    template <typename T>
+    T Configuration::getValue(std::string path) const {
+        return getNode(path).as<T>();
+    }
+
+    std::vector<std::string>
+    Configuration::getChildren(std::string path) const {
+        std::vector<std::string> children;
+        Node node = getNode(path);
+
+        for(auto &child : node.as<std::map<std::string, Node>>()) {
+            children.push_back(child.first);
+        }
+
+        return children;
+    }
+
+    Configuration Configuration::getSubTree(std::string path) const {
+        // log(LogLevel::debug, "path: " + path);
+        // log(LogLevel::debug, "config:");
+        // log(LogLevel::debug, *config.get());
+        // log(LogLevel::debug, getNode(path));
+        return Configuration(getNode(path));
+    }
+
+    Node Configuration::getNode(std::string path) const {
         std::vector<std::string> fields = parseFields(path);
 
         Node node = Clone(*config);
@@ -47,33 +105,24 @@ namespace etudes {
         return node;
     }
 
-    bool Configuration::hasValue(std::string path) {
-        if(getNode(path).IsNull()) {
-            return false;
-        }
-        return true;
+    std::ostream &operator<<(std::ostream &os, const Configuration &config) {
+        os << config.getNode("");
+        return os;
     }
 
-    template <typename T>
-    T Configuration::getValue(std::string path) {
-        return getNode(path).as<T>();
-    }
+    template bool
+    Configuration::getValue<bool>(std::string path) const;
 
-    std::vector<std::string> Configuration::parseFields(std::string path) {
-        std::istringstream ssPath(path);
-        std::string field;
-        std::vector<std::string> fields;
+    template int
+    Configuration::getValue<int>(std::string path) const;
 
-        while(std::getline(ssPath, field, '/')) {
-            fields.push_back(field);
-        }
+    template std::string
+    Configuration::getValue<std::string>(std::string path) const;
 
-        return fields;
-    }
-
-    template std::string Configuration::getValue<std::string>(std::string path);
     template std::list<std::string>
-    Configuration::getValue<std::list<std::string>>(std::string path);
-    template int Configuration::getValue<int>(std::string path);
-    template bool Configuration::getValue<bool>(std::string path);
+    Configuration::getValue<std::list<std::string>>(std::string path) const;
+
+    template std::vector<float>
+    Configuration::getValue<std::vector<float>>(std::string path) const;
+
 }

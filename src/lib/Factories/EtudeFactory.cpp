@@ -1,7 +1,9 @@
+#include <vector>
 #include <string>
 
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
+#include <Utility/Configuration.hpp>
 
 #include <Factories/ElementFactory.hpp>
 
@@ -13,19 +15,16 @@ namespace etudes {
     using logging::log;
     using logging::LogLevel;
 
-    using YAML::Node;
-
     std::unique_ptr<Etude>
-    EtudeFactory::makeEtude(std::string name, const Node &node) {
+    EtudeFactory::makeEtude(std::string name, const Configuration &config) {
         std::unique_ptr<Etude> product;
 
-        if(node["type"]) {
-            // special etudes
-            std::string type = node["type"].as<std::string>();
+        if(config.hasValue("type")) {
+            std::string type = config.getValue<std::string>("type");
         }
         else {
             log(LogLevel::debug, "Creating default etude '" + name + "'");
-            product = makeEtudeDefault(node);
+            product = makeEtudeDefault(config);
         }
 
         product->registerInputs();
@@ -34,17 +33,17 @@ namespace etudes {
     }
 
     std::unique_ptr<Etude>
-    EtudeFactory::makeEtudeDefault(const Node &node) {
+    EtudeFactory::makeEtudeDefault(const Configuration &config) {
         std::unique_ptr<Etude> product = std::make_unique<Etude>();
 
-        log(LogLevel::excessive, node["elements"]);
+        log(LogLevel::excessive, config);
 
-        std::map<std::string, Node> elements =
-            node["elements"].as<std::map<std::string, Node>>();
-
-        for(auto &element : elements)
-            product->addElement(element.first,
-                                ElementFactory::makeElement(element.second));
+        for(auto &child : config.getChildren("elements")) {
+            log(LogLevel::debug, child);
+            product->addElement(
+                child, ElementFactory::makeElement(
+                    config.getSubTree("elements:" + child)));
+        }
 
         return product;
     }
