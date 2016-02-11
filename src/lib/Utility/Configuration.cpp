@@ -42,11 +42,16 @@ namespace etudes {
             if(node[*field])
                 node = node[*field];
             else
-                throw std::invalid_argument(
-                    "Configuration: field "s + *field +
-                    " not found in configuration path " + path);
+                return Node();
         }
         return node;
+    }
+
+    bool Configuration::hasValue(std::string path) {
+        if(getNode(path).IsNull()) {
+            return false;
+        }
+        return true;
     }
 
     template <typename T>

@@ -14,6 +14,8 @@ namespace etudes {
 
         template <typename T>
         T getValue(std::string path);
+        bool hasValue(std::string path);
+
         YAML::Node getNode(std::string path);
 
         private:
