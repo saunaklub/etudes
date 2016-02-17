@@ -69,10 +69,10 @@ namespace etudes {
     }
 
     EtudesHost::EtudesHost() :
+        logFramerate(false),
         window(nullptr),
         quitLoop(false),
-        oscInput(etudes, 6666),
-        logFramerate(false) {
+        oscInput(etudes, 6666) {
     }
 
     EtudesHost::~EtudesHost() {
@@ -90,6 +90,7 @@ namespace etudes {
         initGLFW();
         initEtudes();
         initOSC();
+        initInput();
     }
 
     void EtudesHost::initGLFW() {
@@ -109,7 +110,7 @@ namespace etudes {
             throw std::runtime_error("glfwCreateWindow failed");
         }
 
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         glfwSetWindowUserPointer(window, this);
 
         glbinding::Binding::initialize();
@@ -158,6 +159,22 @@ namespace etudes {
         currentEtude = etudes.begin();
     }
 
+    void EtudesHost::initInput() {
+        using std::string;
+        using std::list;
+
+        if(!hostConfig.hasValue("input"))
+            return;
+
+        Configuration inputConfig = hostConfig.getSubTree("input");
+        if(inputConfig.hasValue("mouse")) {
+            if(inputConfig.hasValue("mouse:xy")) {
+                for(auto &e : inputConfig.getValue<list<string>>("mouse:xy"))
+                    inputsMouse.push_back(std::make_pair(MOUSE_XY, e));
+            }
+        }
+    }
+
     bool EtudesHost::loopIteration() {
         long t0 = microSeconds();
 
@@ -180,6 +197,29 @@ namespace etudes {
         if(glfwWindowShouldClose(window)) {
             glfwDestroyWindow(window);
             quitLoop = true;
+        }
+
+        double mouseX, mouseY;
+        glfwGetCursorPos(window, &mouseX, &mouseY);
+
+        int width, height;
+        glfwGetWindowSize(window, &width, &height);
+
+        float mouseXNorm =  ((mouseX / width)  - 0.5) * 2.0f;
+        float mouseYNorm = -((mouseY / height) - 0.5) * 2.0f;
+
+        for(auto &inputMouse : inputsMouse) {
+            switch(inputMouse.first) {
+            case MOUSE_X:
+                oscInput.update(inputMouse.second, {mouseXNorm});
+                break;
+            case MOUSE_Y:
+                oscInput.update(inputMouse.second, {mouseYNorm});
+                break;
+            case MOUSE_XY:
+                oscInput.update(inputMouse.second, {mouseXNorm, mouseYNorm});
+                break;
+            }
         }
     }
 

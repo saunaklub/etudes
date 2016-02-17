@@ -56,10 +56,18 @@ namespace etudes {
         bool loopIteration();
 
     private:
+        enum MouseInput {
+            MOUSE_X,
+            MOUSE_Y,
+            MOUSE_XY
+        };
+
         void initGLFW();
         void initOSC();
         void initEtudes();
+        void initInput();
 
+        void registerMouseInput(MouseInput mode, std::string path);
         void processInput();
         void keyCallback(int, int, int, int);
 
@@ -70,8 +78,13 @@ namespace etudes {
         void renderOutputs();
         void renderScreen();
 
+        Configuration hostConfig;
+        bool logFramerate;
+
         GLFWwindow *window;
         bool quitLoop;
+
+        std::vector<std::pair<MouseInput, std::string>> inputsMouse;
 
         etudes_t etudes;
         etudes_t::const_iterator currentEtude;
@@ -79,9 +92,6 @@ namespace etudes {
         output_vec_t videoOutputs;
 
         OSCInput oscInput;
-
-        Configuration hostConfig;
-        bool logFramerate;
     };
 }
 

@@ -9,5 +9,10 @@ logging:
 
 etudes:
   - particles
-  - grid
   - line
+  - grid
+
+input:
+  mouse:
+    xy:
+      - /particles/particles/center
