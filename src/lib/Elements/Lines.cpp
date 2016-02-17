@@ -25,7 +25,6 @@ namespace etudes {
         registerInput("/width/amplitude", {0.0f});
         registerInput("/width/omega",     {0.0f});
         registerInput("/width/lambda",    {0.0f});
-
         registerInput("/color/base",      {1.0f, 1.0f, 1.0f});
         registerInput("/color/amplitude", {0.0f, 0.0f, 0.0f});
         registerInput("/color/omega",     {0.0f});
