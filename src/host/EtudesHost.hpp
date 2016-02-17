@@ -47,7 +47,7 @@ namespace etudes {
         EtudesHost();
         ~EtudesHost();
 
-        bool initialise();
+        void initialise();
 
         /**
          * @return Wether the application will continue to run, i.e. the
@@ -56,10 +56,9 @@ namespace etudes {
         bool loopIteration();
 
     private:
-        // @todo: use exceptions for error handling!
-        bool initGLFW();
+        void initGLFW();
         void initOSC();
-        bool initEtudes();
+        void initEtudes();
 
         void processInput();
         void keyCallback(int, int, int, int);

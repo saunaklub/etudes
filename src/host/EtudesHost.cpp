@@ -78,9 +78,7 @@ namespace etudes {
     EtudesHost::~EtudesHost() {
     }
 
-    bool EtudesHost::initialise() {
-        bool success = true;
-
+    void EtudesHost::initialise() {
         hostConfig.read("configuration/host.yml");
 
         std::string logLevel =
@@ -89,19 +87,17 @@ namespace etudes {
         logging::setLogLevelMax(logLevelMap[logLevel]);
         logFramerate = hostConfig.getValue<bool>("logging:framerate");
 
-        success &= initGLFW();
-        success &= initEtudes();
-
+        initGLFW();
+        initEtudes();
         initOSC();
-
-        return success;
     }
 
-    bool EtudesHost::initGLFW() {
+    void EtudesHost::initGLFW() {
         glfwSetErrorCallback(error_callback);
 
-        if(!glfwInit())
-            exit(EXIT_FAILURE);
+        if(!glfwInit()) {
+            throw std::runtime_error("glfwInit failed");
+        }
 
         window = glfwCreateWindow(
             hostConfig.getValue<int>("window:width"),
@@ -110,7 +106,7 @@ namespace etudes {
 
         if(window == nullptr){
             glfwTerminate();
-            return false;
+            throw std::runtime_error("glfwCreateWindow failed");
         }
 
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
@@ -121,15 +117,13 @@ namespace etudes {
         glfwMakeContextCurrent(window);
         glfwSwapInterval(1);
         glfwSetKeyCallback(window, key_callback);
-
-        return true;
     }
 
     void EtudesHost::initOSC() {
         oscInput.start();
     }
 
-    bool EtudesHost::initEtudes() {
+    void EtudesHost::initEtudes() {
         std::list<std::string> etudeList =
             hostConfig.getValue<std::list<std::string>>("etudes");
 
@@ -162,8 +156,6 @@ namespace etudes {
         }
 
         currentEtude = etudes.begin();
-
-        return true;
     }
 
     bool EtudesHost::loopIteration() {
