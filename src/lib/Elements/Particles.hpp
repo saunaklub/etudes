@@ -2,6 +2,7 @@
 #define ETUDES_PARTICLES
 
 #include <vector>
+#include <random>
 
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
