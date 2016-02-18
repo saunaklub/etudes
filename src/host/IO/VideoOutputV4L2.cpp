@@ -1,3 +1,5 @@
+#ifdef __linux__
+
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -117,3 +119,5 @@ namespace etudes {
     }
 
 }
+
+#endif
