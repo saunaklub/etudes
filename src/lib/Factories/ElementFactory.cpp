@@ -24,7 +24,12 @@ namespace etudes {
         std::unique_ptr<Element> product;
 
         std::string type = config.getValue<std::string>("type");
-        product = creationMap[type](config);
+        try {
+            product = creationMap[type](config);
+        } catch(std::bad_function_call) {
+            log(LogLevel::error,
+                "no factory method defined for element type: " + type);
+        }
 
         product->registerInputs();
 
