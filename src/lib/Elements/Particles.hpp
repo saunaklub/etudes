@@ -24,6 +24,8 @@ namespace etudes {
         void draw() override;
 
     private:
+        void updateBest();
+
         std::unique_ptr<ShaderRegistry> registry;
 
         gl::GLuint vao, vbo;
@@ -32,6 +34,9 @@ namespace etudes {
         glm::vec2 center;
 
         std::vector<glm::vec2> positions;
+        std::vector<glm::vec2> positionsIBest;
+        glm::vec2 positionGBest;
+
         std::vector<glm::vec2> velocities;
 
         std::random_device randDev;

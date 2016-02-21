@@ -16,7 +16,7 @@ namespace etudes {
     }
 
     void Particles::registerInputs() {
-        registerInput("/count", {10});
+        registerInput("/count", {128});
         registerInput("/center", {0, 0});
     }
 
@@ -25,6 +25,7 @@ namespace etudes {
         center = to_vec2(getValue<vecf>("/center"));
 
         positions.resize(count);
+        positionsIBest.resize(count);
         velocities.resize(count);
 
         std::normal_distribution<float> distN(0.0f, 0.2f);
@@ -59,26 +60,15 @@ namespace etudes {
     }
 
     void Particles::update() {
-        vec2 center = to_vec2(getValue<vecf>("/center"));
-
-        size_t indexMin = 0;
-        float distMin = std::numeric_limits<float>::max();
-        for(size_t index = 0 ; index < positions.size() ; ++index) {
-            vec2 dist = positions[index] - center;
-            float product = dot(dist, dist);
-            if(product < distMin) {
-                distMin = product;
-                indexMin = index;
-            }
-        }
-
-        vec2 gbest = positions[indexMin];
-
-        float phi_cognitive = 2.0;
-        float phi_social = 2.1;
+        float phi_cognitive = 4.05;
+        float phi_social = 4.1 - phi_cognitive;
         float w = 0.72984f;
-//        float w = 0.87;
-//        float w = 0.02;
+//        float w = 0.5;
+//        float w = 1;
+        float minDot = 0.2;
+        float minDim = 0.1;
+
+        updateBest();
 
         // update velocities and positions
         std::uniform_real_distribution<float> distU;
@@ -88,15 +78,23 @@ namespace etudes {
 
             vec2 ibest(positions[index]);
             vec2 deltaV =
-                (phi_cognitive * rand1 * (ibest - positions[index]) +
-                 phi_social    * rand2 * (gbest - positions[index]));
+                (phi_cognitive * rand1 * (positionsIBest[index] -
+                                          positions[index]) +
+                 phi_social    * rand2 * (positionGBest  - positions[index]));
 
             // float maxDot = 0.0002f;
             // if(dot(deltaV, deltaV) > maxDot)
             //     deltaV = maxDot * normalize(deltaV);
 
             velocities[index] = w * (velocities[index] + deltaV);
-            positions[index] += velocities[index];
+            if(dot(velocities[index], velocities[index]) < minDot)
+                velocities[index] = minDot * normalize(velocities[index]);
+            // for(int dim = 0 ; dim < 2 ; ++dim) {
+            //     if(velocities[index][dim] < minDim)
+            //         velocities[index][dim] = minDim;
+            // }
+
+            positions[index] += 0.08f * velocities[index];
         }
 
         glBindVertexArray(vao);
@@ -104,6 +102,30 @@ namespace etudes {
         glBufferSubData(GL_ARRAY_BUFFER,
                         0, positions.size() * sizeof(vec2),
                         &positions[0]);
+    }
+
+    void Particles::updateBest() {
+        vec2 center = to_vec2(getValue<vecf>("/center"));
+
+        size_t indexMin = 0;
+        float productMin = std::numeric_limits<float>::max();
+        for(size_t index = 0 ; index < positions.size() ; ++index) {
+            vec2 dist = positions[index] - center;
+            vec2 distIBest = positionsIBest[index] - center;
+
+            float product = dot(dist, dist);
+            float productIBest = dot(distIBest, distIBest);
+
+            if(product < productIBest) {
+                positionsIBest[index] = positions[index];
+            }
+            if(product < productMin) {
+                productMin = product;
+                indexMin = index;
+            }
+        }
+
+        positionGBest = positions[indexMin];
     }
 
     void Particles::draw() {
