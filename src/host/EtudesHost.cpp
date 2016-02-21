@@ -88,6 +88,8 @@ namespace etudes {
         logFramerate = hostConfig.getValue<bool>("logging:framerate");
 
         initGLFW();
+        printOpenGLInfo();
+
         initEtudes();
         initOSC();
         initInput();
@@ -118,6 +120,23 @@ namespace etudes {
         glfwMakeContextCurrent(window);
         glfwSwapInterval(1);
         glfwSetKeyCallback(window, key_callback);
+    }
+
+    void EtudesHost::printOpenGLInfo() {
+        std::string output = "OpenGL info:\n";
+
+        output += "  version string: " +
+            std::string((const char*)(glGetString(GL_VERSION))) + "\n";
+
+        GLint maxTexSize, maxTexUnits;
+        glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
+        glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTexUnits);
+
+        output += "  max texture size: " + std::to_string(maxTexSize) + "\n";
+        output += "  max texture units: " + std::to_string(maxTexUnits);
+
+
+        log(LogLevel::info, output);
     }
 
     void EtudesHost::initOSC() {

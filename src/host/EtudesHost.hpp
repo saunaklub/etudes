@@ -67,6 +67,8 @@ namespace etudes {
         void initEtudes();
         void initInput();
 
+        void printOpenGLInfo();
+
         void registerMouseInput(MouseInput mode, std::string path);
         void processInput();
         void keyCallback(int, int, int, int);
