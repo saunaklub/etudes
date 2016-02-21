@@ -123,7 +123,7 @@ namespace etudes {
     }
 
     void EtudesHost::printOpenGLInfo() {
-        std::string output = "OpenGL info:\n";
+        std::string output = "OpenGL information:\n";
 
         output += "  version string: " +
             std::string((const char*)(glGetString(GL_VERSION))) + "\n";

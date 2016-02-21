@@ -23,7 +23,7 @@ namespace etudes {
             std::string type = config.getValue<std::string>("type");
         }
         else {
-            log(LogLevel::debug, "Creating default etude '" + name + "'");
+            log(LogLevel::info, "Creating default etude '" + name + "'");
             product = makeEtudeDefault(config);
         }
 
@@ -39,7 +39,6 @@ namespace etudes {
         log(LogLevel::excessive, config);
 
         for(auto &child : config.getChildren("elements")) {
-            log(LogLevel::debug, child);
             product->addElement(
                 child, ElementFactory::makeElement(
                     config.getSubTree("elements:" + child)));
