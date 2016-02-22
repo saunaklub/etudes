@@ -4,13 +4,22 @@ set(CLIENT  etudes-host)
 project(etudes)
 cmake_minimum_required(VERSION 3.0)
 
-add_executable(${CLIENT}
-    src/host/main.cpp
-    src/host/EtudesHost.cpp
-    src/host/IO/OSCInput.cpp
-    src/host/IO/VideoOutput.cpp
-    src/host/IO/VideoOutputV4L2.cpp
-    )
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    add_executable(${CLIENT}
+        src/host/main.cpp
+        src/host/EtudesHost.cpp
+        src/host/IO/OSCInput.cpp
+        src/host/IO/VideoOutput.cpp
+        src/host/IO/VideoOutputV4L2.cpp
+        )
+else()
+    add_executable(${CLIENT}
+        src/host/main.cpp
+        src/host/EtudesHost.cpp
+        src/host/IO/OSCInput.cpp
+        src/host/IO/VideoOutput.cpp
+        )
+endif()
 
 set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
 
