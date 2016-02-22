@@ -16,7 +16,7 @@ namespace etudes {
     }
 
     void Particles::registerInputs() {
-        registerInput("/count", {128});
+        registerInput("/count", {256});
         registerInput("/center", {0, 0});
     }
 

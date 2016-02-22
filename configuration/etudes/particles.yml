@@ -1,10 +1,14 @@
+elements:
+  particles:
+    type: particles
+
+input:
+  mouse:
+    xy:
+      - /particles/center
+    
 output:
   enabled: false
   name: /dev/video1
   width:  600
   height: 600
-
-elements:
-  particles:
-    type: particles
-#    defaults:

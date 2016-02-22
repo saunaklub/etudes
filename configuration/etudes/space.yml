@@ -1,0 +1,5 @@
+elements:
+  background:
+    type: imageview
+    image: resources/images/test.png
+

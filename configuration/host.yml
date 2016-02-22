@@ -9,6 +9,7 @@ logging:
   framerate: false
 
 etudes:
+  - space
   - particles
   - line
   - grid

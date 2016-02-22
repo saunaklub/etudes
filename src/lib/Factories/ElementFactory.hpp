@@ -28,6 +28,8 @@ namespace etudes {
             return product;
         }
 
+        static std::unique_ptr<Element>
+        createElementImageView(const Configuration &);
     };
 }
 

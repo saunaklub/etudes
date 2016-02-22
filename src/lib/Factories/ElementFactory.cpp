@@ -6,6 +6,7 @@
 
 #include <Elements/Lines.hpp>
 #include <Elements/Particles.hpp>
+#include <Elements/ImageView.hpp>
 
 #include "ElementFactory.hpp"
 
@@ -16,7 +17,8 @@ namespace etudes {
     std::map<std::string, ElementFactory::creation_t>
     ElementFactory::creationMap = {
         {"line", ElementFactory::createElement<Lines>},
-        {"particles", ElementFactory::createElement<Particles>}
+        {"particles", ElementFactory::createElement<Particles>},
+        {"imageview", ElementFactory::createElementImageView},
     };
 
     std::unique_ptr<Element>
@@ -45,4 +47,9 @@ namespace etudes {
         return product;
     }
 
+    std::unique_ptr<Element>
+    ElementFactory::createElementImageView(const Configuration & config) {
+        std::string image = config.getValue<std::string>("image");
+        return std::make_unique<ImageView>(image);
+    }
 }
