@@ -73,6 +73,7 @@ namespace etudes {
         void processInput();
         void keyCallback(int, int, int, int);
 
+        void printEtude();
         void nextEtude();
         void prevEtude();
 

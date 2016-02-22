@@ -181,6 +181,7 @@ namespace etudes {
         }
 
         currentEtude = etudes.begin();
+        printEtude();
     }
 
     void EtudesHost::initInput() {
@@ -260,13 +261,19 @@ namespace etudes {
 
             case GLFW_KEY_N:
                 nextEtude();
+                printEtude();
                 break;
 
             case GLFW_KEY_P:
                 prevEtude();
+                printEtude();
                 break;
             }
         }
+    }
+
+    void EtudesHost::printEtude() {
+        log(LogLevel::info, "Switched to etude: " + currentEtude->first);
     }
 
     void EtudesHost::nextEtude() {

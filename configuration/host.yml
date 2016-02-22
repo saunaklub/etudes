@@ -4,7 +4,7 @@ window:
   fullscreen: true
 
 logging:
-  logLevel: debug
+  logLevel: info
   framerate: false
 
 etudes:
