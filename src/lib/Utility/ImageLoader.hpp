@@ -14,6 +14,7 @@ namespace etudes {
         int getHeight();
         int getBitsPerPixel();
 
+        size_t getByteSize();
         unsigned char *getData();
 
     private:

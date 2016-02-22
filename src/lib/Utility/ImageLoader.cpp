@@ -18,6 +18,10 @@ namespace etudes {
         return image.getBitsPerPixel();
     }
 
+    size_t ImageLoader::getByteSize() {
+        return image.getImageSize();
+    }
+
     unsigned char *ImageLoader::getData() {
         return image.accessPixels();
     }

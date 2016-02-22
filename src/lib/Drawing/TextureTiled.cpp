@@ -53,7 +53,7 @@ namespace etudes {
                         GL_TEXTURE_WRAP_T, GLint(GL_REPEAT));
 
         glTexStorage3D(GL_TEXTURE_2D_ARRAY,
-                       mipLevelCount, GL_RGB8UI,
+                       mipLevelCount, GL_RGB8,
                        tileWidth, tileHeight, numTilesX*numTilesY);
     }
 
@@ -96,10 +96,9 @@ namespace etudes {
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
     }
 
-    void TextureTiled::uploadData(unsigned char *data) {
-        size_t size = numTilesY*numTilesY*3*tileHeight*tileHeight;
-        char *test = new char[size];
-        memset(test, 100, size);
+    void TextureTiled::uploadData(unsigned char *data, size_t size) {
+        char *test = new char[numTilesX*numTilesY*3*tileWidth*tileHeight];
+        memcpy(test, data, size);
 
         glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, 0,
                         tileWidth, tileHeight, numTilesX*numTilesY,
