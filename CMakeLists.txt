@@ -4,35 +4,7 @@ set(CLIENT  etudes-host)
 project(etudes)
 cmake_minimum_required(VERSION 3.0)
 
-add_executable(${CLIENT}
-    src/host/main.cpp
-    src/host/EtudesHost.cpp
-    src/host/IO/OSCInput.cpp
-    src/host/IO/VideoOutput.cpp
-    )
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-    add_executable(${CLIENT}
-        src/host/IO/VideoOutputV4L2.cpp
-        )
-endif()
-
-set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
-
-if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-    add_definitions("-DDEBUG")
-endif()
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-    add_definitions("-DLINUX")
-endif()
-
-add_library(${LIBRARY}
-    SHARED
+set(LIBRARY_SOURCES
     src/lib/Utility/Utility.cpp
     src/lib/Utility/Logging.cpp
     src/lib/Utility/Configuration.cpp
@@ -47,7 +19,35 @@ add_library(${LIBRARY}
     src/lib/Elements/Particles.cpp
     )
 
+set(CLIENT_SOURCES
+    src/host/main.cpp
+    src/host/EtudesHost.cpp
+    src/host/IO/OSCInput.cpp
+    src/host/IO/VideoOutput.cpp
+    )
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    list(APPEND CLIENT_SOURCES
+        src/host/IO/VideoOutputV4L2.cpp)
+endif()
+
+add_library(${LIBRARY} SHARED ${LIBRARY_SOURCES})
+add_executable(${CLIENT} ${CLIENT_SOURCES})
+
 set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
+set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+
+if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
+    add_definitions("-DDEBUG")
+endif()
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    add_definitions("-DLINUX")
+endif()
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
