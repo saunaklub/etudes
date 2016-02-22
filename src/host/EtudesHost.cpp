@@ -102,6 +102,11 @@ namespace etudes {
             throw std::runtime_error("glfwInit failed");
         }
 
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+
         window = glfwCreateWindow(
             hostConfig.getValue<int>("window:width"),
             hostConfig.getValue<int>("window:height"),
