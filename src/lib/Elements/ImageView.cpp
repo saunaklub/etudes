@@ -42,7 +42,8 @@ namespace etudes {
             tileSize, tileSize,
             false);
 
-        texture->uploadData(loader.getData(), loader.getByteSize());
+        texture->uploadData(
+            loader.getData(), loader.getWidth(), loader.getHeight());
     }
 
     void ImageView::draw() {

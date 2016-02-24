@@ -96,15 +96,33 @@ namespace etudes {
         glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
     }
 
-    void TextureTiled::uploadData(unsigned char *data, size_t size) {
-        char *test = new char[numTilesX*numTilesY*3*tileWidth*tileHeight];
-        memcpy(test, data, size);
+    void TextureTiled::uploadData(unsigned char *data,
+                                  int width, int height) {
 
-        glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, 0,
-                        tileWidth, tileHeight, numTilesX*numTilesY,
-                        GL_RGB, GL_UNSIGNED_BYTE, test);
+        if(width != tileWidth || height != tileHeight) {
+            char *buffer = new char[numTilesX*numTilesY*tileWidth*tileHeight*3];
 
-        delete [] test;
+            int copyWidth = std::min(tileWidth, width);
+            int copyHeight = std::min(tileHeight, height);
+            for(int row = 0 ; row < copyWidth ; ++row) {
+                for(int col = 0 ; col < copyHeight ; ++col) {
+                    int indexSource = row*copyWidth + col;
+                    int indexTexture = row*tileWidth + col;
+                    buffer[3*indexTexture + 0] = data[3*indexSource + 0];
+                    buffer[3*indexTexture + 1] = data[3*indexSource + 1];
+                    buffer[3*indexTexture + 2] = data[3*indexSource + 2];
+                }
+            }
+            glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, 0,
+                            tileWidth, tileHeight, numTilesX*numTilesY,
+                            GL_RGB, GL_UNSIGNED_BYTE, buffer);
+            delete [] buffer;
+        }
+        else {
+            glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, 0,
+                            tileWidth, tileHeight, numTilesX*numTilesY,
+                            GL_RGB, GL_UNSIGNED_BYTE, data);
+        }
 
         if(mipmaps)
             glGenerateMipmap(GL_TEXTURE_2D_ARRAY);

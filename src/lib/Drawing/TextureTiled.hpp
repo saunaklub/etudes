@@ -10,7 +10,8 @@ namespace etudes {
                      int tileWidth, int tileHeight,
                      bool mipmaps);
 
-        void uploadData(unsigned char *data, size_t size);
+        void uploadData(unsigned char *data,
+                        int width, int height);
 
         void render();
 
