@@ -45,9 +45,9 @@ namespace etudes {
         gl::GLuint registerUniform(std::string program_name,
                                    std::string uniform_name);
 
-        gl::GLuint getProgram(std::string name);
+        gl::GLuint getProgram(std::string name) const;
         gl::GLuint getUniform(std::string program_name,
-                              std::string uniform_name);
+                              std::string uniform_name) const;
 
     };
 

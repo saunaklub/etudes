@@ -57,7 +57,7 @@ namespace etudes {
         GLenum type,
         std::vector<std::string> paths) {
 
-        log(logging::debug, "Registering shader: "s + name);
+        log(LogLevel::debug, "Registering shader: "s + name);
 
         // create gl shader object
         GLuint shader = glCreateShader(type);
@@ -73,7 +73,7 @@ namespace etudes {
         const char* strShaderData = sShaderCombined.c_str();
         glShaderSource(shader, 1, &strShaderData, NULL);
 
-        log(logging::excessive, "Shader source:\n"s + strShaderData + "\n");
+        log(LogLevel::excessive, "Shader source:\n"s + strShaderData + "\n");
 
         glCompileShader(shader);
 
@@ -98,9 +98,9 @@ namespace etudes {
             default: break;
             }
 
-            std::cerr << "Compile failure in " << sShaderType
-                      << " shader: " << name << std::endl
-                      << &sInfoLog.front() << std::endl;
+            log(LogLevel::error, "Compile failure in "s +
+                sShaderType + " shader: "s + name);
+            log(LogLevel::error, &sInfoLog.front());
         }
 
         m_mapShader[name] = shader;
@@ -111,7 +111,7 @@ namespace etudes {
         std::string name,
         std::vector<std::string> shader_names) {
 
-        log(logging::debug, "Registering shader program: "s + name);
+        log(LogLevel::debug, "Registering shader program: "s + name);
 
         GLuint program = glCreateProgram();
 
@@ -152,21 +152,39 @@ namespace etudes {
         return location;
     }
 
-    GLuint ShaderRegistry::getProgram(std::string name) {
-        std::map<std::string, GLuint>::iterator it = m_mapProgram.find(name);
+    GLuint ShaderRegistry::getProgram(std::string name) const {
+        auto it = m_mapProgram.find(name);
 
         if(it == m_mapProgram.end()) {
-            log(logging::debug, "Program "s + name +
-                " not found in ShaderRegistry!");
-            return ~0;
+            std::string error = "Program "s + name +
+                " not found in program registry!";
+            log(LogLevel::error, error);
+            throw std::runtime_error(error);
         }
 
         return it->second;
     }
 
     GLuint ShaderRegistry::getUniform(std::string program_name,
-                                      std::string uniform_name) {
-        return m_mapUniform[program_name][uniform_name];
+                                      std::string uniform_name) const {
+        auto it_program = m_mapUniform.find(program_name);
+        if(it_program == m_mapUniform.end()) {
+            std::string error = "Program "s + program_name +
+                " not found in uniform registry!";
+            log(LogLevel::error, error);
+            throw std::runtime_error(error);
+        }
+
+        auto it_uniform = it_program->second.find(uniform_name);
+        if(it_uniform == it_program->second.end()) {
+            std::string error = "Uniform "s + uniform_name +
+                " for program " + program_name +
+                " not found in uniform registry!";
+            log(LogLevel::error, error);
+            throw std::runtime_error(error);
+        }
+
+        return it_uniform->second;
     }
 
 }
