@@ -28,6 +28,9 @@
 #include <IO/OSCInput.hpp>
 
 #include <Utility/Configuration.hpp>
+#include <Utility/ShaderRegistry.hpp>
+
+#include <Rendering/Painter.hpp>
 
 struct GLFWwindow;
 
@@ -95,6 +98,9 @@ namespace etudes {
         output_vec_t videoOutputs;
 
         OSCInput oscInput;
+
+        ShaderRegistry registry;
+        Painter painter;
     };
 }
 

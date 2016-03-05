@@ -7,7 +7,8 @@ namespace etudes {
     class Lines : public Element {
     public:
         void registerInputs() override;
-        void draw() override;
+        void draw(const ShaderRegistry &registry,
+                  const Painter &painter) override;
 
     private:
     };

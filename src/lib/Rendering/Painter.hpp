@@ -18,25 +18,34 @@
 
 */
 
-#ifndef ETUDES_DRAWPRIMITIVES
-#define ETUDES_DRAWPRIMITIVES
-
 #include <functional>
 
+#include <glbinding/gl/gl.h>
 #include <glm/glm.hpp>
 
+#ifndef ETUDES_PAINTER
+#define ETUDES_PAINTER
+
 namespace etudes {
+    class Painter {
+    public:
+        void init();
 
-    void drawLine(glm::vec2 p0, glm::vec2 p1,
-                  float width,
-                  glm::vec3 color);
+        void drawLine(glm::vec2 p0, glm::vec2 p1,
+                      float width,
+                      glm::vec3 color) const;
 
-    void drawParallels(
-        glm::vec2 centerp0, glm::vec2 centerp1,
-        int leftRepeat, int rightRepeat,
-        std::function<float(int)> funcWidth,
-        std::function<float(int)> funcDistance,
-        std::function<glm::vec3(int)> funcColor);
+        void drawParallels(
+            glm::vec2 centerp0, glm::vec2 centerp1,
+            int leftRepeat, int rightRepeat,
+            std::function<float(int)> funcWidth,
+            std::function<float(int)> funcDistance,
+            std::function<glm::vec3(int)> funcColor) const;
+
+    private:
+        gl::GLuint vao, vbo;
+
+    };
 }
 
-#endif // ETUDES_DRAWPRIMITIVES
+#endif // ETUDES_PAINTER

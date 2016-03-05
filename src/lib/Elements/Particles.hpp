@@ -5,7 +5,6 @@
 #include <random>
 
 #include <glbinding/gl/gl.h>
-#include <glbinding/Binding.h>
 
 #include <glm/glm.hpp>
 
@@ -19,14 +18,15 @@ namespace etudes {
 
         void registerInputs() override;
 
-        void init() override;
+        void init(ShaderRegistry &registry) override;
         void update() override;
-        void draw() override;
+        void draw(const ShaderRegistry &registry,
+                  const Painter &painter) override;
 
     private:
-        void updateBest();
+        void initGL(ShaderRegistry &registry);
 
-        std::unique_ptr<ShaderRegistry> registry;
+        void updateBest();
 
         gl::GLuint vao, vbo;
 

@@ -20,7 +20,7 @@ namespace etudes {
         registerInput("/center", {0, 0});
     }
 
-    void Particles::init() {
+    void Particles::init(ShaderRegistry &registry) {
         count = getValue<float>("/count");
         center = to_vec2(getValue<vecf>("/center"));
 
@@ -37,12 +37,15 @@ namespace etudes {
             v = vec2(0, 0);
         }
 
-        registry = std::make_unique<ShaderRegistry>();
-        registry->registerShader("ident", GL_VERTEX_SHADER,
+        initGL(registry);
+    }
+
+    void Particles::initGL(ShaderRegistry &registry) {
+        registry.registerShader("ident", GL_VERTEX_SHADER,
                                  {"resources/shader/ident.vert"});
-        registry->registerShader("white", GL_FRAGMENT_SHADER,
+        registry.registerShader("white", GL_FRAGMENT_SHADER,
                                  {"resources/shader/white.frag"});
-        registry->registerProgram("simple", {"ident", "white"});
+        registry.registerProgram("simple", {"ident", "white"});
 
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
@@ -51,10 +54,10 @@ namespace etudes {
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER,
                      positions.size() * sizeof(vec2),
-                     NULL, GL_STATIC_DRAW);
+                     NULL, GL_DYNAMIC_DRAW);
 
         GLint attribPosition =
-            glGetAttribLocation(registry->getProgram("simple"), "position");
+            glGetAttribLocation(registry.getProgram("simple"), "position");
         glVertexAttribPointer(attribPosition, 2, GL_FLOAT, GL_FALSE, 0, 0);
         glEnableVertexAttribArray(attribPosition);
     }
@@ -66,7 +69,7 @@ namespace etudes {
 //        float w = 0.5;
 //        float w = 1;
         float minDot = 0.2;
-        float minDim = 0.1;
+//        float minDim = 0.1;
 
         updateBest();
 
@@ -97,7 +100,6 @@ namespace etudes {
             positions[index] += 0.08f * velocities[index];
         }
 
-        glBindVertexArray(vao);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferSubData(GL_ARRAY_BUFFER,
                         0, positions.size() * sizeof(vec2),
@@ -128,12 +130,13 @@ namespace etudes {
         positionGBest = positions[indexMin];
     }
 
-    void Particles::draw() {
+    void Particles::draw(const ShaderRegistry &registry,
+                         const Painter &painter) {
+        glUseProgram(registry.getProgram("simple"));
+
         glBindVertexArray(vao);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
         glPointSize(10.0f);
-        glLineWidth(5.0f);
         glDrawArrays(GL_POINTS, 0, positions.size());
     }
 

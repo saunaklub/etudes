@@ -2,8 +2,8 @@
 
 #include <Utility/Utility.hpp>
 
-#include <Drawing/ModulationFuncs.hpp>
-#include <Drawing/DrawPrimitives.hpp>
+#include <Rendering/ModulationFuncs.hpp>
+#include <Rendering/Painter.hpp>
 
 #include "Lines.hpp"
 
@@ -31,7 +31,8 @@ namespace etudes {
         registerInput("/color/lambda",    {0.0f});
     }
 
-    void Lines::draw() {
+    void Lines::draw(const ShaderRegistry &registry,
+                     const Painter &painter) {
         auto dist_b = getValue<float>("/distance/base");
         auto dist_a = getValue<float>("/distance/amplitude");
         auto dist_o = getValue<float>("/distance/omega");
@@ -58,8 +59,8 @@ namespace etudes {
                        2.0f*sin(angle));
         auto p1 = -p0;
 
-        drawParallels(p0, p1,
-                      count, count,
-                      width, dist, color);
+        painter.drawParallels(p0, p1,
+                              count, count,
+                              width, dist, color);
     }
 }

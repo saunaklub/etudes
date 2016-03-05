@@ -13,8 +13,8 @@ set(LIBRARY_SOURCES
     src/lib/Factories/EtudeFactory.cpp
     src/lib/Receivers/Receiver.cpp
     src/lib/Receivers/Etude.cpp
-    src/lib/Drawing/DrawPrimitives.cpp
-    src/lib/Drawing/ModulationFuncs.cpp
+    src/lib/Rendering/Painter.cpp
+    src/lib/Rendering/ModulationFuncs.cpp
     src/lib/Elements/Lines.cpp
     src/lib/Elements/Particles.cpp
     )

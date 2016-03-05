@@ -33,9 +33,10 @@ namespace etudes {
 
         void registerInputs() override;
 
-        void init() override;
+        void init(ShaderRegistry &registry) override;
         void update() override;
-        void draw() override;
+        void draw(const ShaderRegistry &registry,
+                  const Painter &painter) override;
 
         void addElement(std::string name, std::unique_ptr<Element> element);
         void dispatchValue(std::string input, vec_t value);

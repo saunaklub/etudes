@@ -13,9 +13,9 @@ namespace etudes {
     void Etude::registerInputs() {
     }
 
-    void Etude::init() {
+    void Etude::init(ShaderRegistry &registry) {
         for(auto &element : elements) {
-            element.second->init();
+            element.second->init(registry);
         }
     }
 
@@ -25,9 +25,10 @@ namespace etudes {
         }
     }
 
-    void Etude::draw() {
+    void Etude::draw(const ShaderRegistry &registry,
+                     const Painter &painter) {
         for(auto &element : elements) {
-            element.second->draw();
+            element.second->draw(registry, painter);
         }
     }
 
