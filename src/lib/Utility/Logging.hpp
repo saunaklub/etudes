@@ -64,11 +64,11 @@ namespace etudes {
                 break;
             case error:
                 os =  &cerr;
-                prefix = "[ERROR] ";
+                prefix = "[error] ";
                 break;
             case warning:
                 os =  &cerr;
-                prefix = "[WARNING] ";
+                prefix = "[warning] ";
                 break;
             case info:
                 os =  &cout;
