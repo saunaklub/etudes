@@ -5,7 +5,7 @@ window:
   cursor: true
 
 logging:
-  logLevel: info
+  logLevel: debug
   framerate: false
 
 etudes:
