@@ -88,8 +88,7 @@ namespace etudes {
         logFramerate = hostConfig.getValue<bool>("logging:framerate");
 
         initGLFW();
-        printOpenGLInfo();
-
+        initGL();
         initEtudes();
         initOSC();
         initInput();
@@ -127,6 +126,11 @@ namespace etudes {
         glfwSetKeyCallback(window, key_callback);
     }
 
+    void EtudesHost::initGL() {
+        printOpenGLInfo();
+        painter.init();
+    }
+
     void EtudesHost::printOpenGLInfo() {
         std::string output = "OpenGL information:\n";
 
@@ -136,10 +140,20 @@ namespace etudes {
         GLint maxTexSize, maxTexUnits;
         glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
         glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTexUnits);
-
         output += "  max texture size: " + std::to_string(maxTexSize) + "\n";
-        output += "  max texture units: " + std::to_string(maxTexUnits);
+        output += "  max texture units: " + std::to_string(maxTexUnits) + "\n";
 
+
+        std::array<GLfloat, 2> lineWidthRangeAliased;
+        std::array<GLfloat, 2> lineWidthRangeSmooth;
+        glGetFloatv(GL_ALIASED_LINE_WIDTH_RANGE, &lineWidthRangeAliased[0]);
+        glGetFloatv(GL_SMOOTH_LINE_WIDTH_RANGE, &lineWidthRangeSmooth[0]);
+        output += "  line width aliased: " +
+            std::to_string(lineWidthRangeAliased[0]) + " - " +
+            std::to_string(lineWidthRangeAliased[1]) + "\n";
+        output += "  line width smooth:  " +
+            std::to_string(lineWidthRangeSmooth[0]) + " - " +
+            std::to_string(lineWidthRangeSmooth[1]) + "\n";
 
         log(LogLevel::info, output);
     }

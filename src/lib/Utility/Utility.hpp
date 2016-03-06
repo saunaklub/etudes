@@ -5,6 +5,7 @@
 #include <iostream>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 
 #ifdef DEBUG
 #define EDB(x) std::cout << std::fixed << #x ": " << x << std::endl
@@ -15,6 +16,7 @@
 namespace etudes {
     glm::vec2 to_vec2(const std::vector<float> &vec);
     glm::vec3 to_vec3(const std::vector<float> &vec);
+    glm::vec4 to_vec4(const std::vector<float> &vec);
 
     std::string splitStringFirst(std::string str, char separator='/');
     std::string splitStringRest(std::string str, char separator='/');

@@ -42,8 +42,8 @@ namespace etudes {
         auto width_o = getValue<float>("/width/omega");
         auto width_l = getValue<float>("/width/lambda");
 
-        auto color_b = to_vec3(getValue<vecf>("/color/base"));
-        auto color_a = to_vec3(getValue<vecf>("/color/amplitude"));
+        auto color_b = to_vec4(getValue<vecf>("/color/base"));
+        auto color_a = to_vec4(getValue<vecf>("/color/amplitude"));
         auto color_o = getValue<float>("/color/omega");
         auto color_l = getValue<float>("/color/lambda");
 

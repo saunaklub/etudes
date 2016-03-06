@@ -146,6 +146,9 @@ namespace etudes {
 
     GLuint ShaderRegistry::registerUniform(std::string program_name,
                                            std::string uniform_name) {
+        log(LogLevel::debug, program_name +
+            ": Registering uniform: " + uniform_name);
+
         GLuint location = glGetUniformLocation(getProgram(program_name),
                                                uniform_name.c_str());
         m_mapUniform[program_name][uniform_name] = location;

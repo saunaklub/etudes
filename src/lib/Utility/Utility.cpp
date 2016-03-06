@@ -28,6 +28,10 @@ namespace etudes {
         return glm::vec3(vec[0], vec[1], vec[2]);
     }
 
+    glm::vec4 to_vec4(const std::vector<float> &vec) {
+        return glm::vec4(vec[0], vec[1], vec[2], vec[3]);
+    }
+
     std::string splitStringFirst(std::string str, char separator) {
         return str.substr(1, str.find(separator, 1) - 1);
     }

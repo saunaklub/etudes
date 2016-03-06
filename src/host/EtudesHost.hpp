@@ -65,6 +65,7 @@ namespace etudes {
         };
 
         void initGLFW();
+        void initGL();
         void initOSC();
         void initEtudes();
         void initInput();
