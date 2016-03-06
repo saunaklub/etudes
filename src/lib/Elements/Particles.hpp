@@ -5,7 +5,6 @@
 #include <random>
 
 #include <glbinding/gl/gl.h>
-#include <glbinding/Binding.h>
 
 #include <glm/glm.hpp>
 
@@ -21,12 +20,12 @@ namespace etudes {
 
         void init() override;
         void update() override;
-        void draw() override;
+        void draw(const Painter &painter) override;
 
     private:
-        void updateBest();
+        void initGL();
 
-        std::unique_ptr<ShaderRegistry> registry;
+        void updateBest();
 
         gl::GLuint vao, vbo;
 
@@ -41,6 +40,8 @@ namespace etudes {
 
         std::random_device randDev;
         std::mt19937 randGen;
+
+        ShaderRegistry shaders;
     };
 }
 

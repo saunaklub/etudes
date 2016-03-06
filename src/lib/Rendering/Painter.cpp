@@ -26,7 +26,7 @@ using namespace gl;
 
 #include <Utility/Logging.hpp>
 
-#include "DrawPrimitives.hpp"
+#include "Painter.hpp"
 
 namespace etudes {
     using std::function;
@@ -35,41 +35,67 @@ namespace etudes {
     using std::make_pair;
 
     using glm::vec2;
-    using glm::vec3;
+    using glm::vec4;
 
     using std::to_string;
     using logging::to_string;
 
     typedef std::vector<float> vec;
 
-    void drawLine(vec2 p0, vec2 p1,
-                  float width, vec3 color) {
+    void Painter::init() {
+        shaders.registerShader("ident", GL_VERTEX_SHADER,
+                                 {"resources/shader/ident.vert"});
+        shaders.registerShader("solid", GL_FRAGMENT_SHADER,
+                                 {"resources/shader/solid.frag"});
+        shaders.registerProgram("line", {"ident", "solid"});
+        shaders.registerUniform("line", "color");
 
-        log(logging::none,
+        glGenVertexArrays(1, &vaoLine);
+        glBindVertexArray(vaoLine);
+
+        glGenBuffers(1, &vboLine);
+        glBindBuffer(GL_ARRAY_BUFFER, vboLine);
+        glBufferData(GL_ARRAY_BUFFER,
+                     2 * sizeof(vec2),
+                     NULL, GL_DYNAMIC_DRAW);
+
+        GLint attribPosition =
+            glGetAttribLocation(shaders.getProgram("line"), "position");
+        glVertexAttribPointer(attribPosition, 2, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(attribPosition);
+    }
+
+    void Painter::drawLine(vec2 p0, vec2 p1,
+                           float width, vec4 color) const {
+
+#if 0
+        log(logging::excessive,
             "drawLine called with: "s +
             to_string(p0) + " "s +
             to_string(p1) + " "s +
             to_string(width) + " "s +
             to_string(color));
+#endif
 
-        glEnable(GL_LINE_SMOOTH);
+        glUseProgram(shaders.getProgram("line"));
 
-        glLineWidth(width);
-        glColor3f(color.r,
-                  color.g,
-                  color.b);
+        vec2 positions[2] = {p0, p1};
+        glBufferSubData(GL_ARRAY_BUFFER,
+                        0, 2 * sizeof(vec2),
+                        &positions[0]);
 
-        glBegin(GL_LINES);
-        glVertex3f(p0.x, p0.y, 0);
-        glVertex3f(p1.x, p1.y, 0);
-        glEnd();
+
+        glUniform4f(shaders.getUniform("line", "color"),
+                    color.r, color.g, color.b, color.a);
+
+        glDrawArrays(GL_LINES, 0, 2);
     }
 
-    void drawParallels(vec2 centerp0, vec2 centerp1,
+    void Painter::drawParallels(vec2 centerp0, vec2 centerp1,
                        int leftRepeat, int rightRepeat,
                        function<float(int)> funcWidth,
                        function<float(int)> funcDistance,
-                       function<vec3(int)>  funcColor) {
+                       function<vec4(int)>  funcColor) const {
 
         // draw center line
         drawLine(

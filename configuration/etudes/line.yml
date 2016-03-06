@@ -2,6 +2,6 @@ elements:
   lines:
     type: line
     defaults:
-      /color/base: [1.0, 0.5, 0.5]
-      /color/amplitude: [0.0, 0.5, 0.0]
+      /color/base: [1.0, 0.5, 0.5, 1.0]
+      /color/amplitude: [0.0, 0.5, 0.0, 0.0]
       /color/omega: [1.0]

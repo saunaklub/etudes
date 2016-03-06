@@ -88,8 +88,7 @@ namespace etudes {
         logFramerate = hostConfig.getValue<bool>("logging:framerate");
 
         initGLFW();
-        printOpenGLInfo();
-
+        initGL();
         initEtudes();
         initOSC();
         initInput();
@@ -101,6 +100,11 @@ namespace etudes {
         if(!glfwInit()) {
             throw std::runtime_error("glfwInit failed");
         }
+
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
         window = glfwCreateWindow(
             hostConfig.getValue<int>("window:width"),
@@ -122,6 +126,11 @@ namespace etudes {
         glfwSetKeyCallback(window, key_callback);
     }
 
+    void EtudesHost::initGL() {
+        printOpenGLInfo();
+        painter.init();
+    }
+
     void EtudesHost::printOpenGLInfo() {
         std::string output = "OpenGL information:\n";
 
@@ -131,10 +140,20 @@ namespace etudes {
         GLint maxTexSize, maxTexUnits;
         glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
         glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &maxTexUnits);
-
         output += "  max texture size: " + std::to_string(maxTexSize) + "\n";
-        output += "  max texture units: " + std::to_string(maxTexUnits);
+        output += "  max texture units: " + std::to_string(maxTexUnits) + "\n";
 
+
+        std::array<GLfloat, 2> lineWidthRangeAliased;
+        std::array<GLfloat, 2> lineWidthRangeSmooth;
+        glGetFloatv(GL_ALIASED_LINE_WIDTH_RANGE, &lineWidthRangeAliased[0]);
+        glGetFloatv(GL_SMOOTH_LINE_WIDTH_RANGE, &lineWidthRangeSmooth[0]);
+        output += "  line width aliased: " +
+            std::to_string(lineWidthRangeAliased[0]) + " - " +
+            std::to_string(lineWidthRangeAliased[1]) + "\n";
+        output += "  line width smooth:  " +
+            std::to_string(lineWidthRangeSmooth[0]) + " - " +
+            std::to_string(lineWidthRangeSmooth[1]) + "\n";
 
         log(LogLevel::info, output);
     }
@@ -176,6 +195,7 @@ namespace etudes {
         }
 
         currentEtude = etudes.begin();
+        printEtude();
     }
 
     void EtudesHost::initInput() {
@@ -255,13 +275,19 @@ namespace etudes {
 
             case GLFW_KEY_N:
                 nextEtude();
+                printEtude();
                 break;
 
             case GLFW_KEY_P:
                 prevEtude();
+                printEtude();
                 break;
             }
         }
+    }
+
+    void EtudesHost::printEtude() {
+        log(LogLevel::info, "Switched to etude: " + currentEtude->first);
     }
 
     void EtudesHost::nextEtude() {
@@ -286,7 +312,7 @@ namespace etudes {
 
     void EtudesHost::renderOutputs() {
         for(auto &output : videoOutputs)
-            output->render();
+            output->render(painter);
     }
 
     void EtudesHost::renderScreen() {
@@ -302,7 +328,7 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        currentEtude->second->draw();
+        currentEtude->second->draw(painter);
 
         glfwSwapBuffers(window);
     }

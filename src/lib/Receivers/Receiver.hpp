@@ -8,6 +8,7 @@
 #include <Utility/Logging.hpp>
 
 namespace etudes {
+
     class Receiver {
     public:
         typedef std::vector<float> vec_t;
@@ -30,23 +31,11 @@ namespace etudes {
         input_map_t mapInputs;
     };
 
-    template <typename T> T
-    Receiver::getValue(std::string input) const {
-        using namespace std::literals::string_literals;
-
-        const auto pair = mapInputs.find(input);
-        if(pair == mapInputs.end())
-            log(logging::warning,
-                "Receiver::getValue: input "s + input + " not registered");
-
-        return pair->second;
-    }
-
     template <> float
     Receiver::getValue<float>(std::string input) const;
 
-    extern template float
-    Receiver::getValue<float>(std::string input) const;
+    template <> Receiver::vec_t
+    Receiver::getValue<Receiver::vec_t>(std::string input) const;
 
 }
 

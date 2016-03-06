@@ -29,6 +29,8 @@
 
 #include <Utility/Configuration.hpp>
 
+#include <Rendering/Painter.hpp>
+
 struct GLFWwindow;
 
 namespace etudes {
@@ -63,6 +65,7 @@ namespace etudes {
         };
 
         void initGLFW();
+        void initGL();
         void initOSC();
         void initEtudes();
         void initInput();
@@ -73,6 +76,7 @@ namespace etudes {
         void processInput();
         void keyCallback(int, int, int, int);
 
+        void printEtude();
         void nextEtude();
         void prevEtude();
 
@@ -92,8 +96,9 @@ namespace etudes {
         etudes_t::const_iterator currentEtude;
 
         output_vec_t videoOutputs;
-
         OSCInput oscInput;
+
+        Painter painter;
     };
 }
 

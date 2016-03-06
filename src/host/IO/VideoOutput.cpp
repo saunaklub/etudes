@@ -22,13 +22,13 @@ namespace etudes {
 
     VideoOutput::~VideoOutput() {}
 
-    void VideoOutput::render() {
+    void VideoOutput::render(const Painter &painter) {
         bindFBO();
 
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        etude->draw();
+        etude->draw(painter);
 
         readFBO();
         unbindFBO();

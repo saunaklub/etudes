@@ -7,6 +7,9 @@
 #include <glbinding/Binding.h>
 
 namespace etudes {
+
+    class ShaderRegistry;
+    class Painter;
     class Etude;
 
     class VideoOutput {
@@ -14,7 +17,7 @@ namespace etudes {
         VideoOutput(Etude *etude, int width, int height);
         virtual ~VideoOutput();
 
-        void render();
+        void render(const Painter &painter);
 
         virtual void createOutput(std::string outputId) = 0;
         virtual void writeOutput() = 0;
