@@ -116,7 +116,10 @@ namespace etudes {
             throw std::runtime_error("glfwCreateWindow failed");
         }
 
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        if(hostConfig.hasValue("window:cursor")) {
+            if(!hostConfig.getValue<bool>("window:cursor"))
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        }
         glfwSetWindowUserPointer(window, this);
 
         glbinding::Binding::initialize();

@@ -2,6 +2,7 @@ window:
   width:  600
   height: 600
   fullscreen: true
+  cursor: true
 
 logging:
   logLevel: info
