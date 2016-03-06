@@ -1,9 +1,15 @@
+#include <Utility/Logging.hpp>
+
 #include "ImageLoader.hpp"
 
 namespace etudes {
 
+    using logging::LogLevel;
+
     void ImageLoader::load(std::string filename) {
-        image.load(filename.c_str());
+        if(!image.load(filename.c_str()))
+            log(LogLevel::error, "failed to load image: " + filename);
+        image.convertTo32Bits();
     }
 
     int ImageLoader::getWidth() {
