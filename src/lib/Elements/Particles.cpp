@@ -20,7 +20,7 @@ namespace etudes {
         registerInput("/center", {0, 0});
     }
 
-    void Particles::init(ShaderRegistry &registry) {
+    void Particles::init() {
         count = getValue<float>("/count");
         center = to_vec2(getValue<vecf>("/center"));
 
@@ -37,15 +37,15 @@ namespace etudes {
             v = vec2(0, 0);
         }
 
-        initGL(registry);
+        initGL();
     }
 
-    void Particles::initGL(ShaderRegistry &registry) {
-        registry.registerShader("ident", GL_VERTEX_SHADER,
+    void Particles::initGL() {
+        shaders.registerShader("ident", GL_VERTEX_SHADER,
                                  {"resources/shader/ident.vert"});
-        registry.registerShader("white", GL_FRAGMENT_SHADER,
+        shaders.registerShader("white", GL_FRAGMENT_SHADER,
                                  {"resources/shader/white.frag"});
-        registry.registerProgram("simple", {"ident", "white"});
+        shaders.registerProgram("simple", {"ident", "white"});
 
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
@@ -57,7 +57,7 @@ namespace etudes {
                      NULL, GL_DYNAMIC_DRAW);
 
         GLint attribPosition =
-            glGetAttribLocation(registry.getProgram("simple"), "position");
+            glGetAttribLocation(shaders.getProgram("simple"), "position");
         glVertexAttribPointer(attribPosition, 2, GL_FLOAT, GL_FALSE, 0, 0);
         glEnableVertexAttribArray(attribPosition);
     }
@@ -130,9 +130,8 @@ namespace etudes {
         positionGBest = positions[indexMin];
     }
 
-    void Particles::draw(const ShaderRegistry &registry,
-                         const Painter &painter) {
-        glUseProgram(registry.getProgram("simple"));
+    void Particles::draw(const Painter &painter) {
+        glUseProgram(shaders.getProgram("simple"));
 
         glBindVertexArray(vao);
 

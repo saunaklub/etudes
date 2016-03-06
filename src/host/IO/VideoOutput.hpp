@@ -17,8 +17,7 @@ namespace etudes {
         VideoOutput(Etude *etude, int width, int height);
         virtual ~VideoOutput();
 
-        void render(const ShaderRegistry &registry,
-                    const Painter &painter);
+        void render(const Painter &painter);
 
         virtual void createOutput(std::string outputId) = 0;
         virtual void writeOutput() = 0;

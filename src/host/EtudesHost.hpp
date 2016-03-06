@@ -28,7 +28,6 @@
 #include <IO/OSCInput.hpp>
 
 #include <Utility/Configuration.hpp>
-#include <Utility/ShaderRegistry.hpp>
 
 #include <Rendering/Painter.hpp>
 
@@ -96,10 +95,8 @@ namespace etudes {
         etudes_t::const_iterator currentEtude;
 
         output_vec_t videoOutputs;
-
         OSCInput oscInput;
 
-        ShaderRegistry registry;
         Painter painter;
     };
 }

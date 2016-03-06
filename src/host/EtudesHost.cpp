@@ -159,7 +159,7 @@ namespace etudes {
             etudes.push_back(
                 std::make_pair(
                     etude, EtudeFactory::makeEtude(etude, etudeConfig)));
-            etudes.back().second->init(registry);
+            etudes.back().second->init();
 
 #ifdef LINUX
             if(etudeConfig.hasValue("output")) {
@@ -298,7 +298,7 @@ namespace etudes {
 
     void EtudesHost::renderOutputs() {
         for(auto &output : videoOutputs)
-            output->render(registry, painter);
+            output->render(painter);
     }
 
     void EtudesHost::renderScreen() {
@@ -314,7 +314,7 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        currentEtude->second->draw(registry, painter);
+        currentEtude->second->draw(painter);
 
         glfwSwapBuffers(window);
     }

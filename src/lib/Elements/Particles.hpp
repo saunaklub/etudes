@@ -18,13 +18,12 @@ namespace etudes {
 
         void registerInputs() override;
 
-        void init(ShaderRegistry &registry) override;
+        void init() override;
         void update() override;
-        void draw(const ShaderRegistry &registry,
-                  const Painter &painter) override;
+        void draw(const Painter &painter) override;
 
     private:
-        void initGL(ShaderRegistry &registry);
+        void initGL();
 
         void updateBest();
 
@@ -41,6 +40,8 @@ namespace etudes {
 
         std::random_device randDev;
         std::mt19937 randGen;
+
+        ShaderRegistry shaders;
     };
 }
 

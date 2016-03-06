@@ -31,8 +31,7 @@ namespace etudes {
         registerInput("/color/lambda",    {0.0f});
     }
 
-    void Lines::draw(const ShaderRegistry &registry,
-                     const Painter &painter) {
+    void Lines::draw(const Painter &painter) {
         auto dist_b = getValue<float>("/distance/base");
         auto dist_a = getValue<float>("/distance/amplitude");
         auto dist_o = getValue<float>("/distance/omega");
