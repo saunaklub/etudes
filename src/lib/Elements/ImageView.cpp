@@ -46,7 +46,7 @@ namespace etudes {
             loader.getData(), loader.getWidth(), loader.getHeight());
     }
 
-    void ImageView::draw() {
+    void ImageView::draw(const Painter &painter) {
         glUseProgram(registry.getProgram("imageview"));
         texture->render();
         glUseProgram(0);

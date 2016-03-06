@@ -9,14 +9,17 @@ set(LIBRARY_SOURCES
     src/lib/Utility/Logging.cpp
     src/lib/Utility/Configuration.cpp
     src/lib/Utility/ShaderRegistry.cpp
+    src/lib/Utility/ImageLoader.cpp
     src/lib/Factories/ElementFactory.cpp
     src/lib/Factories/EtudeFactory.cpp
     src/lib/Receivers/Receiver.cpp
     src/lib/Receivers/Etude.cpp
-    src/lib/Rendering/Painter.cpp
     src/lib/Rendering/ModulationFuncs.cpp
+    src/lib/Rendering/Painter.cpp
+    src/lib/Rendering/TextureTiled.cpp
     src/lib/Elements/Lines.cpp
     src/lib/Elements/Particles.cpp
+    src/lib/Elements/ImageView.cpp
     )
 
 set(CLIENT_SOURCES
@@ -49,29 +52,6 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     add_definitions("-DLINUX")
 endif()
 
-<<<<<<< d3a0013f8f14928c90f6f353d074d9a57659bf3d
-=======
-add_library(${LIBRARY} SHARED
-    src/lib/Utility/Utility.cpp
-    src/lib/Utility/Logging.cpp
-    src/lib/Utility/Configuration.cpp
-    src/lib/Utility/ShaderRegistry.cpp
-    src/lib/Utility/ImageLoader.cpp
-    src/lib/Factories/ElementFactory.cpp
-    src/lib/Factories/EtudeFactory.cpp
-    src/lib/Receivers/Receiver.cpp
-    src/lib/Receivers/Etude.cpp
-    src/lib/Drawing/DrawPrimitives.cpp
-    src/lib/Drawing/ModulationFuncs.cpp
-    src/lib/Drawing/TextureTiled.cpp
-    src/lib/Elements/Lines.cpp
-    src/lib/Elements/Particles.cpp
-    src/lib/Elements/ImageView.cpp
-    )
-
-set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
-
->>>>>>> intermediate commit tiled textures imageview
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)

@@ -6,7 +6,7 @@
 #include <Utility/ImageLoader.hpp>
 #include <Utility/ShaderRegistry.hpp>
 
-#include <Drawing/TextureTiled.hpp>
+#include <Rendering/TextureTiled.hpp>
 #include <Receivers/Element.hpp>
 
 namespace etudes {
@@ -20,7 +20,7 @@ namespace etudes {
         void registerInputs() override;
 
         void init() override;
-        void draw() override;
+        void draw(const Painter &painter) override;
 
     private:
         std::string filename;
