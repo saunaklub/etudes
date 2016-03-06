@@ -20,11 +20,11 @@ namespace etudes {
     void ImageView::init() {
         ImageLoader loader;
 
-        registry.registerShader("ident", GL_VERTEX_SHADER,
-                                 {"resources/shader/ident.vert"});
+        registry.registerShader("ident-uv3d", GL_VERTEX_SHADER,
+                                 {"resources/shader/ident-uv3d.vert"});
         registry.registerShader("textured_array", GL_FRAGMENT_SHADER,
                                  {"resources/shader/textured_array.frag"});
-        registry.registerProgram("imageview", {"ident", "textured_array"});
+        registry.registerProgram("imageview", {"ident-uv3d", "textured_array"});
 
         log(LogLevel::debug, "ImageView: loading image: " + filename);
         loader.load(filename);
