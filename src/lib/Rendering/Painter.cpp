@@ -78,8 +78,10 @@ namespace etudes {
 #endif
 
         glUseProgram(shaders.getProgram("line"));
+        glBindVertexArray(vaoLine);
 
         vec2 positions[2] = {p0, p1};
+        glBindBuffer(GL_ARRAY_BUFFER, vboLine);
         glBufferSubData(GL_ARRAY_BUFFER,
                         0, 2 * sizeof(vec2),
                         &positions[0]);
