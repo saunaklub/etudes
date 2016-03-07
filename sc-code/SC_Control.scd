@@ -1,6 +1,8 @@
 (
     Tdef(\init, {
 
+        ~etudes = ();
+
         ("Server.scd").loadRelative;
 
         s.bootSync;
