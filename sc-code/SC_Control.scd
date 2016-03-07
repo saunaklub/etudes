@@ -1,4 +1,3 @@
-//s.options.device = "Saffire";
 (
     Tdef(\init, {
 
@@ -11,6 +10,8 @@
         ("Definitions.scd").loadRelative;
         s.sync;
 
+
+        Environment.push(~etudes);
 
         //NDEFS
         Ndef('sinOsc1', Fdef(\sinOsc)).set('freq', 0.3, 'mul', 300,'add', 35);
@@ -44,43 +45,23 @@
         Ndef(\lfPulse1).map(\freq, Ndef('mapper2',{~midiBus[27].kr(1) * 300}));
         s.sync;
 
+        ~registerValue.value("/lines/angle", \sinOsc1, -265,335,0,4pi);
+        ~registerValue.value("/lines/distance/omega", \sinOsc2, 0,1,0,2pi);
+        ~registerValue.value("/lines/distance/base", \sinOsc3, 0,1,0.02,0);
+        ~registerValue.value("/lines/count", \LFSaw1, -100,100,100, 300);
+        ~registerValue.value("/lines/width/amplitude", \lfPulse2, 0,1,0,0.02);
+
         Tdef(\oscUpdate, {
             loop{
-                Ndef(\sinOsc1).bus.get({
-                    arg v; 
-                    ~etudes.sendMsg(
-                        "/lines/angle", v.linlin(-265,335,0,4pi)
-                    ); 
-                });
-                Ndef(\sinOsc2).bus.get({
-                    arg v; 
-                    ~etudes.sendMsg(
-                        "/lines/distance/omega", v.linlin(0,1,0,2pi)
-                    ); 
-                });
-                Ndef(\sinOsc3).bus.get({
-                    arg v; 
-                    ~etudes.sendMsg(
-                        "/lines/distance/base", v.linlin(0,1,0.02,0)
-                    ); 
-                });
-                Ndef(\LFSaw1).bus.get({
-                    arg v; 
-                    ~etudes.sendMsg(
-                        "/lines/count", v.linlin(-100,100,100, 300)
-                    ); 
-                });
-                Ndef(\lfPulse1).bus.get({
-                    arg v; 
-                    ~etudes.sendMsg(
-                        "/lines/width/amplitude", v.linlin(0,1,0,0.02)
-                    ); 
-                });
+                ~sendValues.value();
                 (1/60).wait;
             }
         });
 
         s.sync;
+
+        Environment.pop;
+        
         "done".postln;
     });
     Tdef(\init).play;

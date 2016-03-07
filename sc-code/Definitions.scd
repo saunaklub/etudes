@@ -1,3 +1,5 @@
+Environment.push(~etudes);
+
 Fdef(\sinOsc, {
     SinOsc.kr(\freq.kr(440), 0, \mul.kr(1), \add.kr(0));
 });
@@ -74,3 +76,5 @@ Fdef(\mapFunc, {
     arg in, min, max;
     LinLin.kr(in,0,1,min,max);
 });
+
+Environment.pop;
