@@ -3,9 +3,12 @@
 
 #include <vector>
 #include <iostream>
+
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
+
+#include <glbinding/gl/gl.h>
 
 #ifdef DEBUG
 #define EDB(x) std::cout << std::fixed << #x ": " << x << std::endl
@@ -23,6 +26,9 @@ namespace etudes {
 
     long microSeconds();
     double seconds();
+
+    void checkGLError();
+    std::string getGLErrorMessage(const gl::GLenum error);
 
     template <typename T>
     std::ostream &operator<<(std::ostream &os,

@@ -1,4 +1,7 @@
+#include <map>
 #include <chrono>
+
+#include <Utility/Logging.hpp>
 
 #include "Utility.hpp"
 
@@ -9,7 +12,21 @@ namespace etudes {
     using std::chrono::duration;
     using std::chrono::microseconds;
 
+    using namespace gl;
+
+    using logging::LogLevel;
+
     auto t0 = clock_t::now();
+
+    std::map<GLenum, std::string> glErrorMap = {
+        {GL_INVALID_ENUM, "GL_INVALID_ENUM"},
+        {GL_INVALID_VALUE, "GL_INVALID_VALUE"},
+        {GL_INVALID_OPERATION, "GL_INVALID_OPERATION"},
+        {GL_OUT_OF_MEMORY, "GL_OUT_OF_MEMORY"},
+        {GL_STACK_OVERFLOW, "GL_STACK_OVERFLOW"},
+        {GL_STACK_UNDERFLOW, "GL_STACK_UNDERFLOW"},
+        {GL_INVALID_FRAMEBUFFER_OPERATION, "GL_INVALID_FRAMEBUFFER_OPERATION"}
+    };
 
     long microSeconds() {
         auto diff =  duration_cast<microseconds>(clock_t::now() - t0);
@@ -41,4 +58,19 @@ namespace etudes {
                           str.size() - str.find(separator, 1));
     }
 
+    void checkGLError() {
+        const GLenum e = glGetError();
+
+        if (e == GL_NO_ERROR)
+            return;
+
+        log(LogLevel::error, getGLErrorMessage(e));
+    }
+
+    std::string getGLErrorMessage(const GLenum error) {
+        if(glErrorMap.find(error) != glErrorMap.end())
+            return glErrorMap[error];
+
+        return "unknown error";
+    }
 }

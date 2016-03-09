@@ -229,6 +229,8 @@ namespace etudes {
 
         render();
 
+        checkGLError();
+
         if(logFramerate)
             log(LogLevel::excessive, "rendering at " +
                 std::to_string(1000000.0/(microSeconds()-t0)) + " fps");
@@ -332,6 +334,8 @@ namespace etudes {
         glClear(GL_COLOR_BUFFER_BIT);
 
         currentEtude->second->draw(painter);
+
+        checkGLError();
 
         glfwSwapBuffers(window);
     }
