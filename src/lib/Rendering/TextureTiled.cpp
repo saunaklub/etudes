@@ -53,7 +53,7 @@ namespace etudes {
                         GL_TEXTURE_WRAP_T, GLint(GL_REPEAT));
 
         glTexStorage3D(GL_TEXTURE_2D_ARRAY,
-                       mipLevelCount, GL_RGB8,
+                       mipLevelCount, GL_RGBA8,
                        tileWidth, tileHeight, numTilesX*numTilesY);
     }
 
@@ -100,28 +100,26 @@ namespace etudes {
                                   int width, int height) {
 
         if(width != tileWidth || height != tileHeight) {
-            char *buffer = new char[numTilesX*numTilesY*tileWidth*tileHeight*3];
+            char *buffer = new char[numTilesX*numTilesY*tileWidth*tileHeight*4];
 
             int copyWidth = std::min(tileWidth, width);
             int copyHeight = std::min(tileHeight, height);
             for(int row = 0 ; row < copyWidth ; ++row) {
                 for(int col = 0 ; col < copyHeight ; ++col) {
-                    int indexSource = row*copyWidth + col;
-                    int indexTexture = row*tileWidth + col;
-                    buffer[3*indexTexture + 0] = data[3*indexSource + 0];
-                    buffer[3*indexTexture + 1] = data[3*indexSource + 1];
-                    buffer[3*indexTexture + 2] = data[3*indexSource + 2];
+                    int indexSource = col*copyWidth + row;
+                    int indexTexture = col*tileHeight + row;
+                    memcpy(buffer+ 4*indexTexture, data + 4*indexSource, 4);
                 }
             }
             glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, 0,
                             tileWidth, tileHeight, numTilesX*numTilesY,
-                            GL_RGB, GL_UNSIGNED_BYTE, buffer);
+                            GL_BGRA, GL_UNSIGNED_BYTE, buffer);
             delete [] buffer;
         }
         else {
             glTexSubImage3D(GL_TEXTURE_2D_ARRAY, 0, 0, 0, 0,
                             tileWidth, tileHeight, numTilesX*numTilesY,
-                            GL_RGB, GL_UNSIGNED_BYTE, data);
+                            GL_BGRA, GL_UNSIGNED_BYTE, data);
         }
 
         if(mipmaps)
