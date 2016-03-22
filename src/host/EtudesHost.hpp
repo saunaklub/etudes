@@ -41,7 +41,8 @@ namespace etudes {
     public:
         using etudes_t =
             std::vector<std::pair<std::string, std::unique_ptr<Etude>>>;
-        using output_vec_t = std::vector<std::unique_ptr<VideoOutput>>;
+        using output_vec_t =
+            std::vector<std::pair<std::string, std::unique_ptr<VideoOutput>>>;
 
         friend void key_callback(GLFWwindow* window,
                                  int key, int scancode, int action, int mods);

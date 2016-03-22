@@ -58,13 +58,14 @@ namespace etudes {
                           str.size() - str.find(separator, 1));
     }
 
-    void checkGLError() {
+    void checkGLError(std::string context) {
         const GLenum e = glGetError();
 
         if (e == GL_NO_ERROR)
             return;
 
-        log(LogLevel::error, getGLErrorMessage(e));
+        log(LogLevel::error,
+            context + ": " + getGLErrorMessage(e));
     }
 
     std::string getGLErrorMessage(const GLenum error) {

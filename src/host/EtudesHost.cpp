@@ -178,6 +178,8 @@ namespace etudes {
                     etude, EtudeFactory::makeEtude(etude, etudeConfig)));
             etudes.back().second->init();
 
+            checkGLError(etude + " init");
+
 #ifdef LINUX
             if(etudeConfig.hasValue("output")) {
                 if(!etudeConfig.hasValue("output:enabled") ||
@@ -189,9 +191,11 @@ namespace etudes {
                             etudes.back().second.get(),
                             etudeConfig.getValue<int>("output:width"),
                             etudeConfig.getValue<int>("output:height"));
-                    out->createOutput(
-                        etudeConfig.getValue<std::string>("output:name"));
-                    videoOutputs.push_back(std::move(out));
+                    std::string name =
+                        etudeConfig.getValue<std::string>("output:name");
+                    out->createOutput(name);
+                    videoOutputs.push_back(
+                        std::make_pair(name, std::move(out)));
                 }
             }
 #endif
@@ -229,7 +233,7 @@ namespace etudes {
 
         render();
 
-        checkGLError();
+        checkGLError("after main loop");
 
         if(logFramerate)
             log(LogLevel::excessive, "rendering at " +
@@ -316,8 +320,10 @@ namespace etudes {
     }
 
     void EtudesHost::renderOutputs() {
-        for(auto &output : videoOutputs)
-            output->render(painter);
+        for(auto &output : videoOutputs) {
+            output.second->render(painter);
+            checkGLError("drawing "s + output.first);
+        }
     }
 
     void EtudesHost::renderScreen() {
@@ -335,7 +341,7 @@ namespace etudes {
 
         currentEtude->second->draw(painter);
 
-        checkGLError();
+        checkGLError("drawing "s + currentEtude->first);
 
         glfwSwapBuffers(window);
     }

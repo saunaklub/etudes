@@ -27,7 +27,7 @@ namespace etudes {
     long microSeconds();
     double seconds();
 
-    void checkGLError();
+    void checkGLError(std::string context);
     std::string getGLErrorMessage(const gl::GLenum error);
 
     template <typename T>
