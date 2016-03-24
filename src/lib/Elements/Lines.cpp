@@ -2,8 +2,9 @@
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 
-#include <Rendering/ModulationFuncs.hpp>
-#include <Rendering/Painter.hpp>
+#include <Utility/ModulationFuncs.hpp>
+
+#include <Graphics/Painter.hpp>
 
 #include "Lines.hpp"
 

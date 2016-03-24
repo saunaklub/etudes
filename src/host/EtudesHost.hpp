@@ -29,7 +29,7 @@
 
 #include <Utility/Configuration.hpp>
 
-#include <Rendering/Painter.hpp>
+#include <Graphics/Painter.hpp>
 
 struct GLFWwindow;
 

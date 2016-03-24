@@ -5,14 +5,14 @@ window:
   cursor: true
 
 logging:
-  logLevel: debug
-  framerate: false
+  logLevel: excessive
+  framerate: true
 
 etudes:
   - space
-  - particles
-  - line
-  - grid
+  # - particles
+  # - line
+  # - grid
 
 input:
   mouse:

@@ -1,5 +1,6 @@
 elements:
   background:
     type: imageview
-    image: resources/images/test.png
-
+#    image: resources/images/hubble.tif
+    image: resources/images/fuck-nvidia.jpg
+#    image: resources/images/fire-glitch.png

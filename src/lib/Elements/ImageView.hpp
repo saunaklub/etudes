@@ -3,10 +3,10 @@
 
 #include <memory>
 
-#include <Utility/ImageLoader.hpp>
-
-#include <Rendering/Texture.hpp>
 #include <Receivers/Element.hpp>
+
+#include <IO/ImageLoader.hpp>
+#include <Graphics/Texture.hpp>
 
 namespace etudes {
 

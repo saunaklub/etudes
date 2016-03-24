@@ -9,31 +9,31 @@ set(LIBRARY_SOURCES
     src/lib/Utility/Logging.cpp
     src/lib/Utility/Configuration.cpp
     src/lib/Utility/ShaderRegistry.cpp
-    src/lib/Utility/ImageLoader.cpp
+    src/lib/Utility/ModulationFuncs.cpp
     src/lib/Factories/ElementFactory.cpp
     src/lib/Factories/EtudeFactory.cpp
+    src/lib/IO/OSCInput.cpp
+    src/lib/IO/ImageLoader.cpp
+    src/lib/IO/VideoOutput.cpp
+    src/lib/Graphics/Painter.cpp
+    src/lib/Graphics/Texture.cpp
+    src/lib/Graphics/TextureTiled.cpp
     src/lib/Receivers/Receiver.cpp
     src/lib/Receivers/Etude.cpp
-    src/lib/Rendering/ModulationFuncs.cpp
-    src/lib/Rendering/Painter.cpp
-    src/lib/Rendering/Texture.cpp
-    src/lib/Rendering/TextureTiled.cpp
     src/lib/Elements/Lines.cpp
     src/lib/Elements/Particles.cpp
     src/lib/Elements/ImageView.cpp
     )
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    list(APPEND LIBRARY_SOURCES
+        src/lib/IO/VideoOutputV4L2.cpp)
+endif()
+
 set(CLIENT_SOURCES
     src/host/main.cpp
     src/host/EtudesHost.cpp
-    src/host/IO/OSCInput.cpp
-    src/host/IO/VideoOutput.cpp
     )
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
-    list(APPEND CLIENT_SOURCES
-        src/host/IO/VideoOutputV4L2.cpp)
-endif()
 
 add_library(${LIBRARY} SHARED ${LIBRARY_SOURCES})
 add_executable(${CLIENT} ${CLIENT_SOURCES})
