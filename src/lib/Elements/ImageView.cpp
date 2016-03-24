@@ -1,6 +1,7 @@
 #include <cstring>
 
 #include <glbinding/gl/gl.h>
+#include <glm/vec2.hpp>
 
 #include <Utility/Logging.hpp>
 
@@ -9,6 +10,7 @@
 namespace etudes {
 
     using namespace gl;
+    using glm::vec2;
     using logging::LogLevel;
 
     ImageView::ImageView(std::string filename) :
@@ -16,7 +18,9 @@ namespace etudes {
     }
 
     void ImageView::registerInputs() {
-        registerInput("/hueshift", {0});
+        registerInput("/x-range", {0, 1});
+        registerInput("/y-range", {0.0, 0.6});
+        registerInput("/hue-shift", {0});
     }
 
     void ImageView::init() {
@@ -51,15 +55,26 @@ namespace etudes {
         int imgWidth = loader->getWidth();
         int imgHeight = loader->getHeight();
 
-        log(LogLevel::debug, "filling texture of size " +
-            std::to_string(texWidth) + " x " +  std::to_string(texHeight));
+        vec2 rangeX = getValue<vec2>("/x-range");
+        vec2 rangeY = getValue<vec2>("/y-range");
+
         for(int row = 0 ; row < texHeight ; ++row) {
             for(int col = 0 ; col < texWidth ; ++col) {
-                int idxTexel = row * texWidth + col;
+                int rowImage =
+                    imgHeight * (
+                        rangeY[0] +
+                        float(row) / float(texHeight) *
+                        (rangeY[1] - rangeY[0])
+                        );
+                int colImage =
+                    imgWidth * (
+                        rangeX[0] +
+                        float(col) / float(texWidth) *
+                        (rangeX[1] - rangeX[0])
+                        );
 
-                int rowImage = float(row) / float(texHeight) * imgHeight;
-                int colImage = float(col) / float(texWidth) * imgWidth;
                 int idxImage = rowImage * imgWidth + colImage;
+                int idxTexel = row * texWidth + col;
 
                 memcpy(texData + 4*idxTexel, imgData + 4*idxImage, 4);
             }
