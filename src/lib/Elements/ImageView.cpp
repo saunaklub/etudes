@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include <glbinding/gl/gl.h>
 
 #include <Utility/Logging.hpp>
@@ -18,38 +20,50 @@ namespace etudes {
     }
 
     void ImageView::init() {
-        ImageLoader loader;
-
-        registry.registerShader("ident-uv3d", GL_VERTEX_SHADER,
-                                 {"resources/shader/ident-uv3d.vert"});
-        registry.registerShader("textured_array", GL_FRAGMENT_SHADER,
-                                 {"resources/shader/textured_array.frag"});
-        registry.registerProgram("imageview", {"ident-uv3d", "textured_array"});
-
         log(LogLevel::debug, "ImageView: loading image: " + filename);
-        loader.load(filename);
+        loader = std::make_unique<ImageLoader>();
+        loader->load(filename);
 
-        int width = loader.getWidth();
-        int height = loader.getHeight();
-        int bpp = loader.getBitsPerPixel();
+        // int width = loader->getWidth();
+        // int height = loader->getHeight();
+        int width = 2048;
+        int height = 2048;
+
+        int bpp = loader->getBitsPerPixel();
         log(LogLevel::debug, "image size: " +
             std::to_string(width) + " x " + std::to_string(height));
         log(LogLevel::debug, "image bpp: " + std::to_string(bpp));
 
-        int tileSize = 2048;
-        texture = std::make_unique<TextureTiled>(
-            width, height,
-            tileSize, tileSize,
-            false);
-
-        texture->uploadData(
-            loader.getData(), loader.getWidth(), loader.getHeight());
+       texture = std::make_unique<Texture>(width, height, false);
     }
 
     void ImageView::draw(const Painter &painter) {
-        glUseProgram(registry.getProgram("imageview"));
+        uploadTextureData();
         texture->render();
-        glUseProgram(0);
+    }
+
+    void ImageView::uploadTextureData() {
+        unsigned char *texData = texture->getData();
+        int texWidth = texture->getWidth();
+        int texHeight = texture->getHeight();
+
+        unsigned char *imgData = loader->getData();
+        int imgWidth = loader->getWidth();
+        int imgHeight = loader->getHeight();
+
+        log(LogLevel::debug, "filling texture of size " +
+            std::to_string(texWidth) + " x " +  std::to_string(texHeight));
+        for(int row = 0 ; row < texHeight ; ++row) {
+            for(int col = 0 ; col < texWidth ; ++col) {
+                int idxTexel = row * texWidth + col;
+
+                int rowImage = float(row) / float(texHeight) * imgHeight;
+                int colImage = float(col) / float(texWidth) * imgWidth;
+                int idxImage = rowImage * imgWidth + colImage;
+
+                memcpy(texData + 4*idxTexel, imgData + 4*idxImage, 4);
+            }
+        }
     }
 
 }

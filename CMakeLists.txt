@@ -16,6 +16,7 @@ set(LIBRARY_SOURCES
     src/lib/Receivers/Etude.cpp
     src/lib/Rendering/ModulationFuncs.cpp
     src/lib/Rendering/Painter.cpp
+    src/lib/Rendering/Texture.cpp
     src/lib/Rendering/TextureTiled.cpp
     src/lib/Elements/Lines.cpp
     src/lib/Elements/Particles.cpp

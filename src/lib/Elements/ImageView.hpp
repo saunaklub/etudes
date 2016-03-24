@@ -4,9 +4,8 @@
 #include <memory>
 
 #include <Utility/ImageLoader.hpp>
-#include <Utility/ShaderRegistry.hpp>
 
-#include <Rendering/TextureTiled.hpp>
+#include <Rendering/Texture.hpp>
 #include <Receivers/Element.hpp>
 
 namespace etudes {
@@ -23,10 +22,12 @@ namespace etudes {
         void draw(const Painter &painter) override;
 
     private:
-        std::string filename;
-        std::unique_ptr<TextureTiled> texture;
+        void uploadTextureData();
 
-        ShaderRegistry registry;
+        std::string filename;
+
+        std::unique_ptr<ImageLoader> loader;
+        std::unique_ptr<Texture> texture;
     };
 }
 
