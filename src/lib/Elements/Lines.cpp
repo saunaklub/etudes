@@ -1,6 +1,6 @@
 #include <glm/gtc/constants.hpp>
-
-#include <Utility/Utility.hpp>
+#include <glm/vec2.hpp>
+#include <glm/vec4.hpp>
 
 #include <Rendering/ModulationFuncs.hpp>
 #include <Rendering/Painter.hpp>
@@ -10,8 +10,7 @@
 namespace etudes {
     using glm::pi;
     using glm::vec2;
-
-    typedef std::vector<float> vecf;
+    using glm::vec4;
 
     void Lines::registerInputs() {
         registerInput("/count", {100.0f});
@@ -25,8 +24,8 @@ namespace etudes {
         registerInput("/width/amplitude", {0.0f});
         registerInput("/width/omega",     {0.0f});
         registerInput("/width/lambda",    {0.0f});
-        registerInput("/color/base",      {1.0f, 1.0f, 1.0f});
-        registerInput("/color/amplitude", {0.0f, 0.0f, 0.0f});
+        registerInput("/color/base",      {1.0f, 1.0f, 1.0f, 1.0f});
+        registerInput("/color/amplitude", {0.0f, 0.0f, 0.0f, 0.0f});
         registerInput("/color/omega",     {0.0f});
         registerInput("/color/lambda",    {0.0f});
     }
@@ -42,8 +41,8 @@ namespace etudes {
         auto width_o = getValue<float>("/width/omega");
         auto width_l = getValue<float>("/width/lambda");
 
-        auto color_b = to_vec4(getValue<vecf>("/color/base"));
-        auto color_a = to_vec4(getValue<vecf>("/color/amplitude"));
+        auto color_b = getValue<vec4>("/color/base");
+        auto color_a = getValue<vec4>("/color/amplitude");
         auto color_o = getValue<float>("/color/omega");
         auto color_l = getValue<float>("/color/lambda");
 

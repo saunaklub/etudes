@@ -28,14 +28,10 @@ namespace etudes {
                            vec_t initialValue = {0});
 
     private:
+        const vec_t &getInput(std::string input) const;
+
         input_map_t mapInputs;
     };
-
-    template <> float
-    Receiver::getValue<float>(std::string input) const;
-
-    template <> Receiver::vec_t
-    Receiver::getValue<Receiver::vec_t>(std::string input) const;
 
 }
 

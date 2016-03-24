@@ -4,12 +4,10 @@
 
 #include "Particles.hpp"
 
-using namespace gl;
-using glm::vec2;
-
 namespace etudes {
 
-    using vecf = std::vector<float>;
+    using namespace gl;
+    using glm::vec2;
 
     Particles::Particles() :
         randGen(randDev()) {
@@ -22,7 +20,7 @@ namespace etudes {
 
     void Particles::init() {
         count = getValue<float>("/count");
-        center = to_vec2(getValue<vecf>("/center"));
+        center = getValue<vec2>("/center");
 
         positions.resize(count);
         positionsIBest.resize(count);
@@ -42,9 +40,9 @@ namespace etudes {
 
     void Particles::initGL() {
         shaders.registerShader("ident", GL_VERTEX_SHADER,
-                                 {"resources/shader/ident.vert"});
+                               {"resources/shader/ident.vert"});
         shaders.registerShader("white", GL_FRAGMENT_SHADER,
-                                 {"resources/shader/white.frag"});
+                               {"resources/shader/white.frag"});
         shaders.registerProgram("simple", {"ident", "white"});
 
         glGenVertexArrays(1, &vao);
@@ -107,7 +105,7 @@ namespace etudes {
     }
 
     void Particles::updateBest() {
-        vec2 center = to_vec2(getValue<vecf>("/center"));
+        vec2 center = getValue<vec2>("/center");
 
         size_t indexMin = 0;
         float productMin = std::numeric_limits<float>::max();
