@@ -235,9 +235,12 @@ namespace etudes {
 
         checkGLError("after main loop");
 
-        if(logFramerate)
-            log(LogLevel::excessive, "rendering at " +
-                std::to_string(1000000.0/(microSeconds()-t0)) + " fps");
+        if(logFramerate) {
+            long timeElapsed = (microSeconds()-t0);
+            log(LogLevel::info, "rendering at " +
+                std::to_string(1000000.0/timeElapsed) + " fps / " +
+                std::to_string(timeElapsed) + " µs");
+        }
 
         return true;
     }
