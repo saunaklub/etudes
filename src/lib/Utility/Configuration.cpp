@@ -49,7 +49,7 @@ namespace etudes {
         try {
             config = std::make_unique<Node>();
             *config = LoadFile(file);
-        } catch (BadFile e) {
+        } catch (BadFile &e) {
             cerr <<
                 "Unable to load file at relative path " <<
                 file << endl;

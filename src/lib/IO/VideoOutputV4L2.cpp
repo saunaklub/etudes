@@ -19,7 +19,8 @@ namespace etudes {
 
     VideoOutputV4L2::VideoOutputV4L2(Etude *etude,
                                      int width, int height) :
-        VideoOutput(etude, width, height) {
+        VideoOutput(etude, width, height),
+        fd(-1) {
     }
 
     void VideoOutputV4L2::printV4L2Capabilities(v4l2_capability *caps) {
@@ -101,7 +102,7 @@ namespace etudes {
                 " BGR32 SRGB colorspace: " + strerror(errno));
         }
 
-        res = ioctl(fd, VIDIOC_G_FMT, &format);
+        ioctl(fd, VIDIOC_G_FMT, &format);
         if(format.fmt.pix.width == 0 || format.fmt.pix.height == 0) {
             log(LogLevel::error, "Invalid video capture resolution: " +
                 to_string(width) + "x" + to_string(height));

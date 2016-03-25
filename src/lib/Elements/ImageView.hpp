@@ -14,7 +14,7 @@ namespace etudes {
 
     class ImageView : public Element {
     public:
-        ImageView(std::string filename);
+        explicit ImageView(std::string filename);
 
         void registerInputs() override;
 

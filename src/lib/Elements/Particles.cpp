@@ -10,6 +10,7 @@ namespace etudes {
     using glm::vec2;
 
     Particles::Particles() :
+        count(0),
         randGen(randDev()) {
     }
 

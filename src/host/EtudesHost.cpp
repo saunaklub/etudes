@@ -303,7 +303,7 @@ namespace etudes {
     }
 
     void EtudesHost::nextEtude() {
-        currentEtude++;
+        ++currentEtude;
         if(currentEtude == etudes.end())
             currentEtude = etudes.begin();
     }
@@ -311,7 +311,7 @@ namespace etudes {
     void EtudesHost::prevEtude() {
         if(currentEtude == etudes.begin())
             currentEtude = etudes.end();
-        currentEtude--;
+        --currentEtude;
     }
 
     void EtudesHost::render() {
