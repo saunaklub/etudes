@@ -19,7 +19,7 @@ namespace etudes {
 
     void ImageView::registerInputs() {
         registerInput("/x-range", {0, 1});
-        registerInput("/y-range", {0.0, 0.6});
+        registerInput("/y-range", {0, 1});
         registerInput("/hue-shift", {0});
     }
 

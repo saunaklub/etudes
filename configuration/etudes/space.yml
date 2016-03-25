@@ -4,3 +4,6 @@ elements:
 #    image: resources/images/hubble.tif
     image: resources/images/fuck-nvidia.jpg
 #    image: resources/images/fire-glitch.png
+    defaults:
+      /x-range: [0, 1]
+      /y-range: [0, 1]
