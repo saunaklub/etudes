@@ -44,9 +44,9 @@ namespace etudes {
 
     void Painter::init() {
         shaders.registerShader("ident", GL_VERTEX_SHADER,
-                                 {"resources/shader/ident.vert"});
+                                 {"resources/shaders/ident.vert"});
         shaders.registerShader("solid", GL_FRAGMENT_SHADER,
-                                 {"resources/shader/solid.frag"});
+                                 {"resources/shaders/solid.frag"});
         shaders.registerProgram("line", {"ident", "solid"});
         shaders.registerUniform("line", "color");
 

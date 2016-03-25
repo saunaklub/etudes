@@ -41,9 +41,9 @@ namespace etudes {
 
     void Particles::initGL() {
         shaders.registerShader("ident", GL_VERTEX_SHADER,
-                               {"resources/shader/ident.vert"});
+                               {"resources/shaders/ident.vert"});
         shaders.registerShader("white", GL_FRAGMENT_SHADER,
-                               {"resources/shader/white.frag"});
+                               {"resources/shaders/white.frag"});
         shaders.registerProgram("simple", {"ident", "white"});
 
         glGenVertexArrays(1, &vao);

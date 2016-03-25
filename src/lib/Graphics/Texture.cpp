@@ -16,9 +16,9 @@ namespace etudes {
         mipmaps(mipmaps) {
 
         registry.registerShader("ident-uv", GL_VERTEX_SHADER,
-                                 {"resources/shader/ident-uv.vert"});
+                                 {"resources/shaders/ident-uv.vert"});
         registry.registerShader("textured", GL_FRAGMENT_SHADER,
-                                 {"resources/shader/textured.frag"});
+                                 {"resources/shaders/textured-hueshift.frag"});
         registry.registerProgram("textured", {"ident-uv", "textured"});
 
         createTextureStorage();
