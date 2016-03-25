@@ -60,6 +60,9 @@ namespace etudes {
 
         for(int row = 0 ; row < texHeight ; ++row) {
             for(int col = 0 ; col < texWidth ; ++col) {
+        float hueShift = getValue<float>("/hue-shift");
+        texture->setHueShift(hueShift);
+
                 int rowImage =
                     imgHeight * (
                         rangeY[0] +

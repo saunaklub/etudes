@@ -21,6 +21,9 @@ namespace etudes {
                                  {"resources/shaders/textured-hueshift.frag"});
         registry.registerProgram("textured", {"ident-uv", "textured"});
 
+        locHueShift = glGetUniformLocation(registry.getProgram("textured"),
+                                           "hueShift");
+
         createTextureStorage();
         createGeometry();
     }
@@ -95,6 +98,10 @@ namespace etudes {
         return texture;
     }
 
+    void Texture::setHueShift(float hueShift) {
+        this->hueShift = hueShift;
+    }
+
     void Texture::uploadData() {
 
         // @todo: mark as dirty from client code
@@ -109,6 +116,8 @@ namespace etudes {
         glBindTexture(GL_TEXTURE_2D, idTexture);
 
         uploadData();
+
+        glUniform1f(locHueShift, hueShift);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
         glBindVertexArray(0);

@@ -14,6 +14,8 @@ namespace etudes {
         int getHeight();
         unsigned char *getData();
 
+        void setHueShift(float hueShift);
+
         void render();
 
     private:
@@ -26,6 +28,8 @@ namespace etudes {
         int width, height;
         bool mipmaps;
 
+        float hueShift;
+
         ShaderRegistry registry;
 
         gl::GLuint idVertexArray;
@@ -33,6 +37,8 @@ namespace etudes {
 
         gl::GLuint vboVertex;
         gl::GLuint vboUV;
+
+        gl::GLuint locHueShift;
 
         unsigned char *texture;
     };
