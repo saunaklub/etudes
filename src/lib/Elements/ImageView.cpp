@@ -28,17 +28,19 @@ namespace etudes {
         loader = std::make_unique<ImageLoader>();
         loader->load(filename);
 
-        // int width = loader->getWidth();
-        // int height = loader->getHeight();
-        int width = 2048;
-        int height = 2048;
+        int imgWidth = loader->getWidth();
+        int imgHeight = loader->getHeight();
+        int texWidth = 2048;
+        int texHeight = 2048;
 
         int bpp = loader->getBitsPerPixel();
         log(LogLevel::debug, "image size: " +
-            std::to_string(width) + " x " + std::to_string(height));
+            std::to_string(imgWidth) + " x " + std::to_string(imgHeight));
         log(LogLevel::debug, "image bpp: " + std::to_string(bpp));
+        log(LogLevel::debug, "texture size: " +
+            std::to_string(texWidth) + " x " + std::to_string(texHeight));
 
-        texture = std::make_unique<Texture>(width, height, false);
+        texture = std::make_unique<Texture>(texWidth, texHeight, false);
     }
 
     void ImageView::uploadTextureData() {
