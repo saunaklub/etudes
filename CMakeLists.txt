@@ -9,6 +9,8 @@ set(LIBRARY_SOURCES
     src/lib/Utility/Logging.cpp
     src/lib/Utility/Configuration.cpp
     src/lib/Utility/ShaderRegistry.cpp
+    src/lib/Utility/ScopedProfiler.cpp
+    src/lib/Utility/AccumulativeProfiler.cpp
     src/lib/Utility/ModulationFuncs.cpp
     src/lib/Factories/ElementFactory.cpp
     src/lib/Factories/EtudeFactory.cpp
