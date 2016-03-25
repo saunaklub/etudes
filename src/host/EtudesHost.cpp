@@ -123,9 +123,12 @@ namespace etudes {
         glfwSetWindowUserPointer(window, this);
 
         glbinding::Binding::initialize();
-
         glfwMakeContextCurrent(window);
-        glfwSwapInterval(1);
+
+        if(hostConfig.hasValue("window:vsync")) {
+            glfwSwapInterval(hostConfig.getValue<bool>("window:vsync"));
+        }
+
         glfwSetKeyCallback(window, key_callback);
     }
 
