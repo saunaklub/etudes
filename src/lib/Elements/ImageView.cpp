@@ -54,13 +54,14 @@ namespace etudes {
         vec2 rangeY = getValue<vec2>("/y-range");
 
         for(int row = 0 ; row < texHeight ; ++row) {
+            int rowImage =
+                imgHeight * (
+                    rangeY[0] +
+                    float(row) / float(texHeight) *
+                    (rangeY[1] - rangeY[0])
+                    );
+
             for(int col = 0 ; col < texWidth ; ++col) {
-                int rowImage =
-                    imgHeight * (
-                        rangeY[0] +
-                        float(row) / float(texHeight) *
-                        (rangeY[1] - rangeY[0])
-                        );
                 int colImage =
                     imgWidth * (
                         rangeX[0] +
