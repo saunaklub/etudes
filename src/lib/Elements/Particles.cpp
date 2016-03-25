@@ -53,7 +53,7 @@ namespace etudes {
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER,
                      positions.size() * sizeof(vec2),
-                     NULL, GL_DYNAMIC_DRAW);
+                     nullptr, GL_DYNAMIC_DRAW);
 
         GLint attribPosition =
             glGetAttribLocation(shaders.getProgram("simple"), "position");

@@ -55,7 +55,7 @@ namespace etudes {
             if(logLevel > logLevelMax)
                 return;
 
-            std::ostream *os;
+            std::ostream *os = nullptr;
             std::string prefix = "";
 
             switch(logLevel) {

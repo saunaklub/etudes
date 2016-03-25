@@ -47,7 +47,7 @@ namespace etudes {
                         GL_TEXTURE_MAG_FILTER, GLint(GL_NEAREST));
         glTexImage2D(GL_TEXTURE_2D, 0, GLint(GL_SRGB8),
                      width, height, 0, GL_BGR,
-                     GL_UNSIGNED_BYTE, NULL);
+                     GL_UNSIGNED_BYTE, nullptr);
 
         glGenFramebuffers(1, &idFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, idFBO);

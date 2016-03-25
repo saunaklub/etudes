@@ -71,7 +71,7 @@ namespace etudes {
         }
 
         const char* strShaderData = sShaderCombined.c_str();
-        glShaderSource(shader, 1, &strShaderData, NULL);
+        glShaderSource(shader, 1, &strShaderData, nullptr);
 
         log(LogLevel::excessive, "Shader source:\n"s + strShaderData + "\n");
 
@@ -87,7 +87,7 @@ namespace etudes {
             std::vector<GLchar> sInfoLog;
             sInfoLog.reserve(infoLogLength+1);
             glGetShaderInfoLog(shader, infoLogLength,
-                               NULL, &sInfoLog.front());
+                               nullptr, &sInfoLog.front());
 
             std::string sShaderType;
             switch(type) {
@@ -131,7 +131,7 @@ namespace etudes {
             sInfoLog.reserve(infoLogLength+1);
 
             glGetProgramInfoLog(program, infoLogLength,
-                                NULL, &sInfoLog.front());
+                                nullptr, &sInfoLog.front());
 
             log(LogLevel::error, "Linker failure: " +
                 std::string(&sInfoLog.front()));

@@ -85,10 +85,10 @@ namespace etudes {
             std::to_string(port).c_str(), error);
 
         lo_server_thread_add_method(
-            oscServer, NULL, "f",
+            oscServer, nullptr, "f",
             float_handler, this);
         lo_server_thread_add_method(
-            oscServer, NULL, "fff",
+            oscServer, nullptr, "fff",
             float_handler, this);
 
         if(lo_server_thread_start(oscServer) != 0)
