@@ -38,12 +38,7 @@ namespace etudes {
             std::to_string(width) + " x " + std::to_string(height));
         log(LogLevel::debug, "image bpp: " + std::to_string(bpp));
 
-       texture = std::make_unique<Texture>(width, height, false);
-    }
-
-    void ImageView::draw(const Painter &painter) {
-        uploadTextureData();
-        texture->render();
+        texture = std::make_unique<Texture>(width, height, false);
     }
 
     void ImageView::uploadTextureData() {
@@ -60,9 +55,6 @@ namespace etudes {
 
         for(int row = 0 ; row < texHeight ; ++row) {
             for(int col = 0 ; col < texWidth ; ++col) {
-        float hueShift = getValue<float>("/hue-shift");
-        texture->setHueShift(hueShift);
-
                 int rowImage =
                     imgHeight * (
                         rangeY[0] +
@@ -82,6 +74,15 @@ namespace etudes {
                 memcpy(texData + 4*idxTexel, imgData + 4*idxImage, 4);
             }
         }
+    }
+
+    void ImageView::draw(const Painter &painter) {
+        uploadTextureData();
+
+        float hueShift = getValue<float>("/hue-shift");
+        texture->setHueShift(hueShift);
+
+        texture->render();
     }
 
 }
