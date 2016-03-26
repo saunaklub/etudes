@@ -44,7 +44,7 @@ namespace etudes {
     }
 
     void ImageView::uploadTextureData() {
-        unsigned char *texData = texture->getData();
+        unsigned char *texData = texture->getMappedData();
         int texWidth = texture->getWidth();
         int texHeight = texture->getHeight();
 

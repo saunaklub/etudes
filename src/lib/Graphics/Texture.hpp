@@ -12,7 +12,7 @@ namespace etudes {
 
         int getWidth();
         int getHeight();
-        unsigned char *getData();
+        unsigned char *getMappedData();
 
         void setHueShift(float hueShift);
 
@@ -35,6 +35,7 @@ namespace etudes {
         gl::GLuint idVertexArray;
         gl::GLuint idTexture;
 
+        gl::GLuint vboTexture;
         gl::GLuint vboVertex;
         gl::GLuint vboUV;
 
