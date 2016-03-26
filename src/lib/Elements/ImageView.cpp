@@ -55,23 +55,30 @@ namespace etudes {
         vec2 rangeX = getValue<vec2>("/x-range");
         vec2 rangeY = getValue<vec2>("/y-range");
 
+        int rowImage[texHeight];
+        int colImage[texWidth];
         for(int row = 0 ; row < texHeight ; ++row) {
-            int rowImage =
+            rowImage[row] =
                 imgHeight * (
                     rangeY[0] +
                     float(row) / float(texHeight) *
                     (rangeY[1] - rangeY[0])
                     );
 
-            for(int col = 0 ; col < texWidth ; ++col) {
-                int colImage =
-                    imgWidth * (
-                        rangeX[0] +
-                        float(col) / float(texWidth) *
-                        (rangeX[1] - rangeX[0])
-                        );
+        }
+        for(int col = 0 ; col < texWidth ; ++col) {
+            colImage[col] =
+                imgWidth * (
+                    rangeX[0] +
+                    float(col) / float(texWidth) *
+                    (rangeX[1] - rangeX[0])
+                    );
+        }
 
-                int idxImage = rowImage * imgWidth + colImage;
+        for(int row = 0 ; row < texHeight ; ++row) {
+            for(int col = 0 ; col < texWidth ; ++col) {
+                // @todo why can't we move the imgWidth multiplication out?
+                int idxImage = rowImage[row] * imgWidth + colImage[col];
                 int idxTexel = row * texWidth + col;
 
                 memcpy(texData + 4*idxTexel, imgData + 4*idxImage, 4);
