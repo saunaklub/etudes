@@ -225,8 +225,6 @@ namespace etudes {
     }
 
     bool EtudesHost::loopIteration() {
-        long t0 = microSeconds();
-
         processInput();
         if(quitLoop)
             return false;
@@ -238,8 +236,10 @@ namespace etudes {
 
         checkGLError("after main loop");
 
+        static long t0 = 0;
         if(logFramerate) {
             long timeElapsed = (microSeconds()-t0);
+            t0 = microSeconds();
             log(LogLevel::info, "rendering at " +
                 std::to_string(1000000.0/timeElapsed) + " fps / " +
                 std::to_string(timeElapsed) + " µs");
