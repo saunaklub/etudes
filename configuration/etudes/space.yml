@@ -7,3 +7,4 @@ elements:
     defaults:
       /x-range: [0, 1]
       /y-range: [0, 1]
+      /hue-shift: [0.0]
