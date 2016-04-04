@@ -1,4 +1,3 @@
-s = Server.scsynth.local;
 s.options.protocol = \tcp;
 
 Environment.push(~etudes);
