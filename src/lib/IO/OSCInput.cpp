@@ -88,6 +88,9 @@ namespace etudes {
             oscServer, nullptr, "f",
             float_handler, this);
         lo_server_thread_add_method(
+            oscServer, nullptr, "ff",
+            float_handler, this);
+        lo_server_thread_add_method(
             oscServer, nullptr, "fff",
             float_handler, this);
 
