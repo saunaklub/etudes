@@ -70,6 +70,7 @@ namespace etudes {
 
     EtudesHost::EtudesHost() :
         logFramerate(false),
+        vsync(false),
         window(nullptr),
         quitLoop(false),
         oscInput(etudes, 6666) {
@@ -126,8 +127,9 @@ namespace etudes {
         glfwMakeContextCurrent(window);
 
         if(hostConfig.hasValue("window:vsync")) {
-            glfwSwapInterval(hostConfig.getValue<bool>("window:vsync"));
+            vsync = hostConfig.getValue<bool>("window:vsync");
         }
+        glfwSwapInterval(vsync);
 
         glfwSetKeyCallback(window, key_callback);
     }
@@ -226,6 +228,7 @@ namespace etudes {
 
     bool EtudesHost::loopIteration() {
         processInput();
+
         if(quitLoop)
             return false;
 
@@ -299,6 +302,17 @@ namespace etudes {
             case GLFW_KEY_P:
                 prevEtude();
                 printEtude();
+                break;
+
+            case GLFW_KEY_F:
+                log(LogLevel::excessive, "toggling framerate display");
+                logFramerate = !logFramerate;
+                break;
+
+            case GLFW_KEY_V:
+                log(LogLevel::excessive, "toggling vertical sync");
+                vsync = !vsync;
+                glfwSwapInterval(vsync);
                 break;
             }
         }

@@ -87,6 +87,7 @@ namespace etudes {
 
         Configuration hostConfig;
         bool logFramerate;
+        bool vsync;
 
         GLFWwindow *window;
         bool quitLoop;
