@@ -30,6 +30,7 @@ using namespace gl;
 #include "ShaderRegistry.hpp"
 
 using namespace std::literals::string_literals;
+using etudes::logging::LogLevel;
 
 namespace {
     void readFileIntoString(std::string filename, std::string &result) {
@@ -45,12 +46,13 @@ namespace {
 
             result = std::string(buffer.begin(), buffer.end());
         }
+        else {
+            log(LogLevel::error, "Failed to read shader file: " + filename);
+        }
     }
 }
 
 namespace etudes {
-
-    using logging::LogLevel;
 
     GLuint ShaderRegistry::registerShader(
         std::string name,
