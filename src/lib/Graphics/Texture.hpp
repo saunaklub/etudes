@@ -12,7 +12,7 @@ namespace etudes {
 
         int getWidth();
         int getHeight();
-        unsigned char *getMappedData();
+        unsigned char *mapData();
 
         void setHueShift(float hueShift);
 

@@ -30,8 +30,8 @@ namespace etudes {
 
         int imgWidth = loader->getWidth();
         int imgHeight = loader->getHeight();
-        int texWidth = 2048;
-        int texHeight = 2048;
+        int texWidth = 1024;
+        int texHeight = 1024;
 
         int bpp = loader->getBitsPerPixel();
         log(LogLevel::debug, "image size: " +
@@ -44,12 +44,14 @@ namespace etudes {
     }
 
     void ImageView::uploadTextureData() {
-        unsigned char *texData = texture->getMappedData();
+        unsigned char *texData = texture->mapData();
+
         int texWidth = texture->getWidth();
         int texHeight = texture->getHeight();
 
         unsigned char *imgData = loader->getData();
         int imgWidth = loader->getWidth();
+        int imgScanWidth = loader->getScanWidth();
         int imgHeight = loader->getHeight();
 
         vec2 rangeX = getValue<vec2>("/x-range");
@@ -57,11 +59,15 @@ namespace etudes {
 
         int rowImage[texHeight];
         int colImage[texWidth];
+
+        float texWidthInv = 1.f / float(texWidth);
+        float texHeightInv = 1.f / float(texHeight);
+
         for(int row = 0 ; row < texHeight ; ++row) {
             rowImage[row] =
                 imgHeight * (
                     rangeY[0] +
-                    float(row) / float(texHeight) *
+                    float(row) * texHeightInv *
                     (rangeY[1] - rangeY[0])
                     );
 
@@ -70,18 +76,20 @@ namespace etudes {
             colImage[col] =
                 imgWidth * (
                     rangeX[0] +
-                    float(col) / float(texWidth) *
+                    float(col) * texWidthInv *
                     (rangeX[1] - rangeX[0])
                     );
         }
 
         for(int row = 0 ; row < texHeight ; ++row) {
             for(int col = 0 ; col < texWidth ; ++col) {
-                // @todo why can't we move the imgWidth multiplication out?
-                int idxImage = rowImage[row] * imgWidth + colImage[col];
-                int idxTexel = row * texWidth + col;
+                unsigned char *imagePtr =
+                    imgData +
+                    rowImage[row] * imgScanWidth + colImage[col] * 3;
+                unsigned char *texelPtr =
+                    texData + (row * texWidth + col) * 3;
 
-                memcpy(texData + 4*idxTexel, imgData + 4*idxImage, 4);
+                memcpy(texelPtr, imagePtr, 3);
             }
         }
     }

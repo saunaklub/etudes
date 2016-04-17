@@ -9,11 +9,15 @@ namespace etudes {
     void ImageLoader::load(std::string filename) {
         if(!image.load(filename.c_str()))
             log(LogLevel::error, "failed to load image: " + filename);
-        image.convertTo32Bits();
+        image.convertTo24Bits();
     }
 
     int ImageLoader::getWidth() {
         return image.getWidth();
+    }
+
+    int ImageLoader::getScanWidth() {
+        return image.getScanWidth();
     }
 
     int ImageLoader::getHeight() {

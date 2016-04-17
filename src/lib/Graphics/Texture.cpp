@@ -42,12 +42,12 @@ namespace etudes {
                         GL_TEXTURE_WRAP_T, GLint(GL_REPEAT));
 
         // @todo calc number of mipmap levels depending on extents
-        glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, width, height);
+        glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB8, width, height);
 
         glGenBuffers(1, &vboTexture);
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, vboTexture);
         glBufferData(GL_PIXEL_UNPACK_BUFFER,
-                     width*height*4,
+                     width*height*3,
                      nullptr, GL_DYNAMIC_DRAW);
     }
 
@@ -98,7 +98,7 @@ namespace etudes {
         return height;
     }
 
-    unsigned char *Texture::getMappedData() {
+    unsigned char *Texture::mapData() {
         texture = (unsigned char*)(glMapBuffer(GL_PIXEL_UNPACK_BUFFER,
                                                GL_WRITE_ONLY));
         return texture;
@@ -111,9 +111,8 @@ namespace etudes {
     void Texture::uploadData() {
         glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
 
-        // @todo: mark as dirty from client code
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height,
-                        GL_BGRA, GL_UNSIGNED_BYTE, 0);
+                        GL_BGR, GL_UNSIGNED_BYTE, 0);
     }
 
     void Texture::render() {

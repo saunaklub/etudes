@@ -11,6 +11,7 @@ namespace etudes {
         void load(std::string filename);
 
         int getWidth();
+        int getScanWidth();
         int getHeight();
         int getBitsPerPixel();
 
