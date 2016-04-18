@@ -15,11 +15,14 @@ set(LIBRARY_SOURCES
     src/lib/Factories/ElementFactory.cpp
     src/lib/Factories/EtudeFactory.cpp
     src/lib/IO/OSCInput.cpp
-    src/lib/IO/ImageLoader.cpp
     src/lib/IO/VideoOutput.cpp
-    src/lib/Graphics/Painter.cpp
+    src/lib/Graphics/Context.cpp
     src/lib/Graphics/Texture.cpp
-    src/lib/Graphics/TextureTiled.cpp
+    src/lib/Graphics/Image.cpp
+#    src/lib/Graphics/TextureTiled.cpp
+    src/lib/Graphics/PanZoom.cpp
+    src/lib/Graphics/PanZoomParallel.cpp
+    src/lib/Graphics/Geometry/Rect.cpp
     src/lib/Receivers/Receiver.cpp
     src/lib/Receivers/Etude.cpp
     src/lib/Elements/Lines.cpp

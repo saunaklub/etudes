@@ -25,9 +25,9 @@ namespace etudes {
         }
     }
 
-    void Etude::draw(const Painter &painter) {
+    void Etude::draw(const Context &context) {
         for(auto &element : elements) {
-            element.second->draw(painter);
+            element.second->draw(context);
         }
     }
 

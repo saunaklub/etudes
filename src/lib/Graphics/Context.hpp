@@ -25,12 +25,17 @@
 
 #include <Utility/ShaderRegistry.hpp>
 
-#ifndef ETUDES_PAINTER
-#define ETUDES_PAINTER
+#include <Graphics/Geometry/Rect.hpp>
+
+#ifndef ETUDES_CONTEXT
+#define ETUDES_CONTEXT
 
 namespace etudes {
-    class Painter {
+
+    class Context {
     public:
+        Context();
+
         void init();
 
         void drawLine(glm::vec2 p0, glm::vec2 p1,
@@ -44,12 +49,21 @@ namespace etudes {
             std::function<float(int)> funcDistance,
             std::function<glm::vec4(int)> funcColor) const;
 
+        Rect getViewport2D() const;
+        void setViewport2D(const Rect &viewport);
+
+        const glm::mat4 &getProjection2D() const;
+        void setProjection2D(const Rect &projection);
+
     private:
         gl::GLuint vaoLine, vboLine;
 
         ShaderRegistry shaders;
 
+        Rect viewport2D;
+        glm::mat4 projOrtho;
     };
+
 }
 
-#endif // ETUDES_PAINTER
+#endif // ETUDES_CONTEXT

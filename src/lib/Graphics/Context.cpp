@@ -26,7 +26,7 @@ using namespace gl;
 
 #include <Utility/Logging.hpp>
 
-#include "Painter.hpp"
+#include "Context.hpp"
 
 namespace etudes {
     using std::function;
@@ -42,7 +42,11 @@ namespace etudes {
 
     typedef std::vector<float> vec;
 
-    void Painter::init() {
+    Context::Context() :
+        viewport2D(0, 0, 800, 600) {
+    }
+
+    void Context::init() {
         shaders.registerShader("ident", GL_VERTEX_SHADER,
                                  {"resources/shaders/ident.vert"});
         shaders.registerShader("solid", GL_FRAGMENT_SHADER,
@@ -65,7 +69,7 @@ namespace etudes {
         glEnableVertexAttribArray(attribPosition);
     }
 
-    void Painter::drawLine(vec2 p0, vec2 p1,
+    void Context::drawLine(vec2 p0, vec2 p1,
                            float width, vec4 color) const {
 
 #if 0
@@ -93,7 +97,7 @@ namespace etudes {
         glDrawArrays(GL_LINES, 0, 2);
     }
 
-    void Painter::drawParallels(vec2 centerp0, vec2 centerp1,
+    void Context::drawParallels(vec2 centerp0, vec2 centerp1,
                        int leftRepeat, int rightRepeat,
                        function<float(int)> funcWidth,
                        function<float(int)> funcDistance,
@@ -135,6 +139,29 @@ namespace etudes {
                     );
             }
         }
+    }
+
+    Rect Context::getViewport2D() const {
+        return viewport2D;
+    }
+
+    void Context::setViewport2D(const Rect &viewport) {
+        viewport2D = viewport;
+    }
+
+    const glm::mat4 &Context::getProjection2D() const {
+        return projOrtho;
+    }
+
+    void Context::setProjection2D(const Rect &viewport) {
+        float tx = -(2*viewport.getPosX() / viewport.getWidth() + 1.f);
+        float ty = -(2*viewport.getPosY() / viewport.getHeight() + 1.f);
+
+        projOrtho = glm::mat4(
+            2.f / viewport.getWidth(),  0, 0, tx,
+            0, 2.f / viewport.getHeight(), 0, ty,
+            0, 0, 1, 0,
+            0, 0, 0, 1);
     }
 
 }

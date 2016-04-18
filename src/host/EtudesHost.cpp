@@ -59,7 +59,7 @@ namespace etudes {
 
     void error_callback(int error, const char * description) {
         std::cerr << description << std::endl;
-    };
+    }
 
     void key_callback(
         GLFWwindow* window,
@@ -68,9 +68,15 @@ namespace etudes {
             ->keyCallback(key, scancode, action, mods);
     }
 
+    void window_size_callback(GLFWwindow* window, int width, int height) {
+        static_cast<EtudesHost*>(glfwGetWindowUserPointer(window))
+            ->resizeCallback(width, height);
+    }
+
     EtudesHost::EtudesHost() :
         logFramerate(false),
         vsync(false),
+        viewportScaling(Rect::CROP),
         window(nullptr),
         quitLoop(false),
         oscInput(etudes, 6666) {
@@ -132,11 +138,28 @@ namespace etudes {
         glfwSwapInterval(vsync);
 
         glfwSetKeyCallback(window, key_callback);
+        glfwSetWindowSizeCallback(window, window_size_callback);
     }
 
     void EtudesHost::initGL() {
         printOpenGLInfo();
-        painter.init();
+
+        context.init();
+
+        if(hostConfig.hasValue("window:viewport")) {
+            std::string viewportString =
+                hostConfig.getValue<std::string>("window:viewport");
+
+            if(viewportString == "stretch") {
+                viewportScaling = Rect::STRETCH;
+            }
+            else if(viewportString == "crop") {
+                viewportScaling = Rect::CROP;
+            }
+            else if(viewportString == "border") {
+                viewportScaling = Rect::BORDER;
+            }
+        }
     }
 
     void EtudesHost::printOpenGLInfo() {
@@ -225,6 +248,30 @@ namespace etudes {
             }
         }
     }
+
+    void EtudesHost::resizeCallback(int width, int height) {
+        Rect window(0, 0, width, height);
+        Rect viewport(0, 0,
+                      hostConfig.getValue<int>("window:width"),
+                      hostConfig.getValue<int>("window:height"));
+        Rect projection;
+
+        switch(viewportScaling) {
+        case Rect::STRETCH:
+            projection = viewport;
+            break;
+        case Rect::CROP:
+            projection = window.maximizedTo(viewport, Rect::BORDER);
+            break;
+        case Rect::BORDER:
+            projection = window.maximizedTo(viewport, Rect::CROP);
+            break;
+        }
+
+        context.setViewport2D(viewport);
+        context.setProjection2D(projection);
+    }
+
 
     bool EtudesHost::loopIteration() {
         processInput();
@@ -341,7 +388,7 @@ namespace etudes {
 
     void EtudesHost::renderOutputs() {
         for(auto &output : videoOutputs) {
-            output.second->render(painter);
+            output.second->render(context);
             checkGLError("drawing "s + output.first);
         }
     }
@@ -359,7 +406,7 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        currentEtude->second->draw(painter);
+        currentEtude->second->draw(context);
 
         checkGLError("drawing "s + currentEtude->first);
 

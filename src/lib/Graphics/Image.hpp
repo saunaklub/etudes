@@ -1,12 +1,15 @@
-#ifndef ETUDES_IMAGELOADER
-#define ETUDES_IMAGELOADER
+#ifndef ETUDES_IMAGE
+#define ETUDES_IMAGE
 
-#include <string>
+#include <memory>
 
 #include <FreeImagePlus.h>
 
+#include <Graphics/Geometry/Rect.hpp>
+
 namespace etudes {
-    class ImageLoader {
+    class Texture;
+    class Image {
     public:
         void load(std::string filename);
 
@@ -18,9 +21,13 @@ namespace etudes {
         size_t getByteSize();
         unsigned char *getData();
 
+        void setSourceArea(const Rect &area);
+        void uploadToTexture(Texture *texture);
+
     private:
         fipImage image;
+        Rect sourceArea;
     };
 }
 
-#endif // ETUDES_IMAGELOADER
+#endif // ETUDES_IMAGE

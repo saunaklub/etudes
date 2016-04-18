@@ -20,7 +20,7 @@ namespace etudes {
 
         void init() override;
         void update() override;
-        void draw(const Painter &painter) override;
+        void draw(const Context &context) override;
 
     private:
         void initGL();

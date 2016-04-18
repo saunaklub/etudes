@@ -1,21 +1,22 @@
 window:
-  width:  600
-  height: 600
+  width:  1024
+  height: 768
+  viewport: border
   fullscreen: true
-  vsync: true
+  vsync: false
   cursor: true
 
 logging:
-  logLevel: excessive
-  framerate: true
+  logLevel: debug
+  framerate: false
 
 etudes:
   - space
-  # - particles
+#  - particles
   # - line
   # - grid
 
-input:
-  mouse:
-    xy:
-      - /particles/particles/center
+# input:
+#   mouse:
+#     xy:
+#       - /particles/particles/center

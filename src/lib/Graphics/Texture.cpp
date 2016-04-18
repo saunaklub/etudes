@@ -1,7 +1,11 @@
 #include <cmath>
 #include <cstring>
 
+#include <glm/ext.hpp>
+
 #include <Utility/Logging.hpp>
+
+#include <Graphics/Geometry/Rect.hpp>
 
 #include "Texture.hpp"
 
@@ -15,12 +19,14 @@ namespace etudes {
         height(height),
         mipmaps(mipmaps) {
 
-        registry.registerShader("ident-uv", GL_VERTEX_SHADER,
-                                 {"resources/shaders/ident-uv.vert"});
+        registry.registerShader("mvp-uv", GL_VERTEX_SHADER,
+                                 {"resources/shaders/mvp-uv.vert"});
         registry.registerShader("textured", GL_FRAGMENT_SHADER,
                                  {"resources/shaders/textured-hueshift.frag"});
-        registry.registerProgram("textured", {"ident-uv", "textured"});
+        registry.registerProgram("textured", {"mvp-uv", "textured"});
 
+        locMVP = glGetUniformLocation(registry.getProgram("textured"),
+                                      "mvp");
         locHueShift = glGetUniformLocation(registry.getProgram("textured"),
                                            "hueShift");
 
@@ -56,18 +62,17 @@ namespace etudes {
         glBindVertexArray(idVertexArray);
 
         std::array<float, 12> aCoords = {
-            -1.0f,  1.0f, 0.0f,
-            -1.0f, -1.0f, 0.0f,
-            1.0f,  1.0f, 0.0f,
-            1.0f, -1.0f, 0.0f,
+            0.0, 1.0, 0.0f,
+            0.0, 0.0, 0.0f,
+            1.0, 1.0, 0.0f,
+            1.0, 0.0, 0.0f,
         };
 
         glGenBuffers(1, &vboVertex);
         glBindBuffer(GL_ARRAY_BUFFER, vboVertex);
         glBufferData(GL_ARRAY_BUFFER,
                      aCoords.size()*sizeof(GLfloat),
-                     aCoords.data(),
-                     GL_STATIC_DRAW);
+                     aCoords.data(), GL_STATIC_DRAW);
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -110,12 +115,13 @@ namespace etudes {
 
     void Texture::uploadData() {
         glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
+        texture = nullptr;
 
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height,
                         GL_BGR, GL_UNSIGNED_BYTE, 0);
     }
 
-    void Texture::render() {
+    void Texture::draw(const glm::mat4 &mvp) {
         glUseProgram(registry.getProgram("textured"));
         glBindVertexArray(idVertexArray);
 
@@ -123,7 +129,10 @@ namespace etudes {
 
         uploadData();
 
+        glUniformMatrix4fv(locMVP, 1, GLboolean(false),
+                           glm::value_ptr(mvp));
         glUniform1f(locHueShift, hueShift);
+
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
         glBindVertexArray(0);

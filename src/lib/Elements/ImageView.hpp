@@ -5,29 +5,29 @@
 
 #include <Receivers/Element.hpp>
 
-#include <IO/ImageLoader.hpp>
+#include <Graphics/Image.hpp>
 #include <Graphics/Texture.hpp>
+#include <Graphics/PanZoom.hpp>
 
 namespace etudes {
 
-    class TextureTiled;
-
     class ImageView : public Element {
     public:
-        explicit ImageView(std::string filename);
+        ImageView(std::string filename,
+                  std::unique_ptr<PanZoom> panZoom);
 
         void registerInputs() override;
 
         void init() override;
-        void draw(const Painter &painter) override;
+        void draw(const Context &context) override;
 
     private:
-        void uploadTextureData();
-
         std::string filename;
 
-        std::unique_ptr<ImageLoader> loader;
+        std::unique_ptr<Image> image;
         std::unique_ptr<Texture> texture;
+
+        std::unique_ptr<PanZoom> panZoom;
     };
 }
 

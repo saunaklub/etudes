@@ -1,6 +1,8 @@
 #include <map>
 #include <chrono>
 
+#include <glm/ext.hpp>
+
 #include <Utility/Logging.hpp>
 
 #include "Utility.hpp"
@@ -74,4 +76,24 @@ namespace etudes {
 
         return "unknown error";
     }
+
+    std::ostream &operator<<(std::ostream &os,
+                             const glm::vec2 &t) {
+        os << glm::to_string(t);
+        return os;
+    }
+
+    std::ostream &operator<<(std::ostream &os,
+                             const glm::mat4 &t) {
+        os << glm::to_string(t);
+        return os;
+    }
+
+    // template <typename T>
+    // std::ostream &operator<<(std::ostream &os,
+    //                          const T &t) {
+    //     os << t.toString();
+    //     return os;
+    // }
+
 }

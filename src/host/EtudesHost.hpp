@@ -29,7 +29,7 @@
 
 #include <Utility/Configuration.hpp>
 
-#include <Graphics/Painter.hpp>
+#include <Graphics/Context.hpp>
 
 struct GLFWwindow;
 
@@ -46,6 +46,8 @@ namespace etudes {
 
         friend void key_callback(GLFWwindow* window,
                                  int key, int scancode, int action, int mods);
+        friend void window_size_callback(GLFWwindow* window,
+                                         int width, int height);
 
         EtudesHost();
         ~EtudesHost();
@@ -75,7 +77,9 @@ namespace etudes {
 
         void registerMouseInput(MouseInput mode, std::string path);
         void processInput();
+
         void keyCallback(int, int, int, int);
+        void resizeCallback(int width, int height);
 
         void printEtude();
         void nextEtude();
@@ -86,10 +90,13 @@ namespace etudes {
         void renderScreen();
 
         Configuration hostConfig;
+
         bool logFramerate;
         bool vsync;
 
+        Rect::Scaling viewportScaling;
         GLFWwindow *window;
+
         bool quitLoop;
 
         std::vector<std::pair<MouseInput, std::string>> inputsMouse;
@@ -100,7 +107,7 @@ namespace etudes {
         output_vec_t videoOutputs;
         OSCInput oscInput;
 
-        Painter painter;
+        Context context;
     };
 }
 

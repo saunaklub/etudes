@@ -8,6 +8,8 @@
 #include <Elements/Particles.hpp>
 #include <Elements/ImageView.hpp>
 
+#include <Graphics/PanZoomParallel.hpp>
+
 #include "ElementFactory.hpp"
 
 namespace etudes {
@@ -50,6 +52,18 @@ namespace etudes {
     std::unique_ptr<Element>
     ElementFactory::createElementImageView(const Configuration & config) {
         std::string image = config.getValue<std::string>("image");
-        return std::make_unique<ImageView>(image);
+        std::unique_ptr<PanZoom> panZoom;
+
+        if(config.hasValue("panZoom")) {
+            std::string panZoomName = config.getValue<std::string>("panZoom");
+            if(panZoomName == "parallel") {
+                panZoom = std::make_unique<PanZoomParallel>();
+            }
+            else
+                log(LogLevel::warning, "unknown pan/zoom strategy: " +
+                    panZoomName);
+        }
+
+        return std::make_unique<ImageView>(image, std::move(panZoom));
     }
 }

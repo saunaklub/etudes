@@ -7,6 +7,7 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
+#include <glm/matrix.hpp>
 
 #include <glbinding/gl/gl.h>
 
@@ -39,6 +40,17 @@ namespace etudes {
 
         return os;
     }
+
+    std::ostream &operator<<(std::ostream &os,
+                             const glm::vec2 &vec);
+    std::ostream &operator<<(std::ostream &os,
+                             const glm::mat4 &vec);
+
+    // template <typename T>
+    // std::string to_string(const T &t) {
+    //     return t.toString();
+    // }
+
 }
 
 #endif // ETUDES_UTILITY
