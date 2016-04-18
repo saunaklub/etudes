@@ -50,6 +50,7 @@ The project is written in C++14 and OpenGL 3.3+.
 - [glbinding](https://github.com/cginternals/glbinding/)
 - [GLFW](http://www.glfw.org/)
 - [liblo](http://liblo.sourceforge.net/)
+- [FreeImagePlus](http://freeimage.sourceforge.net/)
 
 Libraries to consider
 
