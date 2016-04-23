@@ -4,13 +4,13 @@ elements:
 #    image: resources/images/hubble.tif
 #   image: resources/images/fuck-nvidia.jpg
 #   image: resources/images/fire-glitch.png
-#    image: /home/bzk/data/media/images/microchips/kr580ik80a-HD.jpg
+    image: /home/bzk/data/media/images/microchips/kr580ik80a-HD.jpg
 #    image: resources/images/wide.png
 #    image: resources/images/rect-test.png
 #    image: resources/images/test-4_3.png
-    image: resources/images/test-16_9.png
+#    image: resources/images/test-16_9.png
 
-#    panZoom: rightAngles
+    panZoom: parallel
     defaults:
       # /x-range: [0.4, 0.5]
       # /y-range: [0.3, 0.4]

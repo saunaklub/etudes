@@ -8,8 +8,7 @@ namespace etudes {
     class PanZoomParallel :
         public PanZoom {
     public:
-        glm::vec2 getXRange() override;
-        glm::vec2 getYRange() override;
+        Rect getSourceArea() override;
 
     private:
     };

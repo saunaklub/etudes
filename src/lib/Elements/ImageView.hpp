@@ -19,6 +19,7 @@ namespace etudes {
         void registerInputs() override;
 
         void init() override;
+        void update() override;
         void draw(const Context &context) override;
 
     private:

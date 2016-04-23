@@ -3,24 +3,11 @@
 namespace etudes {
 
     PanZoom::PanZoom() :
-        zoom(1.f),
-        aspectRatio(1.f) {
+        speed(1.f),
+        sourceArea(0, 0, 1, 1) {
     }
 
-    float PanZoom::getZoom() {
-        return zoom;
-    }
-
-    void PanZoom::setZoom(float zoom) {
-        this->zoom = zoom;
-    }
-
-    float PanZoom::getAspectRatio() {
-        return aspectRatio;
-    }
-
-    void PanZoom::setAspectRatio(float aspectRatio) {
-        this->aspectRatio = aspectRatio;
+    PanZoom::~PanZoom() {
     }
 
     float PanZoom::getSpeed() {
@@ -31,12 +18,12 @@ namespace etudes {
         this->speed = speed;
     }
 
-    glm::vec2 PanZoom::getCenter() {
-        return center;
+    Rect PanZoom::getSourceArea() {
+        return sourceArea;
     }
 
-    void PanZoom::setCenter(glm::vec2 center) {
-        this->center = center;
+    void PanZoom::setSourceArea(const Rect &area) {
+        sourceArea = area;
     }
 
 }

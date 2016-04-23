@@ -1,35 +1,24 @@
 #ifndef ETUDES_PANZOOM
 #define ETUDES_PANZOOM
 
-#include <glm/vec2.hpp>
+#include <Graphics/Geometry/Rect.hpp>
 
 namespace etudes {
 
     class PanZoom {
     public:
         PanZoom();
-
-        float getZoom();
-        void setZoom(float zoom);
-
-        float getAspectRatio();
-        void setAspectRatio(float aspectRatio);
+        virtual ~PanZoom();
 
         float getSpeed();
         void setSpeed(float speed);
 
-        glm::vec2 getCenter();
-        void setCenter(glm::vec2 center);
-
-        virtual glm::vec2 getXRange() = 0;
-        virtual glm::vec2 getYRange() = 0;
+        virtual Rect getSourceArea();
+        void setSourceArea(const Rect &area);
 
     private:
-        float zoom;
-        float aspectRatio;
         float speed;
-
-        glm::vec2 center;
+        Rect sourceArea;
     };
 
 }

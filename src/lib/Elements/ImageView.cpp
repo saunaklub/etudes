@@ -46,11 +46,26 @@ namespace etudes {
         texture = std::make_unique<Texture>(texWidth, texHeight, false);
     }
 
-    void ImageView::draw(const Context &context) {
-        // replace by range inputs or PanZoom
-        image->setSourceArea(Rect(0, 0, 1, 1));
-        image->uploadToTexture(texture.get());
+    void ImageView::update() {
+        Rect sourceArea;
 
+        if(panZoom) {
+            sourceArea = panZoom->getSourceArea();
+        }
+        else {
+            vec2 rangeX = getValue<vec2>("/x-range");
+            vec2 rangeY = getValue<vec2>("/y-range");
+
+            sourceArea = Rect(rangeX[0], rangeY[0],
+                              rangeX[1] - rangeX[0],
+                              rangeY[1] - rangeY[0]);
+        }
+
+        image->setSourceArea(sourceArea);
+        image->uploadToTexture(texture.get());
+    }
+
+    void ImageView::draw(const Context &context) {
         float hueShift = getValue<float>("/hue-shift");
         texture->setHueShift(hueShift);
 
