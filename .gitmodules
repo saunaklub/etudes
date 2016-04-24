@@ -1,0 +1,3 @@
+[submodule "sc-tools"]
+	path = sc-tools
+	url = https://github.com/saunaklub/sc-tools
