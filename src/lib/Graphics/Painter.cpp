@@ -27,13 +27,15 @@ namespace etudes {
         glBindVertexArray(vaoLine);
 
         const GLfloat coords[] =  {
+            0.f, 1.f, 0.f,
             0.f, 0.f, 0.f,
-            1.f, 0.f, 0.f
+            1.f, 1.f, 0.f,
+            1.f, 0.f, 0.f,
         };
         glGenBuffers(1, &vboLine);
         glBindBuffer(GL_ARRAY_BUFFER, vboLine);
         glBufferData(GL_ARRAY_BUFFER,
-                     6 * sizeof(GLfloat),
+                     12 * sizeof(GLfloat),
                      coords, GL_DYNAMIC_DRAW);
 
         GLint attribPosition =
@@ -68,7 +70,7 @@ namespace etudes {
         model = glm::rotate(model, std::atan2(line[1], line[0]),
                             glm::vec3{0, 0, 1});
         model = glm::scale(model,
-                           glm::vec3(glm::length(line), glm::length(line), 1));
+                           glm::vec3(glm::length(line), width, 1));
 
         glm::mat4 proj = context.getProjection2D();
         glm::mat4 mvp = proj * model;
@@ -77,7 +79,7 @@ namespace etudes {
             context.getShaderRegistry().getUniform("line", "mvp"),
             1, GLboolean(false), glm::value_ptr(mvp));
 
-        glDrawArrays(GL_LINES, 0, 2);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
 
     void Painter::drawParallels(
