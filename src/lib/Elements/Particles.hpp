@@ -8,7 +8,7 @@
 
 #include <glm/glm.hpp>
 
-#include <Utility/ShaderRegistry.hpp>
+#include <Graphics/ShaderRegistry.hpp>
 #include <Receivers/Element.hpp>
 
 namespace etudes {
@@ -20,7 +20,8 @@ namespace etudes {
 
         void init() override;
         void update() override;
-        void draw(const Context &context) override;
+        void draw(const Context &context,
+                  const Painter &painter) override;
 
     private:
         void initGL();

@@ -1,6 +1,6 @@
 #include <random>
 
-#include <Utility/ShaderRegistry.hpp>
+#include <Graphics/ShaderRegistry.hpp>
 
 #include "Particles.hpp"
 
@@ -129,7 +129,8 @@ namespace etudes {
         positionGBest = positions[indexMin];
     }
 
-    void Particles::draw(const Context &context) {
+    void Particles::draw(const Context &context,
+                         const Painter &painter) {
         glUseProgram(shaders.getProgram("simple"));
 
         glBindVertexArray(vao);

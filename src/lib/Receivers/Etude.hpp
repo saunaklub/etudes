@@ -35,7 +35,8 @@ namespace etudes {
 
         void init() override;
         void update() override;
-        void draw(const Context &context) override;
+        void draw(const Context &context,
+                  const Painter &painter) override;
 
         void addElement(std::string name, std::unique_ptr<Element> element);
         void dispatchValue(std::string input, vec_t value);

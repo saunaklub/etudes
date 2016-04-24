@@ -1,5 +1,7 @@
 #include <glbinding/gl/gl.h>
+
 #include <glm/vec2.hpp>
+#include <glm/ext.hpp>
 
 #include <Utility/Logging.hpp>
 
@@ -65,22 +67,32 @@ namespace etudes {
         image->uploadToTexture(texture.get());
     }
 
-    void ImageView::draw(const Context &context) {
+    void ImageView::draw(const Context &context,
+                         const Painter &painter) {
+        const ShaderRegistry &registry = context.getShaderRegistry();
+
+        glUseProgram(registry.getProgram("textured"));
+
         float hueShift = getValue<float>("/hue-shift");
-        texture->setHueShift(hueShift);
+        GLint locHueShift = registry.getUniform("textured", "hueShift");
+        glUniform1f(locHueShift, hueShift);
 
         Rect area(0, 0, image->getWidth(), image->getHeight());
         area = area.maximizedTo(context.getViewport2D(), Rect::CROP);
 
-        glm::mat4 view(
-            area.getWidth(),  0, 0, area.getPosX(),
-            0, area.getHeight(), 0, area.getPosY(),
+        glm::mat4 model(
+            area.getWidth(),  0, 0, 0,
+            0, area.getHeight(), 0, 0,
             0, 0, 1, 0,
-            0, 0, 0, 1);
+            area.getPosX(), area.getPosY(), 0, 1);
+        glm::mat4 mvp = context.getProjection2D() * model;
 
-        glm::mat4 mvp = view * context.getProjection2D();
+        GLint locMVP =
+            context.getShaderRegistry().getUniform("textured", "mvp");
+        glUniformMatrix4fv(locMVP, 1, GLboolean(false),
+                           glm::value_ptr(mvp));
 
-        texture->draw(mvp);
+        texture->draw();
     }
 
 }

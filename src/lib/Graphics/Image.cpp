@@ -90,7 +90,7 @@ namespace etudes {
                 unsigned char *texelPtr =
                     texData + (row * texWidth + col) * 3;
 
-                memcpy(texelPtr, imagePtr, 3);
+               memcpy(texelPtr, imagePtr, 3);
             }
         }
     }

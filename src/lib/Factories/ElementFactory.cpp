@@ -7,6 +7,7 @@
 #include <Elements/Lines.hpp>
 #include <Elements/Particles.hpp>
 #include <Elements/ImageView.hpp>
+#include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
 
@@ -21,6 +22,7 @@ namespace etudes {
         {"line", ElementFactory::createElement<Lines>},
         {"particles", ElementFactory::createElement<Particles>},
         {"imageview", ElementFactory::createElementImageView},
+        {"testbed", ElementFactory::createElement<Testbed>},
     };
 
     std::unique_ptr<Element>

@@ -79,7 +79,9 @@ namespace etudes {
         viewportScaling(Rect::CROP),
         window(nullptr),
         quitLoop(false),
-        oscInput(etudes, 6666) {
+        oscInput(etudes, 6666),
+        context(),
+        painter(context) {
     }
 
     EtudesHost::~EtudesHost() {
@@ -96,8 +98,8 @@ namespace etudes {
 
         initGLFW();
         initGL();
-        initEtudes();
         initOSC();
+        initEtudes();
         initInput();
     }
 
@@ -145,6 +147,9 @@ namespace etudes {
         printOpenGLInfo();
 
         context.init();
+        checkGLError("host: init context");
+        painter.init();
+        checkGLError("host: init painter");
 
         if(hostConfig.hasValue("window:viewport")) {
             std::string viewportString =
@@ -160,6 +165,8 @@ namespace etudes {
                 viewportScaling = Rect::BORDER;
             }
         }
+
+        checkGLError("host: initGL");
     }
 
     void EtudesHost::printOpenGLInfo() {
@@ -279,6 +286,7 @@ namespace etudes {
         if(quitLoop)
             return false;
 
+        context.update();
         for(auto &e : etudes)
             e.second->update();
 
@@ -388,7 +396,7 @@ namespace etudes {
 
     void EtudesHost::renderOutputs() {
         for(auto &output : videoOutputs) {
-            output.second->render(context);
+            output.second->render(context, painter);
             checkGLError("drawing "s + output.first);
         }
     }
@@ -406,7 +414,7 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        currentEtude->second->draw(context);
+        currentEtude->second->draw(context, painter);
 
         checkGLError("drawing "s + currentEtude->first);
 

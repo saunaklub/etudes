@@ -3,18 +3,19 @@ window:
   height: 768
   viewport: border
   fullscreen: true
-  vsync: false
+  vsync: true
   cursor: true
 
 logging:
-  logLevel: debug
+  logLevel: excessive
   framerate: false
 
 etudes:
   - space
-#  - particles
-  # - line
-  # - grid
+  - particles
+  - parallels
+  - grid
+  - testbed
 
 # input:
 #   mouse:

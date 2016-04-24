@@ -10,6 +10,8 @@ namespace etudes {
 
     class ShaderRegistry;
     class Context;
+    class Painter;
+
     class Etude;
 
     class VideoOutput {
@@ -17,7 +19,8 @@ namespace etudes {
         VideoOutput(Etude *etude, int width, int height);
         virtual ~VideoOutput();
 
-        void render(const Context &context);
+        void render(const Context &context,
+                    const Painter &painter);
 
         virtual void createOutput(std::string outputId) = 0;
         virtual void writeOutput() = 0;

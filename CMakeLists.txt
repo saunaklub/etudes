@@ -8,7 +8,6 @@ set(LIBRARY_SOURCES
     src/lib/Utility/Utility.cpp
     src/lib/Utility/Logging.cpp
     src/lib/Utility/Configuration.cpp
-    src/lib/Utility/ShaderRegistry.cpp
     src/lib/Utility/ScopedProfiler.cpp
     src/lib/Utility/AccumulativeProfiler.cpp
     src/lib/Utility/ModulationFuncs.cpp
@@ -16,18 +15,22 @@ set(LIBRARY_SOURCES
     src/lib/Factories/EtudeFactory.cpp
     src/lib/IO/OSCInput.cpp
     src/lib/IO/VideoOutput.cpp
+    src/lib/Graphics/ShaderRegistry.cpp
     src/lib/Graphics/Context.cpp
+    src/lib/Graphics/Painter.cpp
     src/lib/Graphics/Texture.cpp
     src/lib/Graphics/Image.cpp
 #    src/lib/Graphics/TextureTiled.cpp
     src/lib/Graphics/PanZoom.cpp
     src/lib/Graphics/PanZoomParallel.cpp
+    src/lib/Graphics/Geometry/Transforms.cpp
     src/lib/Graphics/Geometry/Rect.cpp
     src/lib/Receivers/Receiver.cpp
     src/lib/Receivers/Etude.cpp
     src/lib/Elements/Lines.cpp
     src/lib/Elements/Particles.cpp
     src/lib/Elements/ImageView.cpp
+    src/lib/Elements/Testbed.cpp
     )
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")

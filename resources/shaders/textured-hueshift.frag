@@ -1,6 +1,6 @@
 #version 330 core
 
-in vec2 UV;
+in vec2 uv;
 out vec4 color;
 
 uniform sampler2D texSampler;
@@ -24,7 +24,7 @@ vec3 hsv2rgb(vec3 c) {
 }
 
 void main(){
-    vec4 color4 = texture(texSampler, UV);
+    vec4 color4 = texture(texSampler, uv);
     vec3 c = color4.xyz;
 
     c = rgb2hsv(c);

@@ -21,8 +21,9 @@
 #include <string>
 
 #include <glbinding/gl/gl.h>
-#include <glbinding/Binding.h>
 using namespace gl;
+
+#include <glm/gtc/type_ptr.hpp>
 
 #include <Utility/Logging.hpp>
 
@@ -47,98 +48,34 @@ namespace etudes {
     }
 
     void Context::init() {
-        shaders.registerShader("ident", GL_VERTEX_SHADER,
-                                 {"resources/shaders/ident.vert"});
+        shaders.registerShader("mvp-uv", GL_VERTEX_SHADER,
+                               {"resources/shaders/mvp-uv.vert"});
         shaders.registerShader("solid", GL_FRAGMENT_SHADER,
                                  {"resources/shaders/solid.frag"});
-        shaders.registerProgram("line", {"ident", "solid"});
+        shaders.registerShader("textured", GL_FRAGMENT_SHADER,
+                               {"resources/shaders/textured-hueshift.frag"});
+
+        shaders.registerProgram("textured", {"mvp-uv", "textured"});
+        shaders.registerUniform("textured", "mvp");
+        shaders.registerUniform("textured", "hueShift");
+
+        shaders.registerProgram("line", {"mvp-uv", "solid"});
+        shaders.registerUniform("line", "mvp");
         shaders.registerUniform("line", "color");
 
-        glGenVertexArrays(1, &vaoLine);
-        glBindVertexArray(vaoLine);
-
-        glGenBuffers(1, &vboLine);
-        glBindBuffer(GL_ARRAY_BUFFER, vboLine);
-        glBufferData(GL_ARRAY_BUFFER,
-                     2 * sizeof(vec2),
-                     nullptr, GL_DYNAMIC_DRAW);
-
-        GLint attribPosition =
-            glGetAttribLocation(shaders.getProgram("line"), "position");
-        glVertexAttribPointer(attribPosition, 2, GL_FLOAT, GL_FALSE, 0, 0);
-        glEnableVertexAttribArray(attribPosition);
+        checkGLError("context: init");
     }
 
-    void Context::drawLine(vec2 p0, vec2 p1,
-                           float width, vec4 color) const {
+    void Context::update() {
+        // glUseProgram(shaders.getProgram("line"));
 
-#if 0
-        log(logging::excessive,
-            "drawLine called with: "s +
-            to_string(p0) + " "s +
-            to_string(p1) + " "s +
-            to_string(width) + " "s +
-            to_string(color));
-#endif
+        // glm::mat4 mvp = getProjection2D();
 
-        glUseProgram(shaders.getProgram("line"));
-        glBindVertexArray(vaoLine);
+        // glUniformMatrix4fv(
+        //     shaders.getUniform("line", "mvp"),
+        //     1, GLboolean(false), glm::value_ptr(mvp));
 
-        vec2 positions[2] = {p0, p1};
-        glBindBuffer(GL_ARRAY_BUFFER, vboLine);
-        glBufferSubData(GL_ARRAY_BUFFER,
-                        0, 2 * sizeof(vec2),
-                        &positions[0]);
-
-
-        glUniform4f(shaders.getUniform("line", "color"),
-                    color.r, color.g, color.b, color.a);
-
-        glDrawArrays(GL_LINES, 0, 2);
-    }
-
-    void Context::drawParallels(vec2 centerp0, vec2 centerp1,
-                       int leftRepeat, int rightRepeat,
-                       function<float(int)> funcWidth,
-                       function<float(int)> funcDistance,
-                       function<vec4(int)>  funcColor) const {
-
-        // draw center line
-        drawLine(
-            centerp0, centerp1,
-            funcWidth(0), funcColor(0)
-            );
-
-        // vector pointing from p0 -> p1
-        vec2 diff = centerp1 - centerp0;
-
-        // rotate left/right
-        vec2 left  = glm::normalize(vec2(-diff.y, diff.x));
-        vec2 right = -left;
-
-        // create pairs of directions and repeats
-        vector<pair<vec2, int>> direction_repeat;
-        direction_repeat.push_back(make_pair(left,  leftRepeat));
-        direction_repeat.push_back(make_pair(right, rightRepeat));
-
-        // intermediate line endpoints
-        vec2 repeatp0;
-        vec2 repeatp1;
-
-        // draw lines in each 'direction
-        for(auto &dr : direction_repeat) {
-            repeatp0 = centerp0;
-            repeatp1 = centerp1;
-            // 'repeat times
-            for(int r = 0 ; r < dr.second ; ++r) {
-                repeatp0 += dr.first * funcDistance(r);
-                repeatp1 += dr.first * funcDistance(r);
-                drawLine(
-                    repeatp0, repeatp1,
-                    funcWidth(r), funcColor(r)
-                    );
-            }
-        }
+        // checkGLError("context: update");
     }
 
     Rect Context::getViewport2D() const {
@@ -158,10 +95,14 @@ namespace etudes {
         float ty = -(2*viewport.getPosY() / viewport.getHeight() + 1.f);
 
         projOrtho = glm::mat4(
-            2.f / viewport.getWidth(),  0, 0, tx,
-            0, 2.f / viewport.getHeight(), 0, ty,
+            2.f / viewport.getWidth(),  0, 0, 0,
+            0, 2.f / viewport.getHeight(), 0, 0,
             0, 0, 1, 0,
-            0, 0, 0, 1);
+            tx, ty, 0, 1);
+    }
+
+    const ShaderRegistry &Context::getShaderRegistry() const {
+        return shaders;
     }
 
 }

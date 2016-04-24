@@ -5,6 +5,8 @@
 #include <Utility/ModulationFuncs.hpp>
 
 #include <Graphics/Context.hpp>
+#include <Graphics/Painter.hpp>
+#include <Graphics/Geometry/Transforms.hpp>
 
 #include "Lines.hpp"
 
@@ -31,7 +33,8 @@ namespace etudes {
         registerInput("/color/lambda",    {0.0f});
     }
 
-    void Lines::draw(const Context &context) {
+    void Lines::draw(const Context &context,
+                     const Painter &painter) {
         auto dist_b = getValue<float>("/distance/base");
         auto dist_a = getValue<float>("/distance/amplitude");
         auto dist_o = getValue<float>("/distance/omega");
@@ -58,8 +61,9 @@ namespace etudes {
                        2.0f*sin(angle));
         auto p1 = -p0;
 
-        context.drawParallels(p0, p1,
+        painter.drawParallels(p0, p1,
                               count, count,
-                              width, dist, color);
+                              width, dist, color,
+                              true);
     }
 }

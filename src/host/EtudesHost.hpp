@@ -30,6 +30,7 @@
 #include <Utility/Configuration.hpp>
 
 #include <Graphics/Context.hpp>
+#include <Graphics/Painter.hpp>
 
 struct GLFWwindow;
 
@@ -108,6 +109,7 @@ namespace etudes {
         OSCInput oscInput;
 
         Context context;
+        Painter painter;
     };
 }
 

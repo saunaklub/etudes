@@ -1,10 +1,10 @@
-#ifndef ETUDES_LINES
-#define ETUDES_LINES
+#ifndef ETUDES_TESTBED
+#define ETUDES_TESTBED
 
 #include <Receivers/Element.hpp>
 
 namespace etudes {
-    class Lines : public Element {
+    class Testbed : public Element {
     public:
         void registerInputs() override;
         void draw(const Context &context,
@@ -14,4 +14,4 @@ namespace etudes {
     };
 }
 
-#endif // ETUDES_LINES
+#endif // ETUDES_TESTBED

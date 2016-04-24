@@ -1,8 +1,6 @@
 #include <cmath>
 #include <cstring>
 
-#include <glm/ext.hpp>
-
 #include <Utility/Logging.hpp>
 
 #include <Graphics/Geometry/Rect.hpp>
@@ -17,18 +15,8 @@ namespace etudes {
     Texture::Texture(int width, int height, bool mipmaps) :
         width(width),
         height(height),
-        mipmaps(mipmaps) {
-
-        registry.registerShader("mvp-uv", GL_VERTEX_SHADER,
-                                 {"resources/shaders/mvp-uv.vert"});
-        registry.registerShader("textured", GL_FRAGMENT_SHADER,
-                                 {"resources/shaders/textured-hueshift.frag"});
-        registry.registerProgram("textured", {"mvp-uv", "textured"});
-
-        locMVP = glGetUniformLocation(registry.getProgram("textured"),
-                                      "mvp");
-        locHueShift = glGetUniformLocation(registry.getProgram("textured"),
-                                           "hueShift");
+        mipmaps(mipmaps),
+        texture(nullptr) {
 
         createTextureStorage();
         createGeometry();
@@ -47,7 +35,6 @@ namespace etudes {
         glTexParameteri(GL_TEXTURE_2D,
                         GL_TEXTURE_WRAP_T, GLint(GL_REPEAT));
 
-        // @todo calc number of mipmap levels depending on extents
         glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB8, width, height);
 
         glGenBuffers(1, &vboTexture);
@@ -104,13 +91,12 @@ namespace etudes {
     }
 
     unsigned char *Texture::mapData() {
-        texture = (unsigned char*)(glMapBuffer(GL_PIXEL_UNPACK_BUFFER,
-                                               GL_WRITE_ONLY));
+        if(!texture) {
+            glBindBuffer(GL_PIXEL_UNPACK_BUFFER, vboTexture);
+            texture = (unsigned char*)(glMapBuffer(GL_PIXEL_UNPACK_BUFFER,
+                                                   GL_WRITE_ONLY));
+        }
         return texture;
-    }
-
-    void Texture::setHueShift(float hueShift) {
-        this->hueShift = hueShift;
     }
 
     void Texture::uploadData() {
@@ -121,17 +107,11 @@ namespace etudes {
                         GL_BGR, GL_UNSIGNED_BYTE, 0);
     }
 
-    void Texture::draw(const glm::mat4 &mvp) {
-        glUseProgram(registry.getProgram("textured"));
+    void Texture::draw() {
         glBindVertexArray(idVertexArray);
-
         glBindTexture(GL_TEXTURE_2D, idTexture);
 
         uploadData();
-
-        glUniformMatrix4fv(locMVP, 1, GLboolean(false),
-                           glm::value_ptr(mvp));
-        glUniform1f(locHueShift, hueShift);
 
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 

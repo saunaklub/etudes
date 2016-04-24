@@ -18,12 +18,9 @@
 
 */
 
-#include <functional>
-
-#include <glbinding/gl/gl.h>
 #include <glm/glm.hpp>
 
-#include <Utility/ShaderRegistry.hpp>
+#include <Graphics/ShaderRegistry.hpp>
 
 #include <Graphics/Geometry/Rect.hpp>
 
@@ -37,17 +34,7 @@ namespace etudes {
         Context();
 
         void init();
-
-        void drawLine(glm::vec2 p0, glm::vec2 p1,
-                      float width,
-                      glm::vec4 color) const;
-
-        void drawParallels(
-            glm::vec2 centerp0, glm::vec2 centerp1,
-            int leftRepeat, int rightRepeat,
-            std::function<float(int)> funcWidth,
-            std::function<float(int)> funcDistance,
-            std::function<glm::vec4(int)> funcColor) const;
+        void update();
 
         Rect getViewport2D() const;
         void setViewport2D(const Rect &viewport);
@@ -55,9 +42,9 @@ namespace etudes {
         const glm::mat4 &getProjection2D() const;
         void setProjection2D(const Rect &projection);
 
-    private:
-        gl::GLuint vaoLine, vboLine;
+        const ShaderRegistry &getShaderRegistry() const;
 
+    private:
         ShaderRegistry shaders;
 
         Rect viewport2D;
