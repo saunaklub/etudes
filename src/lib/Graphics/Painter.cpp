@@ -36,9 +36,11 @@ namespace etudes {
             to_string(color));
 #endif
 
-        glUseProgram(context.getShaderRegistry().getProgram("line"));
+        const ShaderRegistry &registry = context.getShaderRegistry();
 
-        glUniform4f(context.getShaderRegistry().getUniform("line", "color"),
+        glUseProgram(registry.getProgram("line"));
+
+        glUniform4f(registry.getUniform("line", "color"),
                     color.r, color.g, color.b, color.a);
 
         drawLineGeometry(p0, p1, width);
@@ -46,6 +48,14 @@ namespace etudes {
 
     void Painter::sinusoid(glm::vec2 p0, glm::vec2 p1,
                            float width, glm::vec4 color) const {
+        const ShaderRegistry &registry = context.getShaderRegistry();
+
+        glUseProgram(registry.getProgram("sinusoid"));
+
+        glUniform4f(registry.getUniform("sinusoid", "color"),
+                    color.r, color.g, color.b, color.a);
+
+        drawLineGeometry(p0, p1, width);
     }
 
     void Painter::parallels(

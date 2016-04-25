@@ -1,0 +1,5 @@
+elements:
+  aura:
+    type: PartialAura
+    defaults:
+      /partials: [.4, .2, .1]

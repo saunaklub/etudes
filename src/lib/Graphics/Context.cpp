@@ -52,6 +52,8 @@ namespace etudes {
                                {"resources/shaders/mvp-uv.vert"});
         shaders.registerShader("solid", GL_FRAGMENT_SHADER,
                                  {"resources/shaders/solid.frag"});
+        shaders.registerShader("sinusoid", GL_FRAGMENT_SHADER,
+                                 {"resources/shaders/sinusoid.frag"});
         shaders.registerShader("textured", GL_FRAGMENT_SHADER,
                                {"resources/shaders/textured-hueshift.frag"});
 
@@ -62,6 +64,16 @@ namespace etudes {
         shaders.registerProgram("line", {"mvp-uv", "solid"});
         shaders.registerUniform("line", "mvp");
         shaders.registerUniform("line", "color");
+
+        shaders.registerProgram("sinusoid", {"mvp-uv", "sinusoid"});
+
+        shaders.registerUniform("sinusoid", "mvp");
+        shaders.registerUniform("sinusoid", "color");
+
+        shaders.registerUniform("sinusoid", "order");
+        shaders.registerUniform("sinusoid", "time");
+        shaders.registerUniform("sinusoid", "phase");
+        shaders.registerUniform("sinusoid", "f0");
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

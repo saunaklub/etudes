@@ -7,15 +7,15 @@ window:
   cursor: true
 
 logging:
-  logLevel: excessive
+  logLevel: debug
   framerate: false
 
 etudes:
-  - grid
-  - space
+  # - grid
+  # - space
   # - particles
   # - parallels
-  # - aura
+  - aura
   # - testbed
 
 # input:
