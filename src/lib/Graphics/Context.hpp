@@ -34,7 +34,6 @@ namespace etudes {
         Context();
 
         void init();
-        void update();
 
         Rect getViewport2D() const;
         void setViewport2D(const Rect &viewport);

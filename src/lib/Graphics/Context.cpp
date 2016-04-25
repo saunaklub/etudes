@@ -69,18 +69,6 @@ namespace etudes {
         checkGLError("context: init");
     }
 
-    void Context::update() {
-        // glUseProgram(shaders.getProgram("line"));
-
-        // glm::mat4 mvp = getProjection2D();
-
-        // glUniformMatrix4fv(
-        //     shaders.getUniform("line", "mvp"),
-        //     1, GLboolean(false), glm::value_ptr(mvp));
-
-        // checkGLError("context: update");
-    }
-
     Rect Context::getViewport2D() const {
         return viewport2D;
     }

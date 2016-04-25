@@ -287,7 +287,6 @@ namespace etudes {
         if(quitLoop)
             return false;
 
-        context->update();
         for(auto &e : etudes)
             e.second->update();
 
