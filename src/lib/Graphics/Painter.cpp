@@ -43,7 +43,7 @@ namespace etudes {
         glUniform4f(registry.getUniform("line", "color"),
                     color.r, color.g, color.b, color.a);
 
-        drawLineGeometry(p0, p1, width);
+        drawLineGeometry(p0, p1, width, "line");
     }
 
     void Painter::sinusoid(glm::vec2 p0, glm::vec2 p1,
@@ -51,11 +51,9 @@ namespace etudes {
         const ShaderRegistry &registry = context.getShaderRegistry();
 
         glUseProgram(registry.getProgram("sinusoid"));
-
         glUniform4f(registry.getUniform("sinusoid", "color"),
                     color.r, color.g, color.b, color.a);
-
-        drawLineGeometry(p0, p1, width);
+        drawLineGeometry(p0, p1, width, "sinusoid");
     }
 
     void Painter::parallels(
@@ -112,7 +110,7 @@ namespace etudes {
     }
 
     void Painter::drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
-                                   float width) const {
+                                   float width, std::string shader) const {
         glm::vec2 line = p1 - p0;
 
         glm::mat4 model;
@@ -127,7 +125,7 @@ namespace etudes {
         glm::mat4 mvp = proj * model;
 
         glUniformMatrix4fv(
-            context.getShaderRegistry().getUniform("line", "mvp"),
+            context.getShaderRegistry().getUniform(shader, "mvp"),
             1, GLboolean(false), glm::value_ptr(mvp));
 
         quad.draw();

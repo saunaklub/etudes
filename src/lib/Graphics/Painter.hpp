@@ -30,7 +30,7 @@ namespace etudes {
 
     private:
         void drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
-                              float width) const;
+                              float width, std::string shader) const;
 
         const Context &context;
         Quad quad;
