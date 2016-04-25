@@ -146,8 +146,8 @@ namespace etudes {
         return program;
     }
 
-    GLuint ShaderRegistry::registerUniform(std::string program_name,
-                                           std::string uniform_name) {
+    GLint ShaderRegistry::registerUniform(std::string program_name,
+                                          std::string uniform_name) {
         log(LogLevel::debug, program_name +
             ": Registering uniform: " + uniform_name);
 
@@ -170,8 +170,8 @@ namespace etudes {
         return it->second;
     }
 
-    GLuint ShaderRegistry::getUniform(std::string program_name,
-                                      std::string uniform_name) const {
+    GLint ShaderRegistry::getUniform(std::string program_name,
+                                     std::string uniform_name) const {
         auto it_program = m_mapUniform.find(program_name);
         if(it_program == m_mapUniform.end()) {
             std::string error = "Program "s + program_name +

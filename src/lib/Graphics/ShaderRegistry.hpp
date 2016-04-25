@@ -41,13 +41,12 @@ namespace etudes {
 
         gl::GLuint registerProgram(std::string name,
                                    std::vector<std::string> shader_names);
-
-        gl::GLuint registerUniform(std::string program_name,
-                                   std::string uniform_name);
-
         gl::GLuint getProgram(std::string name) const;
-        gl::GLuint getUniform(std::string program_name,
-                              std::string uniform_name) const;
+
+        gl::GLint registerUniform(std::string program_name,
+                                  std::string uniform_name);
+        gl::GLint getUniform(std::string program_name,
+                             std::string uniform_name) const;
 
     };
 
