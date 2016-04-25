@@ -16,8 +16,8 @@ namespace etudes {
                        const Painter &painter) {
         auto input = getValue<vec_t>("/test");
 
-       log(LogLevel::excessive, "test values");
-       log(LogLevel::excessive, input);
+        log(LogLevel::excessive, "test values");
+        log(LogLevel::excessive, input);
 
         const Rect &viewport = context.getViewport2D();
         glm::vec2 p0 = denormalize({0.0, 0.5}, viewport);

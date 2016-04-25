@@ -11,11 +11,12 @@ logging:
   framerate: false
 
 etudes:
-  - grid
+  # - grid
   - space
-  - particles
-  - parallels
-  - testbed
+  # - particles
+  # - parallels
+  # - aura
+  # - testbed
 
 # input:
 #   mouse:

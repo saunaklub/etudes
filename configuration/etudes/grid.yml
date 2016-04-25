@@ -6,7 +6,7 @@ output:
 
 elements:
   lines1:
-    type: line
+    type: Line
     defaults:
       /width/base: [10]
       /distance/base: [0.1]
@@ -17,7 +17,7 @@ elements:
       /color/amplitude: [0.0, 0.1, -0.1, 0.0]
       /color/omega: [1.0]
   lines2:
-    type: line
+    type: Line
     defaults:
       /angle: [1.57079632679489661922]
       /width/base: [10]

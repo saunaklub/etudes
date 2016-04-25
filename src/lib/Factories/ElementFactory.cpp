@@ -7,6 +7,7 @@
 #include <Elements/Lines.hpp>
 #include <Elements/Particles.hpp>
 #include <Elements/ImageView.hpp>
+#include <Elements/PartialAura.hpp>
 #include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
@@ -19,10 +20,11 @@ namespace etudes {
 
     std::map<std::string, ElementFactory::creation_t>
     ElementFactory::creationMap = {
-        {"line", ElementFactory::createElement<Lines>},
-        {"particles", ElementFactory::createElement<Particles>},
-        {"imageview", ElementFactory::createElementImageView},
-        {"testbed", ElementFactory::createElement<Testbed>},
+        {"Line", ElementFactory::createElement<Lines>},
+        {"Particles", ElementFactory::createElement<Particles>},
+        {"ImageView", ElementFactory::createElementImageView},
+        {"PartialAura", ElementFactory::createElement<PartialAura>},
+        {"Testbed", ElementFactory::createElement<Testbed>},
     };
 
     std::unique_ptr<Element>

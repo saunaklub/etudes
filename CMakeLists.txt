@@ -30,6 +30,7 @@ set(LIBRARY_SOURCES
     src/lib/Elements/Lines.cpp
     src/lib/Elements/Particles.cpp
     src/lib/Elements/ImageView.cpp
+    src/lib/Elements/PartialAura.cpp
     src/lib/Elements/Testbed.cpp
     )
 

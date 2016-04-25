@@ -1,6 +1,6 @@
 elements:
   particles:
-    type: particles
+    type: Particles
 
 input:
   mouse:
