@@ -61,9 +61,9 @@ namespace etudes {
                        2.0f*sin(angle));
         auto p1 = -p0;
 
-        painter.drawParallels(p0, p1,
-                              count, count,
-                              width, dist, color,
-                              true);
+        painter.parallels(p0, p1,
+                          count, count,
+                          width, dist, color,
+                          true);
     }
 }

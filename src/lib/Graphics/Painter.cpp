@@ -25,8 +25,8 @@ namespace etudes {
     void Painter::init() {
     }
 
-    void Painter::drawLine(glm::vec2 p0, glm::vec2 p1,
-                           float width, glm::vec4 color) const {
+    void Painter::line(glm::vec2 p0, glm::vec2 p1,
+                       float width, glm::vec4 color) const {
 #if 0
         log(logging::excessive,
             "drawLine called with: "s +
@@ -41,26 +41,14 @@ namespace etudes {
         glUniform4f(context.getShaderRegistry().getUniform("line", "color"),
                     color.r, color.g, color.b, color.a);
 
-        glm::vec2 line = p1 - p0;
-
-        glm::mat4 model;
-        model = glm::translate(model, glm::vec3{p0[0], p0[1], 0.f});
-        model = glm::rotate(model, std::atan2(line[1], line[0]),
-                            glm::vec3{0, 0, 1});
-        model = glm::scale(model,
-                           glm::vec3(glm::length(line), width, 1));
-
-        glm::mat4 proj = context.getProjection2D();
-        glm::mat4 mvp = proj * model;
-
-        glUniformMatrix4fv(
-            context.getShaderRegistry().getUniform("line", "mvp"),
-            1, GLboolean(false), glm::value_ptr(mvp));
-
-        quad.draw();
+        drawLineGeometry(p0, p1, width);
     }
 
-    void Painter::drawParallels(
+    void Painter::sinusoid(glm::vec2 p0, glm::vec2 p1,
+                           float width, glm::vec4 color) const {
+    }
+
+    void Painter::parallels(
         glm::vec2 centerp0, glm::vec2 centerp1,
         int leftRepeat, int rightRepeat,
         std::function<float(int)> funcWidth,
@@ -108,9 +96,30 @@ namespace etudes {
                     p0 = denormalize(p0, viewport);
                     p1 = denormalize(p1, viewport);
                 }
-                drawLine(p0, p1,
-                         funcWidth(r), funcColor(r));
+                line(p0, p1, funcWidth(r), funcColor(r));
             }
         }
     }
+
+    void Painter::drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
+                                   float width) const {
+        glm::vec2 line = p1 - p0;
+
+        glm::mat4 model;
+        model = glm::translate(model, glm::vec3{p0[0], p0[1], 0.f});
+        model = glm::rotate(model, std::atan2(line[1], line[0]),
+                            glm::vec3{0, 0, 1});
+        model = glm::scale(model,
+                           glm::vec3(glm::length(line), width, 1));
+
+        glm::mat4 proj = context.getProjection2D();
+        glm::mat4 mvp = proj * model;
+
+        glUniformMatrix4fv(
+            context.getShaderRegistry().getUniform("line", "mvp"),
+            1, GLboolean(false), glm::value_ptr(mvp));
+
+        quad.draw();
+    }
+
 }

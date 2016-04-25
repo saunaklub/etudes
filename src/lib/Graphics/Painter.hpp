@@ -14,11 +14,13 @@ namespace etudes {
 
         void init();
 
-        void drawLine(glm::vec2 p0, glm::vec2 p1,
-                      float width,
-                      glm::vec4 color) const;
+        void line(glm::vec2 p0, glm::vec2 p1,
+                  float width, glm::vec4 color) const;
 
-        void drawParallels(
+        void sinusoid(glm::vec2 p0, glm::vec2 p1,
+                      float width, glm::vec4 color) const;
+
+        void parallels(
             glm::vec2 centerp0, glm::vec2 centerp1,
             int leftRepeat, int rightRepeat,
             std::function<float(int)> funcWidth,
@@ -26,7 +28,10 @@ namespace etudes {
             std::function<glm::vec4(int)> funcColor,
             bool normalizedInput=false) const;
 
-     private:
+    private:
+        void drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
+                              float width) const;
+
         const Context &context;
         Quad quad;
     };

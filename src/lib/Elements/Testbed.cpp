@@ -23,6 +23,6 @@ namespace etudes {
         glm::vec2 p0 = denormalize({0.0, 0.5}, viewport);
         glm::vec2 p1 = denormalize({1.0, 0.5}, viewport);
 
-        painter.drawLine(p0, p1, 10, {1, 0.5, 0, 1});
+        painter.line(p0, p1, 10, {1, 0.5, 0, 1});
     }
 }
