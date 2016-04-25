@@ -33,6 +33,8 @@ namespace etudes {
 
         float offset = 0.f;
 
+        glUseProgram(registry.getProgram("sinusoid"));
+
         glUniform1f(registry.getUniform("sinusoid", "time"), seconds());
         glUniform1f(registry.getUniform("sinusoid", "f0"), f0);
 
