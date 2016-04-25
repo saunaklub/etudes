@@ -78,6 +78,7 @@ namespace etudes {
         vsync(false),
         viewportScaling(Rect::CROP),
         window(nullptr),
+        paused(false),
         quitLoop(false),
         oscInput(etudes, 6666) {
     }
@@ -284,6 +285,9 @@ namespace etudes {
     bool EtudesHost::loopIteration() {
         processInput();
 
+        if(paused)
+            return true;
+
         if(quitLoop)
             return false;
 
@@ -374,6 +378,10 @@ namespace etudes {
                 log(LogLevel::excessive, "toggling cursor");
                 cursor = !cursor;
                 setCursorEnabled(cursor);
+                break;
+
+            case GLFW_KEY_PAUSE:
+                paused = !paused;
                 break;
             }
         }

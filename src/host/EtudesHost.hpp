@@ -101,6 +101,7 @@ namespace etudes {
         Rect::Scaling viewportScaling;
         GLFWwindow *window;
 
+        bool paused;
         bool quitLoop;
 
         std::vector<std::pair<MouseInput, std::string>> inputsMouse;
