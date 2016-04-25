@@ -82,6 +82,8 @@ namespace etudes {
         void keyCallback(int, int, int, int);
         void resizeCallback(int width, int height);
 
+        void setCursorEnabled(bool enabled);
+
         void printEtude();
         void nextEtude();
         void prevEtude();
@@ -94,6 +96,7 @@ namespace etudes {
 
         bool logFramerate;
         bool vsync;
+        bool cursor;
 
         Rect::Scaling viewportScaling;
         GLFWwindow *window;

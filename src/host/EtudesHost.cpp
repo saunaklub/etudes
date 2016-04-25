@@ -124,8 +124,8 @@ namespace etudes {
         }
 
         if(hostConfig.hasValue("window:cursor")) {
-            if(!hostConfig.getValue<bool>("window:cursor"))
-                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+            cursor = hostConfig.getValue<bool>("window:cursor");
+            setCursorEnabled(cursor);
         }
         glfwSetWindowUserPointer(window, this);
 
@@ -369,8 +369,21 @@ namespace etudes {
                 vsync = !vsync;
                 glfwSwapInterval(vsync);
                 break;
+
+            case GLFW_KEY_C:
+                log(LogLevel::excessive, "toggling cursor");
+                cursor = !cursor;
+                setCursorEnabled(cursor);
+                break;
             }
         }
+    }
+
+    void EtudesHost::setCursorEnabled(bool enabled) {
+        if(enabled)
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        else
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     }
 
     void EtudesHost::printEtude() {
