@@ -2,6 +2,7 @@
 #define ETUDES_UTILITY
 
 #include <vector>
+#include <list>
 #include <iostream>
 
 #include <glm/vec2.hpp>
@@ -35,7 +36,17 @@ namespace etudes {
     std::ostream &operator<<(std::ostream &os,
                              const std::vector<T> &container) {
         for(auto &e : container)
-            os << " " << e << " ";
+            os << e << " ";
+        os << std::endl;
+
+        return os;
+    }
+
+    template <typename T>
+    std::ostream &operator<<(std::ostream &os,
+                             const std::list<T> &container) {
+        for(auto &e : container)
+            os << e << " ";
         os << std::endl;
 
         return os;
