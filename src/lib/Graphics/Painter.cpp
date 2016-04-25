@@ -23,27 +23,6 @@ namespace etudes {
     }
 
     void Painter::init() {
-        glGenVertexArrays(1, &vaoLine);
-        glBindVertexArray(vaoLine);
-
-        const GLfloat coords[] =  {
-            0.f, 1.f, 0.f,
-            0.f, 0.f, 0.f,
-            1.f, 1.f, 0.f,
-            1.f, 0.f, 0.f,
-        };
-        glGenBuffers(1, &vboLine);
-        glBindBuffer(GL_ARRAY_BUFFER, vboLine);
-        glBufferData(GL_ARRAY_BUFFER,
-                     12 * sizeof(GLfloat),
-                     coords, GL_DYNAMIC_DRAW);
-
-        GLint attribPosition =
-            glGetAttribLocation(
-                context.getShaderRegistry().getProgram("line"), "vertPos");
-        glVertexAttribPointer(attribPosition, 3, GL_FLOAT, GL_FALSE, 0, 0);
-        glEnableVertexAttribArray(attribPosition);
-        checkGLError("painter: line vertex attrib");
     }
 
     void Painter::drawLine(glm::vec2 p0, glm::vec2 p1,
@@ -58,7 +37,6 @@ namespace etudes {
 #endif
 
         glUseProgram(context.getShaderRegistry().getProgram("line"));
-        glBindVertexArray(vaoLine);
 
         glUniform4f(context.getShaderRegistry().getUniform("line", "color"),
                     color.r, color.g, color.b, color.a);
@@ -79,7 +57,7 @@ namespace etudes {
             context.getShaderRegistry().getUniform("line", "mvp"),
             1, GLboolean(false), glm::value_ptr(mvp));
 
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+        quad.draw();
     }
 
     void Painter::drawParallels(

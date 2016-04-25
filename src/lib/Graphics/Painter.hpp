@@ -4,6 +4,8 @@
 #include <glbinding/gl/gl.h>
 #include <glm/glm.hpp>
 
+#include <Graphics/Quad.hpp>
+
 namespace etudes {
     class Context;
     class Painter {
@@ -26,10 +28,7 @@ namespace etudes {
 
      private:
         const Context &context;
-
-        gl::GLuint vaoLine, vboLine;
-
-        gl::GLint locMVP;
+        Quad quad;
     };
 }
 

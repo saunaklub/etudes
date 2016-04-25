@@ -7,7 +7,7 @@ namespace etudes {
     class Quad {
     public:
         Quad();
-        void draw();
+        void draw() const;
 
     private:
         void createGeometry();
@@ -20,4 +20,3 @@ namespace etudes {
 }
 
 #endif // ETUDES_QUAD
-

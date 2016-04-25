@@ -108,8 +108,8 @@ namespace etudes {
         output_vec_t videoOutputs;
         OSCInput oscInput;
 
-        Context context;
-        Painter painter;
+        std::unique_ptr<Context> context;
+        std::unique_ptr<Painter> painter;
     };
 }
 

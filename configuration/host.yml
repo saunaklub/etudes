@@ -11,7 +11,7 @@ logging:
   framerate: false
 
 etudes:
-  # - grid
+  - grid
   - space
   # - particles
   # - parallels

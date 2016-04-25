@@ -79,9 +79,7 @@ namespace etudes {
         viewportScaling(Rect::CROP),
         window(nullptr),
         quitLoop(false),
-        oscInput(etudes, 6666),
-        context(),
-        painter(context) {
+        oscInput(etudes, 6666) {
     }
 
     EtudesHost::~EtudesHost() {
@@ -146,9 +144,12 @@ namespace etudes {
     void EtudesHost::initGL() {
         printOpenGLInfo();
 
-        context.init();
+        context = std::make_unique<Context>();
+        context->init();
         checkGLError("host: init context");
-        painter.init();
+
+        painter = std::make_unique<Painter>(*context.get());
+        painter->init();
         checkGLError("host: init painter");
 
         if(hostConfig.hasValue("window:viewport")) {
@@ -275,8 +276,8 @@ namespace etudes {
             break;
         }
 
-        context.setViewport2D(viewport);
-        context.setProjection2D(projection);
+        context->setViewport2D(viewport);
+        context->setProjection2D(projection);
     }
 
 
@@ -286,7 +287,7 @@ namespace etudes {
         if(quitLoop)
             return false;
 
-        context.update();
+        context->update();
         for(auto &e : etudes)
             e.second->update();
 
@@ -396,7 +397,7 @@ namespace etudes {
 
     void EtudesHost::renderOutputs() {
         for(auto &output : videoOutputs) {
-            output.second->render(context, painter);
+            output.second->render(*context.get(), *painter.get());
             checkGLError("drawing "s + output.first);
         }
     }
@@ -414,7 +415,7 @@ namespace etudes {
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        currentEtude->second->draw(context, painter);
+        currentEtude->second->draw(*context.get(), *painter.get());
 
         checkGLError("drawing "s + currentEtude->first);
 
