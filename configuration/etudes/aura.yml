@@ -3,3 +3,14 @@ elements:
     type: PartialAura
     defaults:
       /partials: [.4, .2, .1]
+  background:
+    type: ImageView
+#    image: resources/images/hubble.tif
+#   image: resources/images/fuck-nvidia.jpg
+#    image: resources/images/fire-glitch.png
+#    image: /home/bzk/data/media/images/microchips/kr580ik80a-HD.jpg
+#    image: resources/images/wide.png
+#    image: resources/images/rect-test.png
+    image: resources/images/test-4_3.png
+
+order: [background, aura]

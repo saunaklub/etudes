@@ -42,9 +42,9 @@ namespace etudes {
         void dispatchValue(std::string input, vec_t value);
 
     private:
-        typedef std::map<std::string, std::unique_ptr<Element>> element_map_t;
-
-        element_map_t elements;
+        typedef std::vector<std::pair<std::string, std::unique_ptr<Element>>>
+                            element_vec_t;
+        element_vec_t elements;
     };
 }
 

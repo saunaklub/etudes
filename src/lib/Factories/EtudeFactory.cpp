@@ -38,10 +38,12 @@ namespace etudes {
 
         log(LogLevel::excessive, config);
 
-        for(auto &child : config.getChildren("elements")) {
+        auto order = config.getValue<std::list<std::string>>("order");
+        for(auto &element : order) {
             product->addElement(
-                child, ElementFactory::makeElement(
-                    config.getSubTree("elements:" + child)));
+                element, ElementFactory::makeElement(
+                    config.getSubTree("elements:" + element)));
+            log(LogLevel::excessive, "added element " + element);
         }
 
         return product;

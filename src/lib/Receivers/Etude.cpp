@@ -34,7 +34,7 @@ namespace etudes {
 
     void Etude::addElement(std::string name,
                            std::unique_ptr<Element> element) {
-        elements[name] = std::move(element);
+        elements.push_back(std::make_pair(name, std::move(element)));
     }
 
     void Etude::dispatchValue(std::string path, vec_t value) {
@@ -45,8 +45,12 @@ namespace etudes {
         }
 
         string prefix = splitStringFirst(path);
-        if(elements.find(prefix) != elements.end()) {
-            elements[prefix]->setValue(splitStringRest(path), value);
+        auto iter = std::find_if(elements.begin(), elements.end(),
+                                 [&](const auto &e)  {
+                                     return(e.first == prefix);
+                                 });
+        if(iter != elements.end()) {
+            iter->second->setValue(splitStringRest(path), value);
             return;
         }
 
