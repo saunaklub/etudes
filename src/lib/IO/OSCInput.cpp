@@ -31,6 +31,9 @@
 using namespace std::literals::string_literals;
 
 namespace {
+    using etudes::logging::log;
+    using etudes::logging::LogLevel;
+
     void error(int num, const char *msg, const char *path) {
         log(etudes::logging::error,
             "liblo error "s + std::to_string(num) +
@@ -85,13 +88,7 @@ namespace etudes {
             std::to_string(port).c_str(), error);
 
         lo_server_thread_add_method(
-            oscServer, nullptr, "f",
-            float_handler, this);
-        lo_server_thread_add_method(
-            oscServer, nullptr, "ff",
-            float_handler, this);
-        lo_server_thread_add_method(
-            oscServer, nullptr, "fff",
+            oscServer, nullptr, nullptr,
             float_handler, this);
 
         if(lo_server_thread_start(oscServer) != 0)
