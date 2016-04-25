@@ -82,6 +82,16 @@ namespace etudes {
         os << glm::to_string(t);
         return os;
     }
+    std::ostream &operator<<(std::ostream &os,
+                             const glm::vec3 &t) {
+        os << glm::to_string(t);
+        return os;
+    }
+    std::ostream &operator<<(std::ostream &os,
+                             const glm::vec4 &t) {
+        os << glm::to_string(t);
+        return os;
+    }
 
     std::ostream &operator<<(std::ostream &os,
                              const glm::mat4 &t) {
