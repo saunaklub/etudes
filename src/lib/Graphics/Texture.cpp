@@ -7,9 +7,9 @@
 
 #include "Texture.hpp"
 
-using namespace gl;
-
 namespace etudes {
+
+    using namespace gl;
     using logging::LogLevel;
 
     Texture::Texture(int width, int height, bool mipmaps) :
@@ -19,7 +19,6 @@ namespace etudes {
         texture(nullptr) {
 
         createTextureStorage();
-        createGeometry();
     }
 
     void Texture::createTextureStorage() {
@@ -42,44 +41,6 @@ namespace etudes {
         glBufferData(GL_PIXEL_UNPACK_BUFFER,
                      width*height*3,
                      nullptr, GL_DYNAMIC_DRAW);
-    }
-
-    void Texture::createGeometry() {
-        glGenVertexArrays(1, &idVertexArray);
-        glBindVertexArray(idVertexArray);
-
-        std::array<float, 12> aCoords = {
-            0.0, 1.0, 0.0f,
-            0.0, 0.0, 0.0f,
-            1.0, 1.0, 0.0f,
-            1.0, 0.0, 0.0f,
-        };
-
-        glGenBuffers(1, &vboVertex);
-        glBindBuffer(GL_ARRAY_BUFFER, vboVertex);
-        glBufferData(GL_ARRAY_BUFFER,
-                     aCoords.size()*sizeof(GLfloat),
-                     aCoords.data(), GL_STATIC_DRAW);
-
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-        std::array<float, 12> aUV = {
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
-        };
-
-        glGenBuffers(1, &vboUV);
-        glBindBuffer(GL_ARRAY_BUFFER, vboUV);
-        glBufferData(GL_ARRAY_BUFFER,
-                     aUV.size()*sizeof(GLfloat),
-                     aUV.data(),
-                     GL_STATIC_DRAW);
-
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
     }
 
     int Texture::getWidth() {
@@ -108,15 +69,10 @@ namespace etudes {
     }
 
     void Texture::draw() {
-        glBindVertexArray(idVertexArray);
         glBindTexture(GL_TEXTURE_2D, idTexture);
-
         uploadData();
 
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-
-        glBindVertexArray(0);
-        glUseProgram(0);
+        quad.draw();
     }
 
 }

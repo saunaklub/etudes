@@ -18,6 +18,7 @@ set(LIBRARY_SOURCES
     src/lib/Graphics/ShaderRegistry.cpp
     src/lib/Graphics/Context.cpp
     src/lib/Graphics/Painter.cpp
+    src/lib/Graphics/Quad.cpp
     src/lib/Graphics/Texture.cpp
     src/lib/Graphics/Image.cpp
 #    src/lib/Graphics/TextureTiled.cpp

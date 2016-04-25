@@ -5,6 +5,7 @@
 #include <glm/matrix.hpp>
 
 #include <Graphics/ShaderRegistry.hpp>
+#include <Graphics/Quad.hpp>
 
 namespace etudes {
 
@@ -22,20 +23,15 @@ namespace etudes {
 
     private:
         void createTextureStorage();
-        void createGeometry();
-
         void uploadData();
+
+        Quad quad;
 
         int width, height;
         bool mipmaps;
 
-        gl::GLuint idVertexArray;
         gl::GLuint idTexture;
-
         gl::GLuint vboTexture;
-        gl::GLuint vboVertex;
-        gl::GLuint vboUV;
-
         unsigned char *texture;
     };
 }
