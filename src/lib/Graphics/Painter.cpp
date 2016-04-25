@@ -111,6 +111,7 @@ namespace etudes {
                             glm::vec3{0, 0, 1});
         model = glm::scale(model,
                            glm::vec3(glm::length(line), width, 1));
+        model = glm::translate(model, glm::vec3{0.5f, 0.f, 0.f});
 
         glm::mat4 proj = context.getProjection2D();
         glm::mat4 mvp = proj * model;

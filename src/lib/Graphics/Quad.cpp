@@ -12,10 +12,10 @@ namespace etudes {
         glBindVertexArray(idVertexArray);
 
         std::array<float, 12> aCoords = {
-            0.0, 1.0, 0.0f,
-            0.0, 0.0, 0.0f,
-            1.0, 1.0, 0.0f,
-            1.0, 0.0, 0.0f,
+            -0.5f,  0.5f, 0.0f,
+            -0.5f, -0.5f, 0.0f,
+             0.5f,  0.5f, 0.0f,
+             0.5f, -0.5f, 0.0f,
         };
 
         glGenBuffers(1, &vboVertex);
