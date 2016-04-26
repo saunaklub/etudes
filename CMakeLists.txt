@@ -94,7 +94,7 @@ target_link_libraries(${CLIENT}
 
 target_link_libraries(${LIBRARY}
     PUBLIC ${OPENGL_LIBRARIES}
-    PUBLIC ${GLBINDING_LIBRARIES}
     PUBLIC ${YAML_CPP_LIBRARIES}
+    glbinding
     freeimageplus
     )
