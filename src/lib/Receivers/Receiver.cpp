@@ -34,7 +34,9 @@ namespace etudes {
         return out;
     }
 
-    const Receiver::vec_t &Receiver::getInput(std::string input) const {
+    Receiver::vec_t Receiver::getInput(std::string input) {
+        std::lock_guard<std::mutex> guard(inputLock);
+
         const auto pair = mapInputs.find(input);
         if(pair == mapInputs.end()) {
             throw std::invalid_argument(
@@ -44,6 +46,8 @@ namespace etudes {
     }
 
     void Receiver::setValue(string input, vec_t value) {
+        std::lock_guard<std::mutex> guard(inputLock);
+
         if(mapInputs.find(input) == mapInputs.end())
             throw std::invalid_argument(
                 "Receiver::setValue: input "s + input + " not registered");
@@ -52,30 +56,30 @@ namespace etudes {
     }
 
     template <> float
-    Receiver::getValue<float>(std::string input) const {
+    Receiver::getValue<float>(std::string input) {
         return getInput(input)[0];
     }
 
     template <> Receiver::vec_t
-    Receiver::getValue<Receiver::vec_t>(std::string input) const {
+    Receiver::getValue<Receiver::vec_t>(std::string input) {
         return getInput(input);
     }
 
     template <> vec2
-    Receiver::getValue<vec2>(std::string input) const {
-        const vec_t &vecInput = getInput(input);
+    Receiver::getValue<vec2>(std::string input) {
+        vec_t vecInput = getInput(input);
         return vec2(vecInput[0], vecInput[1]);
     }
 
     template <> vec3
-    Receiver::getValue<vec3>(std::string input) const {
-        const vec_t &vecInput = getInput(input);
+    Receiver::getValue<vec3>(std::string input) {
+        vec_t vecInput = getInput(input);
         return vec3(vecInput[0], vecInput[1], vecInput[2]);
     }
 
     template <> vec4
-    Receiver::getValue<vec4>(std::string input) const {
-        const vec_t &vecInput = getInput(input);
+    Receiver::getValue<vec4>(std::string input) {
+        vec_t vecInput = getInput(input);
         return vec4(vecInput[0], vecInput[1], vecInput[2], vecInput[3]);
     }
 

@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <mutex>
 
 #include <Utility/Logging.hpp>
 
@@ -20,7 +21,7 @@ namespace etudes {
         void setValue(std::string input, vec_t value);
 
         template <class T>
-        T getValue(std::string input) const;
+        T getValue(std::string input);
 
     protected:
         Receiver() = default;
@@ -28,9 +29,10 @@ namespace etudes {
                            vec_t initialValue = {0});
 
     private:
-        const vec_t &getInput(std::string input) const;
+        vec_t getInput(std::string input);
 
         input_map_t mapInputs;
+        std::mutex inputLock;
     };
 
 }
