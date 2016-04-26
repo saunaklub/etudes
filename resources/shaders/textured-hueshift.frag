@@ -6,6 +6,7 @@ out vec4 color;
 uniform sampler2D texSampler;
 
 uniform float hueShift;
+uniform float alpha;
 
 vec3 rgb2hsv(vec3 c) {
     vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -32,5 +33,5 @@ void main(){
     c.x = mod(c.x, 1);
     c = hsv2rgb(c);
 
-    color = vec4(c, color4.a);
+    color = vec4(c, color4.a * alpha);
 }

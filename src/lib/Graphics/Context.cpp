@@ -60,6 +60,7 @@ namespace etudes {
         shaders.registerProgram("textured", {"mvp-uv", "textured"});
         shaders.registerUniform("textured", "mvp");
         shaders.registerUniform("textured", "hueShift");
+        shaders.registerUniform("textured", "alpha");
 
         shaders.registerProgram("line", {"mvp-uv", "solid"});
         shaders.registerUniform("line", "mvp");

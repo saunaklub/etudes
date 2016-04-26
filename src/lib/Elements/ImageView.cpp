@@ -25,6 +25,7 @@ namespace etudes {
         registerInput("/x-range", {0, 1});
         registerInput("/y-range", {0, 1});
         registerInput("/hue-shift", {0});
+        registerInput("/alpha", {1.f});
     }
 
     void ImageView::init() {
@@ -74,8 +75,9 @@ namespace etudes {
         glUseProgram(registry.getProgram("textured"));
 
         float hueShift = getValue<float>("/hue-shift");
-        GLint locHueShift = registry.getUniform("textured", "hueShift");
-        glUniform1f(locHueShift, hueShift);
+        float alpha = getValue<float>("/alpha");
+        glUniform1f(registry.getUniform("textured", "hueShift"), hueShift);
+        glUniform1f(registry.getUniform("textured", "alpha"), alpha);
 
         Rect area(0, 0, image->getWidth(), image->getHeight());
         area = area.maximizedTo(context.getViewport2D(), Rect::CROP);
