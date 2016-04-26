@@ -74,7 +74,7 @@ namespace etudes {
         shaders.registerUniform("sinusoid", "order");
         shaders.registerUniform("sinusoid", "time");
         shaders.registerUniform("sinusoid", "phase");
-        shaders.registerUniform("sinusoid", "f0");
+        shaders.registerUniform("sinusoid", "freq");
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -15,14 +15,14 @@ namespace etudes {
 
     void PartialAura::registerInputs() {
         registerInput("/partials", vec_float_t{});
-        registerInput("/f0", vec_float_t{300.f});
+        registerInput("/freq", vec_float_t{1.f});
         registerInput("/offset-mode", vec_string_t{"absolute"});
     }
 
     void PartialAura::draw(const Context &context,
                            const Painter &painter) {
         auto partials = getValue<vec_float_t>("/partials");
-        auto f0 = getValue<float>("/f0");
+        auto freq = getValue<float>("/freq");
 
         const ShaderRegistry &registry = context.getShaderRegistry();
         const Rect &viewport = context.getViewport2D();
@@ -39,7 +39,7 @@ namespace etudes {
         glUseProgram(registry.getProgram("sinusoid"));
 
         glUniform1f(registry.getUniform("sinusoid", "time"), seconds());
-        glUniform1f(registry.getUniform("sinusoid", "f0"), f0);
+        glUniform1f(registry.getUniform("sinusoid", "freq"), freq);
 
         for(size_t partial = 0 ; partial < partials.size() ; ++partial) {
             float amplitude = partials[partial];
