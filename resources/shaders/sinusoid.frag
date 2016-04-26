@@ -22,6 +22,7 @@ void main() {
     float f0norm = (f0 - f0min) / (f0max - f0min);
 
     vec4 shaded = color;
+    shaded = clamp(shaded, 0, 1);
 
     // shade with distance from sinusoid
     float sinusoid =
