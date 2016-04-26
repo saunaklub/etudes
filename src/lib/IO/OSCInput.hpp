@@ -43,8 +43,9 @@ namespace etudes {
         void start();
         void stop();
 
+        template <typename T>
         void update(std::string path,
-                    std::vector<float> values);
+                    const T &values);
 
     private:
         const etudes_t &etudes;

@@ -330,13 +330,16 @@ namespace etudes {
         for(auto &inputMouse : inputsMouse) {
             switch(inputMouse.first) {
             case MOUSE_X:
-                oscInput.update(inputMouse.second, {mouseXNorm});
+                oscInput.update(inputMouse.second,
+                                Receiver::vec_float_t{mouseXNorm});
                 break;
             case MOUSE_Y:
-                oscInput.update(inputMouse.second, {mouseYNorm});
+                oscInput.update(inputMouse.second,
+                                Receiver::vec_float_t{mouseYNorm});
                 break;
             case MOUSE_XY:
-                oscInput.update(inputMouse.second, {mouseXNorm, mouseYNorm});
+                oscInput.update(inputMouse.second,
+                                Receiver::vec_float_t{mouseXNorm, mouseYNorm});
                 break;
             }
         }

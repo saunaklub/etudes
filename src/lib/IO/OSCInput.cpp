@@ -40,24 +40,38 @@ namespace {
             "at "s + path + ": "s + msg);
     }
 
-    int float_handler(const char *path, const char *types, lo_arg ** argv,
+    int handler(const char *path, const char *types, lo_arg ** argv,
                       int argc, void *data, void *user_data) {
 
-        etudes::OSCInput* router =
+        etudes::OSCInput* oscInput =
             static_cast<etudes::OSCInput*>(user_data);
 
-        std::vector<float> values;
-        for(int arg = 0 ; arg < argc ; ++arg) {
-            if(types[arg] != 'f') {
-                log(etudes::logging::warning,
-                    "OSC handler: unexpected argument type: "s + types[arg]);
-                continue;
+        if(types[0] == 'f') {
+            std::vector<float> values;
+            for(int arg = 0 ; arg < argc ; ++arg) {
+                if(types[arg] != 'f') {
+                    log(etudes::logging::warning,
+                        "OSC handler: unexpected argument type: "s + types[arg]);
+                    continue;
+                }
+
+                values.emplace_back(argv[arg]->f);
             }
-
-            values.emplace_back(argv[arg]->f);
+            oscInput->update(path, std::move(values));
         }
+        else if(types[0] == 's') {
+            std::vector<std::string> values;
+            for(int arg = 0 ; arg < argc ; ++arg) {
+                if(types[arg] != 's') {
+                    log(etudes::logging::warning,
+                        "OSC handler: unexpected argument type: "s + types[arg]);
+                    continue;
+                }
 
-        router->update(path, std::move(values));
+                values.emplace_back(&argv[arg]->s);
+            }
+            oscInput->update(path, std::move(values));
+        }
 
         return 0;
     }
@@ -89,7 +103,7 @@ namespace etudes {
 
         lo_server_thread_add_method(
             oscServer, nullptr, nullptr,
-            float_handler, this);
+            handler, this);
 
         if(lo_server_thread_start(oscServer) != 0)
             throw(std::runtime_error(
@@ -108,8 +122,9 @@ namespace etudes {
         //started = false;
     }
 
+    template <typename T>
     void OSCInput::update(std::string path,
-                          std::vector<float> values) {
+                          const T &values) {
         string etude = splitStringFirst(path);
         string input = splitStringRest(path);
 
