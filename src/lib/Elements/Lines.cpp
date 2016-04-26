@@ -16,21 +16,21 @@ namespace etudes {
     using glm::vec4;
 
     void Lines::registerInputs() {
-        registerInput("/count", {100.0f});
-        registerInput("/angle", {pi<float>()/2.0f});
+        registerInput("/count", vec_float_t{100.0f});
+        registerInput("/angle", vec_float_t{pi<float>()/2.0f});
 
-        registerInput("/distance/base",      {0.1f});
-        registerInput("/distance/amplitude", {0.0f});
-        registerInput("/distance/omega",     {0.0f});
-        registerInput("/distance/lambda",    {0.0f});
-        registerInput("/width/base",      {5.0f});
-        registerInput("/width/amplitude", {0.0f});
-        registerInput("/width/omega",     {0.0f});
-        registerInput("/width/lambda",    {0.0f});
-        registerInput("/color/base",      {1.0f, 1.0f, 1.0f, 1.0f});
-        registerInput("/color/amplitude", {0.0f, 0.0f, 0.0f, 0.0f});
-        registerInput("/color/omega",     {0.0f});
-        registerInput("/color/lambda",    {0.0f});
+        registerInput("/distance/base",      vec_float_t{0.1f});
+        registerInput("/distance/amplitude", vec_float_t{0.0f});
+        registerInput("/distance/omega",     vec_float_t{0.0f});
+        registerInput("/distance/lambda",    vec_float_t{0.0f});
+        registerInput("/width/base",      vec_float_t{5.0f});
+        registerInput("/width/amplitude", vec_float_t{0.0f});
+        registerInput("/width/omega",     vec_float_t{0.0f});
+        registerInput("/width/lambda",    vec_float_t{0.0f});
+        registerInput("/color/base",      vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
+        registerInput("/color/amplitude", vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
+        registerInput("/color/omega",     vec_float_t{0.0f});
+        registerInput("/color/lambda",    vec_float_t{0.0f});
     }
 
     void Lines::draw(const Context &context,

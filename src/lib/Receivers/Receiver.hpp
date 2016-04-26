@@ -12,26 +12,37 @@ namespace etudes {
 
     class Receiver {
     public:
-        typedef std::vector<float> vec_t;
-        typedef std::map<std::string, vec_t> input_map_t;
+        typedef std::vector<float> vec_float_t;
+        typedef std::vector<std::string> vec_string_t;
+
+        typedef std::map<std::string, vec_float_t> input_map_float_t;
+        typedef std::map<std::string, vec_string_t> input_map_string_t;
 
         virtual void registerInputs() = 0;
 
         std::vector<std::string> getInputs() const;
-        void setValue(std::string input, vec_t value);
 
-        template <class T>
+        template <typename T>
+        void setValue(std::string input, const T &value);
+
+        template <typename T>
         T getValue(std::string input);
 
     protected:
         Receiver() = default;
+
         void registerInput(std::string input,
-                           vec_t initialValue = {0});
+                           vec_float_t initialValue = {0});
+        void registerInput(std::string input,
+                           vec_string_t initialValue = {""});
 
     private:
-        vec_t getInput(std::string input);
+        template <class T>
+        T getInput(std::string input);
 
-        input_map_t mapInputs;
+        input_map_float_t mapInputsFloat;
+        input_map_string_t mapInputsString;
+
         std::mutex inputLock;
     };
 

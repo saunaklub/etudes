@@ -39,7 +39,9 @@ namespace etudes {
                   const Painter &painter) override;
 
         void addElement(std::string name, std::unique_ptr<Element> element);
-        void dispatchValue(std::string input, vec_t value);
+
+        template <typename T>
+        void dispatchValue(std::string input, const T &value);
 
     private:
         typedef std::vector<std::pair<std::string, std::unique_ptr<Element>>>

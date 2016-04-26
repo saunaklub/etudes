@@ -22,10 +22,10 @@ namespace etudes {
     }
 
     void ImageView::registerInputs() {
-        registerInput("/x-range", {0, 1});
-        registerInput("/y-range", {0, 1});
-        registerInput("/hue-shift", {0});
-        registerInput("/alpha", {1.f});
+        registerInput("/x-range", vec_float_t{0, 1});
+        registerInput("/y-range", vec_float_t{0, 1});
+        registerInput("/hue-shift", vec_float_t{0});
+        registerInput("/alpha", vec_float_t{1.f});
     }
 
     void ImageView::init() {

@@ -37,7 +37,8 @@ namespace etudes {
         elements.push_back(std::make_pair(name, std::move(element)));
     }
 
-    void Etude::dispatchValue(std::string path, vec_t value) {
+    template <typename T>
+    void Etude::dispatchValue(std::string path, const T &value) {
         auto inputs = getInputs();
         if(std::find(inputs.begin(), inputs.end(), path) != inputs.end()) {
             setValue(path, value);
@@ -59,4 +60,10 @@ namespace etudes {
             "Etude::dispatchValue: Unable to dispatch message with path: " +
             path);
     }
+
+    template void Etude::dispatchValue(std::string path,
+                                       const vec_float_t &value);
+    template void Etude::dispatchValue(std::string path,
+                                       const vec_string_t &value);
+
 }

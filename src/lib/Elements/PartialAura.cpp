@@ -14,13 +14,14 @@ namespace etudes {
     using logging::LogLevel;
 
     void PartialAura::registerInputs() {
-        registerInput("/partials", {});
-        registerInput("/f0", {300.f});
+        registerInput("/partials", vec_float_t{});
+        registerInput("/f0", vec_float_t{300.f});
+        registerInput("/offset-mode", vec_string_t{"absolute"});
     }
 
     void PartialAura::draw(const Context &context,
                            const Painter &painter) {
-        auto partials = getValue<vec_t>("/partials");
+        auto partials = getValue<vec_float_t>("/partials");
         auto f0 = getValue<float>("/f0");
 
         const ShaderRegistry &registry = context.getShaderRegistry();
@@ -32,6 +33,8 @@ namespace etudes {
         glm::vec2 start, end;
 
         float offset = 0.f;
+        float offsetAccum = 0.f;
+        std::string offsetMode = getValue<std::string>("/offset-mode");
 
         glUseProgram(registry.getProgram("sinusoid"));
 
