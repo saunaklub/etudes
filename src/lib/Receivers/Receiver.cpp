@@ -16,10 +16,12 @@ namespace etudes {
     using glm::vec3;
     using glm::vec4;
 
+    using logging::LogLevel;
+
     void Receiver::registerInput(string input,
                                  vec_float_t initialValue) {
         if(mapInputsFloat.find(input) != mapInputsFloat.end())
-            log(logging::warning,
+            log(LogLevel::warning,
                 "Receiver::registerInput: "s + input + " already registered");
 
         mapInputsFloat[input] = initialValue;
@@ -28,7 +30,7 @@ namespace etudes {
     void Receiver::registerInput(string input,
                                  vec_string_t initialValue) {
         if(mapInputsString.find(input) != mapInputsString.end())
-            log(logging::warning,
+            log(LogLevel::warning,
                 "Receiver::registerInput: "s + input + " already registered");
 
         mapInputsString[input] = initialValue;
@@ -74,7 +76,7 @@ namespace etudes {
         std::lock_guard<std::mutex> guard(inputLock);
 
         if(mapInputsFloat.find(input) == mapInputsFloat.end())
-            throw std::invalid_argument(
+            log(LogLevel::warning,
                 "Receiver::setValue: input "s + input + " not registered");
         else
             mapInputsFloat[input] = {value};
@@ -85,7 +87,7 @@ namespace etudes {
         std::lock_guard<std::mutex> guard(inputLock);
 
         if(mapInputsString.find(input) == mapInputsString.end())
-            throw std::invalid_argument(
+            log(LogLevel::warning,
                 "Receiver::setValue: input "s + input + " not registered");
         else
             mapInputsString[input] = {value};
