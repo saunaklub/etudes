@@ -4,7 +4,7 @@ window:
   viewport: border
   fullscreen: true
   vsync: true
-  cursor: true
+  cursor: false
 
 logging:
   logLevel: debug
