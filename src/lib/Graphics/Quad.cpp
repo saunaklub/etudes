@@ -43,12 +43,13 @@ namespace etudes {
 
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
+
+        glBindVertexArray(0);
     }
 
     void Quad::draw() const {
         glBindVertexArray(idVertexArray);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         glBindVertexArray(0);
-
     }
 }
