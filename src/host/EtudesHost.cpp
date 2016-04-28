@@ -324,8 +324,8 @@ namespace etudes {
         int width, height;
         glfwGetWindowSize(window, &width, &height);
 
-        float mouseXNorm =  ((mouseX / width)  - 0.5) * 2.0f;
-        float mouseYNorm = -((mouseY / height) - 0.5) * 2.0f;
+        float mouseXNorm =  mouseX / width;
+        float mouseYNorm = -mouseY / height;
 
         for(auto &inputMouse : inputsMouse) {
             switch(inputMouse.first) {
