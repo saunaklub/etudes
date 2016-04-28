@@ -69,12 +69,15 @@ namespace etudes {
         shaders.registerProgram("sinusoid", {"mvp-uv", "sinusoid"});
 
         shaders.registerUniform("sinusoid", "mvp");
+
         shaders.registerUniform("sinusoid", "color");
+        shaders.registerUniform("sinusoid", "width");
 
         shaders.registerUniform("sinusoid", "order");
         shaders.registerUniform("sinusoid", "time");
         shaders.registerUniform("sinusoid", "phase");
         shaders.registerUniform("sinusoid", "freq");
+        shaders.registerUniform("sinusoid", "lambda");
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

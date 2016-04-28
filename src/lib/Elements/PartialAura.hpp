@@ -14,6 +14,8 @@ namespace etudes {
                   const Painter &painter);
 
     private:
+        std::vector<float>
+        calculateOffsets(const std::vector<float> &partials);
     };
 }
 
