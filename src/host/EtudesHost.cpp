@@ -114,10 +114,10 @@ namespace etudes {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-        window = glfwCreateWindow(
-            hostConfig.getValue<int>("window:width"),
-            hostConfig.getValue<int>("window:height"),
-            "Études audiovisuel", nullptr, nullptr);
+        int width = hostConfig.getValue<int>("window:width");
+        int height = hostConfig.getValue<int>("window:height");
+        window = glfwCreateWindow(width, height,
+                                  "Études audiovisuel", nullptr, nullptr);
 
         if(window == nullptr){
             glfwTerminate();
@@ -167,6 +167,10 @@ namespace etudes {
                 viewportScaling = Rect::BORDER;
             }
         }
+
+        int width = hostConfig.getValue<int>("window:width");
+        int height = hostConfig.getValue<int>("window:height");
+        resizeCallback(width, height);
 
         checkGLError("host: initGL");
     }
