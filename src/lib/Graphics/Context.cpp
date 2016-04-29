@@ -71,7 +71,8 @@ namespace etudes {
         shaders.registerUniform("sinusoid", "mvp");
 
         shaders.registerUniform("sinusoid", "color");
-        shaders.registerUniform("sinusoid", "width");
+        shaders.registerUniform("sinusoid", "stroke_width");
+        shaders.registerUniform("sinusoid", "stroke_blur");
 
         shaders.registerUniform("sinusoid", "order");
         shaders.registerUniform("sinusoid", "time");

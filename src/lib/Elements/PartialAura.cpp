@@ -16,10 +16,14 @@ namespace etudes {
     void PartialAura::registerInputs() {
         registerInput("/partials", vec_float_t{});
 
+        registerInput("/mode", vec_string_t{"straight"});
+
         registerInput("/freq", vec_float_t{1.0f});
         registerInput("/lambda", vec_float_t{1.0f});
         registerInput("/phase-amp", vec_float_t{1.0f});
-        registerInput("/width", vec_float_t{0.3f});
+
+        registerInput("/stroke-width", vec_float_t{0.5f});
+        registerInput("/stroke-blur", vec_float_t{0.0f});
 
         registerInput("/center", vec_float_t{0.5f, 0.5f});
 
@@ -54,14 +58,18 @@ namespace etudes {
         float yStart = 0.f;
         float yEnd = 1.f;
 
+        std::string mode = getValue<std::string>("/mode");
+        std::string shader = "sinusoid";
+
         glUseProgram(registry.getProgram("sinusoid"));
 
         glUniform1f(registry.getUniform("sinusoid", "time"), seconds());
         glUniform1f(registry.getUniform("sinusoid", "freq"), freq);
         glUniform1f(registry.getUniform("sinusoid", "lambda"), lambda);
-
-        glUniform1f(registry.getUniform("sinusoid", "width"),
-                    getValue<float>("/width"));
+        glUniform1f(registry.getUniform("sinusoid", "stroke_width"),
+                    getValue<float>("/stroke-width"));
+        glUniform1f(registry.getUniform("sinusoid", "stroke_blur"),
+                    getValue<float>("/stroke-blur"));
 
         float colorBaseRed   = getValue<float>("/color-base-red");
         float colorBaseGreen = getValue<float>("/color-base-green");
@@ -102,8 +110,6 @@ namespace etudes {
 
             start = glm::vec2(center[0] + offsets[partial], yStart);
             end = glm::vec2(center[0] + offsets[partial], yEnd);
-            // start = glm::vec2(yStart, center[0] + offset);
-            // end = glm::vec2(yEnd, center[0] + offset);
 
             start = denormalize(start, viewport);
             end = denormalize(end, viewport);
