@@ -40,12 +40,6 @@ namespace etudes {
     }
 
     void Particles::initGL() {
-        shaders.registerShader("ident", GL_VERTEX_SHADER,
-                               {"resources/shaders/ident.vert"});
-        shaders.registerShader("white", GL_FRAGMENT_SHADER,
-                               {"resources/shaders/white.frag"});
-        shaders.registerProgram("simple", {"ident", "white"});
-
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
 
@@ -55,10 +49,8 @@ namespace etudes {
                      positions.size() * sizeof(vec2),
                      nullptr, GL_DYNAMIC_DRAW);
 
-        GLint attribPosition =
-            glGetAttribLocation(shaders.getProgram("simple"), "position");
-        glVertexAttribPointer(attribPosition, 2, GL_FLOAT, GL_FALSE, 0, 0);
-        glEnableVertexAttribArray(attribPosition);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(0);
     }
 
     void Particles::update() {
@@ -131,7 +123,7 @@ namespace etudes {
 
     void Particles::draw(const Context &context,
                          const Painter &painter) {
-        glUseProgram(shaders.getProgram("simple"));
+        glUseProgram(context.getShaderRegistry().getProgram("simple"));
 
         glBindVertexArray(vao);
 

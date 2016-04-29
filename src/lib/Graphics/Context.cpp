@@ -50,12 +50,19 @@ namespace etudes {
     void Context::init() {
         shaders.registerShader("mvp-uv", GL_VERTEX_SHADER,
                                {"resources/shaders/mvp-uv.vert"});
+        shaders.registerShader("ident", GL_VERTEX_SHADER,
+                               {"resources/shaders/ident.vert"});
+
+        shaders.registerShader("white", GL_FRAGMENT_SHADER,
+                               {"resources/shaders/white.frag"});
         shaders.registerShader("solid", GL_FRAGMENT_SHADER,
                                  {"resources/shaders/solid.frag"});
         shaders.registerShader("sinusoid", GL_FRAGMENT_SHADER,
                                  {"resources/shaders/sinusoid.frag"});
         shaders.registerShader("textured", GL_FRAGMENT_SHADER,
                                {"resources/shaders/textured-hueshift.frag"});
+
+        shaders.registerProgram("simple", {"ident", "white"});
 
         shaders.registerProgram("textured", {"mvp-uv", "textured"});
         shaders.registerUniform("textured", "mvp");
