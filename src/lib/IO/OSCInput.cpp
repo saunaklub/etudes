@@ -139,4 +139,7 @@ namespace etudes {
             iter->second->dispatchValue(input, std::move(values));
     }
 
+    template
+    void OSCInput::update(std::string path,
+                          const std::vector<float> &values);
 }
