@@ -14,13 +14,13 @@ namespace etudes {
     using logging::LogLevel;
 
     void PartialAura::registerInputs() {
-        registerInput("/partials", vec_float_t{});
+        registerInput("/partials", vec_float_t{1.0f, 0.6f, 0.2f});
 
         registerInput("/mode", vec_string_t{"straight"});
 
         registerInput("/freq", vec_float_t{1.0f});
         registerInput("/lambda", vec_float_t{1.0f});
-        registerInput("/phase-amp", vec_float_t{1.0f});
+        registerInput("/phase-amp", vec_float_t{0.0f});
 
         registerInput("/stroke-width", vec_float_t{0.5f});
         registerInput("/stroke-blur", vec_float_t{0.0f});
@@ -31,14 +31,14 @@ namespace etudes {
         registerInput("/offset-scale", vec_float_t{1.0f});
 
         registerInput("/color-base-red",   vec_float_t{1.0f});
-        registerInput("/color-base-green", vec_float_t{0.0f});
-        registerInput("/color-base-blue",  vec_float_t{0.0f});
-        registerInput("/color-base-alpha", vec_float_t{0.2f});
+        registerInput("/color-base-green", vec_float_t{1.0f});
+        registerInput("/color-base-blue",  vec_float_t{1.0f});
+        registerInput("/color-base-alpha", vec_float_t{1.0f});
 
         registerInput("/color-amp-red",   vec_float_t{0.0f});
-        registerInput("/color-amp-green", vec_float_t{3.0f});
+        registerInput("/color-amp-green", vec_float_t{0.0f});
         registerInput("/color-amp-blue",  vec_float_t{0.0f});
-        registerInput("/color-amp-alpha", vec_float_t{3.0f});
+        registerInput("/color-amp-alpha", vec_float_t{0.0f});
     }
 
     void PartialAura::draw(const Context &context,
