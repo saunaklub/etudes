@@ -30,10 +30,10 @@ void main() {
 
     // shade with distance from sinusoid and blur factor
     if(dist > blur_start_dist)
-        shaded *=  1.0f - (dist-blur_start_dist) / blur_width;
+        shaded.a *=  1.0f - (dist-blur_start_dist) / blur_width;
 
     // shade along line length
-    shaded *= sin(PI*uv.x);
+    shaded.a *= sin(PI*uv.x);
 
     out_color = shaded;
 }
