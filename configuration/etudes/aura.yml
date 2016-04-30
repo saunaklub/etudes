@@ -2,7 +2,7 @@ elements:
   aura:
     type: PartialAura
     defaults:
-      /partials: [0.5, 0.4, 0.4, 0.3, 0.2]
+      /amplitudes: [0.5, 0.4, 0.4, 0.3, 0.2]
       # /mode: [straight]
 
       /width: [0.3]
@@ -19,15 +19,8 @@ elements:
       # /offset-mode: [absolute]
       /offset-scale: [1.0]
 
-      /color-base-red: [0.8]
-      /color-base-green: [0.0]
-      /color-base-blue: [0.0]
-      /color-base-alpha: [0.5]
-
-      /color-amp-red: [0.0]
-      /color-amp-green: [1.0]
-      /color-amp-blue: [0.0]
-      /color-amp-alpha: [0.5]
+      /color: [1, 1, 1, 1]
+      /color-amp: [0, 0, 0, 0]
 
   background:
     type: ImageView

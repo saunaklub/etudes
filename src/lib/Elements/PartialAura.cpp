@@ -26,56 +26,53 @@ namespace etudes {
 
     void PartialAura::registerInputs() {
         registerInput("/amplitudes", vec_float_t{1.0f});
+        registerInput("/draw-mode", vec_string_t{"straight"});
 
-        registerInput("/mode", vec_string_t{"straight"});
+        registerInput("/center", vec_float_t{0.5f, 0.5f});
 
-        registerInput("/width", vec_float_t{0.5});
+        registerInput("/width", vec_float_t{0.1});
+        registerInput("/width-amp", vec_float_t{0.0});
 
         registerInput("/freq", vec_float_t{1.0f});
         registerInput("/lambda", vec_float_t{1.0f});
+        registerInput("/phase", vec_float_t{0.0f});
         registerInput("/phase-amp", vec_float_t{0.0f});
 
         registerInput("/stroke-width", vec_float_t{0.5f});
         registerInput("/stroke-blur", vec_float_t{0.0f});
 
-        registerInput("/center", vec_float_t{0.5f, 0.5f});
-
         registerInput("/offset-mode", vec_string_t{"absolute"});
         registerInput("/offset-scale", vec_float_t{1.0f});
 
-        registerInput("/color-base", vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
+        registerInput("/color", vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
         registerInput("/color-amp",  vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
+    }
 
+    void PartialAura::update() {
+        amplitudes = getValue<vec_float_t>("/amplitudes");
+        offsets = calculateOffsets(offsetMode, amplitudes);
+
+        center = getValue<glm::vec2>("/center");
+
+        widthBase = getValue<float>("/width");
+        widthAmp = getValue<float>("/width-amp");
+
+        colorBase = getValue<glm::vec4>("/color");
+        colorAmp = getValue<glm::vec4>("/color-amp");
+
+        freq = getValue<float>("/freq");
+        lambda = getValue<float>("/lambda");
+        phaseBase = getValue<float>("/phase");
+        phaseAmp = getValue<float>("/phase-amp");
+
+        drawMode = mapDrawMode[getValue<std::string>("/draw-mode")];
+        offsetMode = mapOffsetMode[getValue<std::string>("/offset-mode")];
     }
 
     void PartialAura::draw(const Context &context,
                            const Painter &painter) {
         const ShaderRegistry &registry = context.getShaderRegistry();
         const Rect &viewport = context.getViewport2D();
-
-        const float diagonal =
-            std::sqrt(viewport.getWidth() * viewport.getWidth() +
-                      viewport.getHeight() * viewport.getHeight());
-        const float maxWidth = diagonal * getValue<float>("/width");
-
-        glm::vec2 center = getValue<glm::vec2>("/center");
-
-        auto partials = getValue<vec_float_t>("/amplitudes");
-
-        auto freq = getValue<float>("/freq");
-        auto lambda = getValue<float>("/lambda");
-
-        DrawMode drawMode = mapDrawMode[getValue<std::string>("/draw-mode")];
-        OffsetMode offsetMode =
-            mapOffsetMode[getValue<std::string>("/offset-mode")];
-
-        std::vector<float> offsets;
-        offsets.resize(partials.size());
-        offsets = calculateOffsets(offsetMode, amplitudes);
-
-        auto colorBase = getValue<glm::vec4>("/color-base");
-        auto colorAmp = getValue<glm::vec4>("/color-amp");
-        float phaseAmp = getValue<float>("/phase-amp");
 
         glUseProgram(registry.getProgram("sinusoid"));
 
@@ -87,21 +84,20 @@ namespace etudes {
         glUniform1f(registry.getUniform("sinusoid", "stroke_blur"),
                     getValue<float>("/stroke-blur"));
 
-        for(int partial = amplitudes.size()-1 ;
-            partial >= 0 ; partial--) {
+        for(int index = amplitudes.size()-1 ; index >= 0 ; index--) {
+            float amplitude = amplitudes[index];
 
-            float amplitude = amplitudes[partial];
+            widthDraw = viewport.getDiagonal() / 2.0f *
+                (widthBase + widthAmp * amplitude);
 
-            glm::vec4 color = colorBase + colorAmp * amplitude;
-            float size = maxWidth * amplitude;
+            colorDraw = colorBase + colorAmp * amplitude;
 
-            glUniform1i(registry.getUniform("sinusoid", "order"), partial+1);
-            glUniform1f(registry.getUniform("sinusoid", "phase"),
-                        amplitude * phaseAmp);
+            glUniform1i(registry.getUniform("sinusoid", "order"), index+1);
 
             switch(drawMode) {
             case STRAIGHT:
-                drawSinusoidStraight();
+                drawSinusoidStraight(index, context, painter);
+
             case CIRCULAR:
                 drawSinusoidCircular();
                 break;
@@ -112,52 +108,63 @@ namespace etudes {
     std::vector<float>
     PartialAura::calculateOffsets(OffsetMode offsetMode,
                                   const std::vector<float> &amplitudes) {
+        std::vector<float> offsets;
+        offsets.resize(amplitudes.size());
 
         float offset = 0.f;
         float offsetScale = getValue<float>("/offset-scale");
 
-        for(size_t partial = 0 ; partial < partials.size() ; ++partial) {
-            float amplitude = partials[partial];
+        for(size_t index = 0 ; index < amplitudes.size() ; ++index) {
+            float amplitude = amplitudes[index];
 
             switch(offsetMode) {
             case ABSOLUTE:
-                offset = float(partial+1) / float(partials.size()) / 2.f;
+                offset = float(index+1) / float(amplitudes.size()) / 2.f;
                 break;
             case INCREMENT:
                 offset += amplitude;
                 break;
             case INCREMENT_FALLOFF:
-                offset += amplitude / float(partial+1);
+                offset += amplitude / float(index+1);
                 break;
             }
 
-            offsets[partial] = offset * offsetScale;
+            offsets[index] = offset * offsetScale;
         }
 
         return offsets;
     }
 
-    void PartialAura::drawSinusoidStraight(glm::vec2 center,
-                                           const std::vector<float> &offsets) {
+    void PartialAura::drawSinusoidStraight(
+        int index,
+        const Context &context, const Painter &painter) {
+
+        const ShaderRegistry &registry = context.getShaderRegistry();
+        const Rect &viewport = context.getViewport2D();
+
         glm::vec2 start, end;
 
         float yStart = 0.f;
         float yEnd = 1.f;
 
-        start = glm::vec2(center[0] - offsets[partial], yStart);
-        end = glm::vec2(center[0] - offsets[partial], yEnd);
+        glUniform1f(registry.getUniform("sinusoid", "phase"),
+                    0.0f + phaseBase + phaseAmp * amplitudes[index]);
+
+        start = glm::vec2(center[0] - offsets[index], yStart);
+        end = glm::vec2(center[0] - offsets[index], yEnd);
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
-        painter.sinusoidStraight(start, end, size, color);
+        painter.sinusoidStraight(start, end, widthDraw, colorDraw);
 
         glUniform1f(registry.getUniform("sinusoid", "phase"),
-                    .5f + amplitude * phaseAmp);
-        start = glm::vec2(center[0] + offsets[partial], yStart);
-        end = glm::vec2(center[0] + offsets[partial], yEnd);
+                    0.5f + phaseBase + phaseAmp * amplitudes[index]);
+
+        start = glm::vec2(center[0] + offsets[index], yStart);
+        end = glm::vec2(center[0] + offsets[index], yEnd);
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
-        painter.sinusoidStraight(start, end, size, color);
+        painter.sinusoidStraight(start, end, widthDraw, colorDraw);
     }
 
     void PartialAura::drawSinusoidCircular() {

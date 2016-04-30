@@ -11,6 +11,7 @@ uniform float stroke_width;
 uniform float stroke_blur;
 
 uniform int order;
+
 uniform float time;
 uniform float phase;
 uniform float freq;

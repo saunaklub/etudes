@@ -21,7 +21,7 @@ namespace etudes {
         void registerInputs();
 
         // void init();
-        // void update();
+        void update();
         void draw(const Context &context,
                   const Painter &painter);
 
@@ -30,8 +30,30 @@ namespace etudes {
         calculateOffsets(OffsetMode offsetMode,
                          const std::vector<float> &partials);
 
-        void drawSinusoidStraight();
+        void drawSinusoidStraight(
+            int index, const Context &context, const Painter &painter);
         void drawSinusoidCircular();
+
+        vec_float_t amplitudes;
+        vec_float_t offsets;
+
+        glm::vec2 center;
+
+        float widthBase;
+        float widthAmp;
+        float widthDraw;
+
+        glm::vec4 colorBase;
+        glm::vec4 colorAmp;
+        glm::vec4 colorDraw;
+
+        float freq;
+        float lambda;
+        float phaseBase;
+        float phaseAmp;
+
+        DrawMode drawMode;
+        OffsetMode offsetMode;
     };
 
 }
