@@ -2,10 +2,10 @@ elements:
   aura:
     type: PartialAura
     defaults:
-      /amplitudes: [0.5, 0.4, 0.4, 0.3, 0.2]
+      /amplitudes: [0.5]
       # /mode: [straight]
 
-      /width: [0.3]
+      /width: [1]
 
       /freq: [0.4]
       /lambda: [2]
@@ -25,5 +25,8 @@ elements:
   background:
     type: ImageView
     image: resources/images/nightsky.jpg
+    defaults:
+      /alpha: [0.5]
+      /hue-shift: [0.5]
 
 order: [background, aura]

@@ -26,7 +26,7 @@ namespace etudes {
 
     void PartialAura::registerInputs() {
         registerInput("/amplitudes", vec_float_t{1.0f});
-        registerInput("/draw-mode", vec_string_t{"straight"});
+        registerInput("/draw-mode", vec_string_t{"circular"});
 
         registerInput("/center", vec_float_t{0.5f, 0.5f});
 
@@ -162,21 +162,11 @@ namespace etudes {
     void PartialAura::drawSinusoidCircular(
         int index, const Context &context, const Painter &painter) {
 
-        // const ShaderRegistry &registry = context.getShaderRegistry();
-        // const Rect &viewport = context.getViewport2D();
-
-        // glm::vec2 start, end;
-
-        // float yStart = 0.f;
-        // float yEnd = 1.f;
-
-        // glUniform1f(registry.getUniform("sinusoid", "phase"),
-        //             0.0f + phaseBase + phaseAmp * amplitudes[index]);
-
-        // start = glm::vec2(center[0] - offsets[index], yStart);
-        // end = glm::vec2(center[0] - offsets[index], yEnd);
-        // start = denormalize(start, viewport);
-        // end = denormalize(end, viewport);
-        // painter.sinusoidCircular(start, end, widthDraw, colorDraw);
+        const Rect &viewport = context.getViewport2D();
+        painter.sinusoidCircular(
+            denormalize(center, viewport), index+1,
+            widthDraw, widthDraw, colorDraw,
+            time, freq, lambda, phaseDraw,
+            strokeWidth, strokeBlur);
     }
 }

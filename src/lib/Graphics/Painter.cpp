@@ -18,6 +18,9 @@ namespace etudes {
 
     using logging::LogLevel;
 
+    const std::string shaderLine = "line";
+    const std::string shaderSinusoid = "sinusoid";
+
     Painter::Painter(const Context &context) :
         context(context) {
     }
@@ -38,12 +41,12 @@ namespace etudes {
 
         const ShaderRegistry &registry = context.getShaderRegistry();
 
-        glUseProgram(registry.getProgram("line"));
+        glUseProgram(registry.getProgram(shaderLine));
 
-        glUniform4f(registry.getUniform("line", "color"),
+        glUniform4f(registry.getUniform(shaderLine, "color"),
                     color.r, color.g, color.b, color.a);
 
-        drawLineGeometry(p0, p1, width, "line");
+        drawLineGeometry(p0, p1, width, shaderLine);
     }
 
     void Painter::sinusoidStraight(
@@ -53,39 +56,53 @@ namespace etudes {
         float strokeWidth, float strokeBlur) const {
         const ShaderRegistry &registry = context.getShaderRegistry();
 
-        glUseProgram(registry.getProgram("sinusoid"));
+        glUseProgram(registry.getProgram(shaderSinusoid));
 
-        glUniform1i(registry.getUniform("sinusoid", "mode"), 0);
-        glUniform1i(registry.getUniform("sinusoid", "order"), order);
+        glUniform1i(registry.getUniform(shaderSinusoid, "mode"), 0);
+        glUniform1i(registry.getUniform(shaderSinusoid, "order"), order);
 
-        glUniform1f(registry.getUniform("sinusoid", "time"), time);
-        glUniform1f(registry.getUniform("sinusoid", "freq"), freq);
-        glUniform1f(registry.getUniform("sinusoid", "phase"), freq);
-        glUniform1f(registry.getUniform("sinusoid", "lambda"), lambda);
+        glUniform1f(registry.getUniform(shaderSinusoid, "time"), time);
+        glUniform1f(registry.getUniform(shaderSinusoid, "freq"), freq);
+        glUniform1f(registry.getUniform(shaderSinusoid, "phase"), freq);
+        glUniform1f(registry.getUniform(shaderSinusoid, "lambda"), lambda);
 
         glUniform1f(
-            registry.getUniform("sinusoid", "stroke_width"), strokeWidth);
+            registry.getUniform(shaderSinusoid, "stroke_width"), strokeWidth);
         glUniform1f(
-            registry.getUniform("sinusoid", "stroke_blur"), strokeBlur);
+            registry.getUniform(shaderSinusoid, "stroke_blur"), strokeBlur);
 
-        glUniform4f(registry.getUniform("sinusoid", "color"),
+        glUniform4f(registry.getUniform(shaderSinusoid, "color"),
                     color.r, color.g, color.b, color.a);
 
-        drawLineGeometry(p0, p1, width, "sinusoid");
+        drawLineGeometry(p0, p1, width, shaderSinusoid);
     }
 
-    void Painter::sinusoidCircular(glm::vec2 center,
-                                   float width, float height,
-                                   glm::vec4 color) const {
+    void Painter::sinusoidCircular(
+        glm::vec2 center, int order,
+        float width, float height, glm::vec4 color,
+        float time, float freq, float lambda, float phase,
+        float strokeWidth, float strokeBlur) const {
         const ShaderRegistry &registry = context.getShaderRegistry();
 
-        glUseProgram(registry.getProgram("sinusoid"));
+        glUseProgram(registry.getProgram(shaderSinusoid));
 
-        glUniform1i(registry.getUniform("sinusoid", "mode"), 1);
-        glUniform4f(registry.getUniform("sinusoid", "color"),
+        glUniform1i(registry.getUniform(shaderSinusoid, "mode"), 1);
+        glUniform1i(registry.getUniform(shaderSinusoid, "order"), order);
+
+        glUniform1f(registry.getUniform(shaderSinusoid, "time"), time);
+        glUniform1f(registry.getUniform(shaderSinusoid, "freq"), freq);
+        glUniform1f(registry.getUniform(shaderSinusoid, "phase"), freq);
+        glUniform1f(registry.getUniform(shaderSinusoid, "lambda"), lambda);
+
+        glUniform1f(
+            registry.getUniform(shaderSinusoid, "stroke_width"), strokeWidth);
+        glUniform1f(
+            registry.getUniform(shaderSinusoid, "stroke_blur"), strokeBlur);
+
+        glUniform4f(registry.getUniform(shaderSinusoid, "color"),
                     color.r, color.g, color.b, color.a);
 
-        drawCircleGeometry(center, width, height, "sinusoid");
+        drawCircleGeometry(center, width, height, shaderSinusoid);
     }
 
     void Painter::parallels(
@@ -165,21 +182,17 @@ namespace etudes {
 
     void Painter::drawCircleGeometry(glm::vec2 center, float width, float height,
                                      std::string shader) const {
-        // glm::mat4 model;
-        // model = glm::translate(model, glm::vec3{p0[0], p0[1], 0.f});
-        // model = glm::rotate(model, std::atan2(line[1], line[0]),
-        //                     glm::vec3{0, 0, 1});
-        // model = glm::scale(model,
-        //                    glm::vec3(glm::length(line), width, 1));
-        // model = glm::translate(model, glm::vec3{0.5f, 0.f, 0.f});
+        glm::mat4 model;
+        model = glm::translate(model, glm::vec3{center[0], center[1], 0.f});
+        model = glm::scale(model, glm::vec3(width, height, 1.0f));
 
-        // glm::mat4 proj = context.getProjection2D();
-        // glm::mat4 mvp = proj * model;
+        glm::mat4 proj = context.getProjection2D();
+        glm::mat4 mvp = proj * model;
 
-        // glUniformMatrix4fv(
-        //     context.getShaderRegistry().getUniform(shader, "mvp"),
-        //     1, GLboolean(false), glm::value_ptr(mvp));
+        glUniformMatrix4fv(
+            context.getShaderRegistry().getUniform(shader, "mvp"),
+            1, GLboolean(false), glm::value_ptr(mvp));
 
-        // quad.draw();
+        quad.draw();
     }
 }
