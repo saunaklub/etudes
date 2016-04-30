@@ -2,15 +2,35 @@ elements:
   aura:
     type: PartialAura
     defaults:
-      /partials: [.4, .2, .1]
-  background:
+      /partials: [0.5, 0.4, 0.4, 0.3, 0.2]
+      # /mode: [straight]
+
+      /width: [0.3]
+
+      /freq: [0.4]
+      /lambda: [2]
+      /phase-amp: [1.0]
+
+      /stroke-width: [0.5]
+      /stroke-blur: [0.8]
+
+      /center: [0.5, 0.5]
+
+      # /offset-mode: [absolute]
+      /offset-scale: [1.0]
+
+      /color-base-red: [0.8]
+      /color-base-green: [0.0]
+      /color-base-blue: [0.0]
+      /color-base-alpha: [0.5]
+
+      /color-amp-red: [0.0]
+      /color-amp-green: [1.0]
+      /color-amp-blue: [0.0]
+      /color-amp-alpha: [0.5]
+
+background:
     type: ImageView
-#    image: resources/images/hubble.tif
-#   image: resources/images/fuck-nvidia.jpg
-#    image: resources/images/fire-glitch.png
-#    image: /home/bzk/data/media/images/microchips/kr580ik80a-HD.jpg
-#    image: resources/images/wide.png
-#    image: resources/images/rect-test.png
-    image: resources/images/test-4_3.png
+    image: resources/images/nightsky.jpg
 
 order: [background, aura]

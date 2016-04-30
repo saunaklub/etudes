@@ -14,9 +14,11 @@ namespace etudes {
     using logging::LogLevel;
 
     void PartialAura::registerInputs() {
-        registerInput("/partials", vec_float_t{1.0f, 0.6f, 0.2f});
+        registerInput("/partials", vec_float_t{1.0f});
 
         registerInput("/mode", vec_string_t{"straight"});
+
+        registerInput("/width", vec_float_t{0.5});
 
         registerInput("/freq", vec_float_t{1.0f});
         registerInput("/lambda", vec_float_t{1.0f});
@@ -50,7 +52,10 @@ namespace etudes {
         const ShaderRegistry &registry = context.getShaderRegistry();
         const Rect &viewport = context.getViewport2D();
 
-        const float sizeMax = 400;
+        const float diagonal =
+            std::sqrt(viewport.getWidth() * viewport.getWidth() +
+                      viewport.getHeight() * viewport.getHeight());
+        const float maxWidth = diagonal * getValue<float>("/width");
 
         glm::vec2 center = getValue<glm::vec2>("/center");
         glm::vec2 start, end;
@@ -94,7 +99,7 @@ namespace etudes {
                 colorBaseGreen + colorAmpGreen * amplitude,
                 colorBaseBlue  + colorAmpBlue  * amplitude,
                 colorBaseAlpha + colorAmpAlpha * amplitude);
-            float size = sizeMax * amplitude;
+            float size = maxWidth * amplitude;
 
             glUniform1i(registry.getUniform("sinusoid", "order"), partial+1);
 
@@ -137,6 +142,8 @@ namespace etudes {
             }
             else if(offsetMode == "increment-falloff") {
                 offset += amplitude / float(partial+1);
+            }
+            else if(offsetMode == "none") {
             }
 
             offsets[partial] = offset * offsetScale;
