@@ -93,6 +93,8 @@ namespace etudes {
                memcpy(texelPtr, imagePtr, 3);
             }
         }
+
+        texture->unmapData();
     }
 
 }

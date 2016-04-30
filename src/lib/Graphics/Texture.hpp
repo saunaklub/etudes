@@ -17,7 +17,9 @@ namespace etudes {
 
         int getWidth();
         int getHeight();
+
         unsigned char *mapData();
+        void unmapData();
 
         void draw();
 

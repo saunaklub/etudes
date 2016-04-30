@@ -60,10 +60,12 @@ namespace etudes {
         return texture;
     }
 
-    void Texture::uploadData() {
+    void Texture::unmapData() {
         glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
         texture = nullptr;
+    }
 
+    void Texture::uploadData() {
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height,
                         GL_BGR, GL_UNSIGNED_BYTE, 0);
     }
