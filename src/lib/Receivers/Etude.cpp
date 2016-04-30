@@ -1,6 +1,8 @@
 #include <algorithm>
 #include <string>
 
+#include <glbinding/gl/gl.h>
+
 #include <Utility/Logging.hpp>
 
 #include "Etude.hpp"
@@ -8,9 +10,12 @@
 namespace etudes {
 
     using std::string;
+    using namespace gl;
     using logging::LogLevel;
 
     void Etude::registerInputs() {
+        registerInput("/background", vec_float_t{0.0f, 0.0f, 0.0f, 1.0f});
+
     }
 
     void Etude::init() {
@@ -27,6 +32,13 @@ namespace etudes {
 
     void Etude::draw(const Context &context,
                      const Painter &painter) {
+        auto colorBackground = getValue<glm::vec4>("/background");
+        glClearColor(colorBackground[0],
+                     colorBackground[1],
+                     colorBackground[2],
+                     colorBackground[3]);
+        glClear(GL_COLOR_BUFFER_BIT);
+
         for(auto &element : elements) {
             element.second->draw(context, painter);
         }
