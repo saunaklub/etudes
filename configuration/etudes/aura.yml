@@ -29,7 +29,7 @@ elements:
       /color-amp-blue: [0.0]
       /color-amp-alpha: [0.5]
 
-background:
+  background:
     type: ImageView
     image: resources/images/nightsky.jpg
 
