@@ -5,6 +5,8 @@ out vec4 out_color;
 
 uniform vec4 color;
 
+uniform int mode;
+
 uniform float stroke_width;
 uniform float stroke_blur;
 

@@ -13,8 +13,19 @@ namespace etudes {
     using namespace gl;
     using logging::LogLevel;
 
+    std::map<std::string, PartialAura::DrawMode> mapDrawMode {
+        {"straight", PartialAura::STRAIGHT},
+        {"circular", PartialAura::CIRCULAR},
+    };
+
+    std::map<std::string, PartialAura::OffsetMode> mapOffsetMode {
+        {"absolute", PartialAura::ABSOLUTE},
+        {"increment", PartialAura::INCREMENT},
+        {"increment-falloff", PartialAura::INCREMENT_FALLOFF},
+    };
+
     void PartialAura::registerInputs() {
-        registerInput("/partials", vec_float_t{1.0f});
+        registerInput("/amplitudes", vec_float_t{1.0f});
 
         registerInput("/mode", vec_string_t{"straight"});
 
@@ -39,10 +50,6 @@ namespace etudes {
 
     void PartialAura::draw(const Context &context,
                            const Painter &painter) {
-        auto partials = getValue<vec_float_t>("/partials");
-        auto freq = getValue<float>("/freq");
-        auto lambda = getValue<float>("/lambda");
-
         const ShaderRegistry &registry = context.getShaderRegistry();
         const Rect &viewport = context.getViewport2D();
 
@@ -52,13 +59,23 @@ namespace etudes {
         const float maxWidth = diagonal * getValue<float>("/width");
 
         glm::vec2 center = getValue<glm::vec2>("/center");
-        glm::vec2 start, end;
 
-        float yStart = 0.f;
-        float yEnd = 1.f;
+        auto partials = getValue<vec_float_t>("/amplitudes");
 
-        std::string mode = getValue<std::string>("/mode");
-        std::string shader = "sinusoid";
+        auto freq = getValue<float>("/freq");
+        auto lambda = getValue<float>("/lambda");
+
+        DrawMode drawMode = mapDrawMode[getValue<std::string>("/draw-mode")];
+        OffsetMode offsetMode =
+            mapOffsetMode[getValue<std::string>("/offset-mode")];
+
+        std::vector<float> offsets;
+        offsets.resize(partials.size());
+        offsets = calculateOffsets(offsetMode, amplitudes);
+
+        auto colorBase = getValue<glm::vec4>("/color-base");
+        auto colorAmp = getValue<glm::vec4>("/color-amp");
+        float phaseAmp = getValue<float>("/phase-amp");
 
         glUseProgram(registry.getProgram("sinusoid"));
 
@@ -70,68 +87,79 @@ namespace etudes {
         glUniform1f(registry.getUniform("sinusoid", "stroke_blur"),
                     getValue<float>("/stroke-blur"));
 
-        auto colorBase = getValue<glm::vec4>("/color-base");
-        auto colorAmp = getValue<glm::vec4>("/color-amp");
-
-        float phaseAmp = getValue<float>("/phase-amp");
-
-        std::vector<float> offsets = calculateOffsets(partials);
-
-        for(int partial = partials.size()-1 ;
+        for(int partial = amplitudes.size()-1 ;
             partial >= 0 ; partial--) {
-            float amplitude = partials[partial];
+
+            float amplitude = amplitudes[partial];
 
             glm::vec4 color = colorBase + colorAmp * amplitude;
             float size = maxWidth * amplitude;
 
             glUniform1i(registry.getUniform("sinusoid", "order"), partial+1);
-
-            start = glm::vec2(center[0] - offsets[partial], yStart);
-            end = glm::vec2(center[0] - offsets[partial], yEnd);
-
-            start = denormalize(start, viewport);
-            end = denormalize(end, viewport);
-
             glUniform1f(registry.getUniform("sinusoid", "phase"),
                         amplitude * phaseAmp);
-            painter.sinusoid(start, end, size, color);
 
-            start = glm::vec2(center[0] + offsets[partial], yStart);
-            end = glm::vec2(center[0] + offsets[partial], yEnd);
-
-            start = denormalize(start, viewport);
-            end = denormalize(end, viewport);
-
-            glUniform1f(registry.getUniform("sinusoid", "phase"),
-                        .5f + amplitude * phaseAmp);
-            painter.sinusoid(start, end, size, color);
+            switch(drawMode) {
+            case STRAIGHT:
+                drawSinusoidStraight();
+            case CIRCULAR:
+                drawSinusoidCircular();
+                break;
+            }
         }
     }
 
     std::vector<float>
-    PartialAura::calculateOffsets(const std::vector<float> &partials) {
-        std::vector<float> offsets;
-        offsets.resize(partials.size());
+    PartialAura::calculateOffsets(OffsetMode offsetMode,
+                                  const std::vector<float> &amplitudes) {
 
         float offset = 0.f;
         float offsetScale = getValue<float>("/offset-scale");
-        std::string offsetMode = getValue<std::string>("/offset-mode");
 
         for(size_t partial = 0 ; partial < partials.size() ; ++partial) {
             float amplitude = partials[partial];
 
-            if(offsetMode == "absolute") {
+            switch(offsetMode) {
+            case ABSOLUTE:
                 offset = float(partial+1) / float(partials.size()) / 2.f;
-            }
-            else if(offsetMode == "increment-falloff") {
+                break;
+            case INCREMENT:
+                offset += amplitude;
+                break;
+            case INCREMENT_FALLOFF:
                 offset += amplitude / float(partial+1);
-            }
-            else if(offsetMode == "none") {
+                break;
             }
 
             offsets[partial] = offset * offsetScale;
         }
 
         return offsets;
+    }
+
+    void PartialAura::drawSinusoidStraight(glm::vec2 center,
+                                           const std::vector<float> &offsets) {
+        glm::vec2 start, end;
+
+        float yStart = 0.f;
+        float yEnd = 1.f;
+
+        start = glm::vec2(center[0] - offsets[partial], yStart);
+        end = glm::vec2(center[0] - offsets[partial], yEnd);
+        start = denormalize(start, viewport);
+        end = denormalize(end, viewport);
+        painter.sinusoidStraight(start, end, size, color);
+
+        glUniform1f(registry.getUniform("sinusoid", "phase"),
+                    .5f + amplitude * phaseAmp);
+        start = glm::vec2(center[0] + offsets[partial], yStart);
+        end = glm::vec2(center[0] + offsets[partial], yEnd);
+        start = denormalize(start, viewport);
+        end = denormalize(end, viewport);
+
+        painter.sinusoidStraight(start, end, size, color);
+    }
+
+    void PartialAura::drawSinusoidCircular() {
     }
 }

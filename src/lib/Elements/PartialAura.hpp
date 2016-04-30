@@ -4,8 +4,20 @@
 #include <Receivers/Element.hpp>
 
 namespace etudes {
+
     class PartialAura : public Element {
     public:
+        enum DrawMode {
+            STRAIGHT,
+            CIRCULAR,
+        };
+
+        enum OffsetMode {
+            ABSOLUTE,
+            INCREMENT,
+            INCREMENT_FALLOFF,
+        };
+
         void registerInputs();
 
         // void init();
@@ -15,8 +27,13 @@ namespace etudes {
 
     private:
         std::vector<float>
-        calculateOffsets(const std::vector<float> &partials);
+        calculateOffsets(OffsetMode offsetMode,
+                         const std::vector<float> &partials);
+
+        void drawSinusoidStraight();
+        void drawSinusoidCircular();
     };
+
 }
 
 #endif // ETUDES_PARTIALAURA

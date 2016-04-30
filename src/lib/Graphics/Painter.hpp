@@ -17,8 +17,12 @@ namespace etudes {
         void line(glm::vec2 p0, glm::vec2 p1,
                   float width, glm::vec4 color) const;
 
-        void sinusoid(glm::vec2 p0, glm::vec2 p1,
-                      float width, glm::vec4 color) const;
+        void sinusoidStraight(glm::vec2 p0, glm::vec2 p1,
+                              float width, glm::vec4 color) const;
+
+        void sinusoidCircular(glm::vec2 center,
+                              float width, float height,
+                              glm::vec4 color) const;
 
         void parallels(
             glm::vec2 centerp0, glm::vec2 centerp1,
@@ -31,6 +35,8 @@ namespace etudes {
     private:
         void drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
                               float width, std::string shader) const;
+        void drawCircleGeometry(glm::vec2 center, float width, float height,
+                                std::string shader) const;
 
         const Context &context;
         Quad quad;

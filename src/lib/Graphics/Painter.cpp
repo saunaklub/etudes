@@ -46,14 +46,31 @@ namespace etudes {
         drawLineGeometry(p0, p1, width, "line");
     }
 
-    void Painter::sinusoid(glm::vec2 p0, glm::vec2 p1,
-                           float width, glm::vec4 color) const {
+    void Painter::sinusoidStraight(glm::vec2 p0, glm::vec2 p1,
+                                   float width, glm::vec4 color) const {
         const ShaderRegistry &registry = context.getShaderRegistry();
 
         glUseProgram(registry.getProgram("sinusoid"));
+
+        glUniform1i(registry.getUniform("sinusoid", "mode"), 0);
         glUniform4f(registry.getUniform("sinusoid", "color"),
                     color.r, color.g, color.b, color.a);
+
         drawLineGeometry(p0, p1, width, "sinusoid");
+    }
+
+    void Painter::sinusoidCircular(glm::vec2 center,
+                                   float width, float height,
+                                   glm::vec4 color) const {
+        const ShaderRegistry &registry = context.getShaderRegistry();
+
+        glUseProgram(registry.getProgram("sinusoid"));
+
+        glUniform1i(registry.getUniform("sinusoid", "mode"), 1);
+        glUniform4f(registry.getUniform("sinusoid", "color"),
+                    color.r, color.g, color.b, color.a);
+
+        drawCircleGeometry(center, width, height, "sinusoid");
     }
 
     void Painter::parallels(
@@ -131,4 +148,23 @@ namespace etudes {
         quad.draw();
     }
 
+    void Painter::drawCircleGeometry(glm::vec2 center, float width, float height,
+                                     std::string shader) const {
+        // glm::mat4 model;
+        // model = glm::translate(model, glm::vec3{p0[0], p0[1], 0.f});
+        // model = glm::rotate(model, std::atan2(line[1], line[0]),
+        //                     glm::vec3{0, 0, 1});
+        // model = glm::scale(model,
+        //                    glm::vec3(glm::length(line), width, 1));
+        // model = glm::translate(model, glm::vec3{0.5f, 0.f, 0.f});
+
+        // glm::mat4 proj = context.getProjection2D();
+        // glm::mat4 mvp = proj * model;
+
+        // glUniformMatrix4fv(
+        //     context.getShaderRegistry().getUniform(shader, "mvp"),
+        //     1, GLboolean(false), glm::value_ptr(mvp));
+
+        // quad.draw();
+    }
 }
