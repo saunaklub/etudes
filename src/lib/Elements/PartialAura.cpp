@@ -32,15 +32,9 @@ namespace etudes {
         registerInput("/offset-mode", vec_string_t{"absolute"});
         registerInput("/offset-scale", vec_float_t{1.0f});
 
-        registerInput("/color-base-red",   vec_float_t{1.0f});
-        registerInput("/color-base-green", vec_float_t{1.0f});
-        registerInput("/color-base-blue",  vec_float_t{1.0f});
-        registerInput("/color-base-alpha", vec_float_t{1.0f});
+        registerInput("/color-base", vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
+        registerInput("/color-amp",  vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
 
-        registerInput("/color-amp-red",   vec_float_t{0.0f});
-        registerInput("/color-amp-green", vec_float_t{0.0f});
-        registerInput("/color-amp-blue",  vec_float_t{0.0f});
-        registerInput("/color-amp-alpha", vec_float_t{0.0f});
     }
 
     void PartialAura::draw(const Context &context,
@@ -76,15 +70,8 @@ namespace etudes {
         glUniform1f(registry.getUniform("sinusoid", "stroke_blur"),
                     getValue<float>("/stroke-blur"));
 
-        float colorBaseRed   = getValue<float>("/color-base-red");
-        float colorBaseGreen = getValue<float>("/color-base-green");
-        float colorBaseBlue  = getValue<float>("/color-base-blue");
-        float colorBaseAlpha = getValue<float>("/color-base-alpha");
-
-        float colorAmpRed   = getValue<float>("/color-amp-red");
-        float colorAmpGreen = getValue<float>("/color-amp-green");
-        float colorAmpBlue  = getValue<float>("/color-amp-blue");
-        float colorAmpAlpha = getValue<float>("/color-amp-alpha");
+        auto colorBase = getValue<glm::vec4>("/color-base");
+        auto colorAmp = getValue<glm::vec4>("/color-amp");
 
         float phaseAmp = getValue<float>("/phase-amp");
 
@@ -94,11 +81,7 @@ namespace etudes {
             partial >= 0 ; partial--) {
             float amplitude = partials[partial];
 
-            glm::vec4 color(
-                colorBaseRed   + colorAmpRed   * amplitude,
-                colorBaseGreen + colorAmpGreen * amplitude,
-                colorBaseBlue  + colorAmpBlue  * amplitude,
-                colorBaseAlpha + colorAmpAlpha * amplitude);
+            glm::vec4 color = colorBase + colorAmp * amplitude;
             float size = maxWidth * amplitude;
 
             glUniform1i(registry.getUniform("sinusoid", "order"), partial+1);
