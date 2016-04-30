@@ -46,13 +46,28 @@ namespace etudes {
         drawLineGeometry(p0, p1, width, "line");
     }
 
-    void Painter::sinusoidStraight(glm::vec2 p0, glm::vec2 p1,
-                                   float width, glm::vec4 color) const {
+    void Painter::sinusoidStraight(
+        glm::vec2 p0, glm::vec2 p1, int order,
+        float width, glm::vec4 color,
+        float time, float freq, float lambda, float phase,
+        float strokeWidth, float strokeBlur) const {
         const ShaderRegistry &registry = context.getShaderRegistry();
 
         glUseProgram(registry.getProgram("sinusoid"));
 
         glUniform1i(registry.getUniform("sinusoid", "mode"), 0);
+        glUniform1i(registry.getUniform("sinusoid", "order"), order);
+
+        glUniform1f(registry.getUniform("sinusoid", "time"), time);
+        glUniform1f(registry.getUniform("sinusoid", "freq"), freq);
+        glUniform1f(registry.getUniform("sinusoid", "phase"), freq);
+        glUniform1f(registry.getUniform("sinusoid", "lambda"), lambda);
+
+        glUniform1f(
+            registry.getUniform("sinusoid", "stroke_width"), strokeWidth);
+        glUniform1f(
+            registry.getUniform("sinusoid", "stroke_blur"), strokeBlur);
+
         glUniform4f(registry.getUniform("sinusoid", "color"),
                     color.r, color.g, color.b, color.a);
 

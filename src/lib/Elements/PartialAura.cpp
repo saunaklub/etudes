@@ -60,10 +60,14 @@ namespace etudes {
         colorBase = getValue<glm::vec4>("/color");
         colorAmp = getValue<glm::vec4>("/color-amp");
 
+        time = seconds();
         freq = getValue<float>("/freq");
         lambda = getValue<float>("/lambda");
         phaseBase = getValue<float>("/phase");
         phaseAmp = getValue<float>("/phase-amp");
+
+        strokeWidth = getValue<float>("/stroke-width");
+        strokeBlur = getValue<float>("/stroke-blur");
 
         drawMode = mapDrawMode[getValue<std::string>("/draw-mode")];
         offsetMode = mapOffsetMode[getValue<std::string>("/offset-mode")];
@@ -71,18 +75,7 @@ namespace etudes {
 
     void PartialAura::draw(const Context &context,
                            const Painter &painter) {
-        const ShaderRegistry &registry = context.getShaderRegistry();
         const Rect &viewport = context.getViewport2D();
-
-        glUseProgram(registry.getProgram("sinusoid"));
-
-        glUniform1f(registry.getUniform("sinusoid", "time"), seconds());
-        glUniform1f(registry.getUniform("sinusoid", "freq"), freq);
-        glUniform1f(registry.getUniform("sinusoid", "lambda"), lambda);
-        glUniform1f(registry.getUniform("sinusoid", "stroke_width"),
-                    getValue<float>("/stroke-width"));
-        glUniform1f(registry.getUniform("sinusoid", "stroke_blur"),
-                    getValue<float>("/stroke-blur"));
 
         for(int index = amplitudes.size()-1 ; index >= 0 ; index--) {
             float amplitude = amplitudes[index];
@@ -91,15 +84,14 @@ namespace etudes {
                 (widthBase + widthAmp * amplitude);
 
             colorDraw = colorBase + colorAmp * amplitude;
-
-            glUniform1i(registry.getUniform("sinusoid", "order"), index+1);
+            phaseDraw = phaseBase + phaseAmp * amplitude;
 
             switch(drawMode) {
             case STRAIGHT:
                 drawSinusoidStraight(index, context, painter);
 
             case CIRCULAR:
-                drawSinusoidCircular();
+                drawSinusoidCircular(index, context, painter);
                 break;
             }
         }
@@ -136,37 +128,55 @@ namespace etudes {
     }
 
     void PartialAura::drawSinusoidStraight(
-        int index,
-        const Context &context, const Painter &painter) {
+        int index, const Context &context, const Painter &painter) {
 
-        const ShaderRegistry &registry = context.getShaderRegistry();
         const Rect &viewport = context.getViewport2D();
-
         glm::vec2 start, end;
 
         float yStart = 0.f;
         float yEnd = 1.f;
 
-        glUniform1f(registry.getUniform("sinusoid", "phase"),
-                    0.0f + phaseBase + phaseAmp * amplitudes[index]);
-
         start = glm::vec2(center[0] - offsets[index], yStart);
         end = glm::vec2(center[0] - offsets[index], yEnd);
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
-        painter.sinusoidStraight(start, end, widthDraw, colorDraw);
 
-        glUniform1f(registry.getUniform("sinusoid", "phase"),
-                    0.5f + phaseBase + phaseAmp * amplitudes[index]);
+        painter.sinusoidStraight(
+            start, end, index+1,
+            widthDraw, colorDraw,
+            time, freq, lambda, phaseDraw + 0.0f,
+            strokeWidth, strokeBlur);
 
         start = glm::vec2(center[0] + offsets[index], yStart);
         end = glm::vec2(center[0] + offsets[index], yEnd);
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
-        painter.sinusoidStraight(start, end, widthDraw, colorDraw);
+        painter.sinusoidStraight(
+            start, end, index+1,
+            widthDraw, colorDraw,
+            time, freq, lambda, phaseDraw + 0.5f,
+            strokeWidth, strokeBlur);
     }
 
-    void PartialAura::drawSinusoidCircular() {
+    void PartialAura::drawSinusoidCircular(
+        int index, const Context &context, const Painter &painter) {
+
+        // const ShaderRegistry &registry = context.getShaderRegistry();
+        // const Rect &viewport = context.getViewport2D();
+
+        // glm::vec2 start, end;
+
+        // float yStart = 0.f;
+        // float yEnd = 1.f;
+
+        // glUniform1f(registry.getUniform("sinusoid", "phase"),
+        //             0.0f + phaseBase + phaseAmp * amplitudes[index]);
+
+        // start = glm::vec2(center[0] - offsets[index], yStart);
+        // end = glm::vec2(center[0] - offsets[index], yEnd);
+        // start = denormalize(start, viewport);
+        // end = denormalize(end, viewport);
+        // painter.sinusoidCircular(start, end, widthDraw, colorDraw);
     }
 }

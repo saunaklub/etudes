@@ -32,7 +32,8 @@ namespace etudes {
 
         void drawSinusoidStraight(
             int index, const Context &context, const Painter &painter);
-        void drawSinusoidCircular();
+        void drawSinusoidCircular(
+            int index, const Context &context, const Painter &painter);
 
         vec_float_t amplitudes;
         vec_float_t offsets;
@@ -47,10 +48,16 @@ namespace etudes {
         glm::vec4 colorAmp;
         glm::vec4 colorDraw;
 
+        float time;
         float freq;
         float lambda;
+
         float phaseBase;
         float phaseAmp;
+        float phaseDraw;
+
+        float strokeWidth;
+        float strokeBlur;
 
         DrawMode drawMode;
         OffsetMode offsetMode;

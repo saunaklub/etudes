@@ -3,19 +3,18 @@
 in vec2 uv;
 out vec4 out_color;
 
-uniform vec4 color;
-
 uniform int mode;
+uniform int order;
+
+uniform float time;
+uniform float freq;
+uniform float phase;
+uniform float lambda;
 
 uniform float stroke_width;
 uniform float stroke_blur;
 
-uniform int order;
-
-uniform float time;
-uniform float phase;
-uniform float freq;
-uniform float lambda;
+uniform vec4 color;
 
 const float PI = 3.14159265359;
 

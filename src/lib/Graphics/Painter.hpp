@@ -17,8 +17,11 @@ namespace etudes {
         void line(glm::vec2 p0, glm::vec2 p1,
                   float width, glm::vec4 color) const;
 
-        void sinusoidStraight(glm::vec2 p0, glm::vec2 p1,
-                              float width, glm::vec4 color) const;
+        void sinusoidStraight(
+            glm::vec2 p0, glm::vec2 p1, int order,
+            float width, glm::vec4 color,
+            float time, float freq, float lambda, float phase,
+            float strokeWidth, float strokeBlur) const;
 
         void sinusoidCircular(glm::vec2 center,
                               float width, float height,
