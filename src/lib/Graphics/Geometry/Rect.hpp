@@ -20,6 +20,7 @@ namespace etudes {
 
         float getWidth() const;
         float getHeight() const;
+        float getDiagonal() const;
 
         void setPosX(float x);
         void setPosY(float y);

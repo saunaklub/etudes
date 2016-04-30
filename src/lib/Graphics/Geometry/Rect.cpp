@@ -31,6 +31,10 @@ namespace etudes {
         return height;
     }
 
+    float Rect::getDiagonal() const {
+        return std::sqrt(width * width + height * height);
+    }
+
     void Rect::setPosX(float x) {
         this->x = x;
     }
