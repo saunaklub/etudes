@@ -1,14 +1,15 @@
-#ifndef ETUDES_PARTIALAURA
-#define ETUDES_PARTIALAURA
+#ifndef ETUDES_SINUSOIDS
+#define ETUDES_SINUSOIDS
 
 #include <Receivers/Element.hpp>
 
 namespace etudes {
 
-    class PartialAura : public Element {
+    class Sinusoids : public Element {
     public:
         enum DrawMode {
             STRAIGHT,
+            MIRRORED,
             CIRCULAR,
         };
 
@@ -31,6 +32,8 @@ namespace etudes {
                          const std::vector<float> &partials);
 
         void drawSinusoidStraight(
+            int index, const Context &context, const Painter &painter);
+        void drawSinusoidMirrored(
             int index, const Context &context, const Painter &painter);
         void drawSinusoidCircular(
             int index, const Context &context, const Painter &painter);
@@ -65,4 +68,4 @@ namespace etudes {
 
 }
 
-#endif // ETUDES_PARTIALAURA
+#endif // ETUDES_SINUSOIDS

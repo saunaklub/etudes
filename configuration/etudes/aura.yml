@@ -1,6 +1,6 @@
 elements:
   aura:
-    type: PartialAura
+    type: Sinusoids
     defaults:
       /amplitudes: [0.8, 0.6, 0.3, 0.1]
       # /mode: [straight]

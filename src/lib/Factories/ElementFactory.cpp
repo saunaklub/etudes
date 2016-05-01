@@ -7,7 +7,7 @@
 #include <Elements/Lines.hpp>
 #include <Elements/Particles.hpp>
 #include <Elements/ImageView.hpp>
-#include <Elements/PartialAura.hpp>
+#include <Elements/Sinusoids.hpp>
 #include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
@@ -23,7 +23,7 @@ namespace etudes {
         {"Line", ElementFactory::createElement<Lines>},
         {"Particles", ElementFactory::createElement<Particles>},
         {"ImageView", ElementFactory::createElementImageView},
-        {"PartialAura", ElementFactory::createElement<PartialAura>},
+        {"Sinusoids", ElementFactory::createElement<Sinusoids>},
         {"Testbed", ElementFactory::createElement<Testbed>},
     };
 

@@ -6,25 +6,25 @@
 #include <Graphics/Geometry/Transforms.hpp>
 #include <Graphics/Painter.hpp>
 
-#include "PartialAura.hpp"
+#include "Sinusoids.hpp"
 
 namespace etudes {
 
     using namespace gl;
     using logging::LogLevel;
 
-    std::map<std::string, PartialAura::DrawMode> mapDrawMode {
-        {"straight", PartialAura::STRAIGHT},
-        {"circular", PartialAura::CIRCULAR},
+    std::map<std::string, Sinusoids::DrawMode> mapDrawMode {
+        {"straight", Sinusoids::STRAIGHT},
+        {"circular", Sinusoids::CIRCULAR},
     };
 
-    std::map<std::string, PartialAura::OffsetMode> mapOffsetMode {
-        {"absolute", PartialAura::ABSOLUTE},
-        {"increment", PartialAura::INCREMENT},
-        {"increment-falloff", PartialAura::INCREMENT_FALLOFF},
+    std::map<std::string, Sinusoids::OffsetMode> mapOffsetMode {
+        {"absolute", Sinusoids::ABSOLUTE},
+        {"increment", Sinusoids::INCREMENT},
+        {"increment-falloff", Sinusoids::INCREMENT_FALLOFF},
     };
 
-    void PartialAura::registerInputs() {
+    void Sinusoids::registerInputs() {
         registerInput("/amplitudes", vec_float_t{1.0f});
         registerInput("/draw-mode", vec_string_t{"circular"});
 
@@ -48,7 +48,7 @@ namespace etudes {
         registerInput("/color-amp",  vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
     }
 
-    void PartialAura::update() {
+    void Sinusoids::update() {
         amplitudes = getValue<vec_float_t>("/amplitudes");
         offsets = calculateOffsets(offsetMode, amplitudes);
 
@@ -73,8 +73,8 @@ namespace etudes {
         offsetMode = mapOffsetMode[getValue<std::string>("/offset-mode")];
     }
 
-    void PartialAura::draw(const Context &context,
-                           const Painter &painter) {
+    void Sinusoids::draw(const Context &context,
+                         const Painter &painter) {
         const Rect &viewport = context.getViewport2D();
 
         for(int index = amplitudes.size()-1 ; index >= 0 ; index--) {
@@ -89,6 +89,11 @@ namespace etudes {
             switch(drawMode) {
             case STRAIGHT:
                 drawSinusoidStraight(index, context, painter);
+                break;
+
+            case MIRRORED:
+                drawSinusoidStraight(index, context, painter);
+                break;
 
             case CIRCULAR:
                 drawSinusoidCircular(index, context, painter);
@@ -98,8 +103,8 @@ namespace etudes {
     }
 
     std::vector<float>
-    PartialAura::calculateOffsets(OffsetMode offsetMode,
-                                  const std::vector<float> &amplitudes) {
+    Sinusoids::calculateOffsets(OffsetMode offsetMode,
+                                const std::vector<float> &amplitudes) {
         std::vector<float> offsets;
         offsets.resize(amplitudes.size());
 
@@ -127,7 +132,7 @@ namespace etudes {
         return offsets;
     }
 
-    void PartialAura::drawSinusoidStraight(
+    void Sinusoids::drawSinusoidStraight(
         int index, const Context &context, const Painter &painter) {
 
         const Rect &viewport = context.getViewport2D();
@@ -136,8 +141,29 @@ namespace etudes {
         float yStart = 0.f;
         float yEnd = 1.f;
 
-        start = glm::vec2(center[0] - offsets[index], yStart);
-        end = glm::vec2(center[0] - offsets[index], yEnd);
+        start = glm::vec2(center[0] + offsets[index], yStart);
+        end = glm::vec2(center[0] + offsets[index], yEnd);
+        start = denormalize(start, viewport);
+        end = denormalize(end, viewport);
+
+        painter.sinusoidStraight(
+            start, end, index+1,
+            widthDraw, colorDraw,
+            time, freq, lambda, phaseDraw + 0.0f,
+            strokeWidth, strokeBlur);
+    }
+
+    void Sinusoids::drawSinusoidMirrored(
+        int index, const Context &context, const Painter &painter) {
+
+        const Rect &viewport = context.getViewport2D();
+        glm::vec2 start, end;
+
+        float yStart = 0.f;
+        float yEnd = 1.f;
+
+        start = glm::vec2(center[0] + offsets[index], yStart);
+        end = glm::vec2(center[0] + offsets[index], yEnd);
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
@@ -147,8 +173,8 @@ namespace etudes {
             time, freq, lambda, phaseDraw + 0.0f,
             strokeWidth, strokeBlur);
 
-        start = glm::vec2(center[0] + offsets[index], yStart);
-        end = glm::vec2(center[0] + offsets[index], yEnd);
+        start = glm::vec2(center[0] - offsets[index], yStart);
+        end = glm::vec2(center[0] - offsets[index], yEnd);
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
@@ -159,7 +185,7 @@ namespace etudes {
             strokeWidth, strokeBlur);
     }
 
-    void PartialAura::drawSinusoidCircular(
+    void Sinusoids::drawSinusoidCircular(
         int index, const Context &context, const Painter &painter) {
 
         const Rect &viewport = context.getViewport2D();
