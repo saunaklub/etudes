@@ -166,7 +166,7 @@ namespace etudes {
         painter.sinusoidCircular(
             denormalize(center, viewport), index+1,
             widthDraw, widthDraw, colorDraw,
-            time, freq, lambda, phaseDraw,
+            time, freq, phaseDraw,
             strokeWidth, strokeBlur);
     }
 }
