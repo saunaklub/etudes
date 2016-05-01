@@ -4,6 +4,7 @@ window:
   viewport: border
   fullscreen: true
   vsync: true
+  multisampling: 4
   cursor: false
 
 logging:

@@ -138,6 +138,12 @@ namespace etudes {
         }
         glfwSwapInterval(vsync);
 
+        if(hostConfig.hasValue("window:multisampling")) {
+            int multisampling =
+                hostConfig.getValue<int>("window:multisampling");
+            glfwWindowHint(GLFW_SAMPLES, multisampling);
+        }
+
         glfwSetKeyCallback(window, key_callback);
         glfwSetWindowSizeCallback(window, window_size_callback);
     }
