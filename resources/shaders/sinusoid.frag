@@ -39,8 +39,9 @@ void main() {
         x = atan(0.5f - uv.y, 0.5f - uv.x) / PI + 1.0f;
         y = length(2.0f * vec2(0.5f - uv.x, 0.5f - uv.y));
 
-        y = clamp(2.0f * y - stroke_width - 0.5f, 0, 1);
-
+        float circular_amp_length = 0.8f;
+        y = clamp((y - circular_amp_length) /
+                  (1 - circular_amp_length), 0, 1);
         break;
     }
 
@@ -54,6 +55,8 @@ void main() {
     float blur_width = stroke_width / 2.f - blur_start_dist;
     if(dist > blur_start_dist)
         shaded.a *=  1.0f - (dist-blur_start_dist) / blur_width;
+
+    shaded = clamp(shaded, 0, 1);
 
     out_color = shaded;
 }
