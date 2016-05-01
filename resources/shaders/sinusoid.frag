@@ -47,7 +47,7 @@ void main() {
         x = atan(0.5f - uv.y, 0.5f - uv.x) / PI + 1.0f;
         y = length(2.0f * vec2(0.5f - uv.x, 0.5f - uv.y));
 
-        float circular_amp_length = 1 - 0.5 / order;
+        float circular_amp_length = 1 - 0.9f / order;
         y = clamp((y - circular_amp_length) /
                   (1 - circular_amp_length) * 2.0f - 1.0f,
                   -1, 1);
