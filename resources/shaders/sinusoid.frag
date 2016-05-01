@@ -38,6 +38,9 @@ void main() {
         // y == r
         x = atan(0.5f - uv.y, 0.5f - uv.x) / PI + 1.0f;
         y = length(2.0f * vec2(0.5f - uv.x, 0.5f - uv.y));
+
+        y = clamp(2.0f * y - stroke_width - 0.5f, 0, 1);
+
         break;
     }
 
