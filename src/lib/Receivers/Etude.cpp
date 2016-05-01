@@ -30,20 +30,6 @@ namespace etudes {
         }
     }
 
-    void Etude::draw(const Context &context,
-                     const Painter &painter) {
-        auto colorBackground = getValue<glm::vec4>("/background");
-        glClearColor(colorBackground[0],
-                     colorBackground[1],
-                     colorBackground[2],
-                     colorBackground[3]);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        for(auto &element : elements) {
-            element.second->draw(context, painter);
-        }
-    }
-
     void Etude::addElement(std::string name,
                            std::unique_ptr<Element> element) {
         elements.push_back(std::make_pair(name, std::move(element)));
@@ -71,6 +57,24 @@ namespace etudes {
             LogLevel::warning,
             "Etude::dispatchValue: Unable to dispatch message with path: " +
             path);
+    }
+
+    void Etude::draw(const Context &context,
+                     const Painter &painter) {
+        clearBackground();
+
+        for(auto &element : elements) {
+            element.second->draw(context, painter);
+        }
+    }
+
+    void Etude::clearBackground() {
+        auto colorBackground = getValue<glm::vec4>("/background");
+        glClearColor(colorBackground[0],
+                     colorBackground[1],
+                     colorBackground[2],
+                     colorBackground[3]);
+        glClear(GL_COLOR_BUFFER_BIT);
     }
 
     template void Etude::dispatchValue(std::string path,

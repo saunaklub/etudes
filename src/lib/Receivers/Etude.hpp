@@ -43,6 +43,9 @@ namespace etudes {
         template <typename T>
         void dispatchValue(std::string input, const T &value);
 
+    protected:
+        void clearBackground();
+
     private:
         typedef std::vector<std::pair<std::string, std::unique_ptr<Element>>>
                             element_vec_t;
