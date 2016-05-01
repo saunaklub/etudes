@@ -88,7 +88,7 @@ namespace etudes {
                 break;
 
             case MIRRORED:
-                drawSinusoidStraight(index, context, painter);
+                drawSinusoidMirrored(index, context, painter);
                 break;
 
             case CIRCULAR:
