@@ -24,11 +24,19 @@ void main() {
 
     float x;
     float y;
+    float sinusoid;
+    float dist;
 
     switch(mode) {
     case 0:
         x = uv.x;
         y = uv.y;
+
+        sinusoid =
+            (sin(2.f*PI * ((order*(x * lambda + freq * time)) + phase))
+             * (1-stroke_width) + 1.f) / 2.f;
+
+        dist = abs(y - sinusoid);
 
         // shade along line length
         shaded.a *= sin(PI*uv.x);
@@ -39,16 +47,22 @@ void main() {
         x = atan(0.5f - uv.y, 0.5f - uv.x) / PI + 1.0f;
         y = length(2.0f * vec2(0.5f - uv.x, 0.5f - uv.y));
 
-        float circular_amp_length = 0.8f;
+        float circular_amp_length = 1 - 0.5 / order;
         y = clamp((y - circular_amp_length) /
-                  (1 - circular_amp_length), 0, 1);
+                  (1 - circular_amp_length) * 2.0f - 1.0f,
+                  -1, 1);
+        sinusoid =
+            (sin(2.f*PI * (order * (x + lambda * time) + phase))
+             * (1-stroke_width) + 1.f) / 2.f;
+
+        sinusoid *= (sin(2.f * PI * freq * order * time));
+
+        dist = y - sinusoid;
+        dist = abs(dist);
+
         break;
     }
 
-    float sinusoid =
-        (sin(2.f*PI * ((order*(x * lambda + freq * time)) + phase))
-         * (1-stroke_width) + 1.f) / 2.f;
-    float dist = abs(y - sinusoid);
 
     // shade with distance from sinusoid and blur factor
     float blur_start_dist = stroke_width / 2.0f * (1.0f - stroke_blur);

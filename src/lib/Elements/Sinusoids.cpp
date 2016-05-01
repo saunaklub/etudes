@@ -75,13 +75,9 @@ namespace etudes {
 
     void Sinusoids::draw(const Context &context,
                          const Painter &painter) {
-        const Rect &viewport = context.getViewport2D();
 
         for(int index = amplitudes.size()-1 ; index >= 0 ; index--) {
             float amplitude = amplitudes[index];
-
-            widthDraw = viewport.getDiagonal() / 2.0f *
-                (widthBase + widthAmp * amplitude);
 
             colorDraw = colorBase + colorAmp * amplitude;
             phaseDraw = phaseBase + phaseAmp * amplitude;
@@ -141,6 +137,9 @@ namespace etudes {
         float yStart = 0.f;
         float yEnd = 1.f;
 
+        widthDraw = viewport.getDiagonal() / 2.0f *
+            (widthBase + widthAmp * amplitudes[index]);
+
         start = glm::vec2(center[0] + offsets[index], yStart);
         end = glm::vec2(center[0] + offsets[index], yEnd);
         start = denormalize(start, viewport);
@@ -161,6 +160,9 @@ namespace etudes {
 
         float yStart = 0.f;
         float yEnd = 1.f;
+
+        widthDraw = viewport.getDiagonal() / 2.0f *
+            (widthBase + widthAmp * amplitudes[index]);
 
         start = glm::vec2(center[0] + offsets[index], yStart);
         end = glm::vec2(center[0] + offsets[index], yEnd);
@@ -189,10 +191,15 @@ namespace etudes {
         int index, const Context &context, const Painter &painter) {
 
         const Rect &viewport = context.getViewport2D();
+
+        widthDraw = viewport.getDiagonal() / 2.0f *
+            (widthBase + widthAmp * amplitudes[index] +
+             offsets[index]);
+
         painter.sinusoidCircular(
             denormalize(center, viewport), index+1,
             widthDraw, widthDraw, colorDraw,
-            time, freq, phaseDraw,
+            time, freq, lambda, phaseDraw,
             strokeWidth, strokeBlur);
     }
 }

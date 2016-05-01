@@ -3,16 +3,18 @@ elements:
     type: Sinusoids
     defaults:
       /amplitudes: [0.8, 0.6, 0.3, 0.1]
+      # /amplitudes: [1]
       # /mode: [straight]
 
-      /width: [1]
+      /width: [0.5]
+      /width-amp: [0]
 
-      /freq: [0.4]
-      # /lambda: [2]
+      /freq: [0.2]
+      /lambda: [0.1]
       /phase-amp: [1.0]
 
       /stroke-width: [0.1]
-      /stroke-blur: [1.0]
+      /stroke-blur: [0]
 
       /center: [0.5, 0.5]
 
