@@ -47,6 +47,8 @@ namespace etudes {
         float widthAmp;
         float widthDraw;
 
+        float circleWidth;
+
         glm::vec4 colorBase;
         glm::vec4 colorAmp;
         glm::vec4 colorDraw;

@@ -38,6 +38,8 @@ namespace etudes {
         registerInput("/phase", vec_float_t{0.0f});
         registerInput("/phase-amp", vec_float_t{0.0f});
 
+        registerInput("/circle-width", vec_float_t{0.5f});
+
         registerInput("/stroke-width", vec_float_t{0.5f});
         registerInput("/stroke-blur", vec_float_t{0.0f});
 
@@ -65,6 +67,8 @@ namespace etudes {
         lambda = getValue<float>("/lambda");
         phaseBase = getValue<float>("/phase");
         phaseAmp = getValue<float>("/phase-amp");
+
+        circleWidth = getValue<float>("/circle-width");
 
         strokeWidth = getValue<float>("/stroke-width");
         strokeBlur = getValue<float>("/stroke-blur");
@@ -200,6 +204,6 @@ namespace etudes {
             denormalize(center, viewport), index+1,
             widthDraw, widthDraw, colorDraw,
             time, freq, lambda, phaseDraw,
-            strokeWidth, strokeBlur);
+            circleWidth, strokeWidth, strokeBlur);
     }
 }

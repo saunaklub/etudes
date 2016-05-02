@@ -81,7 +81,7 @@ namespace etudes {
         glm::vec2 center, int order,
         float width, float height, glm::vec4 color,
         float time, float freq, float lambda, float phase,
-        float strokeWidth, float strokeBlur) const {
+        float circleWidth, float strokeWidth, float strokeBlur) const {
         const ShaderRegistry &registry = context.getShaderRegistry();
 
         glUseProgram(registry.getProgram(shaderSinusoid));
@@ -93,6 +93,9 @@ namespace etudes {
         glUniform1f(registry.getUniform(shaderSinusoid, "freq"), freq);
         glUniform1f(registry.getUniform(shaderSinusoid, "lambda"), lambda);
         glUniform1f(registry.getUniform(shaderSinusoid, "phase"), freq);
+
+        glUniform1f(
+            registry.getUniform(shaderSinusoid, "circle_width"), circleWidth);
 
         glUniform1f(
             registry.getUniform(shaderSinusoid, "stroke_width"), strokeWidth);

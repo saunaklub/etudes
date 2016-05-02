@@ -14,6 +14,8 @@ uniform float lambda;
 uniform float stroke_width;
 uniform float stroke_blur;
 
+uniform float circle_width = 1f;
+
 uniform vec4 color;
 
 const float PI = 3.14159265359;
@@ -47,9 +49,9 @@ void main() {
         x = atan(0.5f - uv.y, 0.5f - uv.x) / PI + 1.0f;
         y = length(2.0f * vec2(0.5f - uv.x, 0.5f - uv.y));
 
-        float circular_amp_length = 1 - 0.9f / order;
-        y = clamp((y - circular_amp_length) /
-                  (1 - circular_amp_length) * 2.0f - 1.0f,
+        float circle_amp_length = 1 - circle_width / order;
+        y = clamp((y - circle_amp_length) /
+                  (1 - circle_amp_length) * 2.0f - 1.0f,
                   -1, 1);
         sinusoid =
             (sin(2.f*PI * (order * (x + lambda * time) + phase))
