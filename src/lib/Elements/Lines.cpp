@@ -23,10 +23,12 @@ namespace etudes {
         registerInput("/distance/amplitude", vec_float_t{0.0f});
         registerInput("/distance/omega",     vec_float_t{0.0f});
         registerInput("/distance/lambda",    vec_float_t{0.0f});
+
         registerInput("/width/base",      vec_float_t{5.0f});
         registerInput("/width/amplitude", vec_float_t{0.0f});
         registerInput("/width/omega",     vec_float_t{0.0f});
         registerInput("/width/lambda",    vec_float_t{0.0f});
+
         registerInput("/color/base",      vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
         registerInput("/color/amplitude", vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
         registerInput("/color/omega",     vec_float_t{0.0f});

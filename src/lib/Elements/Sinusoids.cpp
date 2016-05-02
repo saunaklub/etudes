@@ -15,6 +15,7 @@ namespace etudes {
 
     std::map<std::string, Sinusoids::DrawMode> mapDrawMode {
         {"straight", Sinusoids::STRAIGHT},
+        {"mirrored", Sinusoids::MIRRORED},
         {"circular", Sinusoids::CIRCULAR},
     };
 

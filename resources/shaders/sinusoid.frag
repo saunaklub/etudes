@@ -14,7 +14,7 @@ uniform float lambda;
 uniform float stroke_width;
 uniform float stroke_blur;
 
-uniform float circle_width = 1f;
+uniform float circle_width;
 
 uniform vec4 color;
 
