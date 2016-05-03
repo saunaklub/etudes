@@ -10,12 +10,13 @@ elements:
     defaults:
       /width/base: [10]
       /distance/base: [0.1]
-      /distance/amplitude: [0.05]
-      /distance/omega: [.5]
-      /distance/lambda: [.15]
+      /distance/amplitude: [0.0]
+      /distance/omega: [0.0]
+      /distance/lambda: [0.0]
       /color/base: [1.0, 0.5, 0.5, 1.0]
       /color/amplitude: [0.0, 0.1, -0.1, 0.0]
-      /color/omega: [1.0]
+      /color/omega: [0.0]
+      /color/lambda: [0.0]
   lines2:
     type: Line
     defaults:
@@ -25,8 +26,8 @@ elements:
       /distance/amplitude: [0.05]
       /distance/omega: [1]
       /distance/lambda: [.1]
-      /color/base: [0.0, 0.5, 0.5, 1.0]
-      /color/amplitude: [0.0, 0.1, 0.0, 0.0]
+      /color/base: [0.0, 0.0, 0.0, 0.0]
+      /color/amplitude: [0.0, 0.0, 0.0, 0.0]
       /color/omega: [1.0]
 
-order: [lines1, lines2]
+order: [lines1]

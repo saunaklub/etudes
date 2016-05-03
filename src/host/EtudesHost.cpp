@@ -114,6 +114,12 @@ namespace etudes {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
+        if(hostConfig.hasValue("window:multisampling")) {
+            int multisampling =
+                hostConfig.getValue<int>("window:multisampling");
+            glfwWindowHint(GLFW_SAMPLES, multisampling);
+        }
+
         int width = hostConfig.getValue<int>("window:width");
         int height = hostConfig.getValue<int>("window:height");
         window = glfwCreateWindow(width, height,
@@ -137,12 +143,6 @@ namespace etudes {
             vsync = hostConfig.getValue<bool>("window:vsync");
         }
         glfwSwapInterval(vsync);
-
-        if(hostConfig.hasValue("window:multisampling")) {
-            int multisampling =
-                hostConfig.getValue<int>("window:multisampling");
-            glfwWindowHint(GLFW_SAMPLES, multisampling);
-        }
 
         glfwSetKeyCallback(window, key_callback);
         glfwSetWindowSizeCallback(window, window_size_callback);
@@ -447,6 +447,7 @@ namespace etudes {
 
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_DEPTH_BUFFER_BIT);
 
         currentEtude->second->draw(*context.get(), *painter.get());
 

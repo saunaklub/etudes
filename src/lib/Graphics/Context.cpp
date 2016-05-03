@@ -94,6 +94,15 @@ namespace etudes {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+        glEnable(GL_MULTISAMPLE);
+        glHint(GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);
+
+//        glEnable(GL_DEPTH_TEST);
+//        glDepthFunc(GL_ALWAYS);
+//        glDepthFunc(GL_LESS);
+//        glDepthFunc(GL_GREATER);
+//        glDepthFunc(GL_EQUAL);
+
         checkGLError("context: init");
     }
 

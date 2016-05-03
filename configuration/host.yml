@@ -4,7 +4,7 @@ window:
   viewport: border
   fullscreen: true
   vsync: true
-  multisampling: 4
+  multisampling: 8
   cursor: false
 
 logging:
@@ -12,7 +12,7 @@ logging:
   framerate: false
 
 etudes:
-  # - grid
+  - grid
   # - space
   # - particles
   # - parallels
