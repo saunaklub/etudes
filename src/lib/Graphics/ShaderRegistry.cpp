@@ -1,7 +1,7 @@
 /*
 
-  Études Audiovisuel - graphical elements for audiovisual composition
-  Copyright (C) 2015 Patric Schmitz, Claudio Cabral
+  Études Audiovisuel - Graphical elements for audiovisual composition.
+  Copyright (C) 2015-2016 Patric Schmitz
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
