@@ -31,12 +31,12 @@ namespace etudes {
         glGenVertexArrays(1, &idVertexArray);
         glBindVertexArray(idVertexArray);
 
-        std::array<float, 12> aCoords = {
-            -0.5f,  0.5f, 0.0f,
-            -0.5f, -0.5f, 0.0f,
-             0.5f,  0.5f, 0.0f,
-             0.5f, -0.5f, 0.0f,
-        };
+        std::array<float, 12> aCoords = {{
+                -0.5f,  0.5f, 0.0f,
+                -0.5f, -0.5f, 0.0f,
+                 0.5f,  0.5f, 0.0f,
+                 0.5f, -0.5f, 0.0f,
+            }};
 
         glGenBuffers(1, &vboVertex);
         glBindBuffer(GL_ARRAY_BUFFER, vboVertex);
@@ -47,12 +47,12 @@ namespace etudes {
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-        std::array<float, 12> aUV = {
-            0.0f, 1.0f,
-            0.0f, 0.0f,
-            1.0f, 1.0f,
-            1.0f, 0.0f,
-        };
+        std::array<float, 12> aUV = {{
+                0.0f, 1.0f,
+                0.0f, 0.0f,
+                1.0f, 1.0f,
+                1.0f, 0.0f,
+            }};
 
         glGenBuffers(1, &vboUV);
         glBindBuffer(GL_ARRAY_BUFFER, vboUV);
