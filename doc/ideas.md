@@ -12,6 +12,9 @@ https://en.wikipedia.org/wiki/List_of_aperiodic_sets_of_tiles
 https://en.wikipedia.org/wiki/Quasicrystal
 https://en.wikipedia.org/wiki/Islamic_geometric_patterns
 https://en.wikipedia.org/wiki/Wallpaper_group
+https://en.wikipedia.org/wiki/Coxeter_plane
+https://en.wikipedia.org/wiki/List_of_E8_polytopes
+https://en.wikipedia.org/wiki/4_21_polytope
 
 http://www.clarku.edu/~djoyce/wallpaper/seventeen.html
 http://www.geom.uiuc.edu/
