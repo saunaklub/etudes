@@ -61,11 +61,11 @@ endif()
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     add_definitions("-DLINUX")
+    find_package(glbinding REQUIRED)
 endif()
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
-find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 find_package(glfw CONFIG NAMES glfw glfw3)
 
@@ -83,6 +83,7 @@ target_include_directories(${LIBRARY}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
     PUBLIC ${GLM_INCLUDE_DIRS}
     PUBLIC ${GLBINDING_INCLUDES}
+    PUBLIC ${LIBLO_INCLUDE_DIRS}
     PUBLIC ${YAML_CPP_INCLUDE_DIRS}
     )
 
@@ -93,6 +94,7 @@ target_link_libraries(${CLIENT}
     )
 
 target_link_libraries(${LIBRARY}
+    PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${YAML_CPP_LIBRARIES}
     glbinding
