@@ -5,8 +5,8 @@ out vec4 color;
 
 uniform sampler2D texSampler;
 
-uniform float hueShift;
-uniform float alpha;
+uniform float hueShift = 0.0f;
+uniform float alpha = 1.0f;
 
 vec3 rgb2hsv(vec3 c) {
     vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
