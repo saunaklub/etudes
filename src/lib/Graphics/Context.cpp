@@ -102,6 +102,7 @@ namespace etudes {
 //        glDepthFunc(GL_LESS);
 //        glDepthFunc(GL_GREATER);
 //        glDepthFunc(GL_EQUAL);
+        glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
 
         checkGLError("context: init");
     }
