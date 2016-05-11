@@ -66,7 +66,8 @@ namespace etudes {
         log(LogLevel::debug, "texture size: " +
             std::to_string(texWidth) + " x " + std::to_string(texHeight));
 
-        texture = std::make_unique<Texture>(texWidth, texHeight, false);
+        texture = std::make_unique<Texture>(texWidth, texHeight,
+                                            Texture::LINEAR, false);
     }
 
     void ImageView::update() {
@@ -110,8 +111,7 @@ namespace etudes {
         model = glm::translate(model, glm::vec3{0.5f, 0.5f, 0.f});
         glm::mat4 mvp = context.getProjection2D() * model;
 
-        GLint locMVP =
-            context.getShaderRegistry().getUniform("textured", "mvp");
+        GLint locMVP = registry.getUniform("textured", "mvp");
         glUniformMatrix4fv(locMVP, 1, GLboolean(false),
                            glm::value_ptr(mvp));
 

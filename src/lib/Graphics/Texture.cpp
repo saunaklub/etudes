@@ -32,23 +32,36 @@ namespace etudes {
     using namespace gl;
     using logging::LogLevel;
 
-    Texture::Texture(int width, int height, bool mipmaps) :
+    Texture::Texture(int width, int height,
+                     Filter filter, bool mipmaps) :
         width(width),
         height(height),
+        filter(filter),
         mipmaps(mipmaps),
         texture(nullptr) {
 
-        createTextureStorage();
+        createTexture();
     }
 
-    void Texture::createTextureStorage() {
+    void Texture::createTexture() {
         glGenTextures(1, &idTexture);
         glBindTexture(GL_TEXTURE_2D, idTexture);
 
-        glTexParameteri(GL_TEXTURE_2D,
-                        GL_TEXTURE_MIN_FILTER, GLint(GL_LINEAR));
-        glTexParameteri(GL_TEXTURE_2D,
-                        GL_TEXTURE_MAG_FILTER, GLint(GL_LINEAR));
+        switch(filter) {
+        case NEAREST:
+            glTexParameteri(GL_TEXTURE_2D,
+                            GL_TEXTURE_MIN_FILTER, GLint(GL_NEAREST));
+            glTexParameteri(GL_TEXTURE_2D,
+                            GL_TEXTURE_MAG_FILTER, GLint(GL_NEAREST));
+            break;
+        case LINEAR:
+            glTexParameteri(GL_TEXTURE_2D,
+                            GL_TEXTURE_MIN_FILTER, GLint(GL_LINEAR));
+            glTexParameteri(GL_TEXTURE_2D,
+                            GL_TEXTURE_MAG_FILTER, GLint(GL_LINEAR));
+            break;
+        }
+
         glTexParameteri(GL_TEXTURE_2D,
                         GL_TEXTURE_WRAP_S, GLint(GL_REPEAT));
         glTexParameteri(GL_TEXTURE_2D,
@@ -75,7 +88,7 @@ namespace etudes {
         if(!texture) {
             glBindBuffer(GL_PIXEL_UNPACK_BUFFER, vboTexture);
             texture = (unsigned char*)(glMapBuffer(GL_PIXEL_UNPACK_BUFFER,
-                                                   GL_WRITE_ONLY));
+                                                   GL_READ_WRITE));
         }
         return texture;
     }
@@ -93,7 +106,6 @@ namespace etudes {
     void Texture::draw() {
         glBindTexture(GL_TEXTURE_2D, idTexture);
         uploadData();
-
         quad.draw();
     }
 

@@ -33,7 +33,13 @@ namespace etudes {
 
     class Texture {
     public:
-        Texture(int width, int height, bool mipmaps);
+        enum Filter {
+            NEAREST,
+            LINEAR,
+        };
+
+        Texture(int width, int height,
+                Filter filter, bool mipmaps);
 
         int getWidth();
         int getHeight();
@@ -44,12 +50,13 @@ namespace etudes {
         void draw();
 
     private:
-        void createTextureStorage();
+        void createTexture();
         void uploadData();
 
         Quad quad;
 
         int width, height;
+        Filter filter;
         bool mipmaps;
 
         gl::GLuint idTexture;
