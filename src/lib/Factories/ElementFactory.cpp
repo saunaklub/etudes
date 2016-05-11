@@ -28,6 +28,7 @@
 #include <Elements/Particles.hpp>
 #include <Elements/ImageView.hpp>
 #include <Elements/Sinusoids.hpp>
+#include <Elements/CellularAutomaton.hpp>
 #include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
@@ -44,6 +45,7 @@ namespace etudes {
         {"Particles", ElementFactory::createElement<Particles>},
         {"ImageView", ElementFactory::createElementImageView},
         {"Sinusoids", ElementFactory::createElement<Sinusoids>},
+        {"CellularAutomaton", ElementFactory::createElement<CellularAutomaton>},
         {"Testbed", ElementFactory::createElement<Testbed>},
     };
 

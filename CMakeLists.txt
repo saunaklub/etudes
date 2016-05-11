@@ -32,6 +32,7 @@ set(LIBRARY_SOURCES
     src/lib/Elements/Particles.cpp
     src/lib/Elements/ImageView.cpp
     src/lib/Elements/Sinusoids.cpp
+    src/lib/Elements/CellularAutomaton.cpp
     src/lib/Elements/Testbed.cpp
     )
 
