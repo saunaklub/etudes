@@ -1,5 +1,6 @@
 set(LIBRARY etudes)
 set(CLIENT  etudes-host)
+set(SOUND   sound-etude)
 
 project(etudes)
 cmake_minimum_required(VERSION 3.0)
@@ -46,11 +47,18 @@ set(CLIENT_SOURCES
     src/host/EtudesHost.cpp
     )
 
+set(SOUND_SOURCES
+    src/sound-host/main.cpp
+    src/sound-host/SoundEtude.cpp
+    )
+
 add_library(${LIBRARY} SHARED ${LIBRARY_SOURCES})
 add_executable(${CLIENT} ${CLIENT_SOURCES})
+add_executable(${SOUND} ${SOUND_SOURCES})
 
 set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
 set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
+set_property(TARGET ${SOUND} PROPERTY CXX_STANDARD 14)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
@@ -80,6 +88,12 @@ target_include_directories(${CLIENT}
     PUBLIC ${GLFW_INCLUDE_DIRS}
     )
 
+target_include_directories(${SOUND}
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/sound-host
+    PUBLIC ${LIBLO_INCLUDE_DIRS}
+    )
+
 target_include_directories(${LIBRARY}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
     PUBLIC ${GLM_INCLUDE_DIRS}
@@ -91,6 +105,11 @@ target_include_directories(${LIBRARY}
 target_link_libraries(${CLIENT}
     PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${GLFW3_LIBRARY}
+    PUBLIC ${LIBRARY}
+    )
+
+target_link_libraries(${SOUND}
+    PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${LIBRARY}
     )
 

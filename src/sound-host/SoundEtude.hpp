@@ -32,6 +32,9 @@ namespace etudes {
 
     class SoundEtude {
     public:
+        using etudes_t =
+            std::vector<std::pair<std::string, std::unique_ptr<Etude>>>;
+
         SoundEtude();
         ~SoundEtude();
 
@@ -41,6 +44,7 @@ namespace etudes {
     private:
         void initOSC();
 
+        etudes_t etudes;
         OSCInput oscInput;
     };
 }

@@ -25,7 +25,7 @@ int main(){
     etudes::SoundEtude sound;
 
     sound.initialise();
-    for(char i = 0;; ++i) std::putchar(sound.outputChar(i , 1, int n = i >> 14, 12));
+    for(char i = 0;; ++i) std::putchar(sound.outputChar(i , 1, i >> 14, 12));
 
     return 0;
 }

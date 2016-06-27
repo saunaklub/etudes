@@ -61,3 +61,4 @@ namespace etudes {
     void SoundEtude::initOSC() {
         oscInput.start();
     }
+}
