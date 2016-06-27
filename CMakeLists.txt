@@ -1,7 +1,8 @@
 set(LIBRARY etudes)
 set(CLIENT  etudes-host)
 
-project(etudes)
+set(PROJECT etudes)
+project(${PROJECT})
 cmake_minimum_required(VERSION 3.0)
 
 set(LIBRARY_SOURCES
@@ -101,3 +102,20 @@ target_link_libraries(${LIBRARY}
     glbinding
     freeimageplus
     )
+
+configure_file(
+    ${PROJECT}Config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT}Config.cmake)
+
+install(
+    TARGETS ${LIBRARY} ${CLIENT}
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin)
+
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/lib/ DESTINATION include/${PROJECT}
+    FILES_MATCHING PATTERN "*.hpp")
+
+install(
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT}Config.cmake
+    DESTINATION lib/cmake/${PROJECT})
