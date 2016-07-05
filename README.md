@@ -59,23 +59,9 @@ Libraries to consider
 
 #### License
 
-All software components developed for the project are released under
-terms of the GNU General Public License 3.0. The goal is to get a
-complete toolchain made of free software components. The only part
-which seems to be lacking right now is the sequencing
-software. Suggestions for free sequencers are very welcome!
-
-#### Team
-
-Patric Schmitz (<flavi0@openmailbox.org>)<br>
-Claudio Cabral (<cabral1349@gmail.com>)
-
-We are based in Paris right now, but being connected over the Internet
-we are happy about anyone who wants to participate. We want this
-project to be as open as possible from the outset. If you are
-interested in our work, want to contribute your own études into the
-framework, have creative ideas, suggestions or questions about the
-project, please do not hesitate to get in touch with us!
+The software is released under terms of the GNU General Public License
+3.0. The goal is to get a complete audio/video toolchain made of free
+software components.
 
 #### Contribution
 
