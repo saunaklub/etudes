@@ -67,13 +67,16 @@ namespace etudes {
         glTexParameteri(GL_TEXTURE_2D,
                         GL_TEXTURE_WRAP_T, GLint(GL_REPEAT));
 
-        glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGB8, width, height);
+        glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, width, height);
+        checkGLError("Texture::createTexture glTexStorage2D");
 
-        glGenBuffers(1, &vboTexture);
-        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, vboTexture);
+        glGenBuffers(1, &pboTexture);
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboTexture);
         glBufferData(GL_PIXEL_UNPACK_BUFFER,
-                     width*height*3,
+                     width*height*4,
                      nullptr, GL_DYNAMIC_DRAW);
+        checkGLError("Texture::createTexture glBufferData");
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
     }
 
     int Texture::getWidth() {
@@ -86,27 +89,35 @@ namespace etudes {
 
     unsigned char *Texture::mapData() {
         if(!texture) {
-            glBindBuffer(GL_PIXEL_UNPACK_BUFFER, vboTexture);
+            glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboTexture);
             texture = (unsigned char*)(glMapBuffer(GL_PIXEL_UNPACK_BUFFER,
                                                    GL_READ_WRITE));
         }
+        checkGLError("Texture::mapData");
         return texture;
     }
 
     void Texture::unmapData() {
         glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
+        checkGLError("Texture::unmapData");
         texture = nullptr;
     }
 
     void Texture::uploadData() {
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboTexture);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height,
-                        GL_BGR, GL_UNSIGNED_BYTE, 0);
+                        GL_BGRA, GL_UNSIGNED_BYTE, 0);
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+        checkGLError("Texture::uploadData");
     }
 
     void Texture::draw() {
         glBindTexture(GL_TEXTURE_2D, idTexture);
+        checkGLError("Texture::draw bind");
         uploadData();
+        checkGLError("Texture::draw upload");
         quad.draw();
+        checkGLError("Texture::draw quad draw");
     }
 
 }

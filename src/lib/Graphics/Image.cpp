@@ -36,7 +36,7 @@ namespace etudes {
             std::string message = "failed to load image: " + filename;
             throw(std::runtime_error(message));
         }
-        image.convertTo24Bits();
+        image.convertTo32Bits();
     }
 
     int Image::getWidth() {
@@ -70,19 +70,19 @@ namespace etudes {
     void Image::uploadToTexture(Texture *texture) {
         unsigned char *texData = texture->mapData();
 
-        int texWidth = texture->getWidth();
-        int texHeight = texture->getHeight();
+        const int texWidth = texture->getWidth();
+        const int texHeight = texture->getHeight();
 
         unsigned char *imgData = getData();
-        int imgWidth = getWidth();
-        int imgScanWidth = getScanWidth();
-        int imgHeight = getHeight();
+        const int imgWidth = getWidth();
+        const int imgScanWidth = getScanWidth();
+        const int imgHeight = getHeight();
 
         int rowImage[texHeight];
         int colImage[texWidth];
 
-        float texWidthInv = 1.f / float(texWidth);
-        float texHeightInv = 1.f / float(texHeight);
+        const float texWidthInv = 1.f / float(texWidth);
+        const float texHeightInv = 1.f / float(texHeight);
 
         for(int row = 0 ; row < texHeight ; ++row) {
             rowImage[row] =
@@ -106,11 +106,11 @@ namespace etudes {
             for(int col = 0 ; col < texWidth ; ++col) {
                 unsigned char *imagePtr =
                     imgData +
-                    rowImage[row] * imgScanWidth + colImage[col] * 3;
+                    rowImage[row] * imgScanWidth + colImage[col] * 4;
                 unsigned char *texelPtr =
-                    texData + (row * texWidth + col) * 3;
+                    texData + (row * texWidth + col) * 4;
 
-               memcpy(texelPtr, imagePtr, 3);
+               memcpy(texelPtr, imagePtr, 4);
             }
         }
 

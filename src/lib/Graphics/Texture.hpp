@@ -60,7 +60,7 @@ namespace etudes {
         bool mipmaps;
 
         gl::GLuint idTexture;
-        gl::GLuint vboTexture;
+        gl::GLuint pboTexture;
         unsigned char *texture;
     };
 }
