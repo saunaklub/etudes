@@ -3,7 +3,7 @@ set(CLIENT  etudes-host)
 
 set(PROJECT etudes)
 project(${PROJECT})
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 
 set(LIBRARY_SOURCES
     src/lib/Utility/Utility.cpp
