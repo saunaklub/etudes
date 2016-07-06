@@ -83,8 +83,7 @@ namespace etudes {
     using std::string;
     using logging::LogLevel;
 
-    OSCInput::OSCInput(const etudes_t &etudes, int port) :
-        etudes(etudes),
+    OSCInput::OSCInput(int port) :
         port(port),
         started(false) {
     }
@@ -131,11 +130,11 @@ namespace etudes {
         logging::log(LogLevel::excessive, etude + ": " + input);
         logging::log(LogLevel::excessive, values);
 
-        auto iter = std::find_if(etudes.begin(), etudes.end(),
+        auto iter = std::find_if(receivers.begin(), receivers.end(),
                                  [&](const auto &e)  {
                                      return(e.first == etude);
                                  });
-        if(iter != etudes.end())
+        if(iter != receivers.end())
             iter->second->dispatchValue(input, std::move(values));
     }
 

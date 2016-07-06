@@ -32,6 +32,7 @@ using namespace gl;
 
 #include <Utility/Logging.hpp>
 #include <Utility/Configuration.hpp>
+
 #include <Factories/EtudeFactory.hpp>
 #include <Receivers/Etude.hpp>
 
@@ -80,7 +81,7 @@ namespace etudes {
         window(nullptr),
         paused(false),
         quitLoop(false),
-        oscInput(etudes, 6666) {
+        oscInput(6666) {
     }
 
     EtudesHost::~EtudesHost() {
@@ -216,40 +217,36 @@ namespace etudes {
         std::list<std::string> etudeList =
             hostConfig.getValue<std::list<std::string>>("etudes");
 
-        for(auto &etude : etudeList) {
+        for(auto &etudeName : etudeList) {
             Configuration etudeConfig;
-            etudeConfig.read("configuration/etudes/" + etude + ".yml");
+            etudeConfig.read("configuration/etudes/" + etudeName + ".yml");
 
-            etudes.push_back(
-                std::make_pair(
-                    etude, EtudeFactory::makeEtude(etude, etudeConfig)));
-            etudes.back().second->init();
+            auto etude = EtudeFactory::makeEtude(etudeName, etudeConfig);
+            etude->init();
 
-            checkGLError(etude + " init");
+            checkGLError(etudeName + " init");
+
+            auto renderer =
+                std::make_unique<Renderer>(etudeName, std::move(etude));
 
 #ifdef LINUX
             if(etudeConfig.hasValue("output")) {
                 if(!etudeConfig.hasValue("output:enabled") ||
                    etudeConfig.getValue<bool>("output:enabled")) {
                     log(LogLevel::debug,
-                        "Creating video output for '" + etude + "'");
-                    std::unique_ptr<VideoOutput> out =
-                        std::make_unique<VideoOutputV4L2>(
-                            etudes.back().second.get(),
-                            etudeConfig.getValue<int>("output:width"),
-                            etudeConfig.getValue<int>("output:height"));
-                    std::string name =
-                        etudeConfig.getValue<std::string>("output:name");
-                    out->createOutput(name);
-                    videoOutputs.push_back(
-                        std::make_pair(name, std::move(out)));
+                        "Creating video output for '" + etudeName + "'");
+                    renderer->addOutput(
+                        etudeConfig.getValue<std::string>("output:name"),
+                        etudeConfig.getValue<int>("output:width"),
+                        etudeConfig.getValue<int>("output:height"));
                 }
             }
 #endif
+            renderers.push_back(std::move(renderer));
         }
 
-        currentEtude = etudes.begin();
-        printEtude();
+        currentRenderer = renderers.begin();
+        printCurrentRenderer();
     }
 
     void EtudesHost::initInput() {
@@ -259,13 +256,13 @@ namespace etudes {
         if(!hostConfig.hasValue("input"))
             return;
 
-        Configuration inputConfig = hostConfig.getSubTree("input");
-        if(inputConfig.hasValue("mouse")) {
-            if(inputConfig.hasValue("mouse:xy")) {
-                for(auto &e : inputConfig.getValue<list<string>>("mouse:xy"))
-                    inputsMouse.push_back(std::make_pair(MOUSE_XY, e));
-            }
-        }
+        // Configuration inputConfig = hostConfig.getSubTree("input");
+        // if(inputConfig.hasValue("mouse")) {
+        //     if(inputConfig.hasValue("mouse:xy")) {
+        //         for(auto &e : inputConfig.getValue<list<string>>("mouse:xy"))
+        //             inputsMouse.push_back(std::make_pair(MOUSE_XY, e));
+        //     }
+        // }
     }
 
     void EtudesHost::resizeCallback(int width, int height) {
@@ -301,8 +298,8 @@ namespace etudes {
         if(quitLoop)
             return false;
 
-        for(auto &e : etudes)
-            e.second->update();
+        for(auto &renderer : renderers)
+            renderer->update();
 
         render();
 
@@ -334,25 +331,25 @@ namespace etudes {
         int width, height;
         glfwGetWindowSize(window, &width, &height);
 
-        float mouseXNorm =  mouseX / width;
-        float mouseYNorm = -mouseY / height;
+        // float mouseXNorm =  mouseX / width;
+        // float mouseYNorm = -mouseY / height;
 
-        for(auto &inputMouse : inputsMouse) {
-            switch(inputMouse.first) {
-            case MOUSE_X:
-                oscInput.update(inputMouse.second,
-                                Receiver::vec_float_t{mouseXNorm});
-                break;
-            case MOUSE_Y:
-                oscInput.update(inputMouse.second,
-                                Receiver::vec_float_t{mouseYNorm});
-                break;
-            case MOUSE_XY:
-                oscInput.update(inputMouse.second,
-                                Receiver::vec_float_t{mouseXNorm, mouseYNorm});
-                break;
-            }
-        }
+        // for(auto &inputMouse : inputsMouse) {
+        //     switch(inputMouse.first) {
+        //     case MOUSE_X:
+        //         oscInput.update(inputMouse.second,
+        //                         Receiver::vec_float_t{mouseXNorm});
+        //         break;
+        //     case MOUSE_Y:
+        //         oscInput.update(inputMouse.second,
+        //                         Receiver::vec_float_t{mouseYNorm});
+        //         break;
+        //     case MOUSE_XY:
+        //         oscInput.update(inputMouse.second,
+        //                         Receiver::vec_float_t{mouseXNorm, mouseYNorm});
+        //         break;
+        //     }
+        // }
     }
 
     void EtudesHost::keyCallback(
@@ -367,13 +364,13 @@ namespace etudes {
                 break;
 
             case GLFW_KEY_N:
-                nextEtude();
-                printEtude();
+                nextRenderer();
+                printCurrentRenderer();
                 break;
 
             case GLFW_KEY_P:
-                prevEtude();
-                printEtude();
+                prevRenderer();
+                printCurrentRenderer();
                 break;
 
             case GLFW_KEY_F:
@@ -407,20 +404,20 @@ namespace etudes {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     }
 
-    void EtudesHost::printEtude() {
-        log(LogLevel::info, "Switched to etude: " + currentEtude->first);
+    void EtudesHost::nextRenderer() {
+        ++currentRenderer;
+        if(currentRenderer == renderers.end())
+            currentRenderer = renderers.begin();
     }
 
-    void EtudesHost::nextEtude() {
-        ++currentEtude;
-        if(currentEtude == etudes.end())
-            currentEtude = etudes.begin();
+    void EtudesHost::printCurrentRenderer() {
+        log(LogLevel::info, "Switched to renderer: " + (*currentRenderer)->getName());
     }
 
-    void EtudesHost::prevEtude() {
-        if(currentEtude == etudes.begin())
-            currentEtude = etudes.end();
-        --currentEtude;
+    void EtudesHost::prevRenderer() {
+        if(currentRenderer == renderers.begin())
+            currentRenderer = renderers.end();
+        --currentRenderer;
     }
 
     void EtudesHost::render() {
@@ -429,9 +426,9 @@ namespace etudes {
     }
 
     void EtudesHost::renderOutputs() {
-        for(auto &output : videoOutputs) {
-            output.second->render(*context.get(), *painter.get());
-            checkGLError("drawing "s + output.first);
+        for(auto &renderer : renderers) {
+            renderer->renderOutput(*context.get(), *painter.get());
+            checkGLError("drawing "s + renderer->getName());
         }
     }
 
@@ -445,13 +442,8 @@ namespace etudes {
             static_cast<GLsizei>(height)
             );
 
-        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClear(GL_DEPTH_BUFFER_BIT);
-
-        currentEtude->second->draw(*context.get(), *painter.get());
-
-        checkGLError("drawing "s + currentEtude->first);
+        (*currentRenderer)->render(*context.get(), *painter.get());
+        checkGLError("drawing "s + (*currentRenderer)->getName());
 
         glfwSwapBuffers(window);
     }

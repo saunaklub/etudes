@@ -32,6 +32,7 @@ namespace etudes {
 
     class Receiver {
     public:
+
         typedef std::vector<float> vec_float_t;
         typedef std::vector<std::string> vec_string_t;
 
@@ -49,6 +50,7 @@ namespace etudes {
         T getValue(std::string input);
 
     protected:
+
         Receiver() = default;
 
         void registerInput(std::string input,
@@ -57,6 +59,7 @@ namespace etudes {
                            vec_string_t initialValue = {""});
 
     private:
+
         template <class T>
         T getInput(std::string input);
 

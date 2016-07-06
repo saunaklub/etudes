@@ -30,14 +30,14 @@
 
 
 namespace etudes {
+
     class Etude;
 
     class OSCInput {
-    public:
-        using etudes_t =
-            std::vector<std::pair<std::string, std::unique_ptr<Etude>>>;
 
-        OSCInput(const etudes_t &etudes, int port);
+    public:
+
+        OSCInput(int port);
         virtual ~OSCInput();
 
         void start();
@@ -48,13 +48,17 @@ namespace etudes {
                     const T &values);
 
     private:
-        const etudes_t &etudes;
+
+        using receiver_vec_t = std::map<std::string, std::unique_ptr<Etude>>;
+
+        receiver_vec_t receivers;
 
         int port;
         lo_server_thread oscServer;
 
         bool started;
     };
+
 }
 
 #endif // ETUDES_OSCINPUT

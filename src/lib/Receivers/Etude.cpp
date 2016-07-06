@@ -94,7 +94,7 @@ namespace etudes {
                      colorBackground[1],
                      colorBackground[2],
                      colorBackground[3]);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
     template void Etude::dispatchValue(std::string path,

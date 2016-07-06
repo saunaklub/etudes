@@ -45,6 +45,7 @@ endif()
 set(CLIENT_SOURCES
     src/host/main.cpp
     src/host/EtudesHost.cpp
+    src/host/Renderer.cpp
     )
 
 add_library(${LIBRARY} SHARED ${LIBRARY_SOURCES})

@@ -32,6 +32,8 @@
 #include <Graphics/Context.hpp>
 #include <Graphics/Painter.hpp>
 
+#include "Renderer.hpp"
+
 struct GLFWwindow;
 
 namespace etudes {
@@ -40,10 +42,6 @@ namespace etudes {
 
     class EtudesHost {
     public:
-        using etudes_t =
-            std::vector<std::pair<std::string, std::unique_ptr<Etude>>>;
-        using output_vec_t =
-            std::vector<std::pair<std::string, std::unique_ptr<VideoOutput>>>;
 
         friend void key_callback(GLFWwindow* window,
                                  int key, int scancode, int action, int mods);
@@ -62,11 +60,6 @@ namespace etudes {
         bool loopIteration();
 
     private:
-        enum MouseInput {
-            MOUSE_X,
-            MOUSE_Y,
-            MOUSE_XY
-        };
 
         void initGLFW();
         void initGL();
@@ -76,7 +69,7 @@ namespace etudes {
 
         void printOpenGLInfo();
 
-        void registerMouseInput(MouseInput mode, std::string path);
+        void registerMouseInput(Renderer::MouseInput mode, std::string path);
         void processInput();
 
         void keyCallback(int, int, int, int);
@@ -84,9 +77,9 @@ namespace etudes {
 
         void setCursorEnabled(bool enabled);
 
-        void printEtude();
-        void nextEtude();
-        void prevEtude();
+        void nextRenderer();
+        void prevRenderer();
+        void printCurrentRenderer();
 
         void render();
         void renderOutputs();
@@ -104,12 +97,9 @@ namespace etudes {
         bool paused;
         bool quitLoop;
 
-        std::vector<std::pair<MouseInput, std::string>> inputsMouse;
+        std::vector<std::unique_ptr<Renderer>> renderers;
+        std::vector<std::unique_ptr<Renderer>>::const_iterator currentRenderer;
 
-        etudes_t etudes;
-        etudes_t::const_iterator currentEtude;
-
-        output_vec_t videoOutputs;
         OSCInput oscInput;
 
         std::unique_ptr<Context> context;

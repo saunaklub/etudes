@@ -27,8 +27,11 @@
 #include <Receivers/Element.hpp>
 
 namespace etudes {
+
     class Etude : public Element {
+
     public:
+
         virtual ~Etude() {};
 
         void registerInputs() override;
@@ -44,13 +47,16 @@ namespace etudes {
         void dispatchValue(std::string input, const T &value);
 
     protected:
+
         void clearBackground();
 
     private:
+
         typedef std::vector<std::pair<std::string, std::unique_ptr<Element>>>
                             element_vec_t;
         element_vec_t elements;
     };
+
 }
 
 #endif // ETUDES_ETUDE
