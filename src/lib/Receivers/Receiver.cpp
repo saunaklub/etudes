@@ -18,6 +18,8 @@
 
 */
 
+#include <algorithm>
+
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
@@ -152,4 +154,25 @@ namespace etudes {
         vec_string_t vecInput = getInput<vec_string_t>(input);
         return vecInput;
     }
+
+    bool
+    Receiver::dispatchValue(std::string path, const vec_float_t &value) {
+        return dispatchValueT(path, value);
+    }
+
+    bool
+    Receiver::dispatchValue(std::string path, const vec_string_t &value) {
+        return dispatchValueT(path, value);
+    }
+    
+    template <typename T> bool
+    Receiver::dispatchValueT(std::string path, const T &value) {
+        std::vector<std::string> inputs = getInputs();
+        if(std::find(inputs.begin(), inputs.end(), path) != inputs.end()) {
+            setValue(path, value);
+            return true;
+        }
+        return false;
+    }
+    
 }

@@ -43,8 +43,11 @@ namespace etudes {
 
         void addElement(std::string name, std::unique_ptr<Element> element);
 
-        template <typename T>
-        void dispatchValue(std::string input, const T &value);
+        virtual bool
+        dispatchValue(std::string input, const vec_float_t &value) override;
+
+        virtual bool
+        dispatchValue(std::string input, const vec_string_t &value) override;
 
     protected:
 
@@ -54,6 +57,10 @@ namespace etudes {
 
         typedef std::vector<std::pair<std::string, std::unique_ptr<Element>>>
                             element_vec_t;
+
+        template <typename T> bool
+        dispatchValueT(std::string input, const T &value);
+        
         element_vec_t elements;
     };
 

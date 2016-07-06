@@ -33,50 +33,62 @@ namespace etudes {
     using namespace gl;
     using logging::LogLevel;
 
-    void Etude::registerInputs() {
+    void
+    Etude::registerInputs() {
         registerInput("/background", vec_float_t{0.0f, 0.0f, 0.0f, 1.0f});
 
     }
 
-    void Etude::init() {
+    void
+    Etude::init() {
         for(auto &element : elements) {
             element.second->init();
         }
     }
 
-    void Etude::update() {
+    void
+    Etude::update() {
         for(auto &element : elements) {
             element.second->update();
         }
     }
 
-    void Etude::addElement(std::string name,
+    void
+    Etude::addElement(std::string name,
                            std::unique_ptr<Element> element) {
         elements.push_back(std::make_pair(name, std::move(element)));
     }
 
-    template <typename T>
-    void Etude::dispatchValue(std::string path, const T &value) {
-        auto inputs = getInputs();
-        if(std::find(inputs.begin(), inputs.end(), path) != inputs.end()) {
-            setValue(path, value);
-            return;
-        }
+    bool
+    Etude::dispatchValue(std::string path, const vec_float_t &value) {
+        return dispatchValueT(path, value);
+    }
 
-        string prefix = splitStringFirst(path);
-        auto iter = std::find_if(elements.begin(), elements.end(),
-                                 [&](const auto &e)  {
-                                     return(e.first == prefix);
-                                 });
-        if(iter != elements.end()) {
-            iter->second->setValue(splitStringRest(path), value);
-            return;
+    bool
+    Etude::dispatchValue(std::string path, const vec_string_t &value) {
+        return dispatchValueT(path, value);
+    }
+
+    template <typename T> bool
+    Etude::dispatchValueT(std::string path, const T &value) {
+        if(! Receiver::dispatchValue(path, value)) {
+            
+            string prefix = splitStringFirst(path);
+            auto iter = std::find_if(elements.begin(), elements.end(),
+                                     [&](const auto &e)  {
+                                         return(e.first == prefix);
+                                     });
+            if(iter != elements.end()) {
+                iter->second->setValue(splitStringRest(path), value);
+                return true;
+            }
         }
 
         logging::log(
             LogLevel::warning,
             "Etude::dispatchValue: Unable to dispatch message with path: " +
             path);
+        return false;
     }
 
     void Etude::draw(const Context &context,
@@ -96,10 +108,5 @@ namespace etudes {
                      colorBackground[3]);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
-
-    template void Etude::dispatchValue(std::string path,
-                                       const vec_float_t &value);
-    template void Etude::dispatchValue(std::string path,
-                                       const vec_string_t &value);
 
 }
