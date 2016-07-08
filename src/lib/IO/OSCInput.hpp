@@ -31,7 +31,7 @@
 
 namespace etudes {
 
-    class Etude;
+    class Receiver;
 
     class OSCInput {
 
@@ -49,7 +49,7 @@ namespace etudes {
 
     private:
 
-        using receiver_vec_t = std::map<std::string, std::unique_ptr<Etude>>;
+        using receiver_vec_t = std::map<std::string, std::unique_ptr<Receiver>>;
 
         receiver_vec_t receivers;
 
