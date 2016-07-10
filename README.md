@@ -60,7 +60,7 @@ Libraries to consider
 #### Compiling
 Currently one needs to manually pass the path to glbinding when
 compiling in OS X. This can be achieved by running
-`cmake -Dglbinding_DIR=`brew --prefix glbinding` .. `
+`cmake -Dglbinding_DIR=\`brew --prefix glbinding\` .. `
 
 #### License
 
