@@ -57,6 +57,11 @@ Libraries to consider
 - [Jamoma](http://jamoma.org/)
 - [libmapper](http://libmapper.github.io/)
 
+#### Compiling
+Currently one needs to manually pass the path to glbinding when
+compiling in OS X. This can be achieved by running
+`cmake -Dglbinding_DIR=`brew --prefix glbinding` .. `
+
 #### License
 
 The software is released under terms of the GNU General Public License
