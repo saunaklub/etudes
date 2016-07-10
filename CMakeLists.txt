@@ -64,11 +64,11 @@ endif()
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     add_definitions("-DLINUX")
-    find_package(glbinding REQUIRED)
 endif()
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 find_package(glfw CONFIG NAMES glfw glfw3)
 
