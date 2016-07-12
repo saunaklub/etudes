@@ -226,8 +226,10 @@ namespace etudes {
 
             checkGLError(etudeName + " init");
 
+            oscInput.addReceiver(etudeName, etude);
+
             auto renderer =
-                std::make_unique<Renderer>(etudeName, std::move(etude));
+                std::make_unique<Renderer>(etudeName, etude);
 
 #ifdef LINUX
             if(etudeConfig.hasValue("output")) {
