@@ -37,6 +37,8 @@ namespace etudes {
 
     public:
 
+        using receiver_map_t = std::map<std::string, std::shared_ptr<Receiver>>;
+
         OSCInput(int port);
         virtual ~OSCInput();
 
@@ -46,12 +48,11 @@ namespace etudes {
         template <typename T>
         void update(std::string path,
                     const T &values);
+        bool addReceiver(Receiver * receiver);
 
     private:
 
-        using receiver_vec_t = std::map<std::string, std::unique_ptr<Receiver>>;
-
-        receiver_vec_t receivers;
+        receiver_map_t receivers;
 
         int port;
         lo_server_thread oscServer;

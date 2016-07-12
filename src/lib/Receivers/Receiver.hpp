@@ -33,6 +33,7 @@ namespace etudes {
     class Receiver {
     public:
 
+        typedef std::vector<int> vec_int_t;
         typedef std::vector<float> vec_float_t;
         typedef std::vector<std::string> vec_string_t;
 
@@ -49,6 +50,9 @@ namespace etudes {
         getValue(std::string input);
 
         virtual bool
+        dispatchValue(std::string input, const vec_int_t &value);
+
+        virtual bool
         dispatchValue(std::string input, const vec_float_t &value);
 
         virtual bool
@@ -60,6 +64,10 @@ namespace etudes {
 
         void
         registerInput(std::string input,
+                      vec_int_t initialValue = {0});
+
+        void
+        registerInput(std::string input,
                       vec_float_t initialValue = {0});
 
         void
@@ -68,6 +76,7 @@ namespace etudes {
 
     private:
 
+        typedef std::map<std::string, vec_int_t> input_map_int_t;
         typedef std::map<std::string, vec_float_t> input_map_float_t;
         typedef std::map<std::string, vec_string_t> input_map_string_t;
 
@@ -77,6 +86,7 @@ namespace etudes {
         template <class T> T
         getInput(std::string input);
 
+        input_map_int_t mapInputsInt;
         input_map_float_t mapInputsFloat;
         input_map_string_t mapInputsString;
 

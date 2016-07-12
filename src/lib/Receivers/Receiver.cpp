@@ -41,6 +41,15 @@ namespace etudes {
     using logging::LogLevel;
 
     void Receiver::registerInput(string input,
+                                 vec_int_t initialValue) {
+        if(mapInputsInt.find(input) != mapInputsInt.end())
+            log(LogLevel::warning,
+                "Receiver::registerInput: "s + input + " already registered");
+
+        mapInputsInt[input] = initialValue;
+    }
+
+    void Receiver::registerInput(string input,
                                  vec_float_t initialValue) {
         if(mapInputsFloat.find(input) != mapInputsFloat.end())
             log(LogLevel::warning,
@@ -61,12 +70,26 @@ namespace etudes {
     vector<string> Receiver::getInputs() const {
         vector<string> out;
 
+        for(auto &pair : mapInputsInt)
+            out.emplace_back(pair.first);
         for(auto &pair : mapInputsFloat)
             out.emplace_back(pair.first);
         for(auto &pair : mapInputsString)
             out.emplace_back(pair.first);
 
         return out;
+    }
+
+    template <> Receiver::vec_int_t
+    Receiver::getInput<Receiver::vec_int_t>(std::string input) {
+        std::lock_guard<std::mutex> guard(inputLock);
+
+        const auto pair = mapInputsInt.find(input);
+        if(pair == mapInputsInt.end()) {
+            throw std::invalid_argument(
+                "Receiver::getValue: input "s + input + " not registered");
+        }
+        return pair->second;
     }
 
     template <> Receiver::vec_float_t
@@ -94,6 +117,17 @@ namespace etudes {
     }
 
     template <>
+    void Receiver::setValue(string input, const vec_int_t &value) {
+        std::lock_guard<std::mutex> guard(inputLock);
+
+        if(mapInputsInt.find(input) == mapInputsInt.end())
+            log(LogLevel::warning,
+                "Receiver::setValue: input "s + input + " not registered");
+        else
+            mapInputsInt[input] = {value};
+    }
+
+    template <>
     void Receiver::setValue(string input, const vec_float_t &value) {
         std::lock_guard<std::mutex> guard(inputLock);
 
@@ -113,6 +147,16 @@ namespace etudes {
                 "Receiver::setValue: input "s + input + " not registered");
         else
             mapInputsString[input] = {value};
+    }
+
+    template <> int
+    Receiver::getValue<int>(std::string input) {
+        return getInput<vec_int_t>(input)[0];
+    }
+
+    template <> Receiver::vec_int_t
+    Receiver::getValue<Receiver::vec_int_t>(std::string input) {
+        return getInput<vec_int_t>(input);
     }
 
     template <> float
@@ -153,6 +197,11 @@ namespace etudes {
     Receiver::getValue<Receiver::vec_string_t>(std::string input) {
         vec_string_t vecInput = getInput<vec_string_t>(input);
         return vecInput;
+    }
+
+    bool
+    Receiver::dispatchValue(std::string path, const vec_int_t &value) {
+        return dispatchValueT(path, value);
     }
 
     bool

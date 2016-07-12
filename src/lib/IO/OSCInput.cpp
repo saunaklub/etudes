@@ -46,7 +46,21 @@ namespace {
         etudes::OSCInput* oscInput =
             static_cast<etudes::OSCInput*>(user_data);
 
-        if(types[0] == 'f') {
+        if(types[0] == 'i') {
+            std::vector<int> values;
+            for(int arg = 0 ; arg < argc ; ++arg) {
+                if(types[arg] != 'i') {
+                    log(etudes::logging::warning,
+                        "OSC handler: unexpected argument type: "s + types[arg]);
+                    continue;
+                }
+
+                values.emplace_back(argv[arg]->i);
+            }
+            oscInput->update(path, std::move(values));
+        }
+
+        else if(types[0] == 'f') {
             std::vector<float> values;
             for(int arg = 0 ; arg < argc ; ++arg) {
                 if(types[arg] != 'f') {
@@ -141,4 +155,8 @@ namespace etudes {
     template
     void OSCInput::update(std::string path,
                           const std::vector<float> &values);
+
+    bool OSCInput::addReceiver(Receiver * receiver) {
+    return true;    
+    }
 }
