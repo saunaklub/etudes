@@ -30,11 +30,11 @@ namespace etudes {
 
     class EtudeFactory {
     public:
-        static std::unique_ptr<Etude>
+        static std::shared_ptr<Etude>
         makeEtude(std::string name, const Configuration &config);
 
     private:
-        static std::unique_ptr<Etude>
+        static std::shared_ptr<Etude>
         makeEtudeDefault(const Configuration &config);
     };
 

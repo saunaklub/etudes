@@ -21,7 +21,7 @@ namespace etudes {
         };
 
         Renderer(std::string name,
-                 std::unique_ptr<Etude> etude);
+                 std::shared_ptr<Etude> etude);
 
         std::string getName() const;
 
@@ -35,7 +35,7 @@ namespace etudes {
 
         std::string name;
 
-        std::unique_ptr<Etude> etude;
+        std::shared_ptr<Etude> etude;
         std::unique_ptr<VideoOutput> output;
 
         std::vector<std::pair<MouseInput, std::string>> inputsMouse;

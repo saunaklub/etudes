@@ -35,9 +35,9 @@ namespace etudes {
     using logging::log;
     using logging::LogLevel;
 
-    std::unique_ptr<Etude>
+    std::shared_ptr<Etude>
     EtudeFactory::makeEtude(std::string name, const Configuration &config) {
-        std::unique_ptr<Etude> product;
+        std::shared_ptr<Etude> product;
 
         if(config.hasValue("type")) {
             std::string type = config.getValue<std::string>("type");
@@ -52,9 +52,9 @@ namespace etudes {
         return product;
     }
 
-    std::unique_ptr<Etude>
+    std::shared_ptr<Etude>
     EtudeFactory::makeEtudeDefault(const Configuration &config) {
-        std::unique_ptr<Etude> product = std::make_unique<Etude>();
+        std::shared_ptr<Etude> product = std::make_shared<Etude>();
 
         log(LogLevel::excessive, config);
 

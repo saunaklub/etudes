@@ -5,9 +5,9 @@
 namespace etudes {
 
     Renderer::Renderer(std::string name,
-                       std::unique_ptr<Etude> etude) :
+                       std::shared_ptr<Etude> etude) :
         name(name),
-        etude(std::move(etude)) {
+        etude(etude) {
     }
 
     std::string Renderer::getName() const {
