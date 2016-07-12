@@ -48,7 +48,8 @@ namespace etudes {
         template <typename T>
         void update(std::string path,
                     const T &values);
-        bool addReceiver(Receiver * receiver);
+
+        bool addReceiver(std::string name, std::shared_ptr<Receiver> receiver);
 
     private:
 

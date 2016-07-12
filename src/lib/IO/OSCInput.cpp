@@ -138,15 +138,15 @@ namespace etudes {
     template <typename T>
     void OSCInput::update(std::string path,
                           const T &values) {
-        string etude = splitStringFirst(path);
+        string receiver = splitStringFirst(path);
         string input = splitStringRest(path);
 
-        logging::log(LogLevel::excessive, etude + ": " + input);
+        logging::log(LogLevel::excessive, receiver + ": " + input);
         logging::log(LogLevel::excessive, values);
 
         auto iter = std::find_if(receivers.begin(), receivers.end(),
                                  [&](const auto &e)  {
-                                     return(e.first == etude);
+                                     return(e.first == receiver);
                                  });
         if(iter != receivers.end())
             iter->second->dispatchValue(input, std::move(values));
@@ -156,7 +156,21 @@ namespace etudes {
     void OSCInput::update(std::string path,
                           const std::vector<float> &values);
 
-    bool OSCInput::addReceiver(Receiver * receiver) {
-    return true;    
+    bool OSCInput::addReceiver(std::string name, 
+                                std::shared_ptr<Receiver> receiver) {
+        auto iter = std::find_if(receivers.begin(), receivers.end(),
+                                 [&](const auto &e)  {
+                                     return(e.first == name);
+                                 });
+        if(iter != receivers.end()) {
+            log(LogLevel::warning, "OSCInput::addReceiver "s + name +
+                                        " already added!"s);
+            return false;
+        }
+
+        else {
+            receivers[name] = receiver;
+            return true;
+        }
     }
 }
