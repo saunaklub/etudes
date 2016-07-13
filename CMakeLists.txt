@@ -65,9 +65,11 @@ endif()
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     add_definitions("-DLINUX")
     find_package(glfw3 3.2 REQUIRED)
+    set(GLFW glfw)
 
 else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
     find_package(glfw CONFIG NAMES glfw glfw3)
+    set(GLFW glfw3)
 endif()
 
 find_package(PkgConfig REQUIRED)
@@ -96,7 +98,7 @@ target_include_directories(${LIBRARY}
 target_link_libraries(${CLIENT}
     PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${LIBRARY}
-    glfw3
+    ${GLFW}
     )
 
 target_link_libraries(${LIBRARY}
