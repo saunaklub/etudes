@@ -79,7 +79,6 @@ target_include_directories(${CLIENT}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/host
     PUBLIC ${LIBLO_INCLUDE_DIRS}
-    PUBLIC ${GLFW_INCLUDE_DIRS}
     )
 
 target_include_directories(${LIBRARY}
@@ -92,8 +91,8 @@ target_include_directories(${LIBRARY}
 
 target_link_libraries(${CLIENT}
     PUBLIC ${LIBLO_LIBRARIES}
-    PUBLIC ${GLFW3_LIBRARY}
     PUBLIC ${LIBRARY}
+    glfw3
     )
 
 target_link_libraries(${LIBRARY}
