@@ -64,13 +64,17 @@ endif()
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     add_definitions("-DLINUX")
+    find_package(glfw3 3.2 REQUIRED)
+
+else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    find_package(glfw CONFIG NAMES glfw glfw3)
 endif()
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
-find_package(glfw CONFIG NAMES glfw glfw3)
+
 
 pkg_search_module(YAML_CPP REQUIRED yaml-cpp)
 pkg_search_module(LIBLO REQUIRED liblo)
