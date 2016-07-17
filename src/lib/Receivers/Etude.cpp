@@ -60,6 +60,11 @@ namespace etudes {
     }
 
     bool
+    Etude::dispatchValue(std::string path, const vec_int_t &value) {
+        return dispatchValueT(path, value);
+    }
+
+    bool
     Etude::dispatchValue(std::string path, const vec_float_t &value) {
         return dispatchValueT(path, value);
     }
@@ -72,7 +77,6 @@ namespace etudes {
     template <typename T> bool
     Etude::dispatchValueT(std::string path, const T &value) {
         if(! Receiver::dispatchValue(path, value)) {
-            
             string prefix = splitStringFirst(path);
             auto iter = std::find_if(elements.begin(), elements.end(),
                                      [&](const auto &e)  {

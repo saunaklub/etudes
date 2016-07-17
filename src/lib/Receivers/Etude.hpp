@@ -44,6 +44,9 @@ namespace etudes {
         void addElement(std::string name, std::unique_ptr<Element> element);
 
         virtual bool
+        dispatchValue(std::string input, const vec_int_t &value) override;
+
+        virtual bool
         dispatchValue(std::string input, const vec_float_t &value) override;
 
         virtual bool
