@@ -7,17 +7,17 @@ uniform float seconds = 0.0;
 uniform float rate = 1.0;
 uniform float cutoff = 0.0;
 
-uniform unsigned int bitshift1 = 0u;
-uniform unsigned int bitshift2 = 0u;
-uniform unsigned int bitmask = ~0u;
+uniform uint bitshift1 = 0u;
+uniform uint bitshift2 = 0u;
+uniform uint bitmask = ~0u;
 
 void main() {
-    unsigned int row = unsigned int(floor(gl_FragCoord.y));
-    unsigned int col = unsigned int(floor(gl_FragCoord.x));
+    uint row = uint(floor(gl_FragCoord.y));
+    uint col = uint(floor(gl_FragCoord.x));
 
-    unsigned int a =
+    uint a =
         (row << bitshift2) & (col << bitshift1) *
-        unsigned int(seconds/1000.0f*rate*(row^col));
+        uint(seconds/1000.0f*rate*(row^col));
 
     float r = a / 255.0f * (1-cutoff);
     float g = a / 255.0f * cutoff;
@@ -28,14 +28,14 @@ void main() {
 
         // for(int row = 0 ; row < texture->getHeight() ; ++row) {
         //     for(int col = 0 ; col < texture->getWidth() ; ++col) {
-        //         // unsigned int value = (col<<1) ^ (row+1+int(seconds()*100));
-        //         // unsigned int value2 = (row<<1) ^ (row+1+int(seconds()*120));
+        //         // uint value = (col<<1) ^ (row+1+int(seconds()*100));
+        //         // uint value2 = (row<<1) ^ (row+1+int(seconds()*120));
         //         // texData[row][3*col+0] = value2;
         //         // texData[row][3*col+1] = value;
         //         // texData[row][3*col+2] = ~value2;
 
-        //         // unsigned int value = (col<<1) ^ (row+1+int(seconds()*10));
-        //         // unsigned int value2 = (row<<1) ^ (row+1+int(seconds()*12));
+        //         // uint value = (col<<1) ^ (row+1+int(seconds()*10));
+        //         // uint value2 = (row<<1) ^ (row+1+int(seconds()*12));
         //         // texData[row][3*col+0] = value2;
         //         // texData[row][3*col+1] = value * value2;
         //         // texData[row][3*col+2] = ~value2;
