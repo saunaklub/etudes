@@ -39,11 +39,14 @@ namespace etudes {
     }
 
     void AlgoSynth::registerInputs() {
+        registerInput("/program-values", vec_int_t{0});
+        registerInput("/program-colors", vec_int_t{0});
         registerInput("/rate", vec_float_t{1.f});
         registerInput("/cutoff", vec_float_t{1.f});
         registerInput("/bitshift1", vec_int_t{0});
         registerInput("/bitshift2", vec_int_t{0});
         registerInput("/bitmask", vec_int_t{0});
+        registerInput("/alpha", vec_float_t{0});
     }
 
     void AlgoSynth::init() {
@@ -66,12 +69,17 @@ namespace etudes {
                                {"resources/shaders/ident.vert"});
         shaders.registerProgram("algosynth", {"ident", "algosynth"});
 
+        shaders.registerUniform("algosynth", "program_values");
+        shaders.registerUniform("algosynth", "program_colors");
+
         shaders.registerUniform("algosynth", "seconds");
         shaders.registerUniform("algosynth", "rate");
         shaders.registerUniform("algosynth", "cutoff");
         shaders.registerUniform("algosynth", "bitshift1");
         shaders.registerUniform("algosynth", "bitshift2");
         shaders.registerUniform("algosynth", "bitmask");
+
+        shaders.registerUniform("algosynth", "alpha");
     }
 
     void AlgoSynth::update() {
@@ -80,6 +88,11 @@ namespace etudes {
 
     void AlgoSynth::renderTexture() {
         glUseProgram(shaders.getProgram("algosynth"));
+
+        glUniform1ui(shaders.getUniform("algosynth", "program_values"),
+                    getValue<int>("/program-values"));
+        glUniform1ui(shaders.getUniform("algosynth", "program_colors"),
+                    getValue<int>("/program-colors"));
 
         glUniform1f(shaders.getUniform("algosynth", "seconds"), seconds());
         glUniform1f(shaders.getUniform("algosynth", "rate"),
@@ -93,6 +106,9 @@ namespace etudes {
                     getValue<int>("/bitshift2"));
         glUniform1ui(shaders.getUniform("algosynth", "bitmask"),
                     getValue<int>("/bitmask"));
+
+        glUniform1f(shaders.getUniform("algosynth", "alpha"),
+                    getValue<float>("/alpha"));
 
         glBindFramebuffer(GL_FRAMEBUFFER, idFBO);
         quad->draw();
