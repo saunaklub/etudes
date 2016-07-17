@@ -24,18 +24,24 @@ namespace etudes {
     using namespace gl;
 
     Quad::Quad() {
-        createGeometry();
+        createGeometry(-1.0f, 1.0f, 1.0f, -1.0f);
     }
 
-    void Quad::createGeometry() {
+    Quad::Quad(float left, float top,
+               float right, float bottom) {
+        createGeometry(left, top, right, bottom);
+    }
+
+    void Quad::createGeometry(float left, float top,
+                              float right, float bottom) {
         glGenVertexArrays(1, &idVertexArray);
         glBindVertexArray(idVertexArray);
 
         std::array<float, 12> aCoords = {{
-                -0.5f,  0.5f, 0.0f,
-                -0.5f, -0.5f, 0.0f,
-                 0.5f,  0.5f, 0.0f,
-                 0.5f, -0.5f, 0.0f,
+                left, top, 0.0f,
+                left, bottom, 0.0f,
+                right, top, 0.0f,
+                right, bottom, 0.0f,
             }};
 
         glGenBuffers(1, &vboVertex);

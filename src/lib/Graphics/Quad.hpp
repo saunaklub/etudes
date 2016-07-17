@@ -27,10 +27,12 @@ namespace etudes {
     class Quad {
     public:
         Quad();
+        Quad(float left, float top, float right, float bottom);
+
         void draw() const;
 
     private:
-        void createGeometry();
+        void createGeometry(float left, float top, float right, float bottom);
 
         // @todo: make static?
         gl::GLuint idVertexArray;
