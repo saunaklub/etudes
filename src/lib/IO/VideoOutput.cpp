@@ -71,9 +71,10 @@ namespace etudes {
                      GL_UNSIGNED_BYTE, nullptr);
 
         glGenFramebuffers(1, &idFBO);
-        glBindFramebuffer(GL_FRAMEBUFFER, idFBO);
+        bindFBO();
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
-                               GL_TEXTURE_2D, idTexture, 0 );
+                               GL_TEXTURE_2D, idTexture, 0);
+        unbindFBO();
     }
 
     void VideoOutput::bindFBO() {
