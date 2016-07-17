@@ -73,7 +73,7 @@ namespace etudes {
         glGenBuffers(1, &pboTexture);
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboTexture);
         glBufferData(GL_PIXEL_UNPACK_BUFFER,
-                     width*height*4,
+                     getWidth() * getHeight() * getChannelCount(),
                      nullptr, GL_DYNAMIC_DRAW);
         checkGLError("Texture::createTexture glBufferData");
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
@@ -85,6 +85,14 @@ namespace etudes {
 
     int Texture::getHeight() {
         return height;
+    }
+
+    int Texture::getChannelCount() {
+        return 4;
+    }
+
+    int Texture::getId() {
+        return idTexture;
     }
 
     unsigned char *Texture::mapData() {
@@ -105,18 +113,36 @@ namespace etudes {
 
     void Texture::uploadData() {
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pboTexture);
+
+        bind();
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height,
                         GL_BGRA, GL_UNSIGNED_BYTE, 0);
+        unbind();
+
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
         checkGLError("Texture::uploadData");
     }
 
-    void Texture::draw() {
-        glBindTexture(GL_TEXTURE_2D, idTexture);
-        checkGLError("Texture::draw bind");
+    void Texture::clear() {
+        unsigned char *texData = mapData();
+        memset(texData, 0, getWidth() * getHeight() * getChannelCount());
+        unmapData();
         uploadData();
-        checkGLError("Texture::draw upload");
+    }
+
+    void Texture::bind() {
+        glBindTexture(GL_TEXTURE_2D, idTexture);
+    }
+
+    void Texture::unbind() {
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    void Texture::draw() {
+        bind();
         quad.draw();
+        unbind();
+
         checkGLError("Texture::draw quad draw");
     }
 

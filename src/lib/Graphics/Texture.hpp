@@ -39,19 +39,25 @@ namespace etudes {
         };
 
         Texture(int width, int height,
-                Filter filter, bool mipmaps);
+                Filter filter=NEAREST, bool mipmaps=false);
 
         int getWidth();
         int getHeight();
+        int getChannelCount();
+        int getId();
 
         unsigned char *mapData();
         void unmapData();
+        void clear();
 
+        void bind();
+        void unbind();
+
+        void uploadData();
         void draw();
 
     private:
         void createTexture();
-        void uploadData();
 
         Quad quad;
 
