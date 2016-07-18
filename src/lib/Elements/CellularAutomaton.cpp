@@ -38,7 +38,7 @@ namespace etudes {
     CellularAutomaton::CellularAutomaton() :
         updateLast(0) {
     }
-    
+
     void CellularAutomaton::registerInputs() {
         registerInput("/rate", vec_float_t{1.f});
     }
@@ -48,8 +48,7 @@ namespace etudes {
         int texHeight = 100;
 
         quad = std::make_unique<Quad>();
-        texture = std::make_unique<Texture>(texWidth, texHeight,
-                                            Texture::NEAREST, false);
+        texture = std::make_unique<Texture>(texWidth, texHeight);
     }
 
     void CellularAutomaton::update() {
@@ -90,15 +89,9 @@ namespace etudes {
 
         glUseProgram(registry.getProgram("textured"));
 
-        Rect area = context.getViewport2D();
-        
-        glm::mat4 model(
-            area.getWidth(),  0, 0, 0,
-            0, area.getHeight(), 0, 0,
-            0, 0, 1, 0,
-            area.getPosX(), area.getPosY(), 0, 1);
-        model = glm::translate(model, glm::vec3{0.5f, 0.5f, 0.f});
-        glm::mat4 mvp = context.getProjection2D() * model;
+        glm::mat4 mvp =
+            context.getProjection2D() *
+            context.getToViewportTransform();
 
         GLint locMVP = registry.getUniform("textured", "mvp");
         glUniformMatrix4fv(locMVP, 1, GLboolean(false),
