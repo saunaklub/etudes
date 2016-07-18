@@ -35,9 +35,11 @@ namespace {
     using etudes::logging::LogLevel;
 
     void error(int num, const char *msg, const char *path) {
+        if (path)
+            log(etudes::logging::error, "at "s + path + ": "s);
         log(etudes::logging::error,
-            "liblo error "s + std::to_string(num) +
-            "at "s + path + ": "s + msg);
+            "liblo error "s + std::to_string(num) + ": "s + msg);
+        throw std::runtime_error("OSCInput::start: "s + msg);
     }
 
     int handler(const char *path, const char *types, lo_arg ** argv,
