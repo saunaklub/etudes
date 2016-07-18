@@ -41,6 +41,8 @@ namespace etudes {
 
         createTexture();
         setFilter(Filter::NEAREST);
+
+        clear();
     }
 
     void Texture::createTexture() {
