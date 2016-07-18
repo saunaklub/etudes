@@ -32,35 +32,20 @@ namespace etudes {
     using namespace gl;
     using logging::LogLevel;
 
-    Texture::Texture(int width, int height,
-                     Filter filter, bool mipmaps) :
+    Texture::Texture(int width, int height) :
         width(width),
         height(height),
-        filter(filter),
-        mipmaps(mipmaps),
+        mipmaps(false),
+        useAlpha(true),
         texture(nullptr) {
 
         createTexture();
+        setFilter(Filter::NEAREST);
     }
 
     void Texture::createTexture() {
         glGenTextures(1, &idTexture);
         glBindTexture(GL_TEXTURE_2D, idTexture);
-
-        switch(filter) {
-        case NEAREST:
-            glTexParameteri(GL_TEXTURE_2D,
-                            GL_TEXTURE_MIN_FILTER, GLint(GL_NEAREST));
-            glTexParameteri(GL_TEXTURE_2D,
-                            GL_TEXTURE_MAG_FILTER, GLint(GL_NEAREST));
-            break;
-        case LINEAR:
-            glTexParameteri(GL_TEXTURE_2D,
-                            GL_TEXTURE_MIN_FILTER, GLint(GL_LINEAR));
-            glTexParameteri(GL_TEXTURE_2D,
-                            GL_TEXTURE_MAG_FILTER, GLint(GL_LINEAR));
-            break;
-        }
 
         glTexParameteri(GL_TEXTURE_2D,
                         GL_TEXTURE_WRAP_S, GLint(GL_REPEAT));
@@ -77,6 +62,31 @@ namespace etudes {
                      nullptr, GL_DYNAMIC_DRAW);
         checkGLError("Texture::createTexture glBufferData");
         glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
+    }
+
+    void Texture::setFilter(Filter filter) {
+        bind();
+
+        switch(filter) {
+        case Filter::NEAREST:
+            glTexParameteri(GL_TEXTURE_2D,
+                            GL_TEXTURE_MIN_FILTER, GLint(GL_NEAREST));
+            glTexParameteri(GL_TEXTURE_2D,
+                            GL_TEXTURE_MAG_FILTER, GLint(GL_NEAREST));
+            break;
+        case Filter::LINEAR:
+            glTexParameteri(GL_TEXTURE_2D,
+                            GL_TEXTURE_MIN_FILTER, GLint(GL_LINEAR));
+            glTexParameteri(GL_TEXTURE_2D,
+                            GL_TEXTURE_MAG_FILTER, GLint(GL_LINEAR));
+            break;
+        }
+
+        unbind();
+    }
+
+    void Texture::setUseAlpha(bool useAlpha) {
+        this->useAlpha = useAlpha;
     }
 
     int Texture::getWidth() {

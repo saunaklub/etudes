@@ -7,6 +7,7 @@ uniform sampler2D texSampler;
 
 uniform float hueShift = 0.0f;
 uniform float alpha = 1.0f;
+uniform bool useAlpha = true;
 
 vec3 rgb2hsv(vec3 c) {
     vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -34,4 +35,7 @@ void main(){
     c = hsv2rgb(c);
 
     color = vec4(c, color4.a * alpha);
+
+    if(!useAlpha)
+        color.a = 1.0f;
 }

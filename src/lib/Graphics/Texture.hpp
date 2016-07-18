@@ -33,18 +33,20 @@ namespace etudes {
 
     class Texture {
     public:
-        enum Filter {
+        enum class Filter {
             NEAREST,
             LINEAR,
         };
 
-        Texture(int width, int height,
-                Filter filter=NEAREST, bool mipmaps=false);
+        Texture(int width, int height);
 
         int getWidth();
         int getHeight();
         int getChannelCount();
         int getId();
+
+        void setFilter(Filter);
+        void setUseAlpha(bool);
 
         unsigned char *mapData();
         void unmapData();
@@ -64,6 +66,7 @@ namespace etudes {
         int width, height;
         Filter filter;
         bool mipmaps;
+        bool useAlpha;
 
         gl::GLuint idTexture;
         gl::GLuint pboTexture;

@@ -66,8 +66,8 @@ namespace etudes {
         log(LogLevel::debug, "texture size: " +
             std::to_string(texWidth) + " x " + std::to_string(texHeight));
 
-        texture = std::make_unique<Texture>(texWidth, texHeight,
-                                            Texture::LINEAR, false);
+        texture = std::make_unique<Texture>(texWidth, texHeight);
+        texture->setFilter(Texture::Filter::LINEAR);
     }
 
     void ImageView::update() {
