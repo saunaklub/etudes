@@ -21,15 +21,15 @@
 #include <string>
 
 #include <glbinding/gl/gl.h>
-using namespace gl;
-
-#include <glm/gtc/type_ptr.hpp>
+#include <glm/ext.hpp>
 
 #include <Utility/Logging.hpp>
 
 #include "Context.hpp"
 
 namespace etudes {
+    using namespace gl;
+
     using std::function;
     using std::vector;
     using std::pair;
@@ -113,6 +113,17 @@ namespace etudes {
 
     void Context::setViewport2D(const Rect &viewport) {
         viewport2D = viewport;
+    }
+
+    glm::mat4 Context::getToViewportTransform() const {
+        glm::mat4 toViewport(
+            viewport2D.getWidth() / 2.0f,  0, 0, 0,
+            0, viewport2D.getHeight() / 2.0f, 0, 0,
+            0, 0, 1, 0,
+            viewport2D.getPosX(), viewport2D.getPosY(), 0, 1);
+        toViewport = glm::translate(toViewport, glm::vec3{1.0f, 1.0f, 0.f});
+
+        return toViewport;
     }
 
     const glm::mat4 &Context::getProjection2D() const {

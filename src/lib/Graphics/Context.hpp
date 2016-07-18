@@ -37,6 +37,7 @@ namespace etudes {
 
         Rect getViewport2D() const;
         void setViewport2D(const Rect &viewport);
+        glm::mat4 getToViewportTransform() const;
 
         const glm::mat4 &getProjection2D() const;
         void setProjection2D(const Rect &projection);
