@@ -19,7 +19,6 @@
 */
 
 #include <glbinding/gl/gl.h>
-
 #include <glm/ext.hpp>
 
 #include <Utility/Utility.hpp>
@@ -46,16 +45,17 @@ namespace etudes {
         registerInput("/bitshift1", vec_int_t{0});
         registerInput("/bitshift2", vec_int_t{0});
         registerInput("/bitmask", vec_int_t{0});
-        registerInput("/alpha", vec_float_t{0});
+        registerInput("/blend", vec_float_t{1});
     }
 
     void AlgoSynth::init() {
-        width = 256;
-        height = 192;
+        // width = 256;
+        // height = 192;
+        width = 128;
+        height = 96;
 
         quad = std::make_unique<Quad>();
-        texture = std::make_unique<Texture>(width, height,
-                                            Texture::NEAREST, false);
+        texture = std::make_unique<Texture>(width, height);
 
         glGenFramebuffers(1, &idFBO);
         glBindFramebuffer(GL_FRAMEBUFFER, idFBO);
@@ -69,8 +69,8 @@ namespace etudes {
                                {"resources/shaders/ident.vert"});
         shaders.registerProgram("algosynth", {"ident", "algosynth"});
 
-        shaders.registerUniform("algosynth", "program_values");
-        shaders.registerUniform("algosynth", "program_colors");
+        shaders.registerUniform("algosynth", "programValues");
+        shaders.registerUniform("algosynth", "programColors");
 
         shaders.registerUniform("algosynth", "seconds");
         shaders.registerUniform("algosynth", "rate");
@@ -79,7 +79,7 @@ namespace etudes {
         shaders.registerUniform("algosynth", "bitshift2");
         shaders.registerUniform("algosynth", "bitmask");
 
-        shaders.registerUniform("algosynth", "alpha");
+        shaders.registerUniform("algosynth", "blend");
     }
 
     void AlgoSynth::update() {
@@ -89,9 +89,9 @@ namespace etudes {
     void AlgoSynth::renderTexture() {
         glUseProgram(shaders.getProgram("algosynth"));
 
-        glUniform1ui(shaders.getUniform("algosynth", "program_values"),
+        glUniform1ui(shaders.getUniform("algosynth", "programValues"),
                     getValue<int>("/program-values"));
-        glUniform1ui(shaders.getUniform("algosynth", "program_colors"),
+        glUniform1ui(shaders.getUniform("algosynth", "programColors"),
                     getValue<int>("/program-colors"));
 
         glUniform1f(shaders.getUniform("algosynth", "seconds"), seconds());
@@ -107,8 +107,8 @@ namespace etudes {
         glUniform1ui(shaders.getUniform("algosynth", "bitmask"),
                     getValue<int>("/bitmask"));
 
-        glUniform1f(shaders.getUniform("algosynth", "alpha"),
-                    getValue<float>("/alpha"));
+        glUniform1f(shaders.getUniform("algosynth", "blend"),
+                    getValue<float>("/blend"));
 
         glBindFramebuffer(GL_FRAMEBUFFER, idFBO);
         quad->draw();
@@ -121,16 +121,11 @@ namespace etudes {
         const ShaderRegistry &registry = context.getShaderRegistry();
 
         glUseProgram(registry.getProgram("textured"));
+        glUniform1ui(registry.getUniform("textured", "useAlpha"), false);
 
-        Rect area = context.getViewport2D();
-
-        glm::mat4 model(
-            area.getWidth() / 2.0f,  0, 0, 0,
-            0, area.getHeight() / 2.0f, 0, 0,
-            0, 0, 1, 0,
-            area.getPosX(), area.getPosY(), 0, 1);
-        model = glm::translate(model, glm::vec3{1.0f, 1.0f, 0.f});
-        glm::mat4 mvp = context.getProjection2D() * model;
+        glm::mat4 mvp =
+            context.getProjection2D() *
+            context.getToViewportTransform();
 
         GLint locMVP = registry.getUniform("textured", "mvp");
         glUniformMatrix4fv(locMVP, 1, GLboolean(false),

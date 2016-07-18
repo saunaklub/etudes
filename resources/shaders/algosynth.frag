@@ -7,14 +7,14 @@ uniform float seconds = 0.0;
 uniform float rate = 1.0;
 uniform float cutoff = 0.0;
 
-uniform float alpha = 1.0;
+uniform float blend = 1.0;
 
 uniform uint bitshift1 = 0u;
 uniform uint bitshift2 = 0u;
 uniform uint bitmask = ~0u;
 
-uniform uint program_values = 0u;
-uniform uint program_colors = 0u;
+uniform uint programValues = 0u;
+uniform uint programColors = 0u;
 
 uint width  = 256u;
 uint height = 192u;
@@ -29,7 +29,7 @@ void main() {
     uint val2 = 0u;
     float r, g, b;
 
-    switch(program_values) {
+    switch(programValues) {
     case 0u:
         val1 = (row << bitshift2) & (col << bitshift1) *
             uint(seconds/1000.0f*rate*(row^col));
@@ -40,7 +40,7 @@ void main() {
             uint(seconds/1000.0f*rate*(row^t));
     }
 
-    switch(program_colors) {
+    switch(programColors) {
     case 0u:
         r = val1 / 255.0f;
         g = val1 / 255.0f * (cutoff) * (col/width);
@@ -53,7 +53,7 @@ void main() {
         b = val1 / 255.0f * (1-cutoff);
     }
 
-    color = vec4(r, g, b, alpha);
+    color = vec4(r, g, b, blend);
 }
 
         // for(int row = 0 ; row < texture->getHeight() ; ++row) {
