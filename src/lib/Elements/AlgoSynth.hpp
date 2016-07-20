@@ -36,8 +36,7 @@ namespace etudes {
         void registerInputs() override;
         void init() override;
         void update() override;
-        void draw(const Context &context,
-                  const Painter &painter) override;
+        void draw() override;
 
     private:
         void renderTexture();
