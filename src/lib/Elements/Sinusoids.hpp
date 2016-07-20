@@ -42,21 +42,17 @@ namespace etudes {
         void registerInputs();
 
         // void init();
-        void update();
-        void draw(const Context &context,
-                  const Painter &painter);
+        void update() override;
+        void draw() override;
 
     private:
         std::vector<float>
         calculateOffsets(OffsetMode offsetMode,
                          const std::vector<float> &partials);
 
-        void drawSinusoidStraight(
-            int index, const Context &context, const Painter &painter);
-        void drawSinusoidMirrored(
-            int index, const Context &context, const Painter &painter);
-        void drawSinusoidCircular(
-            int index, const Context &context, const Painter &painter);
+        void drawSinusoidStraight(int index);
+        void drawSinusoidMirrored(int index);
+        void drawSinusoidCircular(int index);
 
         vec_float_t amplitudes;
         vec_float_t offsets;

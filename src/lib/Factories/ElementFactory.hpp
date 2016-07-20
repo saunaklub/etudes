@@ -25,31 +25,47 @@
 #include <map>
 #include <string>
 
+#include <Receivers/Element.hpp>
+
 namespace etudes {
-    class Element;
     class Configuration;
+    class Context;
+    class Painter;
 
     class ElementFactory {
     public:
         static std::unique_ptr<Element>
-        makeElement(const Configuration &config);
+        makeElement(const Configuration &config,
+                    const Context &context,
+                    const Painter &painter);
 
     private:
         typedef std::function<
-        std::unique_ptr<Element>(const Configuration &)> creation_t;
+        std::unique_ptr<Element>(const Configuration &,
+                                 const Context & context,
+                                 const Painter & painter)> creation_t;
 
         static std::map<std::string, creation_t> creationMap;
 
         template <typename T> static
         std::unique_ptr<Element>
-        createElement(const Configuration &config) {
+        createElement(const Configuration &config,
+                      const Context &context,
+                      const Painter &painter) {
+
             std::unique_ptr<Element> product =
                 std::make_unique<T>();
+
+            product->context = &context;
+            product->painter = &painter;
+
             return product;
         }
 
         static std::unique_ptr<Element>
-        createElementImageView(const Configuration &);
+        createElementImageView(const Configuration &,
+                               const Context & context,
+                               const Painter & painter);
     };
 }
 

@@ -97,12 +97,11 @@ namespace etudes {
         return false;
     }
 
-    void Etude::draw(const Context &context,
-                     const Painter &painter) {
+    void Etude::draw() {
         clearBackground();
 
         for(auto &element : elements) {
-            element.second->draw(context, painter);
+            element.second->draw();
         }
     }
 

@@ -32,12 +32,11 @@ namespace etudes {
     class CellularAutomaton : public Element {
     public:
         CellularAutomaton();
-        
+
         void registerInputs() override;
         void init() override;
         void update() override;
-        void draw(const Context &context,
-                  const Painter &painter) override;
+        void draw() override;
 
         void randomizeTexture();
         void advanceCA();

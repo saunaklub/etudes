@@ -26,9 +26,9 @@
 namespace etudes {
     class Lines : public Element {
     public:
+
         void registerInputs() override;
-        void draw(const Context &context,
-                  const Painter &painter) override;
+        void draw() override;
 
     private:
     };

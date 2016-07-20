@@ -55,8 +55,7 @@ namespace etudes {
         registerInput("/color/lambda",    vec_float_t{0.0f});
     }
 
-    void Lines::draw(const Context &context,
-                     const Painter &painter) {
+    void Lines::draw() {
         auto dist_b = getValue<float>("/distance/base");
         auto dist_a = getValue<float>("/distance/amplitude");
         auto dist_o = getValue<float>("/distance/omega");
@@ -83,9 +82,9 @@ namespace etudes {
                        2.0f*sin(angle));
         auto p1 = -p0;
 
-        painter.parallels(p0, p1,
-                          count, count,
-                          width, dist, color,
-                          true);
+        getPainter().parallels(p0, p1,
+                               count, count,
+                               width, dist, color,
+                               true);
     }
 }

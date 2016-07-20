@@ -98,8 +98,7 @@ namespace etudes {
         offsetMode = mapOffsetMode[getValue<std::string>("/offset-mode")];
     }
 
-    void Sinusoids::draw(const Context &context,
-                         const Painter &painter) {
+    void Sinusoids::draw() {
 
         for(int index = amplitudes.size()-1 ; index >= 0 ; index--) {
             float amplitude = amplitudes[index];
@@ -109,15 +108,15 @@ namespace etudes {
 
             switch(drawMode) {
             case STRAIGHT:
-                drawSinusoidStraight(index, context, painter);
+                drawSinusoidStraight(index);
                 break;
 
             case MIRRORED:
-                drawSinusoidMirrored(index, context, painter);
+                drawSinusoidMirrored(index);
                 break;
 
             case CIRCULAR:
-                drawSinusoidCircular(index, context, painter);
+                drawSinusoidCircular(index);
                 break;
             }
         }
@@ -153,10 +152,9 @@ namespace etudes {
         return offsets;
     }
 
-    void Sinusoids::drawSinusoidStraight(
-        int index, const Context &context, const Painter &painter) {
+    void Sinusoids::drawSinusoidStraight(int index) {
 
-        const Rect &viewport = context.getViewport2D();
+        const Rect &viewport = getContext().getViewport2D();
         glm::vec2 start, end;
 
         float yStart = 0.f;
@@ -170,17 +168,16 @@ namespace etudes {
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
-        painter.sinusoidStraight(
+        getPainter().sinusoidStraight(
             start, end, index+1,
             widthDraw, colorDraw,
             time, freq, lambda, phaseDraw + 0.0f,
             strokeWidth, strokeBlur);
     }
 
-    void Sinusoids::drawSinusoidMirrored(
-        int index, const Context &context, const Painter &painter) {
+    void Sinusoids::drawSinusoidMirrored(int index) {
 
-        const Rect &viewport = context.getViewport2D();
+        const Rect &viewport = getContext().getViewport2D();
         glm::vec2 start, end;
 
         float yStart = 0.f;
@@ -194,7 +191,7 @@ namespace etudes {
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
-        painter.sinusoidStraight(
+        getPainter().sinusoidStraight(
             start, end, index+1,
             widthDraw, colorDraw,
             time, freq, lambda, phaseDraw + 0.0f,
@@ -205,23 +202,22 @@ namespace etudes {
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
-        painter.sinusoidStraight(
+        getPainter().sinusoidStraight(
             start, end, index+1,
             widthDraw, colorDraw,
             time, freq, lambda, phaseDraw + 0.5f,
             strokeWidth, strokeBlur);
     }
 
-    void Sinusoids::drawSinusoidCircular(
-        int index, const Context &context, const Painter &painter) {
+    void Sinusoids::drawSinusoidCircular(int index) {
 
-        const Rect &viewport = context.getViewport2D();
+        const Rect &viewport = getContext().getViewport2D();
 
         widthDraw = viewport.getDiagonal() / 2.0f *
             (widthBase + widthAmp * amplitudes[index] +
              offsets[index]);
 
-        painter.sinusoidCircular(
+        getPainter().sinusoidCircular(
             denormalize(center, viewport), index+1,
             widthDraw, widthDraw, colorDraw,
             time, freq, lambda, phaseDraw,

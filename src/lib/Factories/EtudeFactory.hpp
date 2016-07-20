@@ -27,15 +27,22 @@ namespace etudes {
 
     class Etude;
     class Configuration;
+    class Context;
+    class Painter;
 
     class EtudeFactory {
     public:
         static std::shared_ptr<Etude>
-        makeEtude(std::string name, const Configuration &config);
+        makeEtude(std::string name,
+                  const Configuration &config,
+                  const Context &context,
+                  const Painter &painter);
 
     private:
         static std::shared_ptr<Etude>
-        makeEtudeDefault(const Configuration &config);
+        makeEtudeDefault(const Configuration &config,
+                         const Context &context,
+                         const Painter &painter);
     };
 
 }

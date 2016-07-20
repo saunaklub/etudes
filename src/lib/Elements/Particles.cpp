@@ -141,9 +141,8 @@ namespace etudes {
         positionGBest = positions[indexMin];
     }
 
-    void Particles::draw(const Context &context,
-                         const Painter &painter) {
-        glUseProgram(context.getShaderRegistry().getProgram("simple"));
+    void Particles::draw() {
+        glUseProgram(getContext().getShaderRegistry().getProgram("simple"));
 
         glBindVertexArray(vao);
 

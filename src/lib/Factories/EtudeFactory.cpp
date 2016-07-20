@@ -36,7 +36,10 @@ namespace etudes {
     using logging::LogLevel;
 
     std::shared_ptr<Etude>
-    EtudeFactory::makeEtude(std::string name, const Configuration &config) {
+    EtudeFactory::makeEtude(std::string name,
+                            const Configuration &config,
+                            const Context & context,
+                            const Painter & painter) {
         std::shared_ptr<Etude> product;
 
         if(config.hasValue("type")) {
@@ -44,7 +47,7 @@ namespace etudes {
         }
         else {
             log(LogLevel::info, "Creating default etude '" + name + "'");
-            product = makeEtudeDefault(config);
+            product = makeEtudeDefault(config, context, painter);
         }
 
         product->registerInputs();
@@ -53,7 +56,9 @@ namespace etudes {
     }
 
     std::shared_ptr<Etude>
-    EtudeFactory::makeEtudeDefault(const Configuration &config) {
+    EtudeFactory::makeEtudeDefault(const Configuration & config,
+                                   const Context & context,
+                                   const Painter & painter) {
         std::shared_ptr<Etude> product = std::make_shared<Etude>();
 
         log(LogLevel::excessive, config);
@@ -62,7 +67,8 @@ namespace etudes {
         for(auto &element : order) {
             product->addElement(
                 element, ElementFactory::makeElement(
-                    config.getSubTree("elements:" + element)));
+                    config.getSubTree("elements:" + element),
+                    context, painter));
             log(LogLevel::excessive, "added element " + element);
         }
 

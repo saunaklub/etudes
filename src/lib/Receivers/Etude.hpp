@@ -38,8 +38,7 @@ namespace etudes {
 
         void init() override;
         void update() override;
-        void draw(const Context &context,
-                  const Painter &painter) override;
+        void draw() override;
 
         void addElement(std::string name, std::unique_ptr<Element> element);
 

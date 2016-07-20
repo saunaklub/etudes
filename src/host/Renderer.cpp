@@ -18,8 +18,8 @@ namespace etudes {
         etude->update();
     }
 
-    void Renderer::render(Context &context, Painter &painter) {
-        etude->draw(context, painter);
+    void Renderer::render() {
+        etude->draw();
     }
 
     void Renderer::addOutput(std::string name, int width, int height) {
@@ -29,9 +29,9 @@ namespace etudes {
 #endif
     }
 
-    void Renderer::renderOutput(Context &context, Painter &painter) {
+    void Renderer::renderOutput() {
         if(output)
-            output->render(context, painter);
+            output->render();
     }
 
 }

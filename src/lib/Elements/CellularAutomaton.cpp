@@ -82,9 +82,8 @@ namespace etudes {
         texture->unmapData();
     }
 
-    void CellularAutomaton::draw(const Context &context,
-                                 const Painter &painter) {
-
+    void CellularAutomaton::draw() {
+        const Context & context = getContext();
         const ShaderRegistry &registry = context.getShaderRegistry();
 
         glUseProgram(registry.getProgram("textured"));

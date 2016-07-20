@@ -39,8 +39,7 @@ namespace etudes {
         VideoOutput(Etude *etude, int width, int height);
         virtual ~VideoOutput();
 
-        void render(const Context &context,
-                    const Painter &painter);
+        void render();
 
         virtual void createOutput(std::string outputId) = 0;
         virtual void writeOutput() = 0;

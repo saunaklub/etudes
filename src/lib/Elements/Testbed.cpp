@@ -32,14 +32,14 @@ namespace etudes {
         registerInput("/test", vec_float_t{});
     }
 
-    void Testbed::draw(const Context &context,
-                       const Painter &painter) {
+    void Testbed::draw() {
         auto input = getValue<vec_float_t>("/test");
 
-        const Rect &viewport = context.getViewport2D();
+        const Rect &viewport = getContext().getViewport2D();
         glm::vec2 p0 = denormalize({0.0, 0.5}, viewport);
         glm::vec2 p1 = denormalize({1.0, 0.5}, viewport);
 
+        const Painter & painter = getPainter();
         painter.line(p0, p1, 20, {0, 1, 0, 1});
         painter.line(p0, p1, 1, {1, 0, 0, 1});
     }

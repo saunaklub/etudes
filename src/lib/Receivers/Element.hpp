@@ -22,6 +22,7 @@
 #define ETUDES_ELEMENT
 
 #include <Graphics/Context.hpp>
+#include <Graphics/Painter.hpp>
 
 #include <Receivers/Receiver.hpp>
 
@@ -32,13 +33,19 @@ namespace etudes {
 
     class Element : public Receiver {
     public:
+        friend class ElementFactory;
 
         virtual void init() {};
         virtual void update() {};
-        virtual void draw(const Context &context,
-                          const Painter &painter) = 0;
+        virtual void draw() = 0;
+
+    protected:
+        const Context & getContext();
+        const Painter & getPainter();
 
     private:
+        const Context * context;
+        const Painter * painter;
     };
 
 }

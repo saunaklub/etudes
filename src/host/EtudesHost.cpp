@@ -223,7 +223,8 @@ namespace etudes {
             Configuration etudeConfig;
             etudeConfig.read("configuration/etudes/" + etudeName + ".yml");
 
-            auto etude = EtudeFactory::makeEtude(etudeName, etudeConfig);
+            auto etude = EtudeFactory::makeEtude(etudeName, etudeConfig,
+                                                 *context, *painter);
             etude->init();
 
             checkGLError(etudeName + " init");
@@ -431,7 +432,7 @@ namespace etudes {
 
     void EtudesHost::renderOutputs() {
         for(auto &renderer : renderers) {
-            renderer->renderOutput(*context.get(), *painter.get());
+            renderer->renderOutput();
             checkGLError("drawing "s + renderer->getName());
         }
     }
@@ -446,7 +447,7 @@ namespace etudes {
             static_cast<GLsizei>(height)
             );
 
-        (*currentRenderer)->render(*context.get(), *painter.get());
+        (*currentRenderer)->render();
         checkGLError("drawing "s + (*currentRenderer)->getName());
 
         glfwSwapBuffers(window);

@@ -40,8 +40,7 @@ namespace etudes {
 
         void init() override;
         void update() override;
-        void draw(const Context &context,
-                  const Painter &painter) override;
+        void draw() override;
 
     private:
         std::string filename;

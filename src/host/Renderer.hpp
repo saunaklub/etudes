@@ -26,10 +26,10 @@ namespace etudes {
         std::string getName() const;
 
         void update();
-        void render(Context &context, Painter &painter);
+        void render();
 
         void addOutput(std::string name, int width, int height);
-        void renderOutput(Context &context, Painter &painter);
+        void renderOutput();
 
     private:
 

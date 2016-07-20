@@ -28,6 +28,7 @@ set(LIBRARY_SOURCES
     src/lib/Graphics/Geometry/Transforms.cpp
     src/lib/Graphics/Geometry/Rect.cpp
     src/lib/Receivers/Receiver.cpp
+    src/lib/Receivers/Element.cpp
     src/lib/Receivers/Etude.cpp
     src/lib/Elements/Lines.cpp
     src/lib/Elements/Particles.cpp

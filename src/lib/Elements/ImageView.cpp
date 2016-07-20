@@ -89,9 +89,9 @@ namespace etudes {
         image->uploadToTexture(texture.get());
     }
 
-    void ImageView::draw(const Context &context,
-                         const Painter &painter) {
-        const ShaderRegistry &registry = context.getShaderRegistry();
+    void ImageView::draw() {
+        const Context & context = getContext();
+        const ShaderRegistry & registry = context.getShaderRegistry();
 
         glUseProgram(registry.getProgram("textured"));
 
