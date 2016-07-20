@@ -39,9 +39,10 @@
 #endif
 
 namespace etudes {
-    glm::vec2 to_vec2(const std::vector<float> &vec);
-    glm::vec3 to_vec3(const std::vector<float> &vec);
-    glm::vec4 to_vec4(const std::vector<float> &vec);
+    namespace util {
+        glm::vec2 to_vec2(const std::vector<float> &vec);
+        glm::vec3 to_vec3(const std::vector<float> &vec);
+        glm::vec4 to_vec4(const std::vector<float> &vec);
 
     std::string splitStringFirst(std::string str, char separator='/');
     std::string splitStringRest(std::string str, char separator='/');
@@ -51,6 +52,7 @@ namespace etudes {
 
     void checkGLError(std::string context);
     std::string getGLErrorMessage(const gl::GLenum error);
+    }
 
     template <typename T>
     std::ostream &operator<<(std::ostream &os,
@@ -85,7 +87,6 @@ namespace etudes {
     // std::string to_string(const T &t) {
     //     return t.toString();
     // }
-
 }
 
 #endif // ETUDES_UTILITY

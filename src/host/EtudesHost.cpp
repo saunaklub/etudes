@@ -58,6 +58,8 @@ namespace {
 
 namespace etudes {
 
+    using util::checkGLError;
+
     void error_callback(int error, const char * description) {
         std::cerr << description << std::endl;
     }
@@ -309,8 +311,8 @@ namespace etudes {
 
         static long t0 = 0;
         if(logFramerate) {
-            long timeElapsed = (microSeconds()-t0);
-            t0 = microSeconds();
+            long timeElapsed = (util::microSeconds()-t0);
+            t0 = util::microSeconds();
             log(LogLevel::info, "rendering at " +
                 std::to_string(1000000.0/timeElapsed) + " fps / " +
                 std::to_string(timeElapsed) + " µs");

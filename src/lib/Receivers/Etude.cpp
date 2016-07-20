@@ -31,7 +31,9 @@ namespace etudes {
 
     using std::string;
     using namespace gl;
+
     using logging::LogLevel;
+    using namespace util;
 
     void
     Etude::registerInputs() {

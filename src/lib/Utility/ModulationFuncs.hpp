@@ -34,6 +34,8 @@ namespace etudes {
     using std::function;
     using std::sin;
 
+    using util::seconds;
+
     template<class T>
         function<T(float)> funcConst(T t) {
             return [=](float) {
@@ -59,9 +61,10 @@ namespace etudes {
                 float phi=0) {
 
             return [=](float k) {
-                return base + amp*sinf(2.0f*glm::pi<float>()
-                        * (k*lambda + seconds()*omega)
-                        + phi);
+                return base + amp*sinf(
+                    2.0f*glm::pi<float>()
+                    * (k*lambda + util::seconds()*omega)
+                    + phi);
             };
         }
 }

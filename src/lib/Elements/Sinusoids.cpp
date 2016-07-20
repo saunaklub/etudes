@@ -83,7 +83,7 @@ namespace etudes {
         colorBase = getValue<glm::vec4>("/color");
         colorAmp = getValue<glm::vec4>("/color-amp");
 
-        time = seconds();
+        time = util::seconds();
         freq = getValue<float>("/freq");
         lambda = getValue<float>("/lambda");
         phaseBase = getValue<float>("/phase");

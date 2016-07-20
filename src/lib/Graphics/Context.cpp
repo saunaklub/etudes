@@ -41,6 +41,8 @@ namespace etudes {
     using std::to_string;
     using logging::to_string;
 
+    using util::checkGLError;
+
     typedef std::vector<float> vec;
 
     Context::Context() :

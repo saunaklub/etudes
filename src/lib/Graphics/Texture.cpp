@@ -31,6 +31,7 @@ namespace etudes {
 
     using namespace gl;
     using logging::LogLevel;
+    using util::checkGLError;
 
     Texture::Texture(int width, int height) :
         width(width),

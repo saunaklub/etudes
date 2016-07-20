@@ -34,6 +34,8 @@ namespace {
     using etudes::logging::log;
     using etudes::logging::LogLevel;
 
+    using namespace etudes::util;
+
     void error(int num, const char *msg, const char *path) {
         if (path)
             log(etudes::logging::error, "at "s + path + ": "s);

@@ -54,7 +54,7 @@ namespace etudes {
     void CellularAutomaton::update() {
         float rate = getValue<float>("/rate");
 
-        double time = seconds();
+        double time = util::seconds();
         if(time > updateLast + 1.f / rate) {
             int updateCount = (time - updateLast) * rate;
             updateLast += updateCount * 1.f / rate;
