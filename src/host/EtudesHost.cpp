@@ -379,19 +379,22 @@ namespace etudes {
                 break;
 
             case GLFW_KEY_F:
-                log(LogLevel::excessive, "toggling framerate display");
                 logFramerate = !logFramerate;
+                log(LogLevel::excessive, "framerate display: "s +
+                    std::to_string(logFramerate));
                 break;
 
             case GLFW_KEY_V:
-                log(LogLevel::excessive, "toggling vertical sync");
                 vsync = !vsync;
+                log(LogLevel::excessive, "vertical sync: "s +
+                    std::to_string(vsync));
                 glfwSwapInterval(vsync);
                 break;
 
             case GLFW_KEY_C:
-                log(LogLevel::excessive, "toggling cursor");
                 cursor = !cursor;
+                log(LogLevel::excessive, "cursor visible: "s +
+                    std::to_string(cursor));
                 setCursorEnabled(cursor);
                 break;
 
