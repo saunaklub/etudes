@@ -36,6 +36,7 @@ set(LIBRARY_SOURCES
     src/lib/Elements/Sinusoids.cpp
     src/lib/Elements/CellularAutomaton.cpp
     src/lib/Elements/AlgoSynth.cpp
+    src/lib/Elements/BlobTraces.cpp
     src/lib/Elements/Testbed.cpp
     )
 
