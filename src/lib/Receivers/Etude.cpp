@@ -38,7 +38,6 @@ namespace etudes {
     void
     Etude::registerInputs() {
         registerInput("/background", vec_float_t{0.0f, 0.0f, 0.0f, 1.0f});
-
     }
 
     void
@@ -107,11 +106,9 @@ namespace etudes {
 
     void Etude::clearBackground() {
         auto colorBackground = getValue<glm::vec4>("/background");
-        glClearColor(colorBackground[0],
-                     colorBackground[1],
-                     colorBackground[2],
-                     colorBackground[3]);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        getPainter().setColor(colorBackground);
+        getPainter().rect({0, 0}, {1, 1});
     }
 
 }
