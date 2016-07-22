@@ -30,6 +30,7 @@
 #include <Elements/Sinusoids.hpp>
 #include <Elements/CellularAutomaton.hpp>
 #include <Elements/AlgoSynth.hpp>
+#include <Elements/BlobTraces.hpp>
 #include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
@@ -48,6 +49,7 @@ namespace etudes {
         {"Sinusoids", ElementFactory::createElement<Sinusoids>},
         {"CellularAutomaton", ElementFactory::createElement<CellularAutomaton>},
         {"AlgoSynth", ElementFactory::createElement<AlgoSynth>},
+        {"BlobTraces", ElementFactory::createElement<BlobTraces>},
         {"Testbed", ElementFactory::createElement<Testbed>},
     };
 
