@@ -120,11 +120,11 @@ namespace etudes {
 
     glm::mat4 Context::getToViewportTransform() const {
         glm::mat4 toViewport(
-            viewport2D.getWidth() / 2.0f,  0, 0, 0,
-            0, viewport2D.getHeight() / 2.0f, 0, 0,
+            viewport2D.getWidth(),  0, 0, 0,
+            0, viewport2D.getHeight(), 0, 0,
             0, 0, 1, 0,
             viewport2D.getPosX(), viewport2D.getPosY(), 0, 1);
-        toViewport = glm::translate(toViewport, glm::vec3{1.0f, 1.0f, 0.f});
+        toViewport = glm::translate(toViewport, glm::vec3{0.5f, 0.5f, 0.f});
 
         return toViewport;
     }

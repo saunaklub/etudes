@@ -104,11 +104,11 @@ namespace etudes {
         area = area.maximizedTo(context.getViewport2D(), Rect::STRETCH);
 
         glm::mat4 model(
-            area.getWidth() / 2.0f,  0, 0, 0,
-            0, area.getHeight() / 2.0f, 0, 0,
+            area.getWidth(),  0, 0, 0,
+            0, area.getHeight(), 0, 0,
             0, 0, 1, 0,
             area.getPosX(), area.getPosY(), 0, 1);
-        model = glm::translate(model, glm::vec3{1.0f, 1.0f, 0.f});
+        model = glm::translate(model, glm::vec3{0.5f, 0.5f, 0.f});
         glm::mat4 mvp = context.getProjection2D() * model;
 
         GLint locMVP = registry.getUniform("textured", "mvp");
