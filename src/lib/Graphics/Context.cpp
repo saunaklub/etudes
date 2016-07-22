@@ -72,9 +72,9 @@ namespace etudes {
         shaders.registerUniform("textured", "alpha");
         shaders.registerUniform("textured", "useAlpha");
 
-        shaders.registerProgram("line", {"mvp-uv", "solid"});
-        shaders.registerUniform("line", "mvp");
-        shaders.registerUniform("line", "color");
+        shaders.registerProgram("solid", {"mvp-uv", "solid"});
+        shaders.registerUniform("solid", "mvp");
+        shaders.registerUniform("solid", "color");
 
         shaders.registerProgram("sinusoid", {"mvp-uv", "sinusoid"});
 

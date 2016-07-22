@@ -38,7 +38,8 @@ namespace etudes {
 
     using logging::LogLevel;
 
-    const std::string shaderLine = "line";
+    const std::string shaderLine = "solid";
+    const std::string shaderRect = "solid";
     const std::string shaderSinusoid = "sinusoid";
 
     Painter::Painter(const Context &context) :
