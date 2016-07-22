@@ -168,16 +168,17 @@ namespace etudes {
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
+        getPainter().setColor(colorDraw);
         getPainter().sinusoidStraight(
-            start, end, index+1,
-            widthDraw, colorDraw,
+            start, end, index+1, widthDraw,
             time, freq, lambda, phaseDraw + 0.0f,
             strokeWidth, strokeBlur);
     }
 
     void Sinusoids::drawSinusoidMirrored(int index) {
-
+        Painter & painter = getPainter();
         const Rect &viewport = getContext().getViewport2D();
+
         glm::vec2 start, end;
 
         float yStart = 0.f;
@@ -191,9 +192,10 @@ namespace etudes {
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
-        getPainter().sinusoidStraight(
-            start, end, index+1,
-            widthDraw, colorDraw,
+        painter.setColor(colorDraw);
+
+        painter.sinusoidStraight(
+            start, end, index+1, widthDraw,
             time, freq, lambda, phaseDraw + 0.0f,
             strokeWidth, strokeBlur);
 
@@ -202,24 +204,24 @@ namespace etudes {
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
-        getPainter().sinusoidStraight(
+        painter.sinusoidStraight(
             start, end, index+1,
-            widthDraw, colorDraw,
-            time, freq, lambda, phaseDraw + 0.5f,
+            widthDraw, time, freq, lambda, phaseDraw + 0.5f,
             strokeWidth, strokeBlur);
     }
 
     void Sinusoids::drawSinusoidCircular(int index) {
-
+        Painter & painter = getPainter();
         const Rect &viewport = getContext().getViewport2D();
 
         widthDraw = viewport.getDiagonal() / 2.0f *
             (widthBase + widthAmp * amplitudes[index] +
              offsets[index]);
 
-        getPainter().sinusoidCircular(
+        painter.setColor(colorDraw);
+        painter.sinusoidCircular(
             denormalize(center, viewport), index+1,
-            widthDraw, widthDraw, colorDraw,
+            widthDraw, widthDraw,
             time, freq, lambda, phaseDraw,
             circleWidth, strokeWidth, strokeBlur);
     }

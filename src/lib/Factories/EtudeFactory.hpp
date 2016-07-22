@@ -36,13 +36,13 @@ namespace etudes {
         makeEtude(std::string name,
                   const Configuration &config,
                   const Context &context,
-                  const Painter &painter);
+                  Painter &painter);
 
     private:
         static std::shared_ptr<Etude>
         makeEtudeDefault(const Configuration &config,
                          const Context &context,
-                         const Painter &painter);
+                         Painter &painter);
     };
 
 }

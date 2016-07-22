@@ -37,13 +37,13 @@ namespace etudes {
         static std::unique_ptr<Element>
         makeElement(const Configuration &config,
                     const Context &context,
-                    const Painter &painter);
+                    Painter &painter);
 
     private:
         typedef std::function<
         std::unique_ptr<Element>(const Configuration &,
                                  const Context & context,
-                                 const Painter & painter)> creation_t;
+                                 Painter & painter)> creation_t;
 
         static std::map<std::string, creation_t> creationMap;
 
@@ -51,7 +51,7 @@ namespace etudes {
         std::unique_ptr<Element>
         createElement(const Configuration &config,
                       const Context &context,
-                      const Painter &painter) {
+                      Painter &painter) {
 
             std::unique_ptr<Element> product =
                 std::make_unique<T>();
@@ -65,7 +65,7 @@ namespace etudes {
         static std::unique_ptr<Element>
         createElementImageView(const Configuration &,
                                const Context & context,
-                               const Painter & painter);
+                               Painter & painter);
     };
 }
 

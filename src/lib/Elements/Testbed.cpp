@@ -39,8 +39,11 @@ namespace etudes {
         glm::vec2 p0 = denormalize({0.0, 0.5}, viewport);
         glm::vec2 p1 = denormalize({1.0, 0.5}, viewport);
 
-        const Painter & painter = getPainter();
-        painter.line(p0, p1, 20, {0, 1, 0, 1});
-        painter.line(p0, p1, 1, {1, 0, 0, 1});
+        Painter & painter = getPainter();
+
+        painter.setColor({0, 1, 0, 1});
+        painter.line(p0, p1, 20);
+        painter.setColor({1, 0, 0, 1});
+        painter.line(p0, p1, 1);
     }
 }

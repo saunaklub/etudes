@@ -34,18 +34,17 @@ namespace etudes {
 
         void init();
 
-        void line(glm::vec2 p0, glm::vec2 p1,
-                  float width, glm::vec4 color) const;
+        void setColor(glm::vec4 color);
+
+        void line(glm::vec2 p0, glm::vec2 p1, float width) const;
 
         void sinusoidStraight(
-            glm::vec2 p0, glm::vec2 p1, int order,
-            float width, glm::vec4 color,
+            glm::vec2 p0, glm::vec2 p1, int order, float width,
             float time, float freq, float lambda, float phase,
             float strokeWidth, float strokeBlur) const;
 
         void sinusoidCircular(
-            glm::vec2 center, int order,
-            float width, float height, glm::vec4 color,
+            glm::vec2 center, int order, float width, float height,
             float time, float freq, float lambda, float phase,
             float circleWidth, float strokeWidth, float strokeBlur) const;
 
@@ -55,7 +54,9 @@ namespace etudes {
             std::function<float(int)> funcWidth,
             std::function<float(int)> funcDistance,
             std::function<glm::vec4(int)> funcColor,
-            bool normalizedInput=false) const;
+            bool normalizedInput=false);
+
+        void rect(glm::vec2 topLeft, glm::vec2 bottomRight) const;
 
     private:
         void drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
@@ -65,6 +66,8 @@ namespace etudes {
 
         const Context &context;
         Quad quad;
+
+        glm::vec4 color;
     };
 }
 

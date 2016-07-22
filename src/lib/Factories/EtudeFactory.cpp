@@ -39,7 +39,7 @@ namespace etudes {
     EtudeFactory::makeEtude(std::string name,
                             const Configuration &config,
                             const Context & context,
-                            const Painter & painter) {
+                            Painter & painter) {
         std::shared_ptr<Etude> product;
 
         if(config.hasValue("type")) {
@@ -50,18 +50,8 @@ namespace etudes {
             product = makeEtudeDefault(config, context, painter);
         }
 
-        product->registerInputs();
-
-        return product;
-    }
-
-    std::shared_ptr<Etude>
-    EtudeFactory::makeEtudeDefault(const Configuration & config,
-                                   const Context & context,
-                                   const Painter & painter) {
-        std::shared_ptr<Etude> product = std::make_shared<Etude>();
-
-        log(LogLevel::excessive, config);
+        product->context = &context;
+        product->painter = &painter;
 
         auto order = config.getValue<std::list<std::string>>("order");
         for(auto &element : order) {
@@ -72,6 +62,26 @@ namespace etudes {
             log(LogLevel::excessive, "added element " + element);
         }
 
+        product->registerInputs();
+
+        if(config.hasValue("defaults")) {
+            log(LogLevel::debug, config);
+            for(auto &child : config.getChildren("defaults")) {
+                product->setValue(
+                    child, config.getValue<std::vector<float>>(
+                        "defaults:" + child));
+            }
+        }
+
+        return product;
+    }
+
+    std::shared_ptr<Etude>
+    EtudeFactory::makeEtudeDefault(const Configuration & config,
+                                   const Context & context,
+                                   Painter & painter) {
+        log(LogLevel::excessive, config);
+        std::shared_ptr<Etude> product = std::make_shared<Etude>();
         return product;
     }
 

@@ -34,6 +34,7 @@ namespace etudes {
     class Element : public Receiver {
     public:
         friend class ElementFactory;
+        friend class EtudeFactory;
 
         virtual void init() {};
         virtual void update() {};
@@ -41,11 +42,11 @@ namespace etudes {
 
     protected:
         const Context & getContext();
-        const Painter & getPainter();
+        Painter & getPainter();
 
     private:
         const Context * context;
-        const Painter * painter;
+        Painter * painter;
     };
 
 }

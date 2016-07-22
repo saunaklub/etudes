@@ -29,7 +29,6 @@
 namespace etudes {
 
     class Etude : public Element {
-
     public:
 
         virtual ~Etude() {};
@@ -52,17 +51,15 @@ namespace etudes {
         dispatchValue(std::string input, const vec_string_t &value) override;
 
     protected:
-
         void clearBackground();
 
     private:
-
         typedef std::vector<std::pair<std::string, std::unique_ptr<Element>>>
                             element_vec_t;
 
         template <typename T> bool
         dispatchValueT(std::string input, const T &value);
-        
+
         element_vec_t elements;
     };
 

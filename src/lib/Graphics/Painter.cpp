@@ -48,8 +48,11 @@ namespace etudes {
     void Painter::init() {
     }
 
-    void Painter::line(glm::vec2 p0, glm::vec2 p1,
-                       float width, glm::vec4 color) const {
+    void Painter::setColor(glm::vec4 color) {
+        this->color = color;
+    }
+
+    void Painter::line(glm::vec2 p0, glm::vec2 p1, float width) const {
 #if 0
         log(logging::excessive,
             "drawLine called with: "s +
@@ -70,8 +73,7 @@ namespace etudes {
     }
 
     void Painter::sinusoidStraight(
-        glm::vec2 p0, glm::vec2 p1, int order,
-        float width, glm::vec4 color,
+        glm::vec2 p0, glm::vec2 p1, int order, float width,
         float time, float freq, float lambda, float phase,
         float strokeWidth, float strokeBlur) const {
         const ShaderRegistry &registry = context.getShaderRegistry();
@@ -98,8 +100,7 @@ namespace etudes {
     }
 
     void Painter::sinusoidCircular(
-        glm::vec2 center, int order,
-        float width, float height, glm::vec4 color,
+        glm::vec2 center, int order, float width, float height,
         float time, float freq, float lambda, float phase,
         float circleWidth, float strokeWidth, float strokeBlur) const {
         const ShaderRegistry &registry = context.getShaderRegistry();
@@ -134,13 +135,11 @@ namespace etudes {
         std::function<float(int)> funcWidth,
         std::function<float(int)> funcDistance,
         std::function<glm::vec4(int)>  funcColor,
-        bool normalizedInput) const {
+        bool normalizedInput) {
 
         // draw center line
-        // drawLine(
-        //     centerp0, centerp1,
-        //     funcWidth(0), funcColor(0)
-        //     );
+        setColor(funcColor(0));
+        line(centerp0, centerp1, funcWidth(0));
 
         // vector pointing from p0 -> p1
         glm::vec2 diff = centerp1 - centerp0;
@@ -176,10 +175,43 @@ namespace etudes {
                     p0 = denormalize(p0, viewport);
                     p1 = denormalize(p1, viewport);
                 }
-                line(p0, p1, funcWidth(r), funcColor(r));
+                setColor(funcColor(r));
+                line(p0, p1, funcWidth(r));
             }
         }
     }
+
+    void Painter::rect(glm::vec2 topLeft, glm::vec2 bottomRight) const {
+        const ShaderRegistry &registry = context.getShaderRegistry();
+
+        glUseProgram(registry.getProgram(shaderRect));
+        glUniform4f(registry.getUniform(shaderRect, "color"),
+                    color.r, color.g, color.b, color.a);
+
+        Rect viewport = context.getViewport2D();
+
+        topLeft = denormalize(topLeft, viewport);
+        bottomRight = denormalize(bottomRight, viewport);
+        auto diag = bottomRight - topLeft;
+
+        glm::mat4 model;
+        model = glm::translate(model, glm::vec3(topLeft[0], topLeft[1], 0));
+        model = glm::scale(model, glm::vec3(diag[0], diag[1], 1));
+        model = glm::translate(model, glm::vec3(0.5, 0.5, 0));
+
+        // EDB(model);
+
+        glm::mat4 proj = context.getProjection2D();
+        glm::mat4 mvp = proj * model;
+        glUniformMatrix4fv(
+            context.getShaderRegistry().getUniform(shaderRect, "mvp"),
+            1, GLboolean(false), glm::value_ptr(mvp));
+
+        quad.draw();
+    }
+
+    // void Painter::rect(glm::vec2 center, float size) const {
+    // }
 
     void Painter::drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
                                    float width, std::string shader) const {

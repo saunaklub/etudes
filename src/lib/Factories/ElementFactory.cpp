@@ -54,7 +54,7 @@ namespace etudes {
     std::unique_ptr<Element>
     ElementFactory::makeElement(const Configuration & config,
                                 const Context & context,
-                                const Painter & painter) {
+                                Painter & painter) {
         std::unique_ptr<Element> product;
 
         std::string type = config.getValue<std::string>("type");
@@ -82,7 +82,7 @@ namespace etudes {
     std::unique_ptr<Element>
     ElementFactory::createElementImageView(const Configuration & config,
                                            const Context & context,
-                                           const Painter & painter) {
+                                           Painter & painter) {
         std::string image = config.getValue<std::string>("image");
         std::unique_ptr<PanZoom> panZoom;
 
