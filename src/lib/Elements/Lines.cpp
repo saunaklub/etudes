@@ -56,6 +56,8 @@ namespace etudes {
     }
 
     void Lines::draw() {
+        Painter & painter = getPainter();
+
         auto dist_b = getValue<float>("/distance/base");
         auto dist_a = getValue<float>("/distance/amplitude");
         auto dist_o = getValue<float>("/distance/omega");
@@ -82,9 +84,9 @@ namespace etudes {
                        2.0f*sin(angle));
         auto p1 = -p0;
 
-        getPainter().parallels(p0, p1,
-                               count, count,
-                               width, dist, color,
-                               true);
+        painter.setInputNormalized(true);
+        painter.parallels(p0, p1,
+                          count, count,
+                          width, dist, color);
     }
 }

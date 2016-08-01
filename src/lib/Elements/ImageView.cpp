@@ -90,8 +90,7 @@ namespace etudes {
     }
 
     void ImageView::draw() {
-        const Context & context = getContext();
-        const ShaderRegistry & registry = context.getShaderRegistry();
+        const ShaderRegistry & registry = getContext().getShaderRegistry();
 
         glUseProgram(registry.getProgram("textured"));
 
@@ -101,7 +100,7 @@ namespace etudes {
         glUniform1f(registry.getUniform("textured", "alpha"), alpha);
 
         Rect area(0, 0, image->getWidth(), image->getHeight());
-        area = area.maximizedTo(context.getViewport2D(), Rect::STRETCH);
+        area = area.maximizedTo(getContext().getViewport2D(), Rect::STRETCH);
 
         glm::mat4 model(
             area.getWidth(),  0, 0, 0,
@@ -109,7 +108,7 @@ namespace etudes {
             0, 0, 1, 0,
             area.getPosX(), area.getPosY(), 0, 1);
         model = glm::translate(model, glm::vec3{0.5f, 0.5f, 0.f});
-        glm::mat4 mvp = context.getProjection2D() * model;
+        glm::mat4 mvp = getContext().getProjection2D() * model;
 
         GLint locMVP = registry.getUniform("textured", "mvp");
         glUniformMatrix4fv(locMVP, 1, GLboolean(false),

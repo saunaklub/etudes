@@ -35,30 +35,24 @@ namespace etudes {
     using logging::log;
     using logging::LogLevel;
 
-    std::shared_ptr<Etude>
+    std::unique_ptr<Etude>
     EtudeFactory::makeEtude(std::string name,
-                            const Configuration &config,
-                            const Context & context,
-                            Painter & painter) {
-        std::shared_ptr<Etude> product;
+                            const Configuration &config) {
+        std::unique_ptr<Etude> product;
 
         if(config.hasValue("type")) {
             std::string type = config.getValue<std::string>("type");
         }
         else {
             log(LogLevel::info, "Creating default etude '" + name + "'");
-            product = makeEtudeDefault(config, context, painter);
+            product = makeEtudeDefault(config);
         }
-
-        product->context = &context;
-        product->painter = &painter;
 
         auto order = config.getValue<std::list<std::string>>("order");
         for(auto &element : order) {
             product->addElement(
                 element, ElementFactory::makeElement(
-                    config.getSubTree("elements:" + element),
-                    context, painter));
+                    config.getSubTree("elements:" + element)));
             log(LogLevel::excessive, "added element " + element);
         }
 
@@ -76,12 +70,10 @@ namespace etudes {
         return product;
     }
 
-    std::shared_ptr<Etude>
-    EtudeFactory::makeEtudeDefault(const Configuration & config,
-                                   const Context & context,
-                                   Painter & painter) {
+    std::unique_ptr<Etude>
+    EtudeFactory::makeEtudeDefault(const Configuration & config) {
         log(LogLevel::excessive, config);
-        std::shared_ptr<Etude> product = std::make_shared<Etude>();
+        std::unique_ptr<Etude> product = std::make_unique<Etude>();
         return product;
     }
 

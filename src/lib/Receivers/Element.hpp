@@ -33,20 +33,22 @@ namespace etudes {
 
     class Element : public Receiver {
     public:
-        friend class ElementFactory;
-        friend class EtudeFactory;
+        virtual ~Element() {};
 
         virtual void init() {};
         virtual void update() {};
         virtual void draw() = 0;
 
-    protected:
-        const Context & getContext();
+        void setContext(const Context & context);
+        const Context & getContext() const;
+
         Painter & getPainter();
+
+    protected:
 
     private:
         const Context * context;
-        Painter * painter;
+        Painter painter;
     };
 
 }

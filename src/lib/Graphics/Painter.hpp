@@ -30,13 +30,19 @@ namespace etudes {
     class Context;
     class Painter {
     public:
-        Painter(const Context &context);
 
-        void init();
+        Painter();
+
+        void reset();
+
+        void setContext(const Context & context);
 
         void setColor(glm::vec4 color);
+        void setInputNormalized(bool normalized);
 
-        void line(glm::vec2 p0, glm::vec2 p1, float width) const;
+        void line(glm::vec2 p0, glm::vec2 p1, float width);
+        void rect(glm::vec2 topLeft, glm::vec2 bottomRight);
+        void rect(glm::vec2 center, float size);
 
         void sinusoidStraight(
             glm::vec2 p0, glm::vec2 p1, int order, float width,
@@ -53,21 +59,20 @@ namespace etudes {
             int leftRepeat, int rightRepeat,
             std::function<float(int)> funcWidth,
             std::function<float(int)> funcDistance,
-            std::function<glm::vec4(int)> funcColor,
-            bool normalizedInput=false);
-
-        void rect(glm::vec2 topLeft, glm::vec2 bottomRight) const;
+            std::function<glm::vec4(int)> funcColor);
 
     private:
+
         void drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
                               float width, std::string shader) const;
         void drawCircleGeometry(glm::vec2 center, float width, float height,
                                 std::string shader) const;
 
-        const Context &context;
+        const Context * context;
         Quad quad;
 
         glm::vec4 color;
+        bool normalizedInput;
     };
 }
 

@@ -42,18 +42,28 @@ namespace etudes {
     const std::string shaderRect = "solid";
     const std::string shaderSinusoid = "sinusoid";
 
-    Painter::Painter(const Context &context) :
-        context(context) {
+    Painter::Painter() {
+        reset();
     }
 
-    void Painter::init() {
+    void Painter::reset() {
+        setInputNormalized(true);
+        setColor({1, 1, 1, 1});
+    }
+
+    void Painter::setContext(const Context & context) {
+        this->context = &context;
     }
 
     void Painter::setColor(glm::vec4 color) {
         this->color = color;
     }
 
-    void Painter::line(glm::vec2 p0, glm::vec2 p1, float width) const {
+    void Painter::setInputNormalized(bool normalized) {
+        normalizedInput = normalized;
+    }
+
+    void Painter::line(glm::vec2 p0, glm::vec2 p1, float width) {
 #if 0
         log(logging::excessive,
             "drawLine called with: "s +
@@ -62,22 +72,68 @@ namespace etudes {
             std::to_string(width) + " "s +
             to_string(color));
 #endif
-
-        const ShaderRegistry &registry = context.getShaderRegistry();
+        assert(context);
+        const ShaderRegistry &registry = context->getShaderRegistry();
+        const Rect & viewport = context->getViewport2D();
 
         glUseProgram(registry.getProgram(shaderLine));
 
         glUniform4f(registry.getUniform(shaderLine, "color"),
                     color.r, color.g, color.b, color.a);
 
+        if(normalizedInput) {
+            p0 = denormalize(p0, viewport);
+            p1 = denormalize(p1, viewport);
+        }
         drawLineGeometry(p0, p1, width, shaderLine);
+    }
+
+    void Painter::rect(glm::vec2 topLeft, glm::vec2 bottomRight) {
+        assert(context);
+
+        const ShaderRegistry &registry = context->getShaderRegistry();
+        const Rect & viewport = context->getViewport2D();
+
+        glUseProgram(registry.getProgram(shaderRect));
+        glUniform4f(registry.getUniform(shaderRect, "color"),
+                    color.r, color.g, color.b, color.a);
+
+        if(normalizedInput) {
+            topLeft = denormalize(topLeft, viewport);
+            bottomRight = denormalize(bottomRight, viewport);
+        }
+
+        auto diag = bottomRight - topLeft;
+
+        glm::mat4 model;
+        model = glm::translate(model, glm::vec3(topLeft[0], topLeft[1], 0));
+        model = glm::scale(model, glm::vec3(diag[0], diag[1], 1));
+        model = glm::translate(model, glm::vec3(0.5, 0.5, 0));
+
+        // EDB(model);
+
+        glm::mat4 proj = context->getProjection2D();
+        glm::mat4 mvp = proj * model;
+        glUniformMatrix4fv(
+            context->getShaderRegistry().getUniform(shaderRect, "mvp"),
+            1, GLboolean(false), glm::value_ptr(mvp));
+
+        quad.draw();
+    }
+
+    void Painter::rect(glm::vec2 center, float size) {
+        glm::vec2 topLeft = {center[0] - size, center[1] + size};
+        glm::vec2 bottomRight = {center[0] + size, center[1] - size};
+        rect(topLeft, bottomRight);
     }
 
     void Painter::sinusoidStraight(
         glm::vec2 p0, glm::vec2 p1, int order, float width,
         float time, float freq, float lambda, float phase,
         float strokeWidth, float strokeBlur) const {
-        const ShaderRegistry &registry = context.getShaderRegistry();
+
+        assert(context);
+        const ShaderRegistry &registry = context->getShaderRegistry();
 
         glUseProgram(registry.getProgram(shaderSinusoid));
 
@@ -104,7 +160,9 @@ namespace etudes {
         glm::vec2 center, int order, float width, float height,
         float time, float freq, float lambda, float phase,
         float circleWidth, float strokeWidth, float strokeBlur) const {
-        const ShaderRegistry &registry = context.getShaderRegistry();
+
+        assert(context);
+        const ShaderRegistry &registry = context->getShaderRegistry();
 
         glUseProgram(registry.getProgram(shaderSinusoid));
 
@@ -135,8 +193,9 @@ namespace etudes {
         int leftRepeat, int rightRepeat,
         std::function<float(int)> funcWidth,
         std::function<float(int)> funcDistance,
-        std::function<glm::vec4(int)>  funcColor,
-        bool normalizedInput) {
+        std::function<glm::vec4(int)>  funcColor) {
+
+        assert(context);
 
         // draw center line
         setColor(funcColor(0));
@@ -158,7 +217,7 @@ namespace etudes {
         glm::vec2 repeatp0;
         glm::vec2 repeatp1;
 
-        const Rect & viewport = context.getViewport2D();
+        const Rect & viewport = context->getViewport2D();
 
         // draw lines in each 'direction
         for(auto &dr : direction_repeat) {
@@ -182,40 +241,10 @@ namespace etudes {
         }
     }
 
-    void Painter::rect(glm::vec2 topLeft, glm::vec2 bottomRight) const {
-        const ShaderRegistry &registry = context.getShaderRegistry();
-
-        glUseProgram(registry.getProgram(shaderRect));
-        glUniform4f(registry.getUniform(shaderRect, "color"),
-                    color.r, color.g, color.b, color.a);
-
-        Rect viewport = context.getViewport2D();
-
-        topLeft = denormalize(topLeft, viewport);
-        bottomRight = denormalize(bottomRight, viewport);
-        auto diag = bottomRight - topLeft;
-
-        glm::mat4 model;
-        model = glm::translate(model, glm::vec3(topLeft[0], topLeft[1], 0));
-        model = glm::scale(model, glm::vec3(diag[0], diag[1], 1));
-        model = glm::translate(model, glm::vec3(0.5, 0.5, 0));
-
-        // EDB(model);
-
-        glm::mat4 proj = context.getProjection2D();
-        glm::mat4 mvp = proj * model;
-        glUniformMatrix4fv(
-            context.getShaderRegistry().getUniform(shaderRect, "mvp"),
-            1, GLboolean(false), glm::value_ptr(mvp));
-
-        quad.draw();
-    }
-
-    // void Painter::rect(glm::vec2 center, float size) const {
-    // }
-
     void Painter::drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
                                    float width, std::string shader) const {
+        assert(context);
+
         glm::vec2 line = p1 - p0;
 
         glm::mat4 model;
@@ -226,11 +255,11 @@ namespace etudes {
                            glm::vec3(glm::length(line), width, 1));
         model = glm::translate(model, glm::vec3{0.5f, 0.f, 0.f});
 
-        glm::mat4 proj = context.getProjection2D();
+        glm::mat4 proj = context->getProjection2D();
         glm::mat4 mvp = proj * model;
 
         glUniformMatrix4fv(
-            context.getShaderRegistry().getUniform(shader, "mvp"),
+            context->getShaderRegistry().getUniform(shader, "mvp"),
             1, GLboolean(false), glm::value_ptr(mvp));
 
         quad.draw();
@@ -238,15 +267,17 @@ namespace etudes {
 
     void Painter::drawCircleGeometry(glm::vec2 center, float width, float height,
                                      std::string shader) const {
+        assert(context);
+
         glm::mat4 model;
         model = glm::translate(model, glm::vec3{center[0], center[1], 0.f});
         model = glm::scale(model, glm::vec3(width, height, 1.0f));
 
-        glm::mat4 proj = context.getProjection2D();
+        glm::mat4 proj = context->getProjection2D();
         glm::mat4 mvp = proj * model;
 
         glUniformMatrix4fv(
-            context.getShaderRegistry().getUniform(shader, "mvp"),
+            context->getShaderRegistry().getUniform(shader, "mvp"),
             1, GLboolean(false), glm::value_ptr(mvp));
 
         quad.draw();

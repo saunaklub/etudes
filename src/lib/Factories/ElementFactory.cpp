@@ -54,14 +54,12 @@ namespace etudes {
     };
 
     std::unique_ptr<Element>
-    ElementFactory::makeElement(const Configuration & config,
-                                const Context & context,
-                                Painter & painter) {
+    ElementFactory::makeElement(const Configuration & config) {
         std::unique_ptr<Element> product;
 
         std::string type = config.getValue<std::string>("type");
         try {
-            product = creationMap[type](config, context, painter);
+            product = creationMap[type](config);
         } catch(std::bad_function_call) {
             log(LogLevel::error,
                 "no factory method defined for element type: " + type);
@@ -82,9 +80,7 @@ namespace etudes {
     }
 
     std::unique_ptr<Element>
-    ElementFactory::createElementImageView(const Configuration & config,
-                                           const Context & context,
-                                           Painter & painter) {
+    ElementFactory::createElementImageView(const Configuration & config) {
         std::string image = config.getValue<std::string>("image");
         std::unique_ptr<PanZoom> panZoom;
 
@@ -100,9 +96,6 @@ namespace etudes {
 
         std::unique_ptr<Element> product =
             std::make_unique<ImageView>(image, std::move(panZoom));;
-
-        product->context = &context;
-        product->painter = &painter;
 
         return std::move(product);
     }

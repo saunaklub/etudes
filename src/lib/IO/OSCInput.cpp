@@ -160,8 +160,7 @@ namespace etudes {
     void OSCInput::update(std::string path,
                           const std::vector<float> &values);
 
-    bool OSCInput::addReceiver(std::string name, 
-                                std::shared_ptr<Receiver> receiver) {
+    bool OSCInput::addReceiver(std::string name, Receiver * receiver) {
         auto iter = std::find_if(receivers.begin(), receivers.end(),
                                  [&](const auto &e)  {
                                      return(e.first == name);

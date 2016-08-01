@@ -35,37 +35,26 @@ namespace etudes {
     class ElementFactory {
     public:
         static std::unique_ptr<Element>
-        makeElement(const Configuration &config,
-                    const Context &context,
-                    Painter &painter);
+        makeElement(const Configuration &config);
 
     private:
         typedef std::function<
-        std::unique_ptr<Element>(const Configuration &,
-                                 const Context & context,
-                                 Painter & painter)> creation_t;
+        std::unique_ptr<Element>(const Configuration &)> creation_t;
 
         static std::map<std::string, creation_t> creationMap;
 
         template <typename T> static
         std::unique_ptr<Element>
-        createElement(const Configuration &config,
-                      const Context &context,
-                      Painter &painter) {
+        createElement(const Configuration &config) {
 
             std::unique_ptr<Element> product =
                 std::make_unique<T>();
-
-            product->context = &context;
-            product->painter = &painter;
 
             return product;
         }
 
         static std::unique_ptr<Element>
-        createElementImageView(const Configuration &,
-                               const Context & context,
-                               Painter & painter);
+        createElementImageView(const Configuration &);
     };
 }
 

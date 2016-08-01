@@ -100,6 +100,7 @@ namespace etudes {
         clearBackground();
 
         for(auto &element : elements) {
+            element.second->setContext(getContext());
             element.second->draw();
         }
     }

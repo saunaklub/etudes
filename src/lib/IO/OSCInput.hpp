@@ -37,7 +37,7 @@ namespace etudes {
 
     public:
 
-        using receiver_map_t = std::map<std::string, std::shared_ptr<Receiver>>;
+        using receiver_map_t = std::map<std::string, Receiver*>;
 
         OSCInput(int port);
         virtual ~OSCInput();
@@ -49,7 +49,7 @@ namespace etudes {
         void update(std::string path,
                     const T &values);
 
-        bool addReceiver(std::string name, std::shared_ptr<Receiver> receiver);
+        bool addReceiver(std::string name, Receiver * receiver);
 
     private:
 
