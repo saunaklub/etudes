@@ -153,6 +153,7 @@ namespace etudes {
                 case 0: {
                     val1 = (row >> bitshift2) & (col >> bitshift1) *
                         int(seconds/1000.0f*rate*(row^col));
+                    val2 = ~val1;
                     break;
                 }
 

@@ -21,21 +21,21 @@ namespace etudes {
         };
 
         Renderer(std::string name,
-                 std::shared_ptr<Etude> etude);
+                 std::unique_ptr<Etude> etude);
 
         std::string getName() const;
 
         void update();
         void render();
 
-        void addOutput(std::string name, int width, int height);
+        void setOutput(std::string name, int width, int height);
         void renderOutput();
 
     private:
 
         std::string name;
 
-        std::shared_ptr<Etude> etude;
+        std::unique_ptr<Etude> etude;
         std::unique_ptr<VideoOutput> output;
 
         std::vector<std::pair<MouseInput, std::string>> inputsMouse;

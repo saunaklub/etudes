@@ -158,10 +158,6 @@ namespace etudes {
         context->init();
         checkGLError("host: init context");
 
-        painter = std::make_unique<Painter>(*context.get());
-        painter->init();
-        checkGLError("host: init painter");
-
         if(hostConfig.hasValue("window:viewport")) {
             std::string viewportString =
                 hostConfig.getValue<std::string>("window:viewport");
@@ -223,16 +219,16 @@ namespace etudes {
             Configuration etudeConfig;
             etudeConfig.read("configuration/etudes/" + etudeName + ".yml");
 
-            auto etude = EtudeFactory::makeEtude(etudeName, etudeConfig,
-                                                 *context, *painter);
+            auto etude = EtudeFactory::makeEtude(etudeName, etudeConfig);
             etude->init();
+            etude->setContext(*context.get());
 
             checkGLError(etudeName + " init");
 
-            oscInput.addReceiver(etudeName, etude);
+            oscInput.addReceiver(etudeName, etude.get());
 
             auto renderer =
-                std::make_unique<Renderer>(etudeName, etude);
+                std::make_unique<Renderer>(etudeName, std::move(etude));
 
 #ifdef LINUX
             if(etudeConfig.hasValue("output")) {
@@ -240,7 +236,7 @@ namespace etudes {
                    etudeConfig.getValue<bool>("output:enabled")) {
                     log(LogLevel::debug,
                         "Creating video output for '" + etudeName + "'");
-                    renderer->addOutput(
+                    renderer->setOutput(
                         etudeConfig.getValue<std::string>("output:name"),
                         etudeConfig.getValue<int>("output:width"),
                         etudeConfig.getValue<int>("output:height"));

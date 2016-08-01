@@ -103,7 +103,6 @@ namespace etudes {
         OSCInput oscInput;
 
         std::unique_ptr<Context> context;
-        std::unique_ptr<Painter> painter;
     };
 }
 

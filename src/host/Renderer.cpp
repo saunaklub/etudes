@@ -5,9 +5,9 @@
 namespace etudes {
 
     Renderer::Renderer(std::string name,
-                       std::shared_ptr<Etude> etude) :
+                       std::unique_ptr<Etude> etude) :
         name(name),
-        etude(etude) {
+        etude(std::move(etude)) {
     }
 
     std::string Renderer::getName() const {
@@ -22,7 +22,7 @@ namespace etudes {
         etude->draw();
     }
 
-    void Renderer::addOutput(std::string name, int width, int height) {
+    void Renderer::setOutput(std::string name, int width, int height) {
 #ifdef LINUX
         output = std::make_unique<VideoOutputV4L2>(etude.get(), width, height);
         output->createOutput(name);
