@@ -205,8 +205,8 @@ namespace etudes {
         end = denormalize(end, viewport);
 
         painter.sinusoidStraight(
-            start, end, index+1,
-            widthDraw, time, freq, lambda, phaseDraw + 0.5f,
+            start, end, index+1, widthDraw,
+            time, freq, lambda, phaseDraw + 0.5f,
             strokeWidth, strokeBlur);
     }
 

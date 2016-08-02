@@ -142,7 +142,7 @@ namespace etudes {
 
         glUniform1f(registry.getUniform(shaderSinusoid, "time"), time);
         glUniform1f(registry.getUniform(shaderSinusoid, "freq"), freq);
-        glUniform1f(registry.getUniform(shaderSinusoid, "phase"), freq);
+        glUniform1f(registry.getUniform(shaderSinusoid, "phase"), phase);
         glUniform1f(registry.getUniform(shaderSinusoid, "lambda"), lambda);
 
         glUniform1f(
