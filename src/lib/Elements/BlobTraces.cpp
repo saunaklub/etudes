@@ -38,10 +38,13 @@ namespace etudes {
     }
 
     void BlobTraces::registerInputs() {
-        registerInput("/personA/positionA", vec_float_t{0.5, 0.5});
-        registerInput("/personA/positionB", vec_float_t{0.5, 0.5});
-        registerInput("/personA/sizeA", vec_float_t{0.5});
-        registerInput("/personA/sizeB", vec_float_t{0.5});
+        registerInput("/position", vec_float_t{0.5, 0.5, 0.5});
+        registerInput("/amplitude", vec_float_t{0.5});
+        // registerInput("/personA/positionB", vec_float_t{0.5, 0.5});
+        // registerInput("/personA/sizeA", vec_float_t{0.5});
+        // registerInput("/personA/sizeB", vec_float_t{0.5});
+
+
     }
 
     void BlobTraces::init() {
@@ -72,20 +75,20 @@ namespace etudes {
     }
 
     void BlobTraces::draw() {
-        vec_float_t pAPA = getValue<vec_float_t>("/personA/positionA");
+        vec_float_t position = getValue<vec_float_t>("/position");
+        float amplitude = getValue<float>("/amplitude");
 
         Painter & painter = getPainter();
+        painter.setInputNormalized(true);
 
-        painter.setColor({1, 0, 0, 1});
-        painter.rect({0.25, 0.25}, {.5, .5});
+        painter.setColor({amplitude, 0, 0, amplitude});
+        painter.rect(glm::vec2(position[0], position[1]), 0.04);
 
-        auto widthF = funcConst(30);
-        auto distF  = funcSin(0.1, 0.05, 0.1, 0);
-        auto colorF = funcConst(glm::vec4(0, 1, 1, 0.6));
+        util::checkGLError("BlobTraces::draw");
 
-        painter.parallels({0.5, 0}, {0.5, 1},
-                               20, 20, widthF, distF, colorF,
-                               true);
+        // auto widthF = funcConst(30);
+        // auto distF  = funcSin(0.1, 0.05, 0.1, 0);
+        // auto colorF = funcConst(glm::vec4(0, 1, 1, 0.6));
 
         // glBindFramebuffer(GL_FRAMEBUFFER, idFBO);
         // ...
