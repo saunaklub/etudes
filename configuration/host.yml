@@ -2,8 +2,10 @@ network:
   port: 6666
 
 window:
-  width:  1280
-  height: 720
+  width:  1440
+  height: 900
+  # width:  1024
+  # height: 768
   viewport: border
   fullscreen: true
   vsync: true
@@ -18,9 +20,10 @@ etudes:
   # - grid
   # - particles
   # - parallels
-  # - aura
-  - algosynth
+  - sinusoids
+  # - algosynth
   # - space
+  # - blobtraces
   # - testbed
 
 # input:
