@@ -86,10 +86,6 @@ namespace etudes {
 
         util::checkGLError("BlobTraces::draw");
 
-        // auto widthF = funcConst(30);
-        // auto distF  = funcSin(0.1, 0.05, 0.1, 0);
-        // auto colorF = funcConst(glm::vec4(0, 1, 1, 0.6));
-
         // glBindFramebuffer(GL_FRAMEBUFFER, idFBO);
         // ...
         // glBindFramebuffer(GL_FRAMEBUFFER, 0);

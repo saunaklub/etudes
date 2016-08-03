@@ -33,8 +33,8 @@ using namespace gl;
 #include <Utility/Logging.hpp>
 #include <Utility/Configuration.hpp>
 
-#include <Factories/EtudeFactory.hpp>
-#include <Receivers/Etude.hpp>
+#include <Factories/SceneFactory.hpp>
+#include <Receivers/Scene.hpp>
 
 #include <IO/OSCInput.hpp>
 #include <IO/VideoOutputV4L2.hpp>
@@ -101,7 +101,7 @@ namespace etudes {
         initGLFW();
         initGL();
         initOSC();
-        initEtudes();
+        initScenes();
         initInput();
     }
 
@@ -211,35 +211,35 @@ namespace etudes {
         oscInput.start();
     }
 
-    void EtudesHost::initEtudes() {
-        std::list<std::string> etudeList =
-            hostConfig.getValue<std::list<std::string>>("etudes");
+    void EtudesHost::initScenes() {
+        std::list<std::string> sceneList =
+            hostConfig.getValue<std::list<std::string>>("scenes");
 
-        for(auto &etudeName : etudeList) {
-            Configuration etudeConfig;
-            etudeConfig.read("configuration/etudes/" + etudeName + ".yml");
+        for(auto &sceneName : sceneList) {
+            Configuration sceneConfig;
+            sceneConfig.read("configuration/scenes/" + sceneName + ".yml");
 
-            auto etude = EtudeFactory::makeEtude(etudeName, etudeConfig);
-            etude->init();
-            etude->setContext(*context.get());
+            auto scene = SceneFactory::makeScene(sceneName, sceneConfig);
+            scene->init();
+            scene->setContext(*context.get());
 
-            checkGLError(etudeName + " init");
+            checkGLError(sceneName + " init");
 
-            oscInput.addReceiver(etudeName, etude.get());
+            oscInput.addReceiver(sceneName, scene.get());
 
             auto renderer =
-                std::make_unique<Renderer>(etudeName, std::move(etude));
+                std::make_unique<Renderer>(sceneName, std::move(scene));
 
 #ifdef LINUX
-            if(etudeConfig.hasValue("output")) {
-                if(!etudeConfig.hasValue("output:enabled") ||
-                   etudeConfig.getValue<bool>("output:enabled")) {
+            if(sceneConfig.hasValue("output")) {
+                if(!sceneConfig.hasValue("output:enabled") ||
+                   sceneConfig.getValue<bool>("output:enabled")) {
                     log(LogLevel::debug,
-                        "Creating video output for '" + etudeName + "'");
+                        "Creating video output for '" + sceneName + "'");
                     renderer->setOutput(
-                        etudeConfig.getValue<std::string>("output:name"),
-                        etudeConfig.getValue<int>("output:width"),
-                        etudeConfig.getValue<int>("output:height"));
+                        sceneConfig.getValue<std::string>("output:name"),
+                        sceneConfig.getValue<int>("output:width"),
+                        sceneConfig.getValue<int>("output:height"));
                 }
             }
 #endif

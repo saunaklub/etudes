@@ -18,27 +18,27 @@
 
 */
 
-#ifndef ETUDES_ETUDEFACTORY
-#define ETUDES_ETUDEFACTORY
+#ifndef ETUDES_SCENEFACTORY
+#define ETUDES_SCENEFACTORY
 
 #include <memory>
 
 namespace etudes {
 
-    class Etude;
+    class Scene;
     class Configuration;
 
-    class EtudeFactory {
+    class SceneFactory {
     public:
-        static std::unique_ptr<Etude>
-        makeEtude(std::string name,
+        static std::unique_ptr<Scene>
+        makeScene(std::string name,
                   const Configuration &config);
 
     private:
-        static std::unique_ptr<Etude>
-        makeEtudeDefault(const Configuration &config);
+        static std::unique_ptr<Scene>
+        makeSceneDefault(const Configuration &config);
     };
 
 }
 
-#endif // ETUDES_ETUDEFACTORY
+#endif // ETUDES_SCENEFACTORY

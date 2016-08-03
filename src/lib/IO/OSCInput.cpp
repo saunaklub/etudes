@@ -24,7 +24,7 @@
 
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
-#include <Receivers/Etude.hpp>
+#include <Receivers/Scene.hpp>
 
 #include "OSCInput.hpp"
 

@@ -37,7 +37,7 @@
 struct GLFWwindow;
 
 namespace etudes {
-    class Etude;
+    class Scene;
     class VideoOutput;
 
     class EtudesHost {
@@ -64,7 +64,7 @@ namespace etudes {
         void initGLFW();
         void initGL();
         void initOSC();
-        void initEtudes();
+        void initScenes();
         void initInput();
 
         void printOpenGLInfo();

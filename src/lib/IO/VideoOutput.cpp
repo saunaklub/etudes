@@ -20,7 +20,7 @@
 
 #include <Utility/Logging.hpp>
 
-#include <Receivers/Etude.hpp>
+#include <Receivers/Scene.hpp>
 
 #include "VideoOutput.hpp"
 
@@ -31,11 +31,11 @@ namespace etudes {
     using logging::log;
     using logging::LogLevel;
 
-    VideoOutput::VideoOutput(Etude *etude,
+    VideoOutput::VideoOutput(Scene *scene,
                              int width, int height) :
         width(width),
         height(height),
-        etude(etude) {
+        scene(scene) {
         data.resize(width*height*4);
         initFBO();
     }
@@ -48,7 +48,7 @@ namespace etudes {
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        etude->draw();
+        scene->draw();
 
         readFBO();
         unbindFBO();

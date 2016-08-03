@@ -27,25 +27,25 @@
 
 #include <Factories/ElementFactory.hpp>
 
-#include <Receivers/Etude.hpp>
+#include <Receivers/Scene.hpp>
 
-#include "EtudeFactory.hpp"
+#include "SceneFactory.hpp"
 
 namespace etudes {
     using logging::log;
     using logging::LogLevel;
 
-    std::unique_ptr<Etude>
-    EtudeFactory::makeEtude(std::string name,
+    std::unique_ptr<Scene>
+    SceneFactory::makeScene(std::string name,
                             const Configuration &config) {
-        std::unique_ptr<Etude> product;
+        std::unique_ptr<Scene> product;
 
         if(config.hasValue("type")) {
             std::string type = config.getValue<std::string>("type");
         }
         else {
-            log(LogLevel::info, "Creating default etude '" + name + "'");
-            product = makeEtudeDefault(config);
+            log(LogLevel::info, "Creating default scene '" + name + "'");
+            product = makeSceneDefault(config);
         }
 
         auto order = config.getValue<std::list<std::string>>("order");
@@ -70,10 +70,10 @@ namespace etudes {
         return product;
     }
 
-    std::unique_ptr<Etude>
-    EtudeFactory::makeEtudeDefault(const Configuration & config) {
+    std::unique_ptr<Scene>
+    SceneFactory::makeSceneDefault(const Configuration & config) {
         log(LogLevel::excessive, config);
-        std::unique_ptr<Etude> product = std::make_unique<Etude>();
+        std::unique_ptr<Scene> product = std::make_unique<Scene>();
         return product;
     }
 

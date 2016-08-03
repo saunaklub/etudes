@@ -18,8 +18,8 @@
 
 */
 
-#ifndef ETUDES_ETUDE
-#define ETUDES_ETUDE
+#ifndef ETUDES_SCENE
+#define ETUDES_SCENE
 
 #include <memory>
 #include <string>
@@ -28,10 +28,10 @@
 
 namespace etudes {
 
-    class Etude : public Element {
+    class Scene : public Element {
     public:
 
-        virtual ~Etude() {};
+        virtual ~Scene() {};
 
         void registerInputs() override;
 
@@ -65,4 +65,4 @@ namespace etudes {
 
 }
 
-#endif // ETUDES_ETUDE
+#endif // ETUDES_SCENE

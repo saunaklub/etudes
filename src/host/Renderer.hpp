@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-#include <Receivers/Etude.hpp>
+#include <Receivers/Scene.hpp>
 #include <IO/VideoOutput.hpp>
 
 namespace etudes {
@@ -21,7 +21,7 @@ namespace etudes {
         };
 
         Renderer(std::string name,
-                 std::unique_ptr<Etude> etude);
+                 std::unique_ptr<Scene> scene);
 
         std::string getName() const;
 
@@ -35,7 +35,7 @@ namespace etudes {
 
         std::string name;
 
-        std::unique_ptr<Etude> etude;
+        std::unique_ptr<Scene> scene;
         std::unique_ptr<VideoOutput> output;
 
         std::vector<std::pair<MouseInput, std::string>> inputsMouse;

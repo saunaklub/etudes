@@ -13,7 +13,7 @@ set(LIBRARY_SOURCES
     src/lib/Utility/AccumulativeProfiler.cpp
     src/lib/Utility/ModulationFuncs.cpp
     src/lib/Factories/ElementFactory.cpp
-    src/lib/Factories/EtudeFactory.cpp
+    src/lib/Factories/SceneFactory.cpp
     src/lib/IO/OSCInput.cpp
     src/lib/IO/VideoOutput.cpp
     src/lib/Graphics/ShaderRegistry.cpp
@@ -29,7 +29,7 @@ set(LIBRARY_SOURCES
     src/lib/Graphics/Geometry/Rect.cpp
     src/lib/Receivers/Receiver.cpp
     src/lib/Receivers/Element.cpp
-    src/lib/Receivers/Etude.cpp
+    src/lib/Receivers/Scene.cpp
     src/lib/Elements/Lines.cpp
     src/lib/Elements/Particles.cpp
     src/lib/Elements/ImageView.cpp

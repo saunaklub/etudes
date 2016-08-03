@@ -37,9 +37,9 @@ namespace etudes {
     using logging::log;
     using logging::LogLevel;
 
-    VideoOutputV4L2::VideoOutputV4L2(Etude *etude,
+    VideoOutputV4L2::VideoOutputV4L2(Scene *scene,
                                      int width, int height) :
-        VideoOutput(etude, width, height),
+        VideoOutput(scene, width, height),
         fd(-1) {
     }
 

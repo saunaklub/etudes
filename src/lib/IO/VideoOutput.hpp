@@ -32,11 +32,11 @@ namespace etudes {
     class Context;
     class Painter;
 
-    class Etude;
+    class Scene;
 
     class VideoOutput {
     public:
-        VideoOutput(Etude *etude, int width, int height);
+        VideoOutput(Scene *scene, int width, int height);
         virtual ~VideoOutput();
 
         void render();
@@ -55,7 +55,7 @@ namespace etudes {
         void readFBO();
         void unbindFBO();
 
-        Etude *etude;
+        Scene *scene;
 
         gl::GLuint idFBO;
         gl::GLuint idTexture;

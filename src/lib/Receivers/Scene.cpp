@@ -25,7 +25,7 @@
 
 #include <Utility/Logging.hpp>
 
-#include "Etude.hpp"
+#include "Scene.hpp"
 
 namespace etudes {
 
@@ -36,47 +36,47 @@ namespace etudes {
     using namespace util;
 
     void
-    Etude::registerInputs() {
+    Scene::registerInputs() {
         registerInput("/background", vec_float_t{0.0f, 0.0f, 0.0f, 1.0f});
     }
 
     void
-    Etude::init() {
+    Scene::init() {
         for(auto &element : elements) {
             element.second->init();
         }
     }
 
     void
-    Etude::update() {
+    Scene::update() {
         for(auto &element : elements) {
             element.second->update();
         }
     }
 
     void
-    Etude::addElement(std::string name,
+    Scene::addElement(std::string name,
                            std::unique_ptr<Element> element) {
         elements.push_back(std::make_pair(name, std::move(element)));
     }
 
     bool
-    Etude::dispatchValue(std::string path, const vec_int_t &value) {
+    Scene::dispatchValue(std::string path, const vec_int_t &value) {
         return dispatchValueT(path, value);
     }
 
     bool
-    Etude::dispatchValue(std::string path, const vec_float_t &value) {
+    Scene::dispatchValue(std::string path, const vec_float_t &value) {
         return dispatchValueT(path, value);
     }
 
     bool
-    Etude::dispatchValue(std::string path, const vec_string_t &value) {
+    Scene::dispatchValue(std::string path, const vec_string_t &value) {
         return dispatchValueT(path, value);
     }
 
     template <typename T> bool
-    Etude::dispatchValueT(std::string path, const T &value) {
+    Scene::dispatchValueT(std::string path, const T &value) {
         if(! Receiver::dispatchValue(path, value)) {
             string prefix = splitStringFirst(path);
             auto iter = std::find_if(elements.begin(), elements.end(),
@@ -91,12 +91,12 @@ namespace etudes {
 
         logging::log(
             LogLevel::warning,
-            "Etude::dispatchValue: Unable to dispatch message with path: " +
+            "Scene::dispatchValue: Unable to dispatch message with path: " +
             path);
         return false;
     }
 
-    void Etude::draw() {
+    void Scene::draw() {
         clearBackground();
 
         for(auto &element : elements) {
@@ -105,7 +105,7 @@ namespace etudes {
         }
     }
 
-    void Etude::clearBackground() {
+    void Scene::clearBackground() {
         auto colorBackground = getValue<glm::vec4>("/background");
 
         getPainter().setColor(colorBackground);

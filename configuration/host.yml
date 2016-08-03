@@ -16,7 +16,7 @@ logging:
   logLevel: debug
   framerate: false
 
-etudes:
+scenes:
   # - grid
   # - particles
   # - parallels
