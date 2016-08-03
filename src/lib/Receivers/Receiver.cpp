@@ -213,7 +213,7 @@ namespace etudes {
     Receiver::dispatchValue(std::string path, const vec_string_t &value) {
         return dispatchValueT(path, value);
     }
-    
+
     template <typename T> bool
     Receiver::dispatchValueT(std::string path, const T &value) {
         std::vector<std::string> inputs = getInputs();
@@ -223,5 +223,5 @@ namespace etudes {
         }
         return false;
     }
-    
+
 }

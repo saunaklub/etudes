@@ -57,7 +57,7 @@ namespace etudes {
 
         virtual bool
         dispatchValue(std::string input, const vec_string_t &value);
-        
+
     protected:
 
         Receiver() = default;
