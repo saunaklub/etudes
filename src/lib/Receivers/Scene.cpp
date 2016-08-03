@@ -77,22 +77,24 @@ namespace etudes {
 
     template <typename T> bool
     Scene::dispatchValueT(std::string path, const T &value) {
-        if(! Receiver::dispatchValue(path, value)) {
-            string prefix = splitStringFirst(path);
-            auto iter = std::find_if(elements.begin(), elements.end(),
-                                     [&](const auto &e)  {
-                                         return(e.first == prefix);
-                                     });
-            if(iter != elements.end()) {
-                iter->second->setValue(splitStringRest(path), value);
-                return true;
-            }
+        if(Receiver::dispatchValue(path, value))
+            return true;
+
+        string prefix = splitStringFirst(path);
+        auto iter = std::find_if(elements.begin(), elements.end(),
+                                 [&](const auto &e)  {
+                                     return(e.first == prefix);
+                                 });
+        if(iter != elements.end()) {
+            iter->second->setValue(splitStringRest(path), value);
+            return true;
         }
 
         logging::log(
             LogLevel::warning,
             "Scene::dispatchValue: Unable to dispatch message with path: " +
             path);
+
         return false;
     }
 
