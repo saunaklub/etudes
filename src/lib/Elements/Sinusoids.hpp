@@ -39,7 +39,7 @@ namespace etudes {
             INCREMENT_FALLOFF,
         };
 
-        void registerInputs();
+        void registerInputs() override;
 
         // void init();
         void update() override;
