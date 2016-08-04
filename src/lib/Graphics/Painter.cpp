@@ -96,29 +96,28 @@ namespace etudes {
             to_string(color));
 #endif
         assert(context);
-        const Rect & viewport = context->getViewport2D();
 
         glUseProgram(shaders.getProgram(shaderLine));
-
         glUniform4f(shaders.getUniform(shaderLine, "color"),
                     color.r, color.g, color.b, color.a);
 
+        const Rect & viewport = context->getViewport2D();
         if(normalizedInput) {
             p0 = denormalize(p0, viewport);
             p1 = denormalize(p1, viewport);
         }
+
         drawLineGeometry(p0, p1, width, shaderLine);
     }
 
     void Painter::rect(glm::vec2 topLeft, glm::vec2 bottomRight) {
         assert(context);
 
-        const Rect & viewport = context->getViewport2D();
-
         glUseProgram(shaders.getProgram(shaderRect));
         glUniform4f(shaders.getUniform(shaderRect, "color"),
                     color.r, color.g, color.b, color.a);
 
+        const Rect & viewport = context->getViewport2D();
         if(normalizedInput) {
             topLeft = denormalize(topLeft, viewport);
             bottomRight = denormalize(bottomRight, viewport);
@@ -153,8 +152,6 @@ namespace etudes {
         float time, float freq, float lambda, float phase,
         float strokeWidth, float strokeBlur) const {
 
-        assert(context);
-
         glUseProgram(shaders.getProgram(shaderSinusoid));
 
         glUniform1i(shaders.getUniform(shaderSinusoid, "mode"), 0);
@@ -180,8 +177,6 @@ namespace etudes {
         glm::vec2 center, int order, float width, float height,
         float time, float freq, float lambda, float phase,
         float circleWidth, float strokeWidth, float strokeBlur) const {
-
-        assert(context);
 
         glUseProgram(shaders.getProgram(shaderSinusoid));
 
@@ -214,8 +209,6 @@ namespace etudes {
         std::function<float(int)> funcDistance,
         std::function<glm::vec4(int)>  funcColor) {
 
-        assert(context);
-
         // draw center line
         setColor(funcColor(0));
         line(centerp0, centerp1, funcWidth(0));
@@ -236,8 +229,6 @@ namespace etudes {
         glm::vec2 repeatp0;
         glm::vec2 repeatp1;
 
-        const Rect & viewport = context->getViewport2D();
-
         // draw lines in each 'direction
         for(auto &dr : direction_repeat) {
             repeatp0 = centerp0;
@@ -250,10 +241,6 @@ namespace etudes {
                 glm::vec2 p0 = repeatp0;
                 glm::vec2 p1 = repeatp1;
 
-                if(normalizedInput) {
-                    p0 = denormalize(p0, viewport);
-                    p1 = denormalize(p1, viewport);
-                }
                 setColor(funcColor(r));
                 line(p0, p1, funcWidth(r));
             }
