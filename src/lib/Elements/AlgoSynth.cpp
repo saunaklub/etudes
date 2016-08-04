@@ -64,7 +64,7 @@ namespace etudes {
         // glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         shaders.registerShader("algosynth", GL_FRAGMENT_SHADER,
-                               {"resources/shaders/algosynth.frag"});
+                               {"resources/shaders/elements/algosynth.frag"});
         shaders.registerShader("ident", GL_VERTEX_SHADER,
                                {"resources/shaders/ident.vert"});
         shaders.registerProgram("algosynth", {"ident", "algosynth"});
