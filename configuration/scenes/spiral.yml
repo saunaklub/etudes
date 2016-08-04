@@ -1,0 +1,9 @@
+elements:
+  spiral1:
+    type: Spiral
+  spiral2:
+    type: Spiral
+    defaults:
+      /curl: [-20.0]
+
+order: [spiral1, spiral2]

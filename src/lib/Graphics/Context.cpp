@@ -63,6 +63,8 @@ namespace etudes {
                                  {"resources/shaders/sinusoid.frag"});
         shaders.registerShader("textured", GL_FRAGMENT_SHADER,
                                {"resources/shaders/textured-hueshift.frag"});
+        shaders.registerShader("spiral", GL_FRAGMENT_SHADER,
+                               {"resources/shaders/spiral.frag"});
 
         shaders.registerProgram("simple", {"ident", "white"});
 
@@ -93,6 +95,10 @@ namespace etudes {
         shaders.registerUniform("sinusoid", "phase");
         shaders.registerUniform("sinusoid", "freq");
         shaders.registerUniform("sinusoid", "lambda");
+
+        shaders.registerProgram("spiral", {"ident", "spiral"});
+        shaders.registerUniform("spiral", "curl");
+        shaders.registerUniform("spiral", "time");
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

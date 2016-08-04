@@ -20,10 +20,11 @@ scenes:
   # - grid
   # - particles
   # - parallels
-  - sinusoids
+  # - sinusoids
   # - algosynth
   # - space
   # - blobtraces
+  - spiral
   # - testbed
 
 # input:

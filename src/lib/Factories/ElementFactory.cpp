@@ -31,6 +31,7 @@
 #include <Elements/CellularAutomaton.hpp>
 #include <Elements/AlgoSynth.hpp>
 #include <Elements/BlobTraces.hpp>
+#include <Elements/Spiral.hpp>
 #include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
@@ -50,6 +51,7 @@ namespace etudes {
         {"CellularAutomaton", ElementFactory::createElement<CellularAutomaton>},
         {"AlgoSynth", ElementFactory::createElement<AlgoSynth>},
         {"BlobTraces", ElementFactory::createElement<BlobTraces>},
+        {"Spiral", ElementFactory::createElement<Spiral>},
         {"Testbed", ElementFactory::createElement<Testbed>},
     };
 
