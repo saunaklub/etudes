@@ -24,8 +24,9 @@ scenes:
   # - algosynth
   # - space
   # - blobtraces
-  - spiral
+  # - spiral
   # - testbed
+  - domainwarp
 
 # input:
 #   mouse:
