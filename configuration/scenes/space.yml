@@ -12,8 +12,8 @@ elements:
 
 #    panZoom: parallel
 #    defaults:
-      # /x-range: [0.4, 0.5]
-      # /y-range: [0.3, 0.4]
-#      /hue-shift: [0.2]
+      # x-range: [0.4, 0.5]
+      # y-range: [0.3, 0.4]
+      # hue-shift: [0.2]
 
 order: [background]

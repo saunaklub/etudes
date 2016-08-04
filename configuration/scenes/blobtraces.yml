@@ -1,10 +1,10 @@
 defaults:
-  /background: [0, 0, 0, 0.05]
+  background: [0, 0, 0, 0.05]
 
 elements:
   blobtraces:
     type: BlobTraces
     defaults:
-      /rate: [1]
+      rate: [1]
 
 order: [blobtraces]

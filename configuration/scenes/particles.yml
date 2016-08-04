@@ -1,16 +1,16 @@
-elements:
-  particles:
-    type: Particles
-
-order: [particles]
-
-input:
-  mouse:
-    xy:
-      - /particles/center
-    
 output:
   enabled: false
   name: /dev/video1
   width:  600
   height: 600
+
+# input:
+#   mouse:
+#     xy:
+#       - particles/center
+
+elements:
+  particles:
+    type: Particles
+
+order: [particles]

@@ -2,6 +2,6 @@ elements:
   ca:
     type: CellularAutomaton
     defaults:
-      /rate: [1]
+      rate: [1]
 
 order: [ca]

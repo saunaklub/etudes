@@ -38,14 +38,14 @@ namespace etudes {
     }
 
     void AlgoSynth::registerInputs() {
-        registerInput("/program-values", vec_int_t{0});
-        registerInput("/program-colors", vec_int_t{0});
-        registerInput("/rate", vec_float_t{1.f});
-        registerInput("/cutoff", vec_float_t{1.f});
-        registerInput("/bitshift1", vec_int_t{0});
-        registerInput("/bitshift2", vec_int_t{0});
-        registerInput("/bitmask", vec_int_t{0});
-        registerInput("/blend", vec_float_t{1});
+        registerInput("program-values", vec_int_t{0});
+        registerInput("program-colors", vec_int_t{0});
+        registerInput("rate", vec_float_t{1.f});
+        registerInput("cutoff", vec_float_t{1.f});
+        registerInput("bitshift1", vec_int_t{0});
+        registerInput("bitshift2", vec_int_t{0});
+        registerInput("bitmask", vec_int_t{0});
+        registerInput("blend", vec_float_t{1});
     }
 
     void AlgoSynth::init() {
@@ -89,16 +89,16 @@ namespace etudes {
     void AlgoSynth::renderTexture() {
         glUseProgram(shaders.getProgram("algosynth"));
 
-        int bitshift1 = getValue<int>("/bitshift1");
-        int bitshift2 = getValue<int>("/bitshift2");
-        int bitmask = getValue<int>("/bitmask");
+        int bitshift1 = getValue<int>("bitshift1");
+        int bitshift2 = getValue<int>("bitshift2");
+        int bitmask = getValue<int>("bitmask");
 
-        float cutoff = getValue<float>("/cutoff");
-        float rate = getValue<float>("/rate");
+        float cutoff = getValue<float>("cutoff");
+        float rate = getValue<float>("rate");
         float seconds = util::seconds();
 
-        int programValues = getValue<int>("/program-values");
-        int programColors = getValue<int>("/program-colors");
+        int programValues = getValue<int>("program-values");
+        int programColors = getValue<int>("program-colors");
 
         glUniform1i(shaders.getUniform("algosynth", "programValues"),
                     programValues);
@@ -114,7 +114,7 @@ namespace etudes {
         glUniform1i(shaders.getUniform("algosynth", "bitmask"), bitmask);
 
         glUniform1f(shaders.getUniform("algosynth", "blend"),
-                    getValue<float>("/blend"));
+                    getValue<float>("blend"));
 
         // glBindFramebuffer(GL_FRAMEBUFFER, idFBO);
         // quad->draw();

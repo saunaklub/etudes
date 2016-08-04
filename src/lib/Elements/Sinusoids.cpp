@@ -46,56 +46,56 @@ namespace etudes {
     };
 
     void Sinusoids::registerInputs() {
-        registerInput("/amplitudes", vec_float_t{1.0f});
-        registerInput("/draw-mode", vec_string_t{"circular"});
+        registerInput("amplitudes", vec_float_t{1.0f});
+        registerInput("draw-mode", vec_string_t{"circular"});
 
-        registerInput("/center", vec_float_t{0.5f, 0.5f});
+        registerInput("center", vec_float_t{0.5f, 0.5f});
 
-        registerInput("/width", vec_float_t{0.1});
-        registerInput("/width-amp", vec_float_t{0.0});
+        registerInput("width", vec_float_t{0.1});
+        registerInput("width-amp", vec_float_t{0.0});
 
-        registerInput("/freq", vec_float_t{1.0f});
-        registerInput("/lambda", vec_float_t{1.0f});
-        registerInput("/phase", vec_float_t{0.0f});
-        registerInput("/phase-amp", vec_float_t{0.0f});
+        registerInput("freq", vec_float_t{1.0f});
+        registerInput("lambda", vec_float_t{1.0f});
+        registerInput("phase", vec_float_t{0.0f});
+        registerInput("phase-amp", vec_float_t{0.0f});
 
-        registerInput("/circle-width", vec_float_t{0.5f});
+        registerInput("circle-width", vec_float_t{0.5f});
 
-        registerInput("/stroke-width", vec_float_t{0.5f});
-        registerInput("/stroke-blur", vec_float_t{0.0f});
+        registerInput("stroke-width", vec_float_t{0.5f});
+        registerInput("stroke-blur", vec_float_t{0.0f});
 
-        registerInput("/offset-mode", vec_string_t{"absolute"});
-        registerInput("/offset-scale", vec_float_t{1.0f});
+        registerInput("offset-mode", vec_string_t{"absolute"});
+        registerInput("offset-scale", vec_float_t{1.0f});
 
-        registerInput("/color", vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
-        registerInput("/color-amp",  vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
+        registerInput("color", vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
+        registerInput("color-amp",  vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
     }
 
     void Sinusoids::update() {
-        amplitudes = getValue<vec_float_t>("/amplitudes");
+        amplitudes = getValue<vec_float_t>("amplitudes");
         offsets = calculateOffsets(offsetMode, amplitudes);
 
-        center = getValue<glm::vec2>("/center");
+        center = getValue<glm::vec2>("center");
 
-        widthBase = getValue<float>("/width");
-        widthAmp = getValue<float>("/width-amp");
+        widthBase = getValue<float>("width");
+        widthAmp = getValue<float>("width-amp");
 
-        colorBase = getValue<glm::vec4>("/color");
-        colorAmp = getValue<glm::vec4>("/color-amp");
+        colorBase = getValue<glm::vec4>("color");
+        colorAmp = getValue<glm::vec4>("color-amp");
 
         time = util::seconds();
-        freq = getValue<float>("/freq");
-        lambda = getValue<float>("/lambda");
-        phaseBase = getValue<float>("/phase");
-        phaseAmp = getValue<float>("/phase-amp");
+        freq = getValue<float>("freq");
+        lambda = getValue<float>("lambda");
+        phaseBase = getValue<float>("phase");
+        phaseAmp = getValue<float>("phase-amp");
 
-        circleWidth = getValue<float>("/circle-width");
+        circleWidth = getValue<float>("circle-width");
 
-        strokeWidth = getValue<float>("/stroke-width");
-        strokeBlur = getValue<float>("/stroke-blur");
+        strokeWidth = getValue<float>("stroke-width");
+        strokeBlur = getValue<float>("stroke-blur");
 
-        drawMode = mapDrawMode[getValue<std::string>("/draw-mode")];
-        offsetMode = mapOffsetMode[getValue<std::string>("/offset-mode")];
+        drawMode = mapDrawMode[getValue<std::string>("draw-mode")];
+        offsetMode = mapOffsetMode[getValue<std::string>("offset-mode")];
     }
 
     void Sinusoids::draw() {
@@ -129,7 +129,7 @@ namespace etudes {
         offsets.resize(amplitudes.size());
 
         float offset = 0.f;
-        float offsetScale = getValue<float>("/offset-scale");
+        float offsetScale = getValue<float>("offset-scale");
 
         for(size_t index = 0 ; index < amplitudes.size() ; ++index) {
             float amplitude = amplitudes[index];

@@ -73,11 +73,11 @@ namespace etudes {
         }
 
         std::string splitStringFirst(std::string str, char separator) {
-            return str.substr(1, str.find(separator, 1) - 1);
+            return str.substr(0, str.find(separator, 1));
         }
 
         std::string splitStringRest(std::string str, char separator) {
-            return str.substr(str.find(separator, 1),
+            return str.substr(str.find(separator, 1) + 1,
                               str.size() - str.find(separator, 1));
         }
 

@@ -35,13 +35,13 @@ namespace etudes {
     }
 
     void Particles::registerInputs() {
-        registerInput("/count", vec_float_t{256});
-        registerInput("/center", vec_float_t{0, 0});
+        registerInput("count", vec_float_t{256});
+        registerInput("center", vec_float_t{0, 0});
     }
 
     void Particles::init() {
-        count = getValue<float>("/count");
-        center = getValue<vec2>("/center");
+        count = getValue<float>("count");
+        center = getValue<vec2>("center");
 
         positions.resize(count);
         positionsIBest.resize(count);
@@ -118,7 +118,7 @@ namespace etudes {
     }
 
     void Particles::updateBest() {
-        vec2 center = getValue<vec2>("/center");
+        vec2 center = getValue<vec2>("center");
 
         size_t indexMin = 0;
         float productMin = std::numeric_limits<float>::max();

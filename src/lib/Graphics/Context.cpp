@@ -59,12 +59,12 @@ namespace etudes {
                                {"resources/shaders/white.frag"});
         shaders.registerShader("solid", GL_FRAGMENT_SHADER,
                                  {"resources/shaders/solid.frag"});
-        shaders.registerShader("sinusoid", GL_FRAGMENT_SHADER,
-                                 {"resources/shaders/sinusoid.frag"});
         shaders.registerShader("textured", GL_FRAGMENT_SHADER,
                                {"resources/shaders/textured-hueshift.frag"});
+        shaders.registerShader("sinusoid", GL_FRAGMENT_SHADER,
+                                 {"resources/shaders/elements/sinusoid.frag"});
         shaders.registerShader("spiral", GL_FRAGMENT_SHADER,
-                               {"resources/shaders/spiral.frag"});
+                               {"resources/shaders/elements/spiral.frag"});
 
         shaders.registerProgram("simple", {"ident", "white"});
 

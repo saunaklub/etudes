@@ -37,7 +37,7 @@ namespace etudes {
 
     void
     Scene::registerInputs() {
-        registerInput("/background", vec_float_t{0.0f, 0.0f, 0.0f, 1.0f});
+        registerInput("background", vec_float_t{0.0f, 0.0f, 0.0f, 1.0f});
     }
 
     void
@@ -108,7 +108,7 @@ namespace etudes {
     }
 
     void Scene::clearBackground() {
-        auto colorBackground = getValue<glm::vec4>("/background");
+        auto colorBackground = getValue<glm::vec4>("background");
 
         getPainter().setColor(colorBackground);
         getPainter().rect({0, 0}, {1, 1});

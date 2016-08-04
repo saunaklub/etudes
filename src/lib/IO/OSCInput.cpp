@@ -142,7 +142,7 @@ namespace etudes {
     template <typename T>
     void OSCInput::update(std::string path,
                           const T &values) {
-        string receiver = splitStringFirst(path);
+        string receiver = splitStringFirst(path.substr(1, path.size()));
         string input = splitStringRest(path);
 
         logging::log(LogLevel::excessive, receiver + ": " + input);

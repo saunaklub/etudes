@@ -30,4 +30,4 @@ scenes:
 # input:
 #   mouse:
 #     xy:
-#       - /particles/particles/center
+#       - particles/particles/center

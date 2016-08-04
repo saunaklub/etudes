@@ -29,11 +29,11 @@ namespace etudes {
     using logging::LogLevel;
 
     void Testbed::registerInputs() {
-        registerInput("/test", vec_float_t{});
+        registerInput("test", vec_float_t{});
     }
 
     void Testbed::draw() {
-        auto input = getValue<vec_float_t>("/test");
+        auto input = getValue<vec_float_t>("test");
 
         const Rect &viewport = getContext().getViewport2D();
         glm::vec2 p0 = denormalize({0.0, 0.5}, viewport);

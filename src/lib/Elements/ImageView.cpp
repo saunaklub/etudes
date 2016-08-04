@@ -42,10 +42,10 @@ namespace etudes {
     }
 
     void ImageView::registerInputs() {
-        registerInput("/x-range", vec_float_t{0, 1});
-        registerInput("/y-range", vec_float_t{0, 1});
-        registerInput("/hue-shift", vec_float_t{0});
-        registerInput("/alpha", vec_float_t{1.f});
+        registerInput("x-range", vec_float_t{0, 1});
+        registerInput("y-range", vec_float_t{0, 1});
+        registerInput("hue-shift", vec_float_t{0});
+        registerInput("alpha", vec_float_t{1.f});
     }
 
     void ImageView::init() {
@@ -77,8 +77,8 @@ namespace etudes {
             sourceArea = panZoom->getSourceArea();
         }
         else {
-            vec2 rangeX = getValue<vec2>("/x-range");
-            vec2 rangeY = getValue<vec2>("/y-range");
+            vec2 rangeX = getValue<vec2>("x-range");
+            vec2 rangeY = getValue<vec2>("y-range");
 
             sourceArea = Rect(rangeX[0], rangeY[0],
                               rangeX[1] - rangeX[0],
@@ -94,8 +94,8 @@ namespace etudes {
 
         glUseProgram(registry.getProgram("textured"));
 
-        float hueShift = getValue<float>("/hue-shift");
-        float alpha = getValue<float>("/alpha");
+        float hueShift = getValue<float>("hue-shift");
+        float alpha = getValue<float>("alpha");
         glUniform1f(registry.getUniform("textured", "hueShift"), hueShift);
         glUniform1f(registry.getUniform("textured", "alpha"), alpha);
 

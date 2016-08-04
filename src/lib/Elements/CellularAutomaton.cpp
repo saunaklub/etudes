@@ -40,7 +40,7 @@ namespace etudes {
     }
 
     void CellularAutomaton::registerInputs() {
-        registerInput("/rate", vec_float_t{1.f});
+        registerInput("rate", vec_float_t{1.f});
     }
 
     void CellularAutomaton::init() {
@@ -52,7 +52,7 @@ namespace etudes {
     }
 
     void CellularAutomaton::update() {
-        float rate = getValue<float>("/rate");
+        float rate = getValue<float>("rate");
 
         double time = util::seconds();
         if(time > updateLast + 1.f / rate) {

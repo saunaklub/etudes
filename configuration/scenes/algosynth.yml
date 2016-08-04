@@ -2,6 +2,6 @@ elements:
   algosynth:
     type: AlgoSynth
     defaults:
-      /rate: [1]
+      rate: [1]
 
 order: [algosynth]

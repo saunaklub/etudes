@@ -34,13 +34,13 @@ namespace etudes {
     {}
 
     void Spiral::registerInputs() {
-        registerInput("/curl",    vec_float_t{0.0f});
+        registerInput("curl",    vec_float_t{0.0f});
     }
 
     void Spiral::draw() {
         const ShaderRegistry & registry = getContext().getShaderRegistry();
 
-        float curl = getValue<float>("/curl");
+        float curl = getValue<float>("curl");
 
         glUseProgram(registry.getProgram("spiral"));
         glUniform1f(registry.getUniform("spiral", "time"), util::seconds());

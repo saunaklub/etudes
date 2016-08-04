@@ -36,49 +36,49 @@ namespace etudes {
     using glm::vec4;
 
     void Lines::registerInputs() {
-        registerInput("/count", vec_float_t{100.0f});
-        registerInput("/angle", vec_float_t{pi<float>()/2.0f});
+        registerInput("count", vec_float_t{100.0f});
+        registerInput("angle", vec_float_t{pi<float>()/2.0f});
 
-        registerInput("/distance/base",      vec_float_t{0.1f});
-        registerInput("/distance/amplitude", vec_float_t{0.0f});
-        registerInput("/distance/omega",     vec_float_t{0.0f});
-        registerInput("/distance/lambda",    vec_float_t{0.0f});
+        registerInput("distance/base",      vec_float_t{0.1f});
+        registerInput("distance/amplitude", vec_float_t{0.0f});
+        registerInput("distance/omega",     vec_float_t{0.0f});
+        registerInput("distance/lambda",    vec_float_t{0.0f});
 
-        registerInput("/width/base",      vec_float_t{5.0f});
-        registerInput("/width/amplitude", vec_float_t{0.0f});
-        registerInput("/width/omega",     vec_float_t{0.0f});
-        registerInput("/width/lambda",    vec_float_t{0.0f});
+        registerInput("width/base",      vec_float_t{5.0f});
+        registerInput("width/amplitude", vec_float_t{0.0f});
+        registerInput("width/omega",     vec_float_t{0.0f});
+        registerInput("width/lambda",    vec_float_t{0.0f});
 
-        registerInput("/color/base",      vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
-        registerInput("/color/amplitude", vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
-        registerInput("/color/omega",     vec_float_t{0.0f});
-        registerInput("/color/lambda",    vec_float_t{0.0f});
+        registerInput("color/base",      vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
+        registerInput("color/amplitude", vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
+        registerInput("color/omega",     vec_float_t{0.0f});
+        registerInput("color/lambda",    vec_float_t{0.0f});
     }
 
     void Lines::draw() {
         Painter & painter = getPainter();
 
-        auto dist_b = getValue<float>("/distance/base");
-        auto dist_a = getValue<float>("/distance/amplitude");
-        auto dist_o = getValue<float>("/distance/omega");
-        auto dist_l = getValue<float>("/distance/lambda");
+        auto dist_b = getValue<float>("distance/base");
+        auto dist_a = getValue<float>("distance/amplitude");
+        auto dist_o = getValue<float>("distance/omega");
+        auto dist_l = getValue<float>("distance/lambda");
 
-        auto width_b = getValue<float>("/width/base");
-        auto width_a = getValue<float>("/width/amplitude");
-        auto width_o = getValue<float>("/width/omega");
-        auto width_l = getValue<float>("/width/lambda");
+        auto width_b = getValue<float>("width/base");
+        auto width_a = getValue<float>("width/amplitude");
+        auto width_o = getValue<float>("width/omega");
+        auto width_l = getValue<float>("width/lambda");
 
-        auto color_b = getValue<vec4>("/color/base");
-        auto color_a = getValue<vec4>("/color/amplitude");
-        auto color_o = getValue<float>("/color/omega");
-        auto color_l = getValue<float>("/color/lambda");
+        auto color_b = getValue<vec4>("color/base");
+        auto color_a = getValue<vec4>("color/amplitude");
+        auto color_o = getValue<float>("color/omega");
+        auto color_l = getValue<float>("color/lambda");
 
         auto dist  = funcSin(dist_b, dist_a, dist_o, dist_l);
         auto width = funcSin(width_b, width_a, width_o, width_l);
         auto color = funcSin(color_b, color_a, color_o, color_l);
 
-        auto count = getValue<float>("/count");
-        auto angle = getValue<float>("/angle");
+        auto count = getValue<float>("count");
+        auto angle = getValue<float>("angle");
 
         auto p0 = vec2(2.0f*cos(angle),
                        2.0f*sin(angle));

@@ -38,11 +38,11 @@ namespace etudes {
     }
 
     void BlobTraces::registerInputs() {
-        registerInput("/position", vec_float_t{0.5, 0.5, 0.5});
-        registerInput("/amplitude", vec_float_t{0.5});
-        // registerInput("/personA/positionB", vec_float_t{0.5, 0.5});
-        // registerInput("/personA/sizeA", vec_float_t{0.5});
-        // registerInput("/personA/sizeB", vec_float_t{0.5});
+        registerInput("position", vec_float_t{0.5, 0.5, 0.5});
+        registerInput("amplitude", vec_float_t{0.5});
+        // registerInput("personA/positionB", vec_float_t{0.5, 0.5});
+        // registerInput("personA/sizeA", vec_float_t{0.5});
+        // registerInput("personA/sizeB", vec_float_t{0.5});
 
 
     }
@@ -75,8 +75,8 @@ namespace etudes {
     }
 
     void BlobTraces::draw() {
-        vec_float_t position = getValue<vec_float_t>("/position");
-        float amplitude = getValue<float>("/amplitude");
+        vec_float_t position = getValue<vec_float_t>("position");
+        float amplitude = getValue<float>("amplitude");
 
         Painter & painter = getPainter();
         painter.setInputNormalized(true);
