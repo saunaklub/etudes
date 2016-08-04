@@ -84,15 +84,15 @@ namespace etudes {
 
     void CellularAutomaton::draw() {
         const Context & context = getContext();
-        const ShaderRegistry &registry = context.getShaderRegistry();
+        ShaderRegistry & shaders = getShaderRegistry();
 
-        glUseProgram(registry.getProgram("textured"));
+        glUseProgram(shaders.getProgram("textured"));
 
         glm::mat4 mvp =
             context.getProjection2D() *
             context.getToViewportTransform();
 
-        GLint locMVP = registry.getUniform("textured", "mvp");
+        GLint locMVP = shaders.getUniform("textured", "mvp");
         glUniformMatrix4fv(locMVP, 1, GLboolean(false),
                            glm::value_ptr(mvp));
 

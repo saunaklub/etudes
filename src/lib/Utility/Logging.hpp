@@ -27,8 +27,6 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
-#include <Utility/Utility.hpp>
-
 using namespace std::literals::string_literals;
 
 namespace etudes {

@@ -30,6 +30,7 @@ using namespace gl;
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 
+#include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 #include <Utility/Configuration.hpp>
 

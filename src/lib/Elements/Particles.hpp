@@ -28,7 +28,6 @@
 
 #include <glm/glm.hpp>
 
-#include <Graphics/ShaderRegistry.hpp>
 #include <Receivers/Element.hpp>
 
 namespace etudes {
@@ -60,8 +59,6 @@ namespace etudes {
 
         std::random_device randDev;
         std::mt19937 randGen;
-
-        ShaderRegistry shaders;
     };
 }
 

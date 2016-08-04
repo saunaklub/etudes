@@ -20,8 +20,6 @@
 
 #include <random>
 
-#include <Graphics/ShaderRegistry.hpp>
-
 #include "Particles.hpp"
 
 namespace etudes {
@@ -142,7 +140,7 @@ namespace etudes {
     }
 
     void Particles::draw() {
-        glUseProgram(getContext().getShaderRegistry().getProgram("simple"));
+        glUseProgram(getShaderRegistry().getProgram("simple"));
 
         glBindVertexArray(vao);
 

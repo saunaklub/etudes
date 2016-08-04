@@ -63,10 +63,10 @@ namespace etudes {
         //                        GL_TEXTURE_2D, texture->getId(), 0);
         // glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+        ShaderRegistry & shaders = getShaderRegistry();
+
         shaders.registerShader("algosynth", GL_FRAGMENT_SHADER,
                                {"resources/shaders/elements/algosynth.frag"});
-        shaders.registerShader("ident", GL_VERTEX_SHADER,
-                               {"resources/shaders/ident.vert"});
         shaders.registerProgram("algosynth", {"ident", "algosynth"});
 
         shaders.registerUniform("algosynth", "programValues");
@@ -87,6 +87,8 @@ namespace etudes {
     }
 
     void AlgoSynth::renderTexture() {
+        ShaderRegistry & shaders = getShaderRegistry();
+
         glUseProgram(shaders.getProgram("algosynth"));
 
         int bitshift1 = getValue<int>("bitshift1");
@@ -238,16 +240,16 @@ namespace etudes {
 
     void AlgoSynth::draw() {
         const Context & context = getContext();
-        const ShaderRegistry &registry = context.getShaderRegistry();
+        ShaderRegistry & shaders = getShaderRegistry();
 
-        glUseProgram(registry.getProgram("textured"));
-        glUniform1ui(registry.getUniform("textured", "useAlpha"), false);
+        glUseProgram(shaders.getProgram("textured"));
+        glUniform1ui(shaders.getUniform("textured", "useAlpha"), false);
 
         glm::mat4 mvp =
             context.getProjection2D() *
             context.getToViewportTransform();
 
-        GLint locMVP = registry.getUniform("textured", "mvp");
+        GLint locMVP = shaders.getUniform("textured", "mvp");
         glUniformMatrix4fv(locMVP, 1, GLboolean(false),
                            glm::value_ptr(mvp));
 

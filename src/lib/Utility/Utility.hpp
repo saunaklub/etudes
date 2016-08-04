@@ -39,19 +39,24 @@
 #endif
 
 namespace etudes {
+
+    class ShaderRegistry;
+
     namespace util {
         glm::vec2 to_vec2(const std::vector<float> &vec);
         glm::vec3 to_vec3(const std::vector<float> &vec);
         glm::vec4 to_vec4(const std::vector<float> &vec);
 
-    std::string splitStringFirst(std::string str, char separator='/');
-    std::string splitStringRest(std::string str, char separator='/');
+        std::string splitStringFirst(std::string str, char separator='/');
+        std::string splitStringRest(std::string str, char separator='/');
 
-    long microSeconds();
-    double seconds();
+        long microSeconds();
+        double seconds();
 
-    void checkGLError(std::string context);
-    std::string getGLErrorMessage(const gl::GLenum error);
+        void checkGLError(std::string context);
+        std::string getGLErrorMessage(const gl::GLenum error);
+
+        void registerDefaultShaders(ShaderRegistry & shaders);
     }
 
     template <typename T>

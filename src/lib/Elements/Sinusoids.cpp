@@ -21,6 +21,7 @@
 #include <glbinding/gl/gl.h>
 #include <glm/vec2.hpp>
 
+#include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 
 #include <Graphics/Geometry/Transforms.hpp>

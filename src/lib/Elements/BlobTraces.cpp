@@ -91,7 +91,7 @@ namespace etudes {
         // glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         // const Context & context = getContext();
-        // const ShaderRegistry & registry = context.getShaderRegistry();
+        // ShaderRegistry & registry = getShaderRegistry();
 
         // glUseProgram(registry.getProgram("textured"));
         // glUniform1ui(registry.getUniform("textured", "useAlpha"), false);

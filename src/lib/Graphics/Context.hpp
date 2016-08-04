@@ -20,8 +20,6 @@
 
 #include <glm/glm.hpp>
 
-#include <Graphics/ShaderRegistry.hpp>
-
 #include <Graphics/Geometry/Rect.hpp>
 
 #ifndef ETUDES_CONTEXT
@@ -42,11 +40,7 @@ namespace etudes {
         const glm::mat4 &getProjection2D() const;
         void setProjection2D(const Rect &projection);
 
-        const ShaderRegistry &getShaderRegistry() const;
-
     private:
-        ShaderRegistry shaders;
-
         Rect viewport2D;
         glm::mat4 projOrtho;
     };

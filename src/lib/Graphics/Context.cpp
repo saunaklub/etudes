@@ -23,6 +23,7 @@
 #include <glbinding/gl/gl.h>
 #include <glm/ext.hpp>
 
+#include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 
 #include "Context.hpp"
@@ -31,7 +32,6 @@ namespace etudes {
     using namespace gl;
 
     using std::function;
-    using std::vector;
     using std::pair;
     using std::make_pair;
 
@@ -43,63 +43,12 @@ namespace etudes {
 
     using util::checkGLError;
 
-    typedef std::vector<float> vec;
-
     Context::Context() :
         viewport2D(0, 0, 800, 600) {
     }
 
     void Context::init() {
-        shaders.registerShader("mvp-uv", GL_VERTEX_SHADER,
-                               {"resources/shaders/mvp-uv.vert"});
-        shaders.registerShader("ident", GL_VERTEX_SHADER,
-                               {"resources/shaders/ident.vert"});
-
-        shaders.registerShader("white", GL_FRAGMENT_SHADER,
-                               {"resources/shaders/white.frag"});
-        shaders.registerShader("solid", GL_FRAGMENT_SHADER,
-                                 {"resources/shaders/solid.frag"});
-        shaders.registerShader("textured", GL_FRAGMENT_SHADER,
-                               {"resources/shaders/textured-hueshift.frag"});
-        shaders.registerShader("sinusoid", GL_FRAGMENT_SHADER,
-                                 {"resources/shaders/elements/sinusoid.frag"});
-        shaders.registerShader("spiral", GL_FRAGMENT_SHADER,
-                               {"resources/shaders/elements/spiral.frag"});
-
-        shaders.registerProgram("simple", {"ident", "white"});
-
-        shaders.registerProgram("textured", {"mvp-uv", "textured"});
-        shaders.registerUniform("textured", "mvp");
-        shaders.registerUniform("textured", "hueShift");
-        shaders.registerUniform("textured", "alpha");
-        shaders.registerUniform("textured", "useAlpha");
-
-        shaders.registerProgram("solid", {"mvp-uv", "solid"});
-        shaders.registerUniform("solid", "mvp");
-        shaders.registerUniform("solid", "color");
-
-        shaders.registerProgram("sinusoid", {"mvp-uv", "sinusoid"});
-
-        shaders.registerUniform("sinusoid", "mvp");
-        shaders.registerUniform("sinusoid", "mode");
-
-        shaders.registerUniform("sinusoid", "color");
-
-        shaders.registerUniform("sinusoid", "circle_width");
-
-        shaders.registerUniform("sinusoid", "stroke_width");
-        shaders.registerUniform("sinusoid", "stroke_blur");
-
-        shaders.registerUniform("sinusoid", "order");
-        shaders.registerUniform("sinusoid", "time");
-        shaders.registerUniform("sinusoid", "phase");
-        shaders.registerUniform("sinusoid", "freq");
-        shaders.registerUniform("sinusoid", "lambda");
-
-        shaders.registerProgram("spiral", {"ident", "spiral"});
-        shaders.registerUniform("spiral", "curl");
-        shaders.registerUniform("spiral", "time");
-
+        // does this belong here, we have multiple instances! do we? aahh!!
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -111,6 +60,7 @@ namespace etudes {
 //        glDepthFunc(GL_LESS);
 //        glDepthFunc(GL_GREATER);
 //        glDepthFunc(GL_EQUAL);
+
         glPixelStorei( GL_UNPACK_ALIGNMENT, 1 );
 
         checkGLError("context: init");
@@ -148,10 +98,6 @@ namespace etudes {
             0, 2.f / viewport.getHeight(), 0, 0,
             0, 0, 1, 0,
             tx, ty, 0, 1);
-    }
-
-    const ShaderRegistry &Context::getShaderRegistry() const {
-        return shaders;
     }
 
 }

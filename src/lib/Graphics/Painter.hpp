@@ -24,6 +24,7 @@
 #include <glbinding/gl/gl.h>
 #include <glm/glm.hpp>
 
+#include <Graphics/ShaderRegistry.hpp>
 #include <Graphics/Quad.hpp>
 
 namespace etudes {
@@ -73,6 +74,8 @@ namespace etudes {
 
         glm::vec4 color;
         bool normalizedInput;
+
+        ShaderRegistry shaders;
     };
 }
 

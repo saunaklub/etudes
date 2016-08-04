@@ -33,6 +33,7 @@ namespace etudes {
 
     class Element : public Receiver {
     public:
+        Element();
         virtual ~Element() {};
 
         virtual void init() {};
@@ -42,12 +43,14 @@ namespace etudes {
         void setContext(const Context & context);
         const Context & getContext() const;
 
-        Painter & getPainter();
-
     protected:
+        ShaderRegistry & getShaderRegistry();
+        Painter & getPainter();
 
     private:
         const Context * context;
+
+        ShaderRegistry shaders;
         Painter painter;
     };
 

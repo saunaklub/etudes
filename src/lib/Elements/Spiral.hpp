@@ -26,9 +26,9 @@
 namespace etudes {
     class Spiral : public Element {
     public:
-
         Spiral();
 
+        void init() override;
         void registerInputs() override;
         void draw() override;
 

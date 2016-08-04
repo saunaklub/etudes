@@ -43,6 +43,29 @@ namespace etudes {
     const std::string shaderSinusoid = "sinusoid";
 
     Painter::Painter() {
+        util::registerDefaultShaders(shaders);
+
+        shaders.registerShader("sinusoid", GL_FRAGMENT_SHADER,
+                                 {"resources/shaders/elements/sinusoid.frag"});
+
+        shaders.registerProgram("sinusoid", {"mvp-uv", "sinusoid"});
+
+        shaders.registerUniform("sinusoid", "mvp");
+        shaders.registerUniform("sinusoid", "mode");
+
+        shaders.registerUniform("sinusoid", "color");
+
+        shaders.registerUniform("sinusoid", "circle_width");
+
+        shaders.registerUniform("sinusoid", "stroke_width");
+        shaders.registerUniform("sinusoid", "stroke_blur");
+
+        shaders.registerUniform("sinusoid", "order");
+        shaders.registerUniform("sinusoid", "time");
+        shaders.registerUniform("sinusoid", "phase");
+        shaders.registerUniform("sinusoid", "freq");
+        shaders.registerUniform("sinusoid", "lambda");
+
         reset();
     }
 
@@ -73,12 +96,11 @@ namespace etudes {
             to_string(color));
 #endif
         assert(context);
-        const ShaderRegistry &registry = context->getShaderRegistry();
         const Rect & viewport = context->getViewport2D();
 
-        glUseProgram(registry.getProgram(shaderLine));
+        glUseProgram(shaders.getProgram(shaderLine));
 
-        glUniform4f(registry.getUniform(shaderLine, "color"),
+        glUniform4f(shaders.getUniform(shaderLine, "color"),
                     color.r, color.g, color.b, color.a);
 
         if(normalizedInput) {
@@ -91,11 +113,10 @@ namespace etudes {
     void Painter::rect(glm::vec2 topLeft, glm::vec2 bottomRight) {
         assert(context);
 
-        const ShaderRegistry &registry = context->getShaderRegistry();
         const Rect & viewport = context->getViewport2D();
 
-        glUseProgram(registry.getProgram(shaderRect));
-        glUniform4f(registry.getUniform(shaderRect, "color"),
+        glUseProgram(shaders.getProgram(shaderRect));
+        glUniform4f(shaders.getUniform(shaderRect, "color"),
                     color.r, color.g, color.b, color.a);
 
         if(normalizedInput) {
@@ -115,7 +136,7 @@ namespace etudes {
         glm::mat4 proj = context->getProjection2D();
         glm::mat4 mvp = proj * model;
         glUniformMatrix4fv(
-            context->getShaderRegistry().getUniform(shaderRect, "mvp"),
+            shaders.getUniform(shaderRect, "mvp"),
             1, GLboolean(false), glm::value_ptr(mvp));
 
         quad.draw();
@@ -133,24 +154,23 @@ namespace etudes {
         float strokeWidth, float strokeBlur) const {
 
         assert(context);
-        const ShaderRegistry &registry = context->getShaderRegistry();
 
-        glUseProgram(registry.getProgram(shaderSinusoid));
+        glUseProgram(shaders.getProgram(shaderSinusoid));
 
-        glUniform1i(registry.getUniform(shaderSinusoid, "mode"), 0);
-        glUniform1i(registry.getUniform(shaderSinusoid, "order"), order);
+        glUniform1i(shaders.getUniform(shaderSinusoid, "mode"), 0);
+        glUniform1i(shaders.getUniform(shaderSinusoid, "order"), order);
 
-        glUniform1f(registry.getUniform(shaderSinusoid, "time"), time);
-        glUniform1f(registry.getUniform(shaderSinusoid, "freq"), freq);
-        glUniform1f(registry.getUniform(shaderSinusoid, "phase"), phase);
-        glUniform1f(registry.getUniform(shaderSinusoid, "lambda"), lambda);
+        glUniform1f(shaders.getUniform(shaderSinusoid, "time"), time);
+        glUniform1f(shaders.getUniform(shaderSinusoid, "freq"), freq);
+        glUniform1f(shaders.getUniform(shaderSinusoid, "phase"), phase);
+        glUniform1f(shaders.getUniform(shaderSinusoid, "lambda"), lambda);
 
         glUniform1f(
-            registry.getUniform(shaderSinusoid, "stroke_width"), strokeWidth);
+            shaders.getUniform(shaderSinusoid, "stroke_width"), strokeWidth);
         glUniform1f(
-            registry.getUniform(shaderSinusoid, "stroke_blur"), strokeBlur);
+            shaders.getUniform(shaderSinusoid, "stroke_blur"), strokeBlur);
 
-        glUniform4f(registry.getUniform(shaderSinusoid, "color"),
+        glUniform4f(shaders.getUniform(shaderSinusoid, "color"),
                     color.r, color.g, color.b, color.a);
 
         drawLineGeometry(p0, p1, width, shaderSinusoid);
@@ -162,27 +182,26 @@ namespace etudes {
         float circleWidth, float strokeWidth, float strokeBlur) const {
 
         assert(context);
-        const ShaderRegistry &registry = context->getShaderRegistry();
 
-        glUseProgram(registry.getProgram(shaderSinusoid));
+        glUseProgram(shaders.getProgram(shaderSinusoid));
 
-        glUniform1i(registry.getUniform(shaderSinusoid, "mode"), 1);
-        glUniform1i(registry.getUniform(shaderSinusoid, "order"), order);
+        glUniform1i(shaders.getUniform(shaderSinusoid, "mode"), 1);
+        glUniform1i(shaders.getUniform(shaderSinusoid, "order"), order);
 
-        glUniform1f(registry.getUniform(shaderSinusoid, "time"), time);
-        glUniform1f(registry.getUniform(shaderSinusoid, "freq"), freq);
-        glUniform1f(registry.getUniform(shaderSinusoid, "lambda"), lambda);
-        glUniform1f(registry.getUniform(shaderSinusoid, "phase"), freq);
-
-        glUniform1f(
-            registry.getUniform(shaderSinusoid, "circle_width"), circleWidth);
+        glUniform1f(shaders.getUniform(shaderSinusoid, "time"), time);
+        glUniform1f(shaders.getUniform(shaderSinusoid, "freq"), freq);
+        glUniform1f(shaders.getUniform(shaderSinusoid, "lambda"), lambda);
+        glUniform1f(shaders.getUniform(shaderSinusoid, "phase"), freq);
 
         glUniform1f(
-            registry.getUniform(shaderSinusoid, "stroke_width"), strokeWidth);
-        glUniform1f(
-            registry.getUniform(shaderSinusoid, "stroke_blur"), strokeBlur);
+            shaders.getUniform(shaderSinusoid, "circle_width"), circleWidth);
 
-        glUniform4f(registry.getUniform(shaderSinusoid, "color"),
+        glUniform1f(
+            shaders.getUniform(shaderSinusoid, "stroke_width"), strokeWidth);
+        glUniform1f(
+            shaders.getUniform(shaderSinusoid, "stroke_blur"), strokeBlur);
+
+        glUniform4f(shaders.getUniform(shaderSinusoid, "color"),
                     color.r, color.g, color.b, color.a);
 
         drawCircleGeometry(center, width, height, shaderSinusoid);
@@ -258,9 +277,8 @@ namespace etudes {
         glm::mat4 proj = context->getProjection2D();
         glm::mat4 mvp = proj * model;
 
-        glUniformMatrix4fv(
-            context->getShaderRegistry().getUniform(shader, "mvp"),
-            1, GLboolean(false), glm::value_ptr(mvp));
+        glUniformMatrix4fv(shaders.getUniform(shader, "mvp"),
+                           1, GLboolean(false), glm::value_ptr(mvp));
 
         quad.draw();
     }
@@ -276,9 +294,8 @@ namespace etudes {
         glm::mat4 proj = context->getProjection2D();
         glm::mat4 mvp = proj * model;
 
-        glUniformMatrix4fv(
-            context->getShaderRegistry().getUniform(shader, "mvp"),
-            1, GLboolean(false), glm::value_ptr(mvp));
+        glUniformMatrix4fv(shaders.getUniform(shader, "mvp"),
+                           1, GLboolean(false), glm::value_ptr(mvp));
 
         quad.draw();
     }

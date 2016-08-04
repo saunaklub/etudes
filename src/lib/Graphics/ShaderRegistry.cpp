@@ -118,7 +118,7 @@ namespace etudes {
         GLuint program = glCreateProgram();
 
         for(auto & shaderName : shader_names)
-            glAttachShader(program,m_mapShader[shaderName]);
+            glAttachShader(program, m_mapShader[shaderName]);
 
         glLinkProgram(program);
 
@@ -146,14 +146,14 @@ namespace etudes {
         return program;
     }
 
-    GLint ShaderRegistry::registerUniform(std::string program_name,
-                                          std::string uniform_name) {
-        log(LogLevel::debug, program_name +
-            ": Registering uniform: " + uniform_name);
+    GLint ShaderRegistry::registerUniform(std::string programName,
+                                          std::string uniformName) {
+        log(LogLevel::debug, programName +
+            ": Registering uniform: " + uniformName);
 
-        GLuint location = glGetUniformLocation(getProgram(program_name),
-                                               uniform_name.c_str());
-        m_mapUniform[program_name][uniform_name] = location;
+        GLuint location = glGetUniformLocation(getProgram(programName),
+                                               uniformName.c_str());
+        m_mapUniform[programName][uniformName] = location;
         return location;
     }
 
@@ -170,20 +170,20 @@ namespace etudes {
         return it->second;
     }
 
-    GLint ShaderRegistry::getUniform(std::string program_name,
-                                     std::string uniform_name) const {
-        auto it_program = m_mapUniform.find(program_name);
+    GLint ShaderRegistry::getUniform(std::string programName,
+                                     std::string uniformName) const {
+        auto it_program = m_mapUniform.find(programName);
         if(it_program == m_mapUniform.end()) {
-            std::string error = "Program "s + program_name +
+            std::string error = "Program "s + programName +
                 " not found in uniform registry!";
             log(LogLevel::error, error);
             throw std::runtime_error(error);
         }
 
-        auto it_uniform = it_program->second.find(uniform_name);
+        auto it_uniform = it_program->second.find(uniformName);
         if(it_uniform == it_program->second.end()) {
-            std::string error = "Uniform "s + uniform_name +
-                " for program " + program_name +
+            std::string error = "Uniform "s + uniformName +
+                " for program " + programName +
                 " not found in uniform registry!";
             log(LogLevel::error, error);
             throw std::runtime_error(error);

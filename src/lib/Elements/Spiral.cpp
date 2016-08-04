@@ -33,18 +33,29 @@ namespace etudes {
         quad(-1, -1, 1, 1)
     {}
 
+    void Spiral::init() {
+        ShaderRegistry & shaders = getShaderRegistry();
+
+        shaders.registerShader("spiral", GL_FRAGMENT_SHADER,
+                               {"resources/shaders/elements/spiral.frag"});
+
+        shaders.registerProgram("spiral", {"ident", "spiral"});
+        shaders.registerUniform("spiral", "curl");
+        shaders.registerUniform("spiral", "time");
+    }
+
     void Spiral::registerInputs() {
         registerInput("curl",    vec_float_t{0.0f});
     }
 
     void Spiral::draw() {
-        const ShaderRegistry & registry = getContext().getShaderRegistry();
+        ShaderRegistry & shaders = getShaderRegistry();
 
         float curl = getValue<float>("curl");
 
-        glUseProgram(registry.getProgram("spiral"));
-        glUniform1f(registry.getUniform("spiral", "time"), util::seconds());
-        glUniform1f(registry.getUniform("spiral", "curl"), curl);
+        glUseProgram(shaders.getProgram("spiral"));
+        glUniform1f(shaders.getUniform("spiral", "time"), util::seconds());
+        glUniform1f(shaders.getUniform("spiral", "curl"), curl);
 
         quad.draw();
     }

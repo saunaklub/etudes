@@ -46,8 +46,6 @@ namespace etudes {
         int height;
 
         gl::GLuint idFBO;
-
-        ShaderRegistry shaders;
     };
 }
 

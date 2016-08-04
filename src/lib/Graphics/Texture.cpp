@@ -21,6 +21,7 @@
 #include <cmath>
 #include <cstring>
 
+#include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 
 #include <Graphics/Geometry/Rect.hpp>

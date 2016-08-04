@@ -90,14 +90,14 @@ namespace etudes {
     }
 
     void ImageView::draw() {
-        const ShaderRegistry & registry = getContext().getShaderRegistry();
+        ShaderRegistry & shaders = getShaderRegistry();
 
-        glUseProgram(registry.getProgram("textured"));
+        glUseProgram(shaders.getProgram("textured"));
 
         float hueShift = getValue<float>("hue-shift");
         float alpha = getValue<float>("alpha");
-        glUniform1f(registry.getUniform("textured", "hueShift"), hueShift);
-        glUniform1f(registry.getUniform("textured", "alpha"), alpha);
+        glUniform1f(shaders.getUniform("textured", "hueShift"), hueShift);
+        glUniform1f(shaders.getUniform("textured", "alpha"), alpha);
 
         Rect area(0, 0, image->getWidth(), image->getHeight());
         area = area.maximizedTo(getContext().getViewport2D(), Rect::STRETCH);
@@ -110,7 +110,7 @@ namespace etudes {
         model = glm::translate(model, glm::vec3{0.5f, 0.5f, 0.f});
         glm::mat4 mvp = getContext().getProjection2D() * model;
 
-        GLint locMVP = registry.getUniform("textured", "mvp");
+        GLint locMVP = shaders.getUniform("textured", "mvp");
         glUniformMatrix4fv(locMVP, 1, GLboolean(false),
                            glm::value_ptr(mvp));
 

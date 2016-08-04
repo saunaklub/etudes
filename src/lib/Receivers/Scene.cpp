@@ -23,6 +23,7 @@
 
 #include <glbinding/gl/gl.h>
 
+#include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 
 #include "Scene.hpp"
