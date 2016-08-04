@@ -99,6 +99,6 @@ namespace etudes {
         std::unique_ptr<Element> product =
             std::make_unique<ImageView>(image, std::move(panZoom));;
 
-        return std::move(product);
+        return product;
     }
 }
