@@ -50,9 +50,6 @@ namespace {
 
 namespace etudes {
 
-    using std::cerr;
-    using std::endl;
-
     using YAML::Node;
     using YAML::LoadFile;
     using YAML::BadFile;
@@ -70,9 +67,8 @@ namespace etudes {
             config = std::make_unique<Node>();
             *config = LoadFile(file);
         } catch (BadFile &e) {
-            cerr <<
-                "Unable to load file at relative path " <<
-                file << endl;
+            logging::log(LogLevel::error,
+                         "Unable to load file at relative path: "s + file);
         }
     }
 
