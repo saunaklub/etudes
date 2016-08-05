@@ -218,7 +218,13 @@ namespace etudes {
 
         for(auto &sceneName : sceneList) {
             Configuration sceneConfig;
-            sceneConfig.read("configuration/scenes/" + sceneName + ".yml");
+
+            try {
+                sceneConfig.read("configuration/scenes/" + sceneName + ".yml");
+            }
+            catch(std::runtime_error e) {
+                continue;
+            }
 
             auto scene = SceneFactory::makeScene(sceneName, sceneConfig);
             scene->init();

@@ -67,8 +67,9 @@ namespace etudes {
             config = std::make_unique<Node>();
             *config = LoadFile(file);
         } catch (BadFile &e) {
-            logging::log(LogLevel::error,
-                         "Unable to load file at relative path: "s + file);
+            std::string message = "Unable to load config: "s + file;
+            logging::log(LogLevel::error, message);
+            throw std::runtime_error(message);
         }
     }
 
