@@ -26,7 +26,7 @@
 namespace etudes {
     class Rect {
     public:
-        enum Scaling {
+        enum class Scaling {
             STRETCH,
             CROP,
             BORDER

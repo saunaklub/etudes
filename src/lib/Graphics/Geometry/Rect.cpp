@@ -78,9 +78,9 @@ namespace etudes {
         Rect result = target;
 
         switch(scaling) {
-        case STRETCH:
+        case Scaling::STRETCH:
             break;
-        case CROP:
+        case Scaling::CROP:
             if(aspect >= aspectTarget) {
                 result.setWidth(target.getHeight() * aspect);
                 result.setPosX(target.getPosX() +
@@ -92,7 +92,7 @@ namespace etudes {
                                (target.getHeight() - result.getHeight()) / 2.f);
             }
             break;
-        case BORDER:
+        case Scaling::BORDER:
             if(aspect >= aspectTarget) {
                 result.setHeight(target.getWidth() / aspect);
                 result.setPosY(target.getPosY() +

@@ -80,7 +80,7 @@ namespace etudes {
     EtudesHost::EtudesHost() :
         logFramerate(false),
         vsync(false),
-        viewportScaling(Rect::CROP),
+        viewportScaling(Rect::Scaling::CROP),
         window(nullptr),
         paused(false),
         quitLoop(false),
@@ -164,13 +164,13 @@ namespace etudes {
                 hostConfig.getValue<std::string>("window:viewport");
 
             if(viewportString == "stretch") {
-                viewportScaling = Rect::STRETCH;
+                viewportScaling = Rect::Scaling::STRETCH;
             }
             else if(viewportString == "crop") {
-                viewportScaling = Rect::CROP;
+                viewportScaling = Rect::Scaling::CROP;
             }
             else if(viewportString == "border") {
-                viewportScaling = Rect::BORDER;
+                viewportScaling = Rect::Scaling::BORDER;
             }
         }
 
@@ -275,14 +275,14 @@ namespace etudes {
         Rect projection;
 
         switch(viewportScaling) {
-        case Rect::STRETCH:
+        case Rect::Scaling::STRETCH:
             projection = viewport;
             break;
-        case Rect::CROP:
-            projection = window.maximizedTo(viewport, Rect::BORDER);
+        case Rect::Scaling::CROP:
+            projection = window.maximizedTo(viewport, Rect::Scaling::BORDER);
             break;
-        case Rect::BORDER:
-            projection = window.maximizedTo(viewport, Rect::CROP);
+        case Rect::Scaling::BORDER:
+            projection = window.maximizedTo(viewport, Rect::Scaling::CROP);
             break;
         }
 
