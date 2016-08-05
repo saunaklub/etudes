@@ -44,7 +44,9 @@ namespace etudes {
     void ImageView::registerInputs() {
         registerInput("x-range", vec_float_t{0, 1});
         registerInput("y-range", vec_float_t{0, 1});
-        registerInput("hue-shift", vec_float_t{0});
+        registerInput("shift-hue", vec_float_t{0});
+        registerInput("shift-saturation", vec_float_t{0});
+        registerInput("shift-value", vec_float_t{0});
         registerInput("alpha", vec_float_t{1.f});
     }
 
@@ -94,9 +96,16 @@ namespace etudes {
 
         glUseProgram(shaders.getProgram("textured"));
 
-        float hueShift = getValue<float>("hue-shift");
+        float shiftHue = getValue<float>("shift-hue");
+        float shiftSaturation = getValue<float>("shift-saturation");
+        float shiftValue = getValue<float>("shift-value");
         float alpha = getValue<float>("alpha");
-        glUniform1f(shaders.getUniform("textured", "hueShift"), hueShift);
+        glUniform1f(
+            shaders.getUniform("textured", "shiftHue"), shiftHue);
+        glUniform1f(
+            shaders.getUniform("textured", "shiftSaturation"), shiftSaturation);
+        glUniform1f(
+            shaders.getUniform("textured", "shiftValue"), shiftValue);
         glUniform1f(shaders.getUniform("textured", "alpha"), alpha);
 
         Rect area(0, 0, image->getWidth(), image->getHeight());
