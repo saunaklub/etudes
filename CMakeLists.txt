@@ -47,13 +47,15 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
         src/lib/IO/VideoOutputV4L2.cpp)
 else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
     set_source_files_properties(src/lib/IO/VideoOutputSyphon.mm PROPERTIES 
-                            COMPILE_FLAGS "-x objective-c++")
+        COMPILE_FLAGS "-x objective-c++ -framework Foundation")
 
     list(APPEND LIBRARY_SOURCES
         src/lib/IO/VideoOutputSyphon.mm)
     
     FIND_LIBRARY(SYPHON_LIBRARY Syphon)
     FIND_PATH(SYPHON_INCLUDE_DIR Syphon/Syphon.h)
+    FIND_LIBRARY(COCOA_LIBRARY Cocoa)
+    FIND_PATH(COCOA_INCLUDE_DIR Cocoa/Cocoa.h)
 endif()
 
 set(CLIENT_SOURCES
@@ -97,9 +99,12 @@ pkg_search_module(LIBLO REQUIRED liblo)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
     set(ADDITIONAL_LIBRARIES ${SYPHON_LIBRARY}
+        ${COCOA_LIBRARY}
         ${GLFW}
         )
-    set(ADDITIONAL_DIRS ${SYPHON_INCLUDE_DIR})
+    set(ADDITIONAL_DIRS ${SYPHON_INCLUDE_DIR}
+        ${COCOA_INCLUDE_DIR}
+        )
 else()
     set(ADDITIONAL_LIBRARIES "")
     set(ADDITIONAL_DIRS "")
@@ -120,11 +125,6 @@ target_include_directories(${LIBRARY}
     PUBLIC ${ADDITIONAL_DIRS}
     )
 
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
-    target_include_directories(${LIBRARY}
-        PUBLIC ${SYPHON_INCLUDE_DUR}
-        )
-endif()
 target_link_libraries(${CLIENT}
     PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${LIBRARY}

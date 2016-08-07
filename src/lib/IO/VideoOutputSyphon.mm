@@ -7,7 +7,7 @@ namespace etudes{
 	                    VideoOutput(scene, width, height) {
 
             auto * window = glfwGetCurrentContext();
-            auto  * context = glfwGetNSGLContext(window);
+            id context = glfwGetNSGLContext(window);
 
     CGLContextObj ctx =  [context CGLContextObj];
 	    server = [[SyphonServer alloc]
