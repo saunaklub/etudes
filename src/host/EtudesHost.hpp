@@ -38,7 +38,6 @@ struct GLFWwindow;
 
 namespace etudes {
     class Scene;
-    class VideoOutput;
 
     class EtudesHost {
     public:

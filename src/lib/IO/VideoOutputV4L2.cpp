@@ -29,6 +29,7 @@
 #include <linux/videodev2.h>
 
 #include <Utility/Logging.hpp>
+#include <Utility/Utility.hpp>
 
 #include "VideoOutputV4L2.hpp"
 
