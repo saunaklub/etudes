@@ -46,16 +46,10 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     list(APPEND LIBRARY_SOURCES
         src/lib/IO/VideoOutputV4L2.cpp)
 else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
-    set_source_files_properties(src/lib/IO/VideoOutputSyphon.mm PROPERTIES 
-        COMPILE_FLAGS "-x objective-c++ -framework Foundation")
-
     list(APPEND LIBRARY_SOURCES
         src/lib/IO/VideoOutputSyphon.mm)
-    
-    FIND_LIBRARY(SYPHON_LIBRARY Syphon)
-    FIND_PATH(SYPHON_INCLUDE_DIR Syphon/Syphon.h)
-    FIND_LIBRARY(COCOA_LIBRARY Cocoa)
-    FIND_PATH(COCOA_INCLUDE_DIR Cocoa/Cocoa.h)
+    set_source_files_properties(src/lib/IO/VideoOutputSyphon.mm PROPERTIES
+        COMPILE_FLAGS "-x objective-c++ -framework Foundation")
 endif()
 
 set(CLIENT_SOURCES
@@ -78,13 +72,28 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     add_definitions("-DDEBUG")
 endif()
 
+set(ADDITIONAL_LIBRARIES "")
+set(ADDITIONAL_DIRS "")
+
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     add_definitions("-DLINUX")
     find_package(glfw3 3.2 REQUIRED)
     set(GLFW glfw)
-
 else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    add_definitions("-DMACOS")
+    find_library(SYPHON_LIBRARY Syphon)
+    find_path(SYPHON_INCLUDE_DIR Syphon/Syphon.h)
+    find_library(COCOA_LIBRARY Cocoa)
+    find_path(COCOA_INCLUDE_DIR Cocoa/Cocoa.h)
     find_package(glfw CONFIG NAMES glfw glfw3)
+
+    set(ADDITIONAL_LIBRARIES ${SYPHON_LIBRARY}
+        ${COCOA_LIBRARY}
+        ${GLFW}
+        )
+    set(ADDITIONAL_DIRS ${SYPHON_INCLUDE_DIR}
+        ${COCOA_INCLUDE_DIR}
+        )
     set(GLFW glfw3)
 endif()
 
@@ -93,22 +102,8 @@ find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 
-
 pkg_search_module(YAML_CPP REQUIRED yaml-cpp)
 pkg_search_module(LIBLO REQUIRED liblo)
-
-if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
-    set(ADDITIONAL_LIBRARIES ${SYPHON_LIBRARY}
-        ${COCOA_LIBRARY}
-        ${GLFW}
-        )
-    set(ADDITIONAL_DIRS ${SYPHON_INCLUDE_DIR}
-        ${COCOA_INCLUDE_DIR}
-        )
-else()
-    set(ADDITIONAL_LIBRARIES "")
-    set(ADDITIONAL_DIRS "")
-endif()
 
 target_include_directories(${CLIENT}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
