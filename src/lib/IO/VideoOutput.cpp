@@ -88,4 +88,8 @@ namespace etudes {
         glGetTexImage(GL_TEXTURE_2D, 0, GL_BGR, GL_UNSIGNED_BYTE, &data[0]);
     }
 
+    gl::GLuint VideoOutput::getTextureId() {
+        return idTexture;
+    }
+
 }

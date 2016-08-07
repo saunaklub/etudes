@@ -7,25 +7,26 @@ namespace etudes{
 	                    VideoOutput(scene, width, height) {
 
             auto * window = glfwGetCurrentContext();
-            //auto context = glfwGetNSGLContext(window);
+            auto  * context = glfwGetNSGLContext(window);
 
-	//    CGLContextObj ctx =  [context CGLContextObj]
-	//    server = [[SyphonServer alloc]
-	//	initWithName:[NSString stringWithCString:name.c_str()]
-	//	context:ctx options:nil];
+    CGLContextObj ctx =  [context CGLContextObj];
+	    server = [[SyphonServer alloc]
+		initWithName:[NSString stringWithCString:name.c_str()]
+		context:ctx options:nil];
      }
 
     VideoOutputSyphon::~VideoOutputSyphon(){
-//	[server stop];
-//	[server release];
+	[server stop];
+	[server release];
     }
 
     void VideoOutputSyphon::writeOutput(){
-//	[server publishFrameTexture:idTexture
-//	textureTarget:GL_TEXTURE_RECTANGLE_EXT
-//	imageRegion:NSMakeRect(0, 0, width, height)
-//	textureDimensions:NSMakeSize(width, height)
-//	flipped:NO];
+        auto idTex = getTextureId();
+	[server publishFrameTexture:idTex
+	textureTarget:GL_TEXTURE_RECTANGLE_EXT
+	imageRegion:NSMakeRect(0, 0, width, height)
+	textureDimensions:NSMakeSize(width, height)
+	flipped:NO];
     }
     void VideoOutputSyphon::createOutput(std::string outputId) {
 
