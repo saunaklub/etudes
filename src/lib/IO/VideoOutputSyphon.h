@@ -21,16 +21,25 @@
 #ifndef ETUDES_VIDEOOUTPUTSYPHON
 #define ETUDES_VIDEOOUTPUTSYPHON
 
-#include "VideoOutput.hpp"
+#include <string>
 
+#define GLFW_INCLUDE_NONE
+#define GLFW_EXPOSE_NATIVE_NSGL
+#define GLFW_EXPOSE_NATIVE_COCOA
+#define GLFWAPI
+
+#include <GLFW/glfw3.h>
+#include <GLFW/glfw3native.h>
+#include "VideoOutput.hpp"
+#include <Syphon/Syphon.h>
 
 namespace etudes {
 
-    class SyphonClient;
-
     class VideoOutputSyphon : public VideoOutput {
         public:
-            VideoOutputSyphon(Scene *scene, int width, int height);
+            VideoOutputSyphon(std::string name,
+                                Scene *scene, int width, int height);
+            ~VideoOutputSyphon() override;
 
             void createOutput(std::string outputId) override;
             void writeOutput() override;
@@ -42,4 +51,4 @@ namespace etudes {
 
 }
 
-#endif // ETUDES_VIDEOOUTPUTV4L2
+#endif // ETUDES_VIDEOOUTPUTSYPHON

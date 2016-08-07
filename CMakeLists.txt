@@ -46,8 +46,12 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     list(APPEND LIBRARY_SOURCES
         src/lib/IO/VideoOutputV4L2.cpp)
 else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    set_source_files_properties(src/lib/IO/VideoOutputSyphon.mm PROPERTIES 
+                            COMPILE_FLAGS "-x objective-c++")
+
     list(APPEND LIBRARY_SOURCES
         src/lib/IO/VideoOutputSyphon.mm)
+    
     FIND_LIBRARY(SYPHON_LIBRARY Syphon)
     FIND_PATH(SYPHON_INCLUDE_DIR Syphon/Syphon.h)
 endif()
@@ -91,6 +95,16 @@ find_package(glm REQUIRED)
 pkg_search_module(YAML_CPP REQUIRED yaml-cpp)
 pkg_search_module(LIBLO REQUIRED liblo)
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    set(ADDITIONAL_LIBRARIES ${SYPHON_LIBRARY}
+        ${GLFW}
+        )
+    set(ADDITIONAL_DIRS ${SYPHON_INCLUDE_DIR})
+else()
+    set(ADDITIONAL_LIBRARIES "")
+    set(ADDITIONAL_DIRS "")
+endif()
+
 target_include_directories(${CLIENT}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/host
@@ -103,11 +117,14 @@ target_include_directories(${LIBRARY}
     PUBLIC ${GLBINDING_INCLUDES}
     PUBLIC ${LIBLO_INCLUDE_DIRS}
     PUBLIC ${YAML_CPP_INCLUDE_DIRS}
-    if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
-        PUBLIC ${SYPHON_INCLUDE_DUR}
-    endif()
+    PUBLIC ${ADDITIONAL_DIRS}
     )
 
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    target_include_directories(${LIBRARY}
+        PUBLIC ${SYPHON_INCLUDE_DUR}
+        )
+endif()
 target_link_libraries(${CLIENT}
     PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${LIBRARY}
@@ -118,11 +135,9 @@ target_link_libraries(${LIBRARY}
     PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${YAML_CPP_LIBRARIES}
+    PUBLIC ${ADDITIONAL_LIBRARIES}
     glbinding
     freeimageplus
-    if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
-        ${SYPHON_LIBRARY}
-    endif()
     )
 
 configure_file(

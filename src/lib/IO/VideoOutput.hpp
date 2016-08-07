@@ -48,6 +48,7 @@ namespace etudes {
         int width;
         int height;
         std::vector<char> data;
+        gl::GLuint idTexture;
 
     private:
         void initFBO();
@@ -58,7 +59,6 @@ namespace etudes {
         Scene *scene;
 
         gl::GLuint idFBO;
-        gl::GLuint idTexture;
     };
 }
 
