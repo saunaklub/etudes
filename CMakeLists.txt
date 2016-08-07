@@ -49,7 +49,7 @@ else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
     list(APPEND LIBRARY_SOURCES
         src/lib/IO/VideoOutputSyphon.mm)
     set_source_files_properties(src/lib/IO/VideoOutputSyphon.mm PROPERTIES
-        COMPILE_FLAGS "-x objective-c++ -framework Foundation")
+        COMPILE_FLAGS "-x objective-c++")
 endif()
 
 set(CLIENT_SOURCES
