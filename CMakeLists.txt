@@ -22,7 +22,7 @@ set(LIBRARY_SOURCES
     src/lib/Graphics/Quad.cpp
     src/lib/Graphics/Texture.cpp
     src/lib/Graphics/Image.cpp
-#    src/lib/Graphics/TextureTiled.cpp
+    #    src/lib/Graphics/TextureTiled.cpp
     src/lib/Graphics/PanZoom.cpp
     src/lib/Graphics/PanZoomParallel.cpp
     src/lib/Graphics/Geometry/Transforms.cpp
@@ -45,6 +45,11 @@ set(LIBRARY_SOURCES
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     list(APPEND LIBRARY_SOURCES
         src/lib/IO/VideoOutputV4L2.cpp)
+else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    list(APPEND LIBRARY_SOURCES
+        src/lib/IO/VideoOutputSyphon.mm)
+    FIND_LIBRARY(SYPHON_LIBRARY Syphon)
+    FIND_PATH(SYPHON_INCLUDE_DIR Syphon/Syphon.h)
 endif()
 
 set(CLIENT_SOURCES
@@ -98,6 +103,9 @@ target_include_directories(${LIBRARY}
     PUBLIC ${GLBINDING_INCLUDES}
     PUBLIC ${LIBLO_INCLUDE_DIRS}
     PUBLIC ${YAML_CPP_INCLUDE_DIRS}
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+        PUBLIC ${SYPHON_INCLUDE_DUR}
+    endif()
     )
 
 target_link_libraries(${CLIENT}
@@ -112,6 +120,9 @@ target_link_libraries(${LIBRARY}
     PUBLIC ${YAML_CPP_LIBRARIES}
     glbinding
     freeimageplus
+    if(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+        ${SYPHON_LIBRARY}
+    endif()
     )
 
 configure_file(

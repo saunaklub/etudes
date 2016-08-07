@@ -8,8 +8,7 @@ namespace etudes{
         VideoOutput(scene, width, height) {
             server = [[SyphonServer alloc] 
                 initWithName:[NSString stringWithCSring:name.c_str()]
-                context:myContext options:nil];
-
+                context:nil options:nil];
         }
 
     VideoOutputSyphon::~VideoOutputSyphon(){
@@ -18,11 +17,10 @@ namespace etudes{
     }
 
     VideoOutputSyphon::writeOutput(){
-        [server publishFrameTexture:idTexture,
-        [NSRect],
-        [NSSize 5],
-        [BOOL true],
-        ];
-
+        [server publishFrameTexture:idTexture
+        textureTarget:GL_TEXTURE_RECTANGLE_EXT 
+        imageRegion:NSMakeRect(0, 0, width, height)
+        textureDimensions:NSMakeSize(width, height) 
+        flipped:NO];
     }
 }
