@@ -80,13 +80,14 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     find_package(glfw3 3.2 REQUIRED)
     set(GLFW glfw)
 else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
-    add_definitions("-DMACOS")
+    add_definitions("-DDARWIN")
     find_library(SYPHON_LIBRARY Syphon)
     find_path(SYPHON_INCLUDE_DIR Syphon/Syphon.h)
     find_library(COCOA_LIBRARY Cocoa)
     find_path(COCOA_INCLUDE_DIR Cocoa/Cocoa.h)
     find_package(glfw CONFIG NAMES glfw glfw3)
 
+    set(GLFW glfw3)
     set(ADDITIONAL_LIBRARIES ${SYPHON_LIBRARY}
         ${COCOA_LIBRARY}
         ${GLFW}
@@ -94,7 +95,6 @@ else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
     set(ADDITIONAL_DIRS ${SYPHON_INCLUDE_DIR}
         ${COCOA_INCLUDE_DIR}
         )
-    set(GLFW glfw3)
 endif()
 
 find_package(PkgConfig REQUIRED)
