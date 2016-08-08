@@ -32,13 +32,6 @@
 #include <GLFW/glfw3native.h>
 #include "VideoOutput.hpp"
 
-//#ifdef __OBJC__
-//#include "Syphon/Syphon.h"
-//typedef SyphonServer Server;
-//#else
-//typedef void Server;
-//#endif
-
 namespace etudes {
 
 
