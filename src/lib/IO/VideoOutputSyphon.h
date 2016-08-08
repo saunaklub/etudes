@@ -31,14 +31,20 @@
 #include <GLFW/glfw3.h>
 #include <GLFW/glfw3native.h>
 #include "VideoOutput.hpp"
-#include <Syphon/Syphon.h>
+
+#ifdef __OBJC__
+#include "Syphon/Syphon.h"
+typedef SyphonServer Server;
+#else
+typedef void Server;
+#endif
 
 namespace etudes {
 
+
     class VideoOutputSyphon : public VideoOutput {
         public:
-            VideoOutputSyphon(std::string name,
-                                Scene *scene, int width, int height);
+            VideoOutputSyphon(Scene *scene, int width, int height);
             ~VideoOutputSyphon() override;
 
             void createOutput(std::string outputId) override;
@@ -46,7 +52,7 @@ namespace etudes {
 
         private:
 
-            SyphonServer * server;
+            Server * server;
     };
 
 }

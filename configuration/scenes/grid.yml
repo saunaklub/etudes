@@ -1,5 +1,5 @@
 output:
-  enabled: false
+  enabled: true
   name: /dev/video1
   width:  600
   height: 600

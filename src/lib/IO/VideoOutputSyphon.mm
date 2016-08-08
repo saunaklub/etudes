@@ -1,18 +1,12 @@
 #import "VideoOutputSyphon.h"
+//#import "Syphon/Syphon.h"
 
 namespace etudes{
 
-    VideoOutputSyphon::VideoOutputSyphon(std::string name, Scene * scene,
+    VideoOutputSyphon::VideoOutputSyphon(Scene * scene,
 	                    int width, int height) :
 	                    VideoOutput(scene, width, height) {
 
-            auto * window = glfwGetCurrentContext();
-            id context = glfwGetNSGLContext(window);
-
-    CGLContextObj ctx =  [context CGLContextObj];
-	    server = [[SyphonServer alloc]
-		initWithName:[NSString stringWithCString:name.c_str()]
-		context:ctx options:nil];
      }
 
     VideoOutputSyphon::~VideoOutputSyphon(){
@@ -29,6 +23,13 @@ namespace etudes{
 	flipped:NO];
     }
     void VideoOutputSyphon::createOutput(std::string outputId) {
+            auto * window = glfwGetCurrentContext();
+            id context = glfwGetNSGLContext(window);
+
+    CGLContextObj ctx =  [context CGLContextObj];
+	    server = [[SyphonServer alloc]
+		initWithName:[NSString stringWithCString:outputId.c_str()]
+		context:ctx options:nil];
 
     }
 }

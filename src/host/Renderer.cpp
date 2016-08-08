@@ -1,4 +1,8 @@
+#ifdef LINUX
 #include <IO/VideoOutputV4L2.hpp>
+#elif defined DARWIN
+#include <IO/VideoOutputSyphon.h>
+#endif
 
 #include "Renderer.hpp"
 
