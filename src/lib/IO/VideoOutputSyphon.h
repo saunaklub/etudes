@@ -21,15 +21,9 @@
 #ifndef ETUDES_VIDEOOUTPUTSYPHON
 #define ETUDES_VIDEOOUTPUTSYPHON
 
+#include <memory>
 #include <string>
 
-#define GLFW_INCLUDE_NONE
-#define GLFW_EXPOSE_NATIVE_NSGL
-#define GLFW_EXPOSE_NATIVE_COCOA
-#define GLFWAPI
-
-#include <GLFW/glfw3.h>
-#include <GLFW/glfw3native.h>
 #include "VideoOutput.hpp"
 
 namespace etudes {
@@ -45,7 +39,8 @@ namespace etudes {
 
         private:
 
-            struct Server * server;
+            struct Server;
+            std::unique_ptr<Server> server;
     };
 
 }
