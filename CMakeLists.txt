@@ -22,7 +22,7 @@ set(LIBRARY_SOURCES
     src/lib/Graphics/Quad.cpp
     src/lib/Graphics/Texture.cpp
     src/lib/Graphics/Image.cpp
-#    src/lib/Graphics/TextureTiled.cpp
+    #    src/lib/Graphics/TextureTiled.cpp
     src/lib/Graphics/PanZoom.cpp
     src/lib/Graphics/PanZoomParallel.cpp
     src/lib/Graphics/Geometry/Transforms.cpp
@@ -45,6 +45,11 @@ set(LIBRARY_SOURCES
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     list(APPEND LIBRARY_SOURCES
         src/lib/IO/VideoOutputV4L2.cpp)
+else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    list(APPEND LIBRARY_SOURCES
+        src/lib/IO/VideoOutputSyphon.mm)
+    set_source_files_properties(src/lib/IO/VideoOutputSyphon.mm PROPERTIES
+        COMPILE_FLAGS "-x objective-c++")
 endif()
 
 set(CLIENT_SOURCES
@@ -67,21 +72,35 @@ if("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
     add_definitions("-DDEBUG")
 endif()
 
+set(ADDITIONAL_LIBRARIES "")
+set(ADDITIONAL_DIRS "")
+
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     add_definitions("-DLINUX")
     find_package(glfw3 3.2 REQUIRED)
     set(GLFW glfw)
-
 else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    add_definitions("-DDARWIN")
+    find_library(SYPHON_LIBRARY Syphon)
+    find_path(SYPHON_INCLUDE_DIR Syphon/Syphon.h)
+    find_library(COCOA_LIBRARY Cocoa)
+    find_path(COCOA_INCLUDE_DIR Cocoa/Cocoa.h)
     find_package(glfw CONFIG NAMES glfw glfw3)
+
     set(GLFW glfw3)
+    set(ADDITIONAL_LIBRARIES ${SYPHON_LIBRARY}
+        ${COCOA_LIBRARY}
+        ${GLFW}
+        )
+    set(ADDITIONAL_DIRS ${SYPHON_INCLUDE_DIR}
+        ${COCOA_INCLUDE_DIR}
+        )
 endif()
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
-
 
 pkg_search_module(YAML_CPP REQUIRED yaml-cpp)
 pkg_search_module(LIBLO REQUIRED liblo)
@@ -98,6 +117,7 @@ target_include_directories(${LIBRARY}
     PUBLIC ${GLBINDING_INCLUDES}
     PUBLIC ${LIBLO_INCLUDE_DIRS}
     PUBLIC ${YAML_CPP_INCLUDE_DIRS}
+    PUBLIC ${ADDITIONAL_DIRS}
     )
 
 target_link_libraries(${CLIENT}
@@ -110,6 +130,7 @@ target_link_libraries(${LIBRARY}
     PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${YAML_CPP_LIBRARIES}
+    PUBLIC ${ADDITIONAL_LIBRARIES}
     glbinding
     freeimageplus
     )

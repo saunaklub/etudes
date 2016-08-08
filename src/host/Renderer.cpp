@@ -1,4 +1,8 @@
+#ifdef LINUX
 #include <IO/VideoOutputV4L2.hpp>
+#elif defined DARWIN
+#include <IO/VideoOutputSyphon.h>
+#endif
 
 #include "Renderer.hpp"
 
@@ -23,8 +27,11 @@ namespace etudes {
     }
 
     void Renderer::setOutput(std::string name, int width, int height) {
-#ifdef LINUX
+#if defined LINUX
         output = std::make_unique<VideoOutputV4L2>(scene.get(), width, height);
+        output->createOutput(name);
+#elif defined DARWIN
+        output = std::make_unique<VideoOutputSyphon>(scene.get(), width, height);
         output->createOutput(name);
 #endif
     }

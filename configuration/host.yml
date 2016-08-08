@@ -17,7 +17,7 @@ logging:
   framerate: false
 
 scenes:
-  # - grid
+  - grid
   # - particles
   # - parallels
   # - sinusoids
@@ -27,6 +27,10 @@ scenes:
   # - spiral
   # - testbed
   - domainwarp
+
+etudes:
+  - particles
+
 
 # input:
 #   mouse:

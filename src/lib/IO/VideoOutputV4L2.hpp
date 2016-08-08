@@ -32,11 +32,16 @@ namespace etudes {
         VideoOutputV4L2(Scene *scene, int width, int height);
 
         void createOutput(std::string outputId) override;
-        void writeOutput() override;
+        void render() override;
 
     private:
         void printV4L2Capabilities(v4l2_capability *caps);
         void printV4L2Formats();
+
+        std::vector<char> data;
+
+        gl::GLuint idFBO;
+        gl::GLuint idTexture;
 
         int fd;
     };

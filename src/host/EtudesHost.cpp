@@ -38,7 +38,6 @@ using namespace gl;
 #include <Receivers/Scene.hpp>
 
 #include <IO/OSCInput.hpp>
-#include <IO/VideoOutputV4L2.hpp>
 
 #include "EtudesHost.hpp"
 
@@ -237,7 +236,7 @@ namespace etudes {
             auto renderer =
                 std::make_unique<Renderer>(sceneName, std::move(scene));
 
-#ifdef LINUX
+#if defined(LINUX) || defined(DARWIN)
             if(sceneConfig.hasValue("output")) {
                 if(!sceneConfig.hasValue("output:enabled") ||
                    sceneConfig.getValue<bool>("output:enabled")) {
