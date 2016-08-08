@@ -171,7 +171,7 @@ namespace etudes {
         glClearColor(0, 0, 0, 1);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        scene->draw();
+        drawScene();
 
         readFBO();
         unbindFBO();
