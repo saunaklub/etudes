@@ -42,6 +42,8 @@ namespace etudes {
                                      int width, int height) :
         VideoOutput(scene, width, height),
         fd(-1) {
+        data.resize(width*height*4);
+        initFBO();
     }
 
     void VideoOutputV4L2::printV4L2Capabilities(v4l2_capability *caps) {
@@ -83,6 +85,38 @@ namespace etudes {
                 reinterpret_cast<char*>(format.description));
             ++format.index;
         }
+    }
+
+    void VideoOutputV4L2::initFBO() {
+        glGenTextures(1, &idTexture);
+        glBindTexture(GL_TEXTURE_2D, idTexture);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GLint(GL_REPEAT));
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GLint(GL_REPEAT));
+        glTexParameteri(GL_TEXTURE_2D,
+                        GL_TEXTURE_MIN_FILTER, GLint(GL_NEAREST));
+        glTexParameteri(GL_TEXTURE_2D,
+                        GL_TEXTURE_MAG_FILTER, GLint(GL_NEAREST));
+        glTexImage2D(GL_TEXTURE_2D, 0, GLint(GL_SRGB8),
+                     width, height, 0, GL_BGR,
+                     GL_UNSIGNED_BYTE, nullptr);
+
+        glGenFramebuffers(1, &idFBO);
+        bindFBO();
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0,
+                               GL_TEXTURE_2D, idTexture, 0);
+        unbindFBO();
+    }
+
+    void VideoOutputV4L2::bindFBO() {
+        glBindFramebuffer(GL_FRAMEBUFFER, idFBO);
+    }
+
+    void VideoOutputV4L2::unbindFBO() {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    }
+
+    void VideoOutputV4L2::readFBO() {
+        glGetTexImage(GL_TEXTURE_2D, 0, GL_BGR, GL_UNSIGNED_BYTE, &data[0]);
     }
 
     void VideoOutputV4L2::createOutput(std::string outputId) {
@@ -131,11 +165,20 @@ namespace etudes {
 
     }
 
-    void VideoOutputV4L2::writeOutput() {
+    void VideoOutputV4L2::render() {
+        bindFBO();
+
+        glClearColor(0, 0, 0, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        scene->draw();
+
+        readFBO();
+        unbindFBO();
+
         int res = write(fd, &data[0], width*height*4);
         if(res < 0) {
             log(LogLevel::error, "Failed to write video output!");
         }
     }
-
 }

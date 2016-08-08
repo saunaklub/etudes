@@ -10,7 +10,6 @@ namespace etudes{
     VideoOutputSyphon::VideoOutputSyphon(Scene * scene,
 	                    int width, int height) :
 	                    VideoOutput(scene, width, height) {
-
      server = std::make_unique<Server>();
      }
 
@@ -19,21 +18,22 @@ namespace etudes{
 	[server->syphon release];
     }
 
-    void VideoOutputSyphon::writeOutput(){
-        auto idTex = getTextureId();
+    void VideoOutputSyphon::render(){
 
-	[server->syphon publishFrameTexture:idTex
-	textureTarget:GL_TEXTURE_2D
-	imageRegion:NSMakeRect(0, 0, width, height)
-	textureDimensions:NSMakeSize(width, height)
-	flipped:NO];
-    }
+        [server->syphon bindToDrawFrameOfSize:NSMakeSize(width,height)];
+
+        drawScene();
+
+        [server->syphon unbindAndPublish];
+
+        }
 
     void VideoOutputSyphon::createOutput(std::string outputId) {
 
         auto ctx =  CGLGetCurrentContext();
         server->syphon = [[SyphonServer alloc]
-            initWithName:[NSString stringWithCString:outputId.c_str()]
+            initWithName:[NSString stringWithCString:outputId.c_str()
+            encoding: NSUTF8StringEncoding]
             context:ctx options:nil];
 
     }

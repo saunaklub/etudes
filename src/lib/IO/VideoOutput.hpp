@@ -39,27 +39,19 @@ namespace etudes {
         VideoOutput(Scene *scene, int width, int height);
         virtual ~VideoOutput();
 
-        void render();
+        virtual void render() = 0;
 
         virtual void createOutput(std::string outputId) = 0;
-        virtual void writeOutput() = 0;
 
     protected:
         int width;
         int height;
-        std::vector<char> data;
-        gl::GLuint getTextureId();
+        void drawScene();
 
     private:
-        void initFBO();
-        void bindFBO();
-        void readFBO();
-        void unbindFBO();
 
         Scene *scene;
 
-        gl::GLuint idFBO;
-        gl::GLuint idTexture;
     };
 }
 

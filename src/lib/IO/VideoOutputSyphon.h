@@ -35,7 +35,7 @@ namespace etudes {
             ~VideoOutputSyphon() override;
 
             void createOutput(std::string outputId) override;
-            void writeOutput() override;
+            void render() override;
 
         private:
 
