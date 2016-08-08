@@ -168,12 +168,10 @@ namespace etudes {
     void VideoOutputV4L2::render() {
         bindFBO();
 
-        glClearColor(0, 0, 0, 1);
-        glClear(GL_COLOR_BUFFER_BIT);
-
         drawScene();
 
         readFBO();
+
         unbindFBO();
 
         int res = write(fd, &data[0], width*height*4);
