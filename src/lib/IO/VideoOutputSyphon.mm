@@ -18,7 +18,7 @@
 
 */
 
-#import "VideoOutputSyphon.h"
+#import "VideoOutputSyphon.hpp"
 #import "Syphon/Syphon.h"
 
 namespace etudes {
