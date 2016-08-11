@@ -40,21 +40,27 @@ namespace etudes {
                                {"resources/shaders/elements/spiral.frag"});
 
         shaders.registerProgram("spiral", {"ident", "spiral"});
-        shaders.registerUniform("spiral", "curl");
         shaders.registerUniform("spiral", "time");
-    }
+
+        shaders.registerUniform("spiral", "resolution");
+        shaders.registerUniform("spiral", "curl");
+}
 
     void Spiral::registerInputs() {
         registerInput("curl",    vec_float_t{0.0f});
     }
 
     void Spiral::draw() {
+        Rect viewport = getContext().getViewport2D();
         ShaderRegistry & shaders = getShaderRegistry();
 
         float curl = getValue<float>("curl");
 
         glUseProgram(shaders.getProgram("spiral"));
+        glUniform2f(shaders.getUniform("spiral", "resolution"),
+                    viewport.getWidth(), viewport.getHeight());
         glUniform1f(shaders.getUniform("spiral", "time"), util::seconds());
+
         glUniform1f(shaders.getUniform("spiral", "curl"), curl);
 
         quad.draw();
