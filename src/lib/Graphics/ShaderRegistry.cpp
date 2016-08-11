@@ -143,6 +143,10 @@ namespace etudes {
             glDetachShader(program, m_mapShader[shader_names[iLoop]]);
 
         m_mapProgram[name] = program;
+
+        log(LogLevel::excessive, "program id " +
+            name + ": " + std::to_string(program));
+
         return program;
     }
 
@@ -154,6 +158,10 @@ namespace etudes {
         GLuint location = glGetUniformLocation(getProgram(programName),
                                                uniformName.c_str());
         m_mapUniform[programName][uniformName] = location;
+
+        log(LogLevel::excessive, "uniform location: " +
+            programName + "/" + uniformName + ": " + std::to_string(location));
+
         return location;
     }
 
