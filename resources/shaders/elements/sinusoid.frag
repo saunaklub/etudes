@@ -11,10 +11,9 @@ uniform float freq;
 uniform float phase;
 uniform float lambda;
 
-uniform float stroke_width;
-uniform float stroke_blur;
-
-uniform float circle_width;
+uniform float circleWidth;
+uniform float strokeWidth;
+uniform float strokeBlur;
 
 uniform vec4 color;
 
@@ -36,7 +35,7 @@ void main() {
 
         sinusoid =
             (sin(2.f*PI * ((order*(x * lambda + freq * time)) + phase))
-             * (1-stroke_width) + 1.f) / 2.f;
+             * (1-strokeWidth) + 1.f) / 2.f;
 
         dist = abs(y - sinusoid);
 
@@ -49,13 +48,13 @@ void main() {
         x = atan(0.5f - uv.y, 0.5f - uv.x) / PI + 1.0f;
         y = length(2.0f * vec2(0.5f - uv.x, 0.5f - uv.y));
 
-        float circle_amp_length = 1 - circle_width / order;
+        float circle_amp_length = 1 - circleWidth / order;
         y = clamp((y - circle_amp_length) /
                   (1 - circle_amp_length) * 2.0f - 1.0f,
                   -1, 1);
         sinusoid =
             (sin(2.f*PI * (order * (x + lambda * time) + phase))
-             * (1-stroke_width) + 1.f) / 2.f;
+             * (1-strokeWidth) + 1.f) / 2.f;
 
         sinusoid *= (sin(2.f * PI * freq * order * time));
 
@@ -67,10 +66,10 @@ void main() {
 
 
     // shade with distance from sinusoid and blur factor
-    float blur_start_dist = stroke_width / 2.0f * (1.0f - stroke_blur);
-    float blur_width = stroke_width / 2.f - blur_start_dist;
-    if(dist > blur_start_dist)
-        shaded.a *=  1.0f - (dist-blur_start_dist) / blur_width;
+    float blurStartDist = strokeWidth / 2.0f * (1.0f - strokeBlur);
+    float blurWidth = strokeWidth / 2.f - blurStartDist;
+    if(dist > blurStartDist)
+        shaded.a *=  1.0f - (dist-blurStartDist) / blurWidth;
 
     shaded = clamp(shaded, 0, 1);
 

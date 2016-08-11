@@ -76,6 +76,28 @@ namespace etudes {
         bool normalizedInput;
 
         ShaderRegistry shaders;
+
+        gl::GLuint programLine;
+        gl::GLuint programRect;
+        gl::GLuint programSinusoid;
+
+        gl::GLint uniformLineColor;
+        gl::GLint uniformRectColor;
+        gl::GLint uniformRectMVP;
+
+        gl::GLint uniformSinusoidMode;
+        gl::GLint uniformSinusoidOrder;
+
+        gl::GLint uniformSinusoidTime;
+        gl::GLint uniformSinusoidFreq;
+        gl::GLint uniformSinusoidPhase;
+        gl::GLint uniformSinusoidLambda;
+
+        gl::GLint uniformSinusoidCircleWidth;
+        gl::GLint uniformSinusoidStrokeWidth;
+        gl::GLint uniformSinusoidStrokeBlur;
+
+        gl::GLint uniformSinusoidColor;
     };
 }
 
