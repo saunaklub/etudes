@@ -35,15 +35,15 @@ namespace etudes {
         Rect();
         Rect(float x, float y, float width, float height);
 
-        float getPosX() const;
-        float getPosY() const;
+        float getX() const;
+        float getY() const;
 
         float getWidth() const;
         float getHeight() const;
         float getDiagonal() const;
 
-        void setPosX(float x);
-        void setPosY(float y);
+        void setX(float x);
+        void setY(float y);
 
         void setWidth(float width);
         void setHeight(float height);

@@ -116,7 +116,7 @@ namespace etudes {
             area.getWidth(),  0, 0, 0,
             0, area.getHeight(), 0, 0,
             0, 0, 1, 0,
-            area.getPosX(), area.getPosY(), 0, 1);
+            area.getX(), area.getY(), 0, 1);
         model = glm::translate(model, glm::vec3{0.5f, 0.5f, 0.f});
         glm::mat4 mvp = getContext().getProjection2D() * model;
 

@@ -79,7 +79,7 @@ namespace etudes {
             viewport2D.getWidth(),  0, 0, 0,
             0, viewport2D.getHeight(), 0, 0,
             0, 0, 1, 0,
-            viewport2D.getPosX(), viewport2D.getPosY(), 0, 1);
+            viewport2D.getX(), viewport2D.getY(), 0, 1);
         toViewport = glm::translate(toViewport, glm::vec3{0.5f, 0.5f, 0.f});
 
         return toViewport;
@@ -90,8 +90,8 @@ namespace etudes {
     }
 
     void Context::setProjection2D(const Rect &viewport) {
-        float tx = -(2*viewport.getPosX() / viewport.getWidth() + 1.f);
-        float ty = -(2*viewport.getPosY() / viewport.getHeight() + 1.f);
+        float tx = -(2*viewport.getX() / viewport.getWidth() + 1.f);
+        float ty = -(2*viewport.getY() / viewport.getHeight() + 1.f);
 
         projOrtho = glm::mat4(
             2.f / viewport.getWidth(),  0, 0, 0,

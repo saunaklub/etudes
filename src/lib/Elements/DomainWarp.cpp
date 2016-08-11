@@ -75,7 +75,7 @@ namespace etudes {
             viewport.getWidth(),  0, 0, 0,
             0, viewport.getHeight(), 0, 0,
             0, 0, 1, 0,
-            viewport.getPosX(), viewport.getPosY(), 0, 1);
+            viewport.getX(), viewport.getY(), 0, 1);
         glm::mat4 mvp = getContext().getProjection2D() * model;
 
         GLint locMVP = shaders.getUniform("domainwarp", "mvp");

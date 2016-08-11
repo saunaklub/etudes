@@ -87,7 +87,7 @@ namespace etudes {
         for(int row = 0 ; row < texHeight ; ++row) {
             rowImage[row] =
                 imgHeight * (
-                    sourceArea.getPosY() +
+                    sourceArea.getY() +
                     float(row) * texHeightInv *
                     sourceArea.getHeight()
                     );
@@ -96,7 +96,7 @@ namespace etudes {
         for(int col = 0 ; col < texWidth ; ++col) {
             colImage[col] =
                 imgWidth * (
-                    sourceArea.getPosX() +
+                    sourceArea.getX() +
                     float(col) * texWidthInv *
                     sourceArea.getWidth()
                     );

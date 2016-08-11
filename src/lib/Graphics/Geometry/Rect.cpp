@@ -35,11 +35,11 @@ namespace etudes {
         height(height) {
     }
 
-    float Rect::getPosX() const {
+    float Rect::getX() const {
         return x;
     }
 
-    float Rect::getPosY() const {
+    float Rect::getY() const {
         return y;
     }
 
@@ -55,11 +55,11 @@ namespace etudes {
         return std::sqrt(width * width + height * height);
     }
 
-    void Rect::setPosX(float x) {
+    void Rect::setX(float x) {
         this->x = x;
     }
 
-    void Rect::setPosY(float y) {
+    void Rect::setY(float y) {
         this->y = y;
     }
 
@@ -83,25 +83,25 @@ namespace etudes {
         case Scaling::CROP:
             if(aspect >= aspectTarget) {
                 result.setWidth(target.getHeight() * aspect);
-                result.setPosX(target.getPosX() +
-                               (target.getWidth() - result.getWidth()) / 2.f);
+                result.setX(target.getX() +
+                            (target.getWidth() - result.getWidth()) / 2.f);
             }
             else {
                 result.setHeight(target.getWidth() / aspect);
-                result.setPosY(target.getPosY() +
-                               (target.getHeight() - result.getHeight()) / 2.f);
+                result.setY(target.getY() +
+                            (target.getHeight() - result.getHeight()) / 2.f);
             }
             break;
         case Scaling::BORDER:
             if(aspect >= aspectTarget) {
                 result.setHeight(target.getWidth() / aspect);
-                result.setPosY(target.getPosY() +
-                               (target.getHeight() - result.getHeight()) / 2.f);
+                result.setY(target.getY() +
+                            (target.getHeight() - result.getHeight()) / 2.f);
             }
             else {
                 result.setWidth(target.getHeight() * aspect);
-                result.setPosX(target.getPosX() +
-                               (target.getWidth() - result.getWidth()) / 2.f);
+                result.setX(target.getX() +
+                            (target.getWidth() - result.getWidth()) / 2.f);
             }
             break;
         }
