@@ -446,10 +446,10 @@ namespace etudes {
         int width, height;
         glfwGetFramebufferSize(window, &width, &height);
 
+        Rect viewport = context->getViewport2D();
         glViewport(
-            0, 0,
-            static_cast<GLsizei>(width),
-            static_cast<GLsizei>(height)
+            viewport.getX(), viewport.getY(),
+            viewport.getWidth(), viewport.getHeight()
             );
 
         (*currentRenderer)->render();
