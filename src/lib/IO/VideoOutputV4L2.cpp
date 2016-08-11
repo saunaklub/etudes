@@ -28,12 +28,16 @@
 
 #include <linux/videodev2.h>
 
+#include <glbinding/gl/gl.h>
+
 #include <Utility/Logging.hpp>
 #include <Utility/Utility.hpp>
 
 #include "VideoOutputV4L2.hpp"
 
 namespace etudes {
+
+    using namespace gl;
 
     using logging::log;
     using logging::LogLevel;

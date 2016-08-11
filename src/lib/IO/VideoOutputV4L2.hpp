@@ -38,6 +38,11 @@ namespace etudes {
         void printV4L2Capabilities(v4l2_capability *caps);
         void printV4L2Formats();
 
+        void initFBO();
+        void bindFBO();
+        void unbindFBO();
+        void readFBO();
+
         std::vector<char> data;
 
         gl::GLuint idFBO;
