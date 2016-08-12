@@ -472,11 +472,7 @@ namespace etudes {
         int width, height;
         glfwGetFramebufferSize(window, &width, &height);
 
-        Rect viewport = context->getViewport2D();
-        glViewport(
-            viewport.getX(), viewport.getY(),
-            viewport.getWidth(), viewport.getHeight()
-            );
+        glViewport(0, 0, width, height);
 
         (*currentRenderer)->render();
         checkGLError("drawing "s + (*currentRenderer)->getName());
