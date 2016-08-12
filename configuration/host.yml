@@ -2,37 +2,30 @@ network:
   port: 6666
 
 window:
-  width:  1440
-  height: 900
-  # width:  1024
-  # height: 768
-  viewport: border
-  fullscreen: true
-  vsync: true
-  multisampling: 8
+  vsync: false
   cursor: false
+  fullscreen: true
+  multisampling: 1
+  title: Études audiovisuels
+
+viewport:
+  width: 1440
+  height: 900
+  scaling: border
 
 logging:
   logLevel: debug
   framerate: false
 
 scenes:
-  - grid
-  # - particles
+  # - testbed
   # - parallels
-  # - sinusoids
-  # - algosynth
+  # - grid
+  # - particles
   # - space
+  - sinusoids
+  # - algosynth
   # - blobtraces
   # - spiral
-  # - testbed
-  - domainwarp
-
-etudes:
-  - particles
-
-
-# input:
-#   mouse:
-#     xy:
-#       - particles/particles/center
+  # - domainwarp
+  # - multifractal
