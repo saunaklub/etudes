@@ -123,11 +123,37 @@ namespace etudes {
             glfwWindowHint(GLFW_SAMPLES, multisampling);
         }
 
-        int width = hostConfig.getValue<int>("window:width");
-        int height = hostConfig.getValue<int>("window:height");
-        window = glfwCreateWindow(width, height,
-                                  "Études audiovisuels", nullptr, nullptr);
+        std::string title;
+        if(hostConfig.hasValue("window:title")) {
+            title = hostConfig.getValue<std::string>("window:title");
+        }
+        else {
+            title = "Études audiovisuels";
+        }
 
+        GLFWmonitor * monitor = nullptr;
+        int width = hostConfig.getValue<int>("viewport:width");
+        int height = hostConfig.getValue<int>("viewport:height");
+
+        if(hostConfig.hasValue("window:fullscreen") &&
+           hostConfig.getValue<bool>("window:fullscreen")) {
+
+            monitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode * mode = glfwGetVideoMode(monitor);
+
+            glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+            glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+            glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+            glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+
+            width = mode->width;
+            height = mode->height;
+        }
+        else {
+        }
+
+        window = glfwCreateWindow(width, height, title.c_str(),
+                                  monitor, nullptr);
         if(window == nullptr){
             glfwTerminate();
             throw std::runtime_error("glfwCreateWindow failed");
@@ -158,9 +184,9 @@ namespace etudes {
         context->init();
         checkGLError("host: init context");
 
-        if(hostConfig.hasValue("window:viewport")) {
+        if(hostConfig.hasValue("viewport:scaling")) {
             std::string viewportString =
-                hostConfig.getValue<std::string>("window:viewport");
+                hostConfig.getValue<std::string>("viewport:scaling");
 
             if(viewportString == "stretch") {
                 viewportScaling = Rect::Scaling::STRETCH;
@@ -173,8 +199,8 @@ namespace etudes {
             }
         }
 
-        int width = hostConfig.getValue<int>("window:width");
-        int height = hostConfig.getValue<int>("window:height");
+        int width = hostConfig.getValue<int>("viewport:width");
+        int height = hostConfig.getValue<int>("viewport:height");
         resizeCallback(width, height);
 
         checkGLError("host: initGL");
@@ -275,8 +301,8 @@ namespace etudes {
     void EtudesHost::resizeCallback(int width, int height) {
         Rect window(0, 0, width, height);
         Rect viewport(0, 0,
-                      hostConfig.getValue<int>("window:width"),
-                      hostConfig.getValue<int>("window:height"));
+                      hostConfig.getValue<int>("viewport:width"),
+                      hostConfig.getValue<int>("viewport:height"));
         Rect projection;
 
         switch(viewportScaling) {
