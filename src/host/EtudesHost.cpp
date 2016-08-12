@@ -414,14 +414,14 @@ namespace etudes {
 
             case GLFW_KEY_V:
                 vsync = !vsync;
-                log(LogLevel::excessive, "vertical sync: "s +
+                log(LogLevel::debug, "vertical sync: "s +
                     std::to_string(vsync));
                 glfwSwapInterval(vsync);
                 break;
 
             case GLFW_KEY_C:
                 cursor = !cursor;
-                log(LogLevel::excessive, "cursor visible: "s +
+                log(LogLevel::debug, "cursor visible: "s +
                     std::to_string(cursor));
                 setCursorEnabled(cursor);
                 break;
