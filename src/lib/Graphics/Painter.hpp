@@ -52,7 +52,7 @@ namespace etudes {
 
         void sinusoidCircular(
             glm::vec2 center, int order, float width, float height,
-            float lambda, float phase,
+            float lambda, float phase, float phaseCircular,
             float circleWidth, float strokeWidth, float strokeBlur) const;
 
         void parallels(
@@ -92,6 +92,7 @@ namespace etudes {
         gl::GLint uniformSinusoidFreq;
         gl::GLint uniformSinusoidPhase;
         gl::GLint uniformSinusoidLambda;
+        gl::GLint uniformSinusoidPhaseCircular;
 
         gl::GLint uniformSinusoidCircleWidth;
         gl::GLint uniformSinusoidStrokeWidth;

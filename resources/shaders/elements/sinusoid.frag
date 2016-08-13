@@ -10,6 +10,7 @@ uniform float time;
 uniform float freq;
 uniform float phase;
 uniform float lambda;
+uniform float phaseCircular;
 
 uniform float circleWidth;
 uniform float strokeWidth;

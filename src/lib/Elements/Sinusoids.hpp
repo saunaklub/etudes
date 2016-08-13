@@ -60,6 +60,7 @@ namespace etudes {
         vec_float_t amplitudes;
         vec_float_t offsets;
         vec_float_t phases;
+        vec_float_t phasesCircular;
 
         glm::vec2 center;
 
@@ -77,10 +78,11 @@ namespace etudes {
         float freq;
         float freqAmp;
         float lambda;
+        float lambdaAmp;
 
-        float phaseBase;
         float phaseAmp;
         float phaseDraw;
+        float phaseCircularDraw;
 
         float strokeWidth;
         float strokeBlur;

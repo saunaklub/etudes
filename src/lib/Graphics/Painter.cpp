@@ -67,6 +67,8 @@ namespace etudes {
         uniformSinusoidFreq   = shaders.registerUniform("sinusoid", "freq");
         uniformSinusoidPhase  = shaders.registerUniform("sinusoid", "phase");
         uniformSinusoidLambda = shaders.registerUniform("sinusoid", "lambda");
+        uniformSinusoidPhaseCircular =
+            shaders.registerUniform("sinusoid", "phaseCircular");
 
         uniformSinusoidCircleWidth = shaders.registerUniform("sinusoid",
                                                              "circleWidth");
@@ -180,7 +182,7 @@ namespace etudes {
 
     void Painter::sinusoidCircular(
         glm::vec2 center, int order, float width, float height,
-        float lambda, float phase,
+        float lambda, float phase, float phaseCircular,
         float circleWidth, float strokeWidth, float strokeBlur) const {
 
         glUseProgram(shaders.getProgram(shaderSinusoid));
@@ -190,6 +192,7 @@ namespace etudes {
 
         glUniform1f(uniformSinusoidLambda, lambda);
         glUniform1f(uniformSinusoidPhase, phase);
+        glUniform1f(uniformSinusoidPhaseCircular, phaseCircular);
 
         glUniform1f(uniformSinusoidCircleWidth, circleWidth);
         glUniform1f(uniformSinusoidStrokeWidth, strokeWidth);

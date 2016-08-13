@@ -60,6 +60,7 @@ namespace etudes {
         registerInput("freq", vec_float_t{1.0f});
         registerInput("freq-amp", vec_float_t{1.0f});
         registerInput("lambda", vec_float_t{1.0f});
+        registerInput("lambda-amp", vec_float_t{1.0f});
         registerInput("phase-amp", vec_float_t{0.0f});
 
         registerInput("circle-width", vec_float_t{0.5f});
@@ -87,8 +88,11 @@ namespace etudes {
         colorAmp = getValue<glm::vec4>("color-amp");
 
         freq = getValue<float>("freq");
-        lambda = getValue<float>("lambda");
+        freqAmp = getValue<float>("freq-amp");
         phaseAmp = getValue<float>("phase-amp");
+
+        lambda = getValue<float>("lambda");
+        lambdaAmp = getValue<float>("lambda-amp");
 
         circleWidth = getValue<float>("circle-width");
 
@@ -110,9 +114,16 @@ namespace etudes {
         float deltaT = time - timeLast;
         timeLast = time;
 
-        for(int index = 0 ; index < amplitudes.size() ; ++index) {
-            phases[index] += deltaT * (freq + freqAmp * amplitudes[index]);
-            phases[index] = std::fmod(phases[index], glm::pi<float>());
+        for(size_t index = 0 ; index < amplitudes.size() ; ++index) {
+            phases[index] +=
+                deltaT * (freq + freqAmp * amplitudes[index]);
+            phases[index] =
+                std::fmod(phases[index], 2 * glm::pi<float>());
+
+            phasesCircular[index] +=
+                deltaT * (lambda + lambdaAmp * amplitudes[index]);
+            phasesCircular[index] =
+                std::fmod(phasesCircular[index], 2 * glm::pi<float>());
         }
     }
 
@@ -123,6 +134,7 @@ namespace etudes {
 
             colorDraw = colorBase + colorAmp * amplitude;
             phaseDraw = phases[index] + phaseAmp * amplitude;
+            phaseCircularDraw = phasesCircular[index];
 
             switch(drawMode) {
             case STRAIGHT:
@@ -240,7 +252,7 @@ namespace etudes {
         painter.sinusoidCircular(
             denormalize(center, viewport), index+1,
             widthDraw, widthDraw,
-            lambda, phaseDraw,
+            lambda, phaseDraw, phaseCircularDraw,
             circleWidth, strokeWidth, strokeBlur);
     }
 }
