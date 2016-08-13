@@ -109,6 +109,7 @@ namespace etudes {
     Sinusoids::integratePhases(const std::vector<float> &amplitudes)
     {
         phases.resize(amplitudes.size());
+        phasesCircular.resize(amplitudes.size());
 
         float time = util::seconds();
         float deltaT = time - timeLast;
