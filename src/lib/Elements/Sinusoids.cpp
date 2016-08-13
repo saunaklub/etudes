@@ -115,16 +115,17 @@ namespace etudes {
         float deltaT = time - timeLast;
         timeLast = time;
 
+        float PI = glm::pi<float>();
         for(size_t index = 0 ; index < amplitudes.size() ; ++index) {
             phases[index] +=
-                deltaT * (freq + freqAmp * amplitudes[index]);
+                deltaT * 2 * PI * (freq + freqAmp * amplitudes[index]);
             phases[index] =
-                std::fmod(phases[index], 2 * glm::pi<float>());
+                std::fmod(phases[index], 2 * PI);
 
             phasesCircular[index] +=
-                deltaT * (lambda + lambdaAmp * amplitudes[index]);
+                deltaT * 2 * PI * (lambda + lambdaAmp * amplitudes[index]);
             phasesCircular[index] =
-                std::fmod(phasesCircular[index], 2 * glm::pi<float>());
+                std::fmod(phasesCircular[index], 2 * PI);
         }
     }
 
