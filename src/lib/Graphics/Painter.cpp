@@ -159,7 +159,7 @@ namespace etudes {
 
     void Painter::sinusoidStraight(
         glm::vec2 p0, glm::vec2 p1, int order, float width,
-        float time, float freq, float lambda, float phase,
+        float lambda, float phase,
         float strokeWidth, float strokeBlur) const {
 
         glUseProgram(shaders.getProgram(shaderSinusoid));
@@ -167,8 +167,6 @@ namespace etudes {
         glUniform1i(uniformSinusoidMode, 0);
         glUniform1i(uniformSinusoidOrder, order);
 
-        glUniform1f(uniformSinusoidTime, time);
-        glUniform1f(uniformSinusoidFreq, freq);
         glUniform1f(uniformSinusoidPhase, phase);
         glUniform1f(uniformSinusoidLambda, lambda);
 
@@ -182,7 +180,7 @@ namespace etudes {
 
     void Painter::sinusoidCircular(
         glm::vec2 center, int order, float width, float height,
-        float time, float freq, float lambda, float phase,
+        float lambda, float phase,
         float circleWidth, float strokeWidth, float strokeBlur) const {
 
         glUseProgram(shaders.getProgram(shaderSinusoid));
@@ -190,10 +188,8 @@ namespace etudes {
         glUniform1i(uniformSinusoidMode, 1);
         glUniform1i(uniformSinusoidOrder, order);
 
-        glUniform1f(uniformSinusoidTime, time);
-        glUniform1f(uniformSinusoidFreq, freq);
         glUniform1f(uniformSinusoidLambda, lambda);
-        glUniform1f(uniformSinusoidFreq, freq);
+        glUniform1f(uniformSinusoidPhase, phase);
 
         glUniform1f(uniformSinusoidCircleWidth, circleWidth);
         glUniform1f(uniformSinusoidStrokeWidth, strokeWidth);
@@ -272,8 +268,8 @@ namespace etudes {
         quad.draw();
     }
 
-    void Painter::drawCircleGeometry(glm::vec2 center, float width, float height,
-                                     std::string shader) const {
+    void Painter::drawCircleGeometry(
+        glm::vec2 center, float width, float height, std::string shader) const {
         assert(context);
 
         glm::mat4 model;

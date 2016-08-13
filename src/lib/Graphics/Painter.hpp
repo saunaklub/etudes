@@ -47,12 +47,12 @@ namespace etudes {
 
         void sinusoidStraight(
             glm::vec2 p0, glm::vec2 p1, int order, float width,
-            float time, float freq, float lambda, float phase,
+            float lambda, float phase,
             float strokeWidth, float strokeBlur) const;
 
         void sinusoidCircular(
             glm::vec2 center, int order, float width, float height,
-            float time, float freq, float lambda, float phase,
+            float lambda, float phase,
             float circleWidth, float strokeWidth, float strokeBlur) const;
 
         void parallels(

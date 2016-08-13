@@ -105,10 +105,13 @@ namespace etudes {
     Sinusoids::integratePhases(const std::vector<float> &amplitudes)
     {
         phases.resize(amplitudes.size());
-        time = util::seconds();
+
+        float time = util::seconds();
+        float deltaT = time - timeLast;
+        timeLast = time;
 
         for(int index = 0 ; index < amplitudes.size() ; ++index) {
-            phases[index] += time * (freq + freqAmp * amplitudes[index]);
+            phases[index] += deltaT * (freq + freqAmp * amplitudes[index]);
             phases[index] = std::fmod(phases[index], glm::pi<float>());
         }
     }
@@ -186,7 +189,7 @@ namespace etudes {
         getPainter().setColor(colorDraw);
         getPainter().sinusoidStraight(
             start, end, index+1, widthDraw,
-            time, freq, lambda, phaseDraw + 0.0f,
+            lambda, phaseDraw + 0.0f,
             strokeWidth, strokeBlur);
     }
 
@@ -211,7 +214,7 @@ namespace etudes {
 
         painter.sinusoidStraight(
             start, end, index+1, widthDraw,
-            time, freq, lambda, phaseDraw + 0.0f,
+            lambda, phaseDraw + 0.0f,
             strokeWidth, strokeBlur);
 
         start = glm::vec2(center[0] - offsets[index], yStart);
@@ -221,7 +224,7 @@ namespace etudes {
 
         painter.sinusoidStraight(
             start, end, index+1, widthDraw,
-            time, freq, lambda, phaseDraw + 0.5f,
+            lambda, phaseDraw + 0.5f,
             strokeWidth, strokeBlur);
     }
 
@@ -237,7 +240,7 @@ namespace etudes {
         painter.sinusoidCircular(
             denormalize(center, viewport), index+1,
             widthDraw, widthDraw,
-            time, freq, lambda, phaseDraw,
+            lambda, phaseDraw,
             circleWidth, strokeWidth, strokeBlur);
     }
 }

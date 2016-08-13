@@ -73,7 +73,7 @@ namespace etudes {
         glm::vec4 colorAmp;
         glm::vec4 colorDraw;
 
-        float time;
+        float timeLast;
         float freq;
         float freqAmp;
         float lambda;
