@@ -58,9 +58,9 @@ namespace etudes {
         registerInput("width-amp", vec_float_t{0.0});
 
         registerInput("freq", vec_float_t{1.0f});
-        registerInput("freq-amp", vec_float_t{1.0f});
+        registerInput("freq-amp", vec_float_t{0.0f});
         registerInput("lambda", vec_float_t{1.0f});
-        registerInput("lambda-amp", vec_float_t{1.0f});
+        registerInput("lambda-amp", vec_float_t{0.0f});
         registerInput("phase-amp", vec_float_t{0.0f});
 
         registerInput("circle-width", vec_float_t{0.5f});
@@ -88,6 +88,7 @@ namespace etudes {
         colorAmp = getValue<glm::vec4>("color-amp");
 
         freq = getValue<float>("freq");
+
         freqAmp = getValue<float>("freq-amp");
         phaseAmp = getValue<float>("phase-amp");
 
