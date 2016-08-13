@@ -48,7 +48,10 @@ namespace etudes {
     private:
         std::vector<float>
         calculateOffsets(OffsetMode offsetMode,
-                         const std::vector<float> &partials);
+                         const std::vector<float> &amplitudes);
+
+        void
+        integratePhases(const std::vector<float> &amplitudes);
 
         void drawSinusoidStraight(int index);
         void drawSinusoidMirrored(int index);
@@ -56,6 +59,7 @@ namespace etudes {
 
         vec_float_t amplitudes;
         vec_float_t offsets;
+        vec_float_t phases;
 
         glm::vec2 center;
 
@@ -71,6 +75,7 @@ namespace etudes {
 
         float time;
         float freq;
+        float freqAmp;
         float lambda;
 
         float phaseBase;

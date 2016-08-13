@@ -19,7 +19,9 @@
 */
 
 #include <glbinding/gl/gl.h>
+
 #include <glm/vec2.hpp>
+#include <glm/gtc/constants.hpp>
 
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
@@ -56,8 +58,8 @@ namespace etudes {
         registerInput("width-amp", vec_float_t{0.0});
 
         registerInput("freq", vec_float_t{1.0f});
+        registerInput("freq-amp", vec_float_t{1.0f});
         registerInput("lambda", vec_float_t{1.0f});
-        registerInput("phase", vec_float_t{0.0f});
         registerInput("phase-amp", vec_float_t{0.0f});
 
         registerInput("circle-width", vec_float_t{0.5f});
@@ -84,10 +86,8 @@ namespace etudes {
         colorBase = getValue<glm::vec4>("color");
         colorAmp = getValue<glm::vec4>("color-amp");
 
-        time = util::seconds();
         freq = getValue<float>("freq");
         lambda = getValue<float>("lambda");
-        phaseBase = getValue<float>("phase");
         phaseAmp = getValue<float>("phase-amp");
 
         circleWidth = getValue<float>("circle-width");
@@ -97,6 +97,20 @@ namespace etudes {
 
         drawMode = mapDrawMode[getValue<std::string>("draw-mode")];
         offsetMode = mapOffsetMode[getValue<std::string>("offset-mode")];
+
+        integratePhases(amplitudes);
+    }
+
+    void
+    Sinusoids::integratePhases(const std::vector<float> &amplitudes)
+    {
+        phases.resize(amplitudes.size());
+        time = util::seconds();
+
+        for(int index = 0 ; index < amplitudes.size() ; ++index) {
+            phases[index] += time * (freq + freqAmp * amplitudes[index]);
+            phases[index] = std::fmod(phases[index], glm::pi<float>());
+        }
     }
 
     void Sinusoids::draw() {
@@ -105,7 +119,7 @@ namespace etudes {
             float amplitude = amplitudes[index];
 
             colorDraw = colorBase + colorAmp * amplitude;
-            phaseDraw = phaseBase + phaseAmp * amplitude;
+            phaseDraw = phases[index] + phaseAmp * amplitude;
 
             switch(drawMode) {
             case STRAIGHT:
