@@ -33,6 +33,7 @@
 #include <Elements/BlobTraces.hpp>
 #include <Elements/Spiral.hpp>
 #include <Elements/DomainWarp.hpp>
+#include <Elements/Truchet.hpp>
 #include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
@@ -53,6 +54,7 @@ namespace etudes {
         {"AlgoSynth", ElementFactory::createElement<AlgoSynth>},
         {"BlobTraces", ElementFactory::createElement<BlobTraces>},
         {"Spiral", ElementFactory::createElement<Spiral>},
+        {"Truchet", ElementFactory::createElement<Truchet>},
         {"DomainWarp", ElementFactory::createElement<DomainWarp>},
         {"Testbed", ElementFactory::createElement<Testbed>},
     };
