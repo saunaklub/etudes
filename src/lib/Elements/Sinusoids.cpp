@@ -239,7 +239,7 @@ namespace etudes {
 
         painter.sinusoidStraight(
             start, end, index+1, widthDraw,
-            lambda, phaseDraw + 0.5f,
+            lambda, phaseDraw + glm::pi<float>(),
             strokeWidth, strokeBlur);
     }
 

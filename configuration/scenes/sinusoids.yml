@@ -25,12 +25,11 @@ elements:
 
       color: [1, 1, 1, 1]
       color-amp: [0, 0, 0, 0]
-
   background:
     type: ImageView
-    image: resources/images/nightsky.jpg
+    image: resources/images/nml.png
     defaults:
-      alpha: [0.5]
-      hue-shift: [0.5]
+      alpha: [1]
+      shift-hue: [0]
 
-order: [sinusoids]
+order: [background, sinusoids]

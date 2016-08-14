@@ -35,7 +35,7 @@ void main() {
         y = uv.y;
 
         sinusoid =
-            (sin(2.f*PI * ((order*(x * lambda + freq * time)) + phase))
+            (sin(2.f*order*(x * lambda) + phase)
              * (1-strokeWidth) + 1.f) / 2.f;
 
         dist = abs(y - sinusoid);
@@ -46,18 +46,18 @@ void main() {
     case 1:
         // x == phi
         // y == r
-        x = atan(0.5f - uv.y, 0.5f - uv.x) / PI + 1.0f;
-        y = length(2.0f * vec2(0.5f - uv.x, 0.5f - uv.y));
+        x = atan(0.5f - uv.y, 0.5f - uv.x) + PI;
+        y = 2.f*length( vec2(uv.x-0.5f, uv.y-0.5f));
 
         float circle_amp_length = 1 - circleWidth / order;
         y = clamp((y - circle_amp_length) /
-                  (1 - circle_amp_length) * 2.0f - 1.0f,
+                  (1 - circle_amp_length),
                   -1, 1);
         sinusoid =
-            (sin(2.f*PI * (order * (x + lambda * time) + phase))
-             * (1-strokeWidth) + 1.f) / 2.f;
+            (sin( (2.f*order) * x + phaseCircular)) * 0.5f
+             * (1-strokeWidth);
 
-        sinusoid *= (sin(2.f * PI * freq * order * time));
+        sinusoid *= cos(order * phase);
 
         dist = y - sinusoid;
         dist = abs(dist);
