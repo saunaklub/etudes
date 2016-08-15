@@ -32,11 +32,15 @@
 
 */
 
+#version 330 core
+
 uniform float time;
 uniform vec2 resolution;
 
 uniform vec3 colorSurface;
 uniform float foldFactor;
+
+out vec4 fragColor;
 
 // Using a 2D Hexagonal Truchet pattern as the source of the height
 // map. This is based on Fabrice's example which in turn was based on
@@ -422,5 +426,5 @@ void main() {
 
 
     // Rough gamma correction, then present to the screen.
-    gl_FragColor = vec4(sqrt(clamp(col, 0., 1.)), 1.);
+    fragColor = vec4(sqrt(clamp(col, 0., 1.)), 1.);
 }
