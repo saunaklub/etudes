@@ -63,13 +63,12 @@ namespace etudes {
         registerInput("lambda-amp", vec_float_t{0.0f});
         registerInput("phase-amp", vec_float_t{0.0f});
 
-        registerInput("circle-width", vec_float_t{0.5f});
-
         registerInput("stroke-width", vec_float_t{0.5f});
         registerInput("stroke-blur", vec_float_t{0.0f});
 
         registerInput("offset-mode", vec_string_t{"absolute"});
         registerInput("offset-scale", vec_float_t{1.0f});
+        registerInput("offset-amp", vec_float_t{0.0f});
 
         registerInput("color", vec_float_t{1.0f, 1.0f, 1.0f, 1.0f});
         registerInput("color-amp",  vec_float_t{0.0f, 0.0f, 0.0f, 0.0f});
@@ -94,8 +93,6 @@ namespace etudes {
 
         lambda = getValue<float>("lambda");
         lambdaAmp = getValue<float>("lambda-amp");
-
-        circleWidth = getValue<float>("circle-width");
 
         strokeWidth = getValue<float>("stroke-width");
         strokeBlur = getValue<float>("stroke-blur");
@@ -163,19 +160,21 @@ namespace etudes {
 
         float offset = 0.f;
         float offsetScale = getValue<float>("offset-scale");
+        float offsetAmp = getValue<float>("offset-amp");
 
         for(size_t index = 0 ; index < amplitudes.size() ; ++index) {
             float amplitude = amplitudes[index];
 
             switch(offsetMode) {
             case ABSOLUTE:
-                offset = float(index+1) / float(amplitudes.size()) / 2.f;
+                offset = float(index+1) / float(amplitudes.size()) / 2.f +
+                    offsetAmp * amplitude;
                 break;
             case INCREMENT:
-                offset += amplitude;
+                offset += amplitude * offsetAmp;
                 break;
             case INCREMENT_FALLOFF:
-                offset += amplitude / float(index+1);
+                offset += amplitude * offsetAmp / float(index+1);
                 break;
             }
 
@@ -217,7 +216,7 @@ namespace etudes {
         float yStart = 0.f;
         float yEnd = 1.f;
 
-        widthDraw = viewport.getDiagonal() / 2.0f *
+        widthDraw = viewport.getWidth() / 2.0f *
             (widthBase + widthAmp * amplitudes[index]);
 
         start = glm::vec2(center[0] + offsets[index], yStart);
@@ -247,9 +246,10 @@ namespace etudes {
         Painter & painter = getPainter();
         const Rect &viewport = getContext().getViewport2D();
 
-        widthDraw = viewport.getDiagonal() / 2.0f *
-            (widthBase + widthAmp * amplitudes[index] +
-             offsets[index]);
+        widthDraw = viewport.getWidth() * 2.0f * offsets[index];
+
+        float circleWidth = widthBase + widthAmp * amplitudes[index];
+        circleWidth *= 0.5f;
 
         painter.setColor(colorDraw);
         painter.sinusoidCircular(
