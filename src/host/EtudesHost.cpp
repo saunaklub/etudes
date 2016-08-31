@@ -1,6 +1,6 @@
 /*
 
-  Études Audiovisuels - Graphical elements for audiovisual composition.
+  Études Audiovisuelles - Graphical elements for audiovisual composition.
   Copyright (C) 2015-2016 Patric Schmitz
 
   This program is free software: you can redistribute it and/or modify
@@ -131,7 +131,7 @@ namespace etudes {
             title = hostConfig.getValue<std::string>("window:title");
         }
         else {
-            title = "Études audiovisuels";
+            title = "Études audiovisuelles";
         }
 
         GLFWmonitor * monitor = nullptr;

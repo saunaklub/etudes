@@ -1,6 +1,6 @@
 /*
 
-  Études Audiovisuels - Graphical elements for audiovisual composition.
+  Études Audiovisuelles - Graphical elements for audiovisual composition.
   Copyright (C) 2015-2016 Patric Schmitz
 
   This program is free software: you can redistribute it and/or modify
