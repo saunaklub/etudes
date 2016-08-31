@@ -1,4 +1,4 @@
-# Études Audiovisuels
+# Études Audiovisuelles
 
 The project provides several OpenGL-based renderers named *études*,
 which serve as graphical building blocks inside a more complex
