@@ -52,21 +52,44 @@ namespace etudes {
      * @param amp Amplitude of the oscillation.
      * @param omega Time frequency (Hz).
      * @param lambda Space frequency ("1/position").
-     * @param phi Initial phase.
      */
-    template<class T>
-        function<T(float)> funcSin(
-                T base, T amp,
-                float omega, float lambda=0,
-                float phi=0) {
+    template <typename T>
+    class FuncSin {
+    public:
+        FuncSin() :
+            omega(0),
+            lambda(0),
+            timeLast(0),
+            phase(0)
+        {}
 
-            return [=](float k) {
-                return base + amp*sinf(
-                    2.0f*glm::pi<float>()
-                    * (k*lambda + util::seconds()*omega)
-                    + phi);
-            };
+        void step(T base, T amp, float omega, float lambda) {
+            this->base = base;
+            this->amp = amp;
+            this->omega = omega;
+            this->lambda = lambda;
+
+            float time = util::seconds();
+            float delta = time - timeLast;
+            timeLast = time;
+
+            phase += 2.0f*glm::pi<float>() * (delta*omega);
         }
+
+        T operator()(float k) {
+            return base +
+                amp*sinf(2.0f*glm::pi<float>()*k*lambda + phase);
+        }
+
+    private:
+        T base;
+        T amp;
+        float omega;
+        float lambda;
+
+        float timeLast;
+        float phase;
+    };
 }
 
 #endif

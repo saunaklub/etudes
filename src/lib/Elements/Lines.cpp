@@ -22,8 +22,6 @@
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 
-#include <Utility/ModulationFuncs.hpp>
-
 #include <Graphics/Context.hpp>
 #include <Graphics/Painter.hpp>
 #include <Graphics/Geometry/Transforms.hpp>
@@ -73,9 +71,9 @@ namespace etudes {
         auto color_o = getValue<float>("color/omega");
         auto color_l = getValue<float>("color/lambda");
 
-        auto dist  = funcSin(dist_b, dist_a, dist_o, dist_l);
-        auto width = funcSin(width_b, width_a, width_o, width_l);
-        auto color = funcSin(color_b, color_a, color_o, color_l);
+        funcDist.step(dist_b, dist_a, dist_o, dist_l);
+        funcWidth.step(width_b, width_a, width_o, width_l);
+        funcColor.step(color_b, color_a, color_o, color_l);
 
         auto count = getValue<float>("count");
         auto angle = getValue<float>("angle");
@@ -87,6 +85,6 @@ namespace etudes {
         painter.setInputNormalized(true);
         painter.parallels(p0, p1,
                           count, count,
-                          width, dist, color);
+                          funcWidth, funcDist, funcColor);
     }
 }

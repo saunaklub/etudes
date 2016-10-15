@@ -21,6 +21,9 @@
 #ifndef ETUDES_LINES
 #define ETUDES_LINES
 
+#include <glm/vec4.hpp>
+
+#include <Utility/ModulationFuncs.hpp>
 #include <Receivers/Element.hpp>
 
 namespace etudes {
@@ -31,6 +34,9 @@ namespace etudes {
         void draw() override;
 
     private:
+        FuncSin<float> funcDist;
+        FuncSin<float> funcWidth;
+        FuncSin<glm::vec4> funcColor;
     };
 }
 
