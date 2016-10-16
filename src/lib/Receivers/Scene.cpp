@@ -28,6 +28,32 @@
 
 #include "Scene.hpp"
 
+namespace  {
+    using namespace gl;
+
+    const std::vector<gl::GLenum> blendingFactors =  {
+        GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR,
+        GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA,
+        GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA,
+        GL_CONSTANT_COLOR, GL_ONE_MINUS_CONSTANT_COLOR, GL_CONSTANT_ALPHA,
+        GL_ONE_MINUS_CONSTANT_ALPHA, GL_SRC_ALPHA_SATURATE
+    };
+
+    gl::GLenum getBlendFactorByNormalizedFloat(float f) {
+        return blendingFactors[size_t(f * (blendingFactors.size()-1))];
+    }
+
+    float getNormalizedFloatByBlendFactor(gl::GLenum factor) {
+        for(size_t i = 0 ; i < blendingFactors.size() ; i++) {
+            if(factor == blendingFactors[i]) {
+                return i / float(blendingFactors.size() - 1);
+            }
+        }
+        return -1.f;
+    }
+
+}
+
 namespace etudes {
 
     using std::string;
@@ -36,9 +62,16 @@ namespace etudes {
     using logging::LogLevel;
     using namespace util;
 
+
     void
     Scene::registerInputs() {
         registerInput("background", vec_float_t{0.0f, 0.0f, 0.0f, 1.0f});
+
+        auto source = getNormalizedFloatByBlendFactor(GL_SRC_ALPHA);
+        auto dest = getNormalizedFloatByBlendFactor(GL_ONE_MINUS_SRC_ALPHA);
+        registerInput("blend-source", vec_float_t{source});
+        registerInput("blend-dest", vec_float_t{dest});
+        registerInput("blend-enabled", vec_float_t{0.0f});
     }
 
     void
@@ -101,6 +134,7 @@ namespace etudes {
 
     void Scene::draw() {
         clearBackground();
+        setBlendFunc();
 
         for(auto &element : elements) {
             element.second->setContext(getContext());
@@ -115,4 +149,15 @@ namespace etudes {
         getPainter().rect({0, 0}, {1, 1});
     }
 
+    void Scene::setBlendFunc() {
+        auto blendSource =
+            getBlendFactorByNormalizedFloat(getValue<float>("blend-source"));
+        auto blendDest =
+            getBlendFactorByNormalizedFloat(getValue<float>("blend-dest"));
+
+        if(getValue<float>("blend-enabled") != 0.0f)
+            glBlendFunc(blendSource, blendDest);
+        else
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
 }

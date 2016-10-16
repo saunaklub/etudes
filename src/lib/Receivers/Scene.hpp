@@ -52,6 +52,7 @@ namespace etudes {
 
     protected:
         void clearBackground();
+        void setBlendFunc();
 
     private:
         typedef std::vector<std::pair<std::string, std::unique_ptr<Element>>>
