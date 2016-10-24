@@ -22,6 +22,7 @@ set(LIBRARY_SOURCES
     src/lib/Graphics/Quad.cpp
     src/lib/Graphics/Texture.cpp
     src/lib/Graphics/Image.cpp
+    src/lib/Graphics/SimplexNoise.cpp
     #    src/lib/Graphics/TextureTiled.cpp
     src/lib/Graphics/PanZoom.cpp
     src/lib/Graphics/PanZoomParallel.cpp
