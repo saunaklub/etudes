@@ -35,6 +35,7 @@
 #include <Elements/DomainWarp.hpp>
 #include <Elements/Truchet.hpp>
 #include <Elements/MultiFractal.hpp>
+#include <Elements/Clouds.hpp>
 #include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
@@ -58,6 +59,7 @@ namespace etudes {
         {"Truchet", ElementFactory::createElement<Truchet>},
         {"DomainWarp", ElementFactory::createElement<DomainWarp>},
         {"MultiFractal", ElementFactory::createElement<MultiFractal>},
+        {"Clouds", ElementFactory::createElement<Clouds>},
         {"Testbed", ElementFactory::createElement<Testbed>},
     };
 

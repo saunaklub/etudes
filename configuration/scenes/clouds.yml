@@ -1,0 +1,10 @@
+defaults:
+  background: [0, 0, 0, 1]
+
+elements:
+  clouds:
+    type: Clouds
+    defaults:
+      scale: [6]
+
+order: [clouds]
