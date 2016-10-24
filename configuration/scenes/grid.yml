@@ -1,5 +1,5 @@
 output:
-  enabled: true
+  enabled: false
   name: /dev/video1
   width:  1440
   height: 900
@@ -30,4 +30,4 @@ elements:
       color/amplitude: [0.0, 0.0, 0.0, 0.0]
       color/omega: [1.0]
 
-order: [lines1]
+order: [lines1, lines2]
