@@ -8,6 +8,7 @@ uniform sampler2D texSampler;
 uniform float shiftHue = 0.0f;
 uniform float shiftSaturation = 0.0f;
 uniform float shiftValue = 0.0f;
+
 uniform float alpha = 1.0f;
 uniform bool useAlpha = true;
 
@@ -34,10 +35,10 @@ void main(){
     c = rgb2hsv(c);
     c.x += shiftHue;
     c.x = mod(c.x, 1);
-    c.y += shiftSaturation;
-    c.y = mod(c.y, 1);
-    c.z += shiftValue;
-    c.z = mod(c.z, 1);
+    // c.y += shiftSaturation;
+    // c.y = mod(c.y, 1);
+    // c.z += shiftValue;
+    // c.z = mod(c.z, 1);
     c = hsv2rgb(c);
 
     color = vec4(c, color4.a * alpha);
