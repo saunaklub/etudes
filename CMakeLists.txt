@@ -61,12 +61,6 @@ set(CLIENT_SOURCES
     src/host/Renderer.cpp
     )
 
-add_library(${LIBRARY} SHARED ${LIBRARY_SOURCES})
-add_executable(${CLIENT} ${CLIENT_SOURCES})
-
-set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
-set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
-
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
@@ -107,6 +101,14 @@ find_package(glm REQUIRED)
 
 pkg_search_module(YAML_CPP REQUIRED yaml-cpp)
 pkg_search_module(LIBLO REQUIRED liblo)
+
+link_directories(${YAML_CPP_LIBRARY_DIRS})
+
+add_library(${LIBRARY} SHARED ${LIBRARY_SOURCES})
+add_executable(${CLIENT} ${CLIENT_SOURCES})
+
+set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
+set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
 
 target_include_directories(${CLIENT}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
