@@ -221,6 +221,10 @@ namespace etudes {
         output += "  max texture size: " + std::to_string(maxTexSize) + "\n";
         output += "  max texture units: " + std::to_string(maxTexUnits) + "\n";
 
+        GLint maxUniformLocations;
+        glGetIntegerv(GL_MAX_UNIFORM_LOCATIONS, &maxUniformLocations);
+        output += "  max uniform locations: " +
+            std::to_string(maxUniformLocations) + "\n";
 
         std::array<GLfloat, 2> lineWidthRangeAliased;
         std::array<GLfloat, 2> lineWidthRangeSmooth;
