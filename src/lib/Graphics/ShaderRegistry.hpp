@@ -32,7 +32,7 @@ namespace etudes {
     class ShaderRegistry {
         std::map<std::string, gl::GLuint> m_mapShader;
         std::map<std::string, gl::GLuint> m_mapProgram;
-        std::map<std::string, std::map<std::string, gl::GLuint> > m_mapUniform;
+        std::map<std::string, std::map<std::string, gl::GLint> > m_mapUniform;
 
     public:
         gl::GLuint registerShader(std::string name,

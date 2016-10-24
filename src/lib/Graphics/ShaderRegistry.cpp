@@ -155,8 +155,14 @@ namespace etudes {
         log(LogLevel::debug, programName +
             ": Registering uniform: " + uniformName);
 
-        GLuint location = glGetUniformLocation(getProgram(programName),
-                                               uniformName.c_str());
+        GLint location = glGetUniformLocation(getProgram(programName),
+                                              uniformName.c_str());
+
+        if(location == -1) {
+            log(LogLevel::warning, "uniform location invalid: " +
+                programName + "/" + uniformName);
+        }
+
         m_mapUniform[programName][uniformName] = location;
 
         log(LogLevel::excessive, "uniform location: " +
