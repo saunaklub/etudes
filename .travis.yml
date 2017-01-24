@@ -11,10 +11,10 @@ matrix:
             - g++-5
             - glfw3
             - pkg-config
-            - libglbinding2
-            - libglm-dev
-            - libyaml-cpp0.3
-            - liblo-dev
+            - glbinding
+            - glm
+            - yaml-cpp
+            - liblo
           sources: &sources
             - llvm-toolchain-precise-3.8
             - ubuntu-toolchain-r-test
