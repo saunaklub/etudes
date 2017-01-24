@@ -13,7 +13,7 @@ matrix:
             - pkg-config
             - libglbinding2
             - libglm-dev
-            - libyaml-cp0.3
+            - libyaml-cpp0.3
             - liblo-dev
           sources: &sources
             - llvm-toolchain-precise-3.8
