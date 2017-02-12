@@ -57,6 +57,9 @@ namespace etudes {
         std::string getGLErrorMessage(const gl::GLenum error);
 
         void registerDefaultShaders(ShaderRegistry & shaders);
+
+        float deg2rad(float);
+        float rad2deg(float);
     }
 
     template <typename T>

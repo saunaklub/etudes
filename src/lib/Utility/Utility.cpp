@@ -126,6 +126,14 @@ namespace etudes {
             shaders.registerUniform("solid", "mvp");
             shaders.registerUniform("solid", "color");
         }
+
+        float deg2rad(float deg) {
+            return deg / 180.f * glm::pi<float>();
+        }
+
+        float rad2deg(float rad) {
+            return rad / glm::pi<float>() * 180.f;
+        }
     }
 
     std::ostream &operator<<(std::ostream &os,
