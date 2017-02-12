@@ -24,7 +24,7 @@
 #include <memory>
 
 #include <Graphics/Texture.hpp>
-#include <Graphics/Quad.hpp>
+#include <Graphics/Drawable/Quad.hpp>
 
 #include <Receivers/Element.hpp>
 

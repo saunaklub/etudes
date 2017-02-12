@@ -19,7 +19,6 @@ set(LIBRARY_SOURCES
     src/lib/Graphics/ShaderRegistry.cpp
     src/lib/Graphics/Context.cpp
     src/lib/Graphics/Painter.cpp
-    src/lib/Graphics/Quad.cpp
     src/lib/Graphics/Texture.cpp
     src/lib/Graphics/Image.cpp
     src/lib/Graphics/SimplexNoise.cpp
@@ -28,6 +27,7 @@ set(LIBRARY_SOURCES
     src/lib/Graphics/PanZoomParallel.cpp
     src/lib/Graphics/Geometry/Transforms.cpp
     src/lib/Graphics/Geometry/Rect.cpp
+    src/lib/Graphics/Drawable/Quad.cpp
     src/lib/Receivers/Receiver.cpp
     src/lib/Receivers/Element.cpp
     src/lib/Receivers/Scene.cpp

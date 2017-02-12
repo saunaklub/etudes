@@ -24,7 +24,7 @@
 #include <glbinding/gl/gl.h>
 #include <glm/matrix.hpp>
 
-#include <Graphics/Quad.hpp>
+#include <Graphics/Drawable/Quad.hpp>
 
 namespace etudes {
 

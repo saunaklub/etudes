@@ -24,7 +24,7 @@ namespace etudes {
     using namespace gl;
 
     Quad::Quad() {
-        createGeometry(-0.5f, 0.5f, 0.5f, -0.5f);
+        createGeometry(-1, 1, 1, -1);
     }
 
     Quad::Quad(float left, float top,
