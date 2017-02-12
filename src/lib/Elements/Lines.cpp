@@ -22,6 +22,8 @@
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 
+#include <Utility/Utility.hpp>
+
 #include <Graphics/Context.hpp>
 #include <Graphics/Painter.hpp>
 #include <Graphics/Geometry/Transforms.hpp>
@@ -33,9 +35,11 @@ namespace etudes {
     using glm::vec2;
     using glm::vec4;
 
+    using util::deg2rad;
+
     void Lines::registerInputs() {
         registerInput("count", vec_float_t{100.0f});
-        registerInput("angle", vec_float_t{pi<float>()/2.0f});
+        registerInput("angle", vec_float_t{0});
 
         registerInput("distance/base",      vec_float_t{0.1f});
         registerInput("distance/amplitude", vec_float_t{0.0f});
@@ -78,13 +82,13 @@ namespace etudes {
         auto count = getValue<float>("count");
         auto angle = getValue<float>("angle");
 
-        auto p0 = vec2(2.0f*cos(angle),
-                       2.0f*sin(angle));
+        auto p0 = vec2(2.0f*cos(deg2rad(angle)),
+                       2.0f*sin(deg2rad(angle)));
         auto p1 = -p0;
 
         painter.setInputNormalized(true);
-        painter.parallels(p0, p1,
-                          count, count,
-                          funcWidth, funcDist, funcColor);
+        painter.drawParallels(p0, p1,
+                              count, count,
+                              funcWidth, funcDist, funcColor);
     }
 }
