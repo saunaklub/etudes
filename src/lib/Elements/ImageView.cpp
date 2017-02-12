@@ -109,7 +109,7 @@ namespace etudes {
         glUniform1f(shaders.getUniform("textured", "alpha"), alpha);
 
         Rect area(0, 0, image->getWidth(), image->getHeight());
-        area = area.maximizedTo(getContext().getViewport2D(),
+        area = area.resizedTo(getContext().getViewport2D(),
                                 Rect::Scaling::CROP);
 
         glm::mat4 model(

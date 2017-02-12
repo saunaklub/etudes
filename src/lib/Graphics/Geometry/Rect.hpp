@@ -48,7 +48,7 @@ namespace etudes {
         void setWidth(float width);
         void setHeight(float height);
 
-        Rect maximizedTo(const Rect &rect, Scaling scaling) const;
+        Rect resizedTo(const Rect &rect, Scaling scaling) const;
 
         std::string toString() const;
 

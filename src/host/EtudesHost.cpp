@@ -317,10 +317,10 @@ namespace etudes {
             projection = viewport;
             break;
         case Rect::Scaling::CROP:
-            projection = window.maximizedTo(viewport, Rect::Scaling::BORDER);
+            projection = window.resizedTo(viewport, Rect::Scaling::BORDER);
             break;
         case Rect::Scaling::BORDER:
-            projection = window.maximizedTo(viewport, Rect::Scaling::CROP);
+            projection = window.resizedTo(viewport, Rect::Scaling::CROP);
             break;
         }
 

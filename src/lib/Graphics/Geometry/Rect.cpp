@@ -71,7 +71,7 @@ namespace etudes {
         this->height = height;
     }
 
-    Rect Rect::maximizedTo(const Rect &target, Scaling scaling) const {
+    Rect Rect::resizedTo(const Rect &target, Scaling scaling) const {
         float aspect = getWidth() / getHeight();
         float aspectTarget = target.getWidth() / target.getHeight();
 
