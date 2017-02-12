@@ -201,7 +201,7 @@ namespace etudes {
         end = denormalize(end, viewport);
 
         getPainter().setColor(colorDraw);
-        getPainter().sinusoidStraight(
+        getPainter().drawSinusoidStraight(
             start, end, index+1, widthDraw,
             lambda, phaseDraw + 0.0f,
             strokeWidth, strokeBlur);
@@ -226,7 +226,7 @@ namespace etudes {
 
         painter.setColor(colorDraw);
 
-        painter.sinusoidStraight(
+        painter.drawSinusoidStraight(
             start, end, index+1, widthDraw,
             lambda, phaseDraw + 0.0f,
             strokeWidth, strokeBlur);
@@ -236,7 +236,7 @@ namespace etudes {
         start = denormalize(start, viewport);
         end = denormalize(end, viewport);
 
-        painter.sinusoidStraight(
+        painter.drawSinusoidStraight(
             start, end, index+1, widthDraw,
             lambda, phaseDraw + glm::pi<float>(),
             strokeWidth, strokeBlur);
@@ -252,7 +252,7 @@ namespace etudes {
         circleWidth *= 0.5f;
 
         painter.setColor(colorDraw);
-        painter.sinusoidCircular(
+        painter.drawSinusoidCircular(
             denormalize(center, viewport), index+1,
             widthDraw, widthDraw,
             lambda, phaseDraw, phaseCircularDraw,

@@ -82,7 +82,7 @@ namespace etudes {
         painter.setInputNormalized(true);
 
         painter.setColor({amplitude, 0, 0, amplitude});
-        painter.rect(glm::vec2(position[0], position[1]), 0.04);
+        painter.drawRect(glm::vec2(position[0], position[1]), 0.04);
 
         util::checkGLError("BlobTraces::draw");
 

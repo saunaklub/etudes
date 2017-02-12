@@ -25,7 +25,8 @@
 #include <glm/glm.hpp>
 
 #include <Graphics/ShaderRegistry.hpp>
-#include <Graphics/Quad.hpp>
+#include <Graphics/Geometry/Rect.hpp>
+#include <Graphics/Drawable/Quad.hpp>
 
 namespace etudes {
     class Context;
@@ -41,21 +42,23 @@ namespace etudes {
         void setColor(glm::vec4 color);
         void setInputNormalized(bool normalized);
 
-        void line(glm::vec2 p0, glm::vec2 p1, float width);
-        void rect(glm::vec2 topLeft, glm::vec2 bottomRight);
-        void rect(glm::vec2 center, float size);
+        void drawLine(glm::vec2 p0, glm::vec2 p1, float width);
 
-        void sinusoidStraight(
+        void drawRect(Rect rect);
+        void drawRect(glm::vec2 topLeft, glm::vec2 bottomRight);
+        void drawRect(glm::vec2 center, float size);
+
+        void drawSinusoidStraight(
             glm::vec2 p0, glm::vec2 p1, int order, float width,
             float lambda, float phase,
             float strokeWidth, float strokeBlur) const;
 
-        void sinusoidCircular(
+        void drawSinusoidCircular(
             glm::vec2 center, int order, float width, float height,
             float lambda, float phase, float phaseCircular,
             float circleWidth, float strokeWidth, float strokeBlur) const;
 
-        void parallels(
+        void drawParallels(
             glm::vec2 centerp0, glm::vec2 centerp1,
             int leftRepeat, int rightRepeat,
             std::function<float(int)> funcWidth,
@@ -88,10 +91,8 @@ namespace etudes {
         gl::GLint uniformSinusoidMode;
         gl::GLint uniformSinusoidOrder;
 
-        gl::GLint uniformSinusoidTime;
-        gl::GLint uniformSinusoidFreq;
-        gl::GLint uniformSinusoidPhase;
         gl::GLint uniformSinusoidLambda;
+        gl::GLint uniformSinusoidPhase;
         gl::GLint uniformSinusoidPhaseCircular;
 
         gl::GLint uniformSinusoidCircleWidth;

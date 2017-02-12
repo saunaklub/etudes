@@ -42,8 +42,8 @@ namespace etudes {
         Painter & painter = getPainter();
 
         painter.setColor({0, 1, 0, 1});
-        painter.line(p0, p1, 20);
+        painter.drawLine(p0, p1, 20);
         painter.setColor({1, 0, 0, 1});
-        painter.line(p0, p1, 1);
+        painter.drawLine(p0, p1, 1);
     }
 }

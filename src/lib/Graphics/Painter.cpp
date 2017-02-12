@@ -63,10 +63,8 @@ namespace etudes {
         uniformSinusoidMode   = shaders.registerUniform("sinusoid", "mode");
         uniformSinusoidOrder  = shaders.registerUniform("sinusoid", "order");
 
-        uniformSinusoidTime   = shaders.registerUniform("sinusoid", "time");
-        uniformSinusoidFreq   = shaders.registerUniform("sinusoid", "freq");
-        uniformSinusoidPhase  = shaders.registerUniform("sinusoid", "phase");
         uniformSinusoidLambda = shaders.registerUniform("sinusoid", "lambda");
+        uniformSinusoidPhase  = shaders.registerUniform("sinusoid", "phase");
         uniformSinusoidPhaseCircular =
             shaders.registerUniform("sinusoid", "phaseCircular");
 
@@ -99,7 +97,7 @@ namespace etudes {
         normalizedInput = normalized;
     }
 
-    void Painter::line(glm::vec2 p0, glm::vec2 p1, float width) {
+    void Painter::drawLine(glm::vec2 p0, glm::vec2 p1, float width) {
 #if 0
         log(logging::excessive,
             "drawLine called with: "s +
@@ -123,7 +121,12 @@ namespace etudes {
         drawLineGeometry(p0, p1, width, shaderLine);
     }
 
-    void Painter::rect(glm::vec2 topLeft, glm::vec2 bottomRight) {
+    void Painter::drawRect(Rect rect) {
+        drawRect(glm::vec2(rect.getX(), rect.getY() + rect.getHeight()),
+             glm::vec2(rect.getX() + rect.getWidth(), rect.getY()));
+    }
+
+    void Painter::drawRect(glm::vec2 topLeft, glm::vec2 bottomRight) {
         assert(context);
 
         glUseProgram(programRect);
@@ -153,13 +156,13 @@ namespace etudes {
         quad.draw();
     }
 
-    void Painter::rect(glm::vec2 center, float size) {
+    void Painter::drawRect(glm::vec2 center, float size) {
         glm::vec2 topLeft = {center[0] - size, center[1] + size};
         glm::vec2 bottomRight = {center[0] + size, center[1] - size};
-        rect(topLeft, bottomRight);
+        drawRect(topLeft, bottomRight);
     }
 
-    void Painter::sinusoidStraight(
+    void Painter::drawSinusoidStraight(
         glm::vec2 p0, glm::vec2 p1, int order, float width,
         float lambda, float phase,
         float strokeWidth, float strokeBlur) const {
@@ -169,8 +172,8 @@ namespace etudes {
         glUniform1i(uniformSinusoidMode, 0);
         glUniform1i(uniformSinusoidOrder, order);
 
-        glUniform1f(uniformSinusoidPhase, phase);
         glUniform1f(uniformSinusoidLambda, lambda);
+        glUniform1f(uniformSinusoidPhase, phase);
 
         glUniform1f(uniformSinusoidStrokeWidth, strokeWidth);
         glUniform1f(uniformSinusoidStrokeBlur, strokeBlur);
@@ -180,7 +183,7 @@ namespace etudes {
         drawLineGeometry(p0, p1, width, shaderSinusoid);
     }
 
-    void Painter::sinusoidCircular(
+    void Painter::drawSinusoidCircular(
         glm::vec2 center, int order, float width, float height,
         float lambda, float phase, float phaseCircular,
         float circleWidth, float strokeWidth, float strokeBlur) const {
@@ -203,7 +206,7 @@ namespace etudes {
         drawCircleGeometry(center, width, height, shaderSinusoid);
     }
 
-    void Painter::parallels(
+    void Painter::drawParallels(
         glm::vec2 centerp0, glm::vec2 centerp1,
         int leftRepeat, int rightRepeat,
         std::function<float(int)> funcWidth,
@@ -212,7 +215,7 @@ namespace etudes {
 
         // draw center line
         setColor(funcColor(0));
-        line(centerp0, centerp1, funcWidth(0));
+        drawLine(centerp0, centerp1, funcWidth(0));
 
         // vector pointing from p0 -> p1
         glm::vec2 diff = centerp1 - centerp0;
@@ -243,7 +246,7 @@ namespace etudes {
                 glm::vec2 p1 = repeatp1;
 
                 setColor(funcColor(r));
-                line(p0, p1, funcWidth(r));
+                drawLine(p0, p1, funcWidth(r));
             }
         }
     }

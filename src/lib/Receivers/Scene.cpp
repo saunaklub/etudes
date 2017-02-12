@@ -146,7 +146,7 @@ namespace etudes {
         auto colorBackground = getValue<glm::vec4>("background");
 
         getPainter().setColor(colorBackground);
-        getPainter().rect({0, 0}, {1, 1});
+        getPainter().drawRect({0, 0}, {1, 1});
     }
 
     void Scene::setBlendFunc() {
