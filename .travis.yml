@@ -27,7 +27,9 @@ matrix:
 #            - clang-3.8
 #          sources: *sources
 
-install: ./travis/scripts/install_glbinding              
+install: 
+    - ./travis/scripts/install_glfw3
+    - ./travis/scripts/install_glbinding              
 
 script: 
     - mkdir build && cd build

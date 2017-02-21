@@ -1,0 +1,18 @@
+#!/bin/bash
+
+mkdir travis/tmp
+cd travis/tmp
+
+mkdir install
+
+git clone https://github.com/glfw/glfw
+
+cd glfw 
+
+git fetch latest
+git checkout latest
+
+mkdir build && cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=../../local ..
+make install
