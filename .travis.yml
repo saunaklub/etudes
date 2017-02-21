@@ -29,8 +29,8 @@ matrix:
 #          sources: *sources
 
 install: 
-    - ./travis/scripts/install_glfw3
     - ./travis/scripts/install_glbinding              
+    - ./travis/scripts/install_glfw3
 
 script: 
     - mkdir build && cd build
