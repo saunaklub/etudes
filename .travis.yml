@@ -26,6 +26,7 @@ matrix:
 #          sources: *sources
 
 install: 
+    - echo $PKG_CONFIG_PATH
     - ./travis/scripts/install_glbinding              
     - ./travis/scripts/install_glfw3
     - ./travis/scripts/install_glm
