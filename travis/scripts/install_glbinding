@@ -14,5 +14,5 @@ git checkout v2.1.1
 
 mkdir build && cd build
 
-cmake -DCMAKE_INSTALL_PREFIX=../../local \ -DOPTION_BUILD_TESTS=NO -DOPTION_BUILD_GPU_TESTS=NO ..
+cmake -DCMAKE_CXX_FLAGS="-lXrandr -lXi -lXrender -ldrm -lXdamage -lXxf86vm -lXext -lX11" -DCMAKE_INSTALL_PREFIX=../../local -DOPTION_BUILD_TESTS=NO -DOPTION_BUILD_GPU_TESTS=NO ..
 make install
