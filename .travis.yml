@@ -34,4 +34,4 @@ install:
 
 script: 
     - mkdir build && cd build
-    - cmake .. && make
+    - cmake -DCMAKE_PREFIX_PATH=travis/tmp/local .. && make
