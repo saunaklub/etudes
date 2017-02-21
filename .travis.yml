@@ -4,7 +4,7 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5
+      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=travis/tmp/local/lib/pkgconfig
       addons:
         apt:
           packages:
@@ -34,4 +34,4 @@ install:
 
 script: 
     - mkdir build && cd build
-    - cmake -DCMAKE_PREFIX_PATH=travis/tmp/local -DPKG_CONFIG_PATH=travis/tmp/local/lib/pkgconfig .. && make
+    - cmake -DCMAKE_PREFIX_PATH=travis/tmp/local .. && make
