@@ -9,9 +9,8 @@ matrix:
         apt:
           packages:
             - g++-5
-            - glfw3
+              #- glfw3
             - pkg-config
-            - libglbinding2
             - libglm-dev
             - libyaml-cpp0.3
             - liblo-dev
@@ -28,6 +27,7 @@ matrix:
 #            - clang-3.8
 #          sources: *sources
 
+install: ./travis/scripts/install_glbinding              
 
 script: 
     - mkdir build && cd build

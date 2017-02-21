@@ -1,0 +1,18 @@
+#!/bin/bash
+
+mkdir travis/tmp
+cd travis/tmp
+
+mkdir install
+
+git clone https://github.com/cginternals/glbinding
+
+cd glbinding 
+
+git fetch --tags
+git checkout v2.1.1
+
+mkdir build && cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=../../local ..
+make install
