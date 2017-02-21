@@ -11,7 +11,7 @@ matrix:
             - g++-5
             - pkg-config
             - xorg-dev
-              #- xserver-xorg-dev-lts-trusty
+            - libboost-all-dev
           sources: &sources
             - llvm-toolchain-precise-3.8
             - ubuntu-toolchain-r-test
