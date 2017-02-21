@@ -4,7 +4,7 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=travis/tmp/local/lib/pkgconfig
+      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig
       addons:
         apt:
           packages:
