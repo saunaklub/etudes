@@ -14,8 +14,7 @@ matrix:
             - libyaml-cpp0.3
             - liblo-dev
             - xorg-dev
-              #- libxrandr-dev
-              #- - libxcb-xinerama0
+            - xserver-xorg-dev-lts-trusty
           sources: &sources
             - llvm-toolchain-precise-3.8
             - ubuntu-toolchain-r-test
