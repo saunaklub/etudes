@@ -34,4 +34,4 @@ install:
 
 script: 
     - mkdir build && cd build
-    - cmake -DCMAKE_PREFIX_PATH=../travis/tmp/local .. && make
+    - cmake -DCMAKE_PREFIX_PATH=../travis/tmp/local -DCMAKE_MODULES_PATH=../travis/tmp/local/lib/cmake/:../travis/tmp/local/lib/pkgconfig .. && make
