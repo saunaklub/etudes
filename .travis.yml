@@ -10,7 +10,6 @@ matrix:
           packages:
             - g++-5
             - pkg-config
-            - libglm-dev
             - libyaml-cpp0.3
             - liblo-dev
             - xorg-dev
@@ -31,6 +30,7 @@ matrix:
 install: 
     - ./travis/scripts/install_glbinding              
     - ./travis/scripts/install_glfw3
+    - ./travis/scripts/install_glm
 
 script: 
     - mkdir build && cd build

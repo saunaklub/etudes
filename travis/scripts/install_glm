@@ -1,0 +1,18 @@
+#!/bin/bash
+
+mkdir travis/tmp
+cd travis/tmp
+
+mkdir install
+
+git clone https://github.com/g-truc/glm
+
+cd glm 
+
+git fetch --tags
+git checkout 0.9.8.4
+
+mkdir build && cd build
+
+cmake -DCMAKE_INSTALL_PREFIX=../../local ..
+make install
