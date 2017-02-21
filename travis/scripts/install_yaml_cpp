@@ -3,7 +3,7 @@
 mkdir travis/tmp
 cd travis/tmp
 
-mkdir install
+mkdir local
 
 git clone https://github.com/jbeder/yaml-cpp
 

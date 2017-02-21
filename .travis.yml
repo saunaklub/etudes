@@ -31,7 +31,6 @@ install:
     - ./travis/scripts/install_glm
     - ./travis/scripts/install_liblo
     - ./travis/scripts/install_yaml_cpp
-    - pkg-config --modversion liblo
 
 script: 
     - mkdir build && cd build
