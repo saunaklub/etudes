@@ -14,5 +14,5 @@ git checkout v2.1.1
 
 mkdir build && cd build
 
-cmake -DCMAKE_PREFIX_PATH=../../local -DCMAKE_INSTALL_PREFIX=../../local ..
+cmake -DCMAKE_INSTALL_PREFIX=../../local \ -DOPTION_BUILD_TESTS=NO -DOPTION_BUILD_GPU_TESTS=NO ..
 make install
