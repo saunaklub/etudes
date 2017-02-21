@@ -10,10 +10,8 @@ matrix:
           packages:
             - g++-5
             - pkg-config
-            - libyaml-cpp0.3
-            - liblo-dev
             - xorg-dev
-            - xserver-xorg-dev-lts-trusty
+              #- xserver-xorg-dev-lts-trusty
           sources: &sources
             - llvm-toolchain-precise-3.8
             - ubuntu-toolchain-r-test
@@ -31,6 +29,8 @@ install:
     - ./travis/scripts/install_glbinding              
     - ./travis/scripts/install_glfw3
     - ./travis/scripts/install_glm
+    - ./travis/scripts/install_liblo
+    - ./travis/scripts/install_yaml_cpp
 
 script: 
     - mkdir build && cd build
