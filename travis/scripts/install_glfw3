@@ -9,7 +9,7 @@ git clone https://github.com/glfw/glfw
 
 cd glfw 
 
-git fetch latest
+git fetch origin latest
 git checkout latest
 
 mkdir build && cd build
