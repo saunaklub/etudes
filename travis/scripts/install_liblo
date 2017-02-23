@@ -3,8 +3,6 @@
 mkdir travis/tmp
 cd travis/tmp
 
-mkdir local
-
 git clone https://github.com/radarsat1/liblo
 
 cd liblo

@@ -1,16 +1,11 @@
 #!/bin/bash
 
-mkdir travis/tmp
+mkdir -p travis/tmp
 cd travis/tmp
-
-mkdir local
 
 git clone https://github.com/jbeder/yaml-cpp
 
 cd yaml-cpp 
-
-git fetch --tags
-git checkout release-0.5.3
 
 mkdir build && cd build
 
