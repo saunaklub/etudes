@@ -7,6 +7,24 @@ matrix:
         apt:
           packages:
             - g++-5
+            - pkg-config
+            - xorg-dev
+            - libfreeimage-dev
+          sources: &sources
+            - ubuntu-toolchain-r-test
+      env:
+        - COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
+      install: 
+        - ./travis/scripts/install_glbinding              
+        - ./travis/scripts/install_glfw3
+        - ./travis/scripts/install_glm
+        - ./travis/scripts/install_liblo
+        - ./travis/scripts/install_yaml_cpp
+    - os: linux
+      dist: trusty
+      addons:
+        apt:
+          packages:
             - clang-3.8
             - pkg-config
             - xorg-dev
@@ -14,6 +32,8 @@ matrix:
           sources: &sources
             - llvm-toolchain-precise-3.8
             - ubuntu-toolchain-r-test
+      env:
+        - COMPILER_NAME=clang-3.8 CXX=clang++-3.8 CC=clang-3.8 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
       install: 
         - ./travis/scripts/install_glbinding              
         - ./travis/scripts/install_glfw3
@@ -22,7 +42,6 @@ matrix:
         - ./travis/scripts/install_yaml_cpp
     - os: osx
       osx_image:
-        - xcode8.2
         - xcode7.3
       install:
         - brew update
@@ -31,10 +50,20 @@ matrix:
         - brew install glm
         - brew install liblo
         - brew install yaml_cpp
-
-env:
-  - COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
-  - COMPILER_NAME=clang-3.8 CXX=clang++-3.8 CC=clang-3.8 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
+      env:
+        - COMPILER_NAME=clang-3.8 CXX=clang++-3.8 CC=clang-3.8 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
+    - os: osx
+      osx_image:
+        - xcode8.2
+      install:
+        - brew update
+        - brew install glbinding
+        - brew install glfw3
+        - brew install glm
+        - brew install liblo
+        - brew install yaml_cpp
+      env:
+        - COMPILER_NAME=clang-3.8 CXX=clang++-3.8 CC=clang-3.8 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
 
 script: 
   - mkdir build && cd build
