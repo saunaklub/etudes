@@ -4,14 +4,14 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig
+      env: COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
       addons:
         apt:
           packages:
             - g++-5
             - pkg-config
             - xorg-dev
-            - libboost-all-dev
+            - libfreeimage-dev
           sources: &sources
             - llvm-toolchain-precise-3.8
             - ubuntu-toolchain-r-test
@@ -34,4 +34,4 @@ install:
 
 script: 
     - mkdir build && cd build
-    - cmake -DCMAKE_PREFIX_PATH=travis/tmp/local .. && make
+    - cmake .. && make
