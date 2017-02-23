@@ -3,9 +3,6 @@ matrix:
   include:
     - os: linux
       dist: trusty
-      env:
-        - COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
-        - COMPILER_NAME=clang-3.8 CXX=clang++-3.8 CC=clang-3.8 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
       addons:
         apt:
           packages:
@@ -34,9 +31,10 @@ matrix:
         - brew install glm
         - brew install liblo
         - brew install yaml_cpp
-      env:
-        - COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
-        - COMPILER_NAME=clang-3.8 CXX=clang++-3.8 CC=clang-3.8 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
+
+env:
+  - COMPILER_NAME=gcc CXX=g++-5 CC=gcc-5 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
+  - COMPILER_NAME=clang-3.8 CXX=clang++-3.8 CC=clang-3.8 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
 
 script: 
   - mkdir build && cd build
