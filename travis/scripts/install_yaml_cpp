@@ -9,5 +9,5 @@ cd yaml-cpp
 
 mkdir build && cd build
 
-cmake -DCMAKE_INSTALL_PREFIX=../../local ..
+cmake -DCMAKE_INSTALL_PREFIX=../../local -DCMAKE_CXX_FLAGS=-fPIC ..
 make install
