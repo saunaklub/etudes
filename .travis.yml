@@ -26,6 +26,7 @@ matrix:
         apt:
           packages:
             - clang-3.8
+            - libc++-dev
             - pkg-config
             - xorg-dev
             - libfreeimage-dev
@@ -33,7 +34,7 @@ matrix:
             - llvm-toolchain-precise-3.8
             - ubuntu-toolchain-r-test
       env:
-        - COMPILER_NAME=clang-3.8 CXX=clang++-3.8 CC=clang-3.8 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local
+        - COMPILER_NAME=clang-3.8 CXX=clang++-3.8 CC=clang-3.8 PKG_CONFIG_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local/lib/pkgconfig CMAKE_PREFIX_PATH=$TRAVIS_BUILD_DIR/travis/tmp/local CMAKE_CXX_FLAGS=-stdlib=libc++
       install: 
         - ./travis/scripts/install_glbinding              
         - ./travis/scripts/install_glfw3
