@@ -95,6 +95,12 @@ else(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
         )
 endif()
 
+option(Test "Build tests" OFF)
+
+if(test)
+    include(etudes-test/CMakeLists.txt)
+endif()
+
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(glbinding REQUIRED)
