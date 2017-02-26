@@ -1,3 +1,3 @@
 [submodule "etudes-test"]
 	path = etudes-test
-	url = git@github.com:saunaklub/etudes-test.git
+	url = https://github.com/saunaklub/etudes-test
