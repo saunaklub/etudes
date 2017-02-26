@@ -97,7 +97,7 @@ endif()
 
 option(Test "Build tests" OFF)
 
-if(test)
+if(Test)
     include(etudes-test/CMakeLists.txt)
 endif()
 
