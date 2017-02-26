@@ -69,3 +69,7 @@ matrix:
 script: 
   - mkdir build && cd build
   - cmake .. && make
+
+
+notifications:
+    irc:"chat.freenode.net#etudes"
