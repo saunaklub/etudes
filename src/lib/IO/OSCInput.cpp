@@ -103,11 +103,13 @@ namespace etudes {
 
     OSCInput::OSCInput(int port) :
         port(port),
+        oscServer(nullptr),
         started(false) {
     }
 
     OSCInput::~OSCInput() {
-        if(lo_server_thread_stop(oscServer) == 0)
+        if(oscServer != nullptr &&
+            lo_server_thread_stop(oscServer) == 0)
             lo_server_thread_free(oscServer);
     }
 
