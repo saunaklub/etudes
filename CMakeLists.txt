@@ -97,9 +97,6 @@ endif()
 
 option(Test "Build tests" OFF)
 
-if(Test)
-    include(etudes-test/CMakeLists.txt)
-endif()
 
 find_package(PkgConfig REQUIRED)
 find_package(OpenGL REQUIRED)
@@ -163,3 +160,8 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/lib/ DESTINATION include/${PRO
 install(
     FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT}Config.cmake
     DESTINATION lib/cmake/${PROJECT})
+
+if(Test)
+    enable_testing()
+    add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/etudes-test)
+endif()
