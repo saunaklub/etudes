@@ -52,7 +52,7 @@ namespace etudes {
 
     void DomainWarp::registerInputs() {
         registerInput("lacunarity", vec_float_t{2});
-        registerInput("H", vec_float_t{0.26});
+        registerInput("H", vec_float_t{0.26f});
     }
 
     void DomainWarp::draw() {

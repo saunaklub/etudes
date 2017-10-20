@@ -21,6 +21,8 @@
 #ifndef ETUDES_ELEMENT
 #define ETUDES_ELEMENT
 
+#include <EtudesConfig.hpp>
+
 #include <Graphics/Context.hpp>
 #include <Graphics/Painter.hpp>
 
@@ -31,7 +33,7 @@ namespace etudes {
     class Context;
     class Painter;
 
-    class Element : public Receiver {
+    class ETUDES_EXPORT Element : public Receiver {
     public:
         Element();
         virtual ~Element() {};

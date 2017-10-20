@@ -25,9 +25,11 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include <EtudesConfig.hpp>
+
 namespace etudes {
 
-    class Configuration {
+    class ETUDES_EXPORT Configuration {
     public:
         friend std::ostream &operator<<(std::ostream &os,
                                         const Configuration &config);

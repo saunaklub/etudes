@@ -168,8 +168,8 @@ namespace etudes {
         }
         glfwSetWindowUserPointer(window, this);
 
-        glbinding::Binding::initialize();
         glfwMakeContextCurrent(window);
+        glbinding::Binding::initialize();
 
         if(hostConfig.hasValue("window:vsync")) {
             vsync = hostConfig.getValue<bool>("window:vsync");
@@ -415,20 +415,20 @@ namespace etudes {
 
             case GLFW_KEY_F:
                 logFramerate = !logFramerate;
-                log(LogLevel::excessive, "framerate display: "s +
+                log(LogLevel::excessive, "framerate display: " +
                     std::to_string(logFramerate));
                 break;
 
             case GLFW_KEY_V:
                 vsync = !vsync;
-                log(LogLevel::debug, "vertical sync: "s +
+                log(LogLevel::debug, "vertical sync: " +
                     std::to_string(vsync));
                 glfwSwapInterval(vsync);
                 break;
 
             case GLFW_KEY_C:
                 cursor = !cursor;
-                log(LogLevel::debug, "cursor visible: "s +
+                log(LogLevel::debug, "cursor visible: " +
                     std::to_string(cursor));
                 setCursorEnabled(cursor);
                 break;
@@ -471,7 +471,7 @@ namespace etudes {
     void EtudesHost::renderOutputs() {
         for(auto &renderer : renderers) {
             renderer->renderOutput();
-            checkGLError("drawing "s + renderer->getName());
+            checkGLError("drawing " + renderer->getName());
         }
     }
 
@@ -482,7 +482,7 @@ namespace etudes {
         glViewport(0, 0, width, height);
 
         (*currentRenderer)->render();
-        checkGLError("drawing "s + (*currentRenderer)->getName());
+        checkGLError("drawing " + (*currentRenderer)->getName());
 
         glfwSwapBuffers(window);
     }

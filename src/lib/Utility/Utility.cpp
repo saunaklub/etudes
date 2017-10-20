@@ -22,6 +22,7 @@
 #include <chrono>
 
 #include <glm/ext.hpp>
+#include <glm/gtx/string_cast.hpp>
 
 #include <Graphics/ShaderRegistry.hpp>
 #include <Utility/Logging.hpp>

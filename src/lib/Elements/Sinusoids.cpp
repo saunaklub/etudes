@@ -37,15 +37,15 @@ namespace etudes {
     using logging::LogLevel;
 
     std::map<std::string, Sinusoids::DrawMode> mapDrawMode {
-        {"straight", Sinusoids::STRAIGHT},
-        {"mirrored", Sinusoids::MIRRORED},
-        {"circular", Sinusoids::CIRCULAR},
+        {"straight", Sinusoids::DrawMode::straight},
+        {"mirrored", Sinusoids::DrawMode::mirrored},
+        {"circular", Sinusoids::DrawMode::circular},
     };
 
     std::map<std::string, Sinusoids::OffsetMode> mapOffsetMode {
-        {"absolute", Sinusoids::ABSOLUTE},
-        {"increment", Sinusoids::INCREMENT},
-        {"increment-falloff", Sinusoids::INCREMENT_FALLOFF},
+        {"absolute", Sinusoids::OffsetMode::absolute},
+        {"increment", Sinusoids::OffsetMode::increment},
+        {"increment-falloff", Sinusoids::OffsetMode::incrementFalloff},
     };
 
     void Sinusoids::registerInputs() {
@@ -54,8 +54,8 @@ namespace etudes {
 
         registerInput("center", vec_float_t{0.5f, 0.5f});
 
-        registerInput("width", vec_float_t{0.1});
-        registerInput("width-amp", vec_float_t{0.0});
+        registerInput("width", vec_float_t{0.1f});
+        registerInput("width-amp", vec_float_t{0.0f});
 
         registerInput("freq", vec_float_t{1.0f});
         registerInput("freq-amp", vec_float_t{0.0f});
@@ -137,15 +137,15 @@ namespace etudes {
             phaseCircularDraw = phasesCircular[index];
 
             switch(drawMode) {
-            case STRAIGHT:
+            case DrawMode::straight:
                 drawSinusoidStraight(index);
                 break;
 
-            case MIRRORED:
+            case DrawMode::mirrored:
                 drawSinusoidMirrored(index);
                 break;
 
-            case CIRCULAR:
+            case DrawMode::circular:
                 drawSinusoidCircular(index);
                 break;
             }
@@ -166,14 +166,14 @@ namespace etudes {
             float amplitude = amplitudes[index];
 
             switch(offsetMode) {
-            case ABSOLUTE:
+            case OffsetMode::absolute:
                 offset = float(index+1) / float(amplitudes.size()) / 2.f +
                     offsetAmp * amplitude;
                 break;
-            case INCREMENT:
+            case OffsetMode::increment:
                 offset += amplitude * offsetAmp;
                 break;
-            case INCREMENT_FALLOFF:
+            case OffsetMode::incrementFalloff:
                 offset += amplitude * offsetAmp / float(index+1);
                 break;
             }

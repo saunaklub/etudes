@@ -26,14 +26,15 @@
 
 #include <lo/lo.h>
 
-#include "OSCInput.hpp"
+#include <EtudesConfig.hpp>
 
+#include "OSCInput.hpp"
 
 namespace etudes {
 
     class Receiver;
 
-    class OSCInput {
+    class ETUDES_EXPORT OSCInput {
 
     public:
 

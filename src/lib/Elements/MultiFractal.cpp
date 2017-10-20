@@ -51,7 +51,7 @@ namespace etudes {
 
     void MultiFractal::registerInputs() {
         registerInput("zoom", vec_float_t{1});
-        registerInput("color-base", vec_float_t{0.2, 0.4, 0.8, 1.0});
+        registerInput("color-base", vec_float_t{0.2f, 0.4f, 0.8f, 1.0f});
     }
 
     void MultiFractal::update() {

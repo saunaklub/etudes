@@ -78,8 +78,8 @@ namespace etudes {
         const int imgScanWidth = getScanWidth();
         const int imgHeight = getHeight();
 
-        int rowImage[texHeight];
-        int colImage[texWidth];
+        int * rowImage = new int[texHeight];
+        int * colImage = new int[texWidth];
 
         const float texWidthInv = 1.f / float(texWidth);
         const float texHeightInv = 1.f / float(texHeight);
@@ -113,6 +113,9 @@ namespace etudes {
                memcpy(texelPtr, imagePtr, 4);
             }
         }
+
+        delete [] rowImage; // @todo: allocate statically
+        delete [] colImage;
 
         texture->unmapData();
     }

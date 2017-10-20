@@ -63,6 +63,11 @@ namespace etudes {
 
         // create gl shader object
         GLuint shader = glCreateShader(type);
+        if(shader == 0) {
+            std::string error = "failed to create shader object for shader: " + name;
+            log(LogLevel::error, error);
+            throw(std::runtime_error(error));
+        }
 
         std::string sShader;
         std::string sShaderCombined;
@@ -82,7 +87,7 @@ namespace etudes {
         GLint status;
         glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
 
-        if(status == 0) {
+        if(status == GLint(GL_FALSE)) {
             GLint infoLogLength;
             glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &infoLogLength);
 

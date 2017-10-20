@@ -27,6 +27,8 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include <EtudesConfig.hpp>
+
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 
@@ -127,19 +129,19 @@ namespace etudes {
         return os;
     }
 
-    template bool
+    template ETUDES_EXPORT bool
     Configuration::getValue<bool>(std::string path) const;
 
-    template int
+    template ETUDES_EXPORT int
     Configuration::getValue<int>(std::string path) const;
 
-    template std::string
+    template ETUDES_EXPORT std::string
     Configuration::getValue<std::string>(std::string path) const;
 
-    template std::list<std::string>
+    template ETUDES_EXPORT std::list<std::string>
     Configuration::getValue<std::list<std::string>>(std::string path) const;
 
-    template std::vector<float>
+    template ETUDES_EXPORT std::vector<float>
     Configuration::getValue<std::vector<float>>(std::string path) const;
 
 }

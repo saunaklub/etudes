@@ -23,10 +23,12 @@
 
 #include <glm/vec2.hpp>
 
+#include <EtudesConfig.hpp>
+
 #include <Graphics/Geometry/Rect.hpp>
 
 namespace etudes {
-    glm::vec2 denormalize(const glm::vec2 &pos, const Rect &area);
+    ETUDES_EXPORT glm::vec2 denormalize(const glm::vec2 &pos, const Rect &area);
 }
 
 #endif // ETUDES_TRANSFORMS

@@ -23,12 +23,14 @@
 
 #include <memory>
 
+#include <EtudesConfig.hpp>
+
 namespace etudes {
 
     class Scene;
     class Configuration;
 
-    class SceneFactory {
+    class ETUDES_EXPORT SceneFactory {
     public:
         static std::unique_ptr<Scene>
         makeScene(std::string name,

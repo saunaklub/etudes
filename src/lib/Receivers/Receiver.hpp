@@ -26,11 +26,13 @@
 #include <map>
 #include <mutex>
 
+#include <EtudesConfig.hpp>
+
 #include <Utility/Logging.hpp>
 
 namespace etudes {
 
-    class Receiver {
+    class ETUDES_EXPORT Receiver {
     public:
 
         typedef std::vector<int> vec_int_t;

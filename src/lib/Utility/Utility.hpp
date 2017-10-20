@@ -32,6 +32,8 @@
 
 #include <glbinding/gl/gl.h>
 
+#include <EtudesConfig.hpp>
+
 #ifdef DEBUG
 #define EDB(x) std::cout << std::fixed << #x ": " << x << std::endl
 #else
@@ -50,10 +52,10 @@ namespace etudes {
         std::string splitStringFirst(std::string str, char separator='/');
         std::string splitStringRest(std::string str, char separator='/');
 
-        long microSeconds();
+        ETUDES_EXPORT long microSeconds();
         double seconds();
 
-        void checkGLError(std::string context);
+        ETUDES_EXPORT void checkGLError(std::string context);
         std::string getGLErrorMessage(const gl::GLenum error);
 
         void registerDefaultShaders(ShaderRegistry & shaders);

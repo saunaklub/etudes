@@ -24,13 +24,15 @@
 #include <glbinding/gl/gl.h>
 #include <glm/glm.hpp>
 
+#include <EtudesConfig.hpp>
+
 #include <Graphics/ShaderRegistry.hpp>
 #include <Graphics/Geometry/Rect.hpp>
 #include <Graphics/Drawable/Quad.hpp>
 
 namespace etudes {
     class Context;
-    class Painter {
+    class ETUDES_EXPORT Painter {
     public:
 
         Painter();

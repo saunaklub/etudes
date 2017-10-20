@@ -18,6 +18,8 @@
 
 */
 
+#include <Utility/Logging.hpp>
+
 #include "Quad.hpp"
 
 namespace etudes {

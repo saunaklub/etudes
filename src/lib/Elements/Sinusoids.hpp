@@ -27,16 +27,16 @@ namespace etudes {
 
     class Sinusoids : public Element {
     public:
-        enum DrawMode {
-            STRAIGHT,
-            MIRRORED,
-            CIRCULAR,
+        enum class DrawMode {
+            straight,
+            mirrored,
+            circular,
         };
 
-        enum OffsetMode {
-            ABSOLUTE,
-            INCREMENT,
-            INCREMENT_FALLOFF,
+        enum class OffsetMode {
+            absolute,
+            increment,
+            incrementFalloff,
         };
 
         void registerInputs() override;

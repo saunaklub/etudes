@@ -23,8 +23,10 @@
 
 #include <string>
 
+#include <EtudesConfig.hpp>
+
 namespace etudes {
-    class Rect {
+    class ETUDES_EXPORT Rect {
     public:
         enum class Scaling {
             STRETCH,

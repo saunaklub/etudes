@@ -20,6 +20,8 @@
 
 #include <glm/glm.hpp>
 
+#include <EtudesConfig.hpp>
+
 #include <Graphics/Geometry/Rect.hpp>
 
 #ifndef ETUDES_CONTEXT
@@ -27,7 +29,7 @@
 
 namespace etudes {
 
-    class Context {
+    class ETUDES_EXPORT Context {
     public:
         Context();
 

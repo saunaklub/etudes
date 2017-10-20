@@ -27,7 +27,7 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
-using namespace std::literals::string_literals;
+#include <EtudesConfig.hpp>
 
 namespace etudes {
     namespace logging {
@@ -41,8 +41,8 @@ namespace etudes {
             excessive
         };
 
-        extern LogLevel logLevelMax;
-        void setLogLevelMax(LogLevel loglevel);
+        ETUDES_EXPORT extern LogLevel logLevelMax; // = LogLevel::excessive;
+        ETUDES_EXPORT void setLogLevelMax(LogLevel loglevel);
 
         template <typename T>
         void log(LogLevel logLevel, const T &object, bool newline=true) {
