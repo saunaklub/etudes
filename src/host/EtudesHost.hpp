@@ -67,6 +67,7 @@ namespace etudes {
         void initInput();
 
         void printOpenGLInfo();
+        void printFramerate();
 
         void registerMouseInput(Renderer::MouseInput mode, std::string path);
         void processInput();

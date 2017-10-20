@@ -345,16 +345,25 @@ namespace etudes {
 
         checkGLError("after main loop");
 
-        static long t0 = 0;
-        if(logFramerate) {
-            long timeElapsed = (util::microSeconds()-t0);
-            t0 = util::microSeconds();
-            log(LogLevel::info, "rendering at " +
-                std::to_string(1000000.0/timeElapsed) + " fps / " +
-                std::to_string(timeElapsed) + " µs");
-        }
+        if(logFramerate)
+            printFramerate();
 
         return true;
+    }
+
+    void EtudesHost::printFramerate() {
+        static int  framesFPS = 0;
+        static long t0 = util::microSeconds();
+
+        long timeElapsed = (util::microSeconds() - t0);
+        if (timeElapsed >= 1000000) {
+            log(LogLevel::info, "rendering at " +
+                std::to_string(framesFPS) + " fps");
+            t0 = util::microSeconds();
+            framesFPS = 0;
+        }
+
+        framesFPS++;
     }
 
     void EtudesHost::processInput() {
