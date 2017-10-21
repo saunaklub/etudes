@@ -97,7 +97,9 @@ endif()
 set(CLIENT_SOURCES
     src/host/main.cpp
     src/host/EtudesHost.cpp
+	src/host/EtudesHost.hpp
     src/host/Renderer.cpp
+	src/host/Renderer.hpp
     )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
