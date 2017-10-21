@@ -86,12 +86,20 @@ set(LIBRARY_SOURCES
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
     list(APPEND LIBRARY_SOURCES
-        src/lib/IO/VideoOutputV4L2.cpp)
+        src/lib/IO/VideoOutputV4L2.cpp
+		src/lib/IO/VideoOutputV4L2.hpp)
 elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
     list(APPEND LIBRARY_SOURCES
         src/lib/IO/VideoOutputSyphon.mm)
     set_source_files_properties(src/lib/IO/VideoOutputSyphon.mm PROPERTIES
         COMPILE_FLAGS "-x objective-c++")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+    list(APPEND LIBRARY_SOURCES
+        src/lib/IO/VideoOutputSpout.cpp
+		src/lib/IO/VideoOutputSpout.hpp)
+		
+	set(SPOUT_LIBRARY_DIR "" CACHE PATH "Spout2 library directory")
+	set(SPOUT_INCLUDE_DIR "" CACHE PATH "Spout2 include directory")
 endif()
 
 set(CLIENT_SOURCES
@@ -136,10 +144,13 @@ elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
 elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 	add_definitions("-DWINDOWS")
 	set(GLFW glfw)
-	
-	if(CMAKE_BUILD_TOOL MATCHES "(msdev|devenv|nmake)")
-    add_definitions(/W2)
-	endif()
+
+	set(ADDITIONAL_LIBRARIES 
+		${SPOUT_LIBRARY_DIR}/SpoutLibrary.lib
+        )
+	set(ADDITIONAL_DIRS 
+		${SPOUT_INCLUDE_DIR}
+        )
 endif()
 
 option(Test "Build tests" OFF)
@@ -168,6 +179,9 @@ set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 	target_compile_definitions(${LIBRARY} PRIVATE "-DDLLEXPORT")
 	set_target_properties(${CLIENT} PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+	
+	message("setting warning level")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W1")
 endif()
 
 target_include_directories(${CLIENT}

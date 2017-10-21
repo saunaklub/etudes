@@ -31,8 +31,6 @@ namespace etudes {
     class Scene : public Element {
     public:
 
-        virtual ~Scene() {};
-
         void registerInputs() override;
 
         void init() override;

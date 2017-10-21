@@ -28,10 +28,6 @@
 
 namespace etudes {
 
-    class ShaderRegistry;
-    class Context;
-    class Painter;
-
     class Scene;
 
     class VideoOutput {
