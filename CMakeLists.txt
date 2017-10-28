@@ -6,82 +6,83 @@ project(${PROJECT})
 cmake_minimum_required(VERSION 3.1)
 
 set(LIBRARY_SOURCES
-	src/lib/EtudesConfig.hpp
+    src/lib/EtudesConfig.hpp
     src/lib/Utility/Utility.cpp
     src/lib/Utility/Utility.hpp
     src/lib/Utility/Logging.cpp
-	src/lib/Utility/Logging.hpp
+    src/lib/Utility/Logging.hpp
     src/lib/Utility/Configuration.cpp
-	src/lib/Utility/Configuration.hpp
+    src/lib/Utility/Configuration.hpp
     src/lib/Utility/ScopedProfiler.cpp
-	src/lib/Utility/ScopedProfiler.hpp
+    src/lib/Utility/ScopedProfiler.hpp
     src/lib/Utility/AccumulativeProfiler.cpp
-	src/lib/Utility/AccumulativeProfiler.hpp
+    src/lib/Utility/AccumulativeProfiler.hpp
     src/lib/Utility/ModulationFuncs.cpp
-	src/lib/Utility/ModulationFuncs.hpp
+    src/lib/Utility/ModulationFuncs.hpp
     src/lib/Factories/ElementFactory.cpp
-	src/lib/Factories/ElementFactory.hpp
+    src/lib/Factories/ElementFactory.hpp
     src/lib/Factories/SceneFactory.cpp
-	src/lib/Factories/SceneFactory.hpp
+    src/lib/Factories/SceneFactory.hpp
     src/lib/IO/OSCInput.cpp
-	src/lib/IO/OSCInput.hpp
+    src/lib/IO/OSCInput.hpp
     src/lib/IO/VideoOutput.cpp
-	src/lib/IO/VideoOutput.hpp
+    src/lib/IO/VideoOutput.hpp
     src/lib/Graphics/ShaderRegistry.cpp
-	src/lib/Graphics/ShaderRegistry.hpp
+    src/lib/Graphics/ShaderRegistry.hpp
     src/lib/Graphics/Context.cpp
-	src/lib/Graphics/Context.hpp
+    src/lib/Graphics/Context.hpp
     src/lib/Graphics/Painter.cpp
-	src/lib/Graphics/Painter.hpp
+    src/lib/Graphics/Painter.hpp
     src/lib/Graphics/Texture.cpp
-	src/lib/Graphics/Texture.hpp
+    src/lib/Graphics/Texture.hpp
     src/lib/Graphics/Image.cpp
-	src/lib/Graphics/Image.hpp
+    src/lib/Graphics/Image.hpp
     src/lib/Graphics/SimplexNoise.cpp
-	src/lib/Graphics/SimplexNoise.hpp
+    src/lib/Graphics/SimplexNoise.hpp
     #    src/lib/Graphics/TextureTiled.cpp
     src/lib/Graphics/PanZoom.cpp
-	src/lib/Graphics/PanZoom.hpp
+    src/lib/Graphics/PanZoom.hpp
     src/lib/Graphics/PanZoomParallel.cpp
-	src/lib/Graphics/PanZoomParallel.hpp
+    src/lib/Graphics/PanZoomParallel.hpp
     src/lib/Graphics/Geometry/Transforms.cpp
-	src/lib/Graphics/Geometry/Transforms.hpp
+    src/lib/Graphics/Geometry/Transforms.hpp
     src/lib/Graphics/Geometry/Rect.cpp
-	src/lib/Graphics/Geometry/Rect.hpp
+    src/lib/Graphics/Geometry/Rect.hpp
     src/lib/Graphics/Drawable/Quad.cpp
-	src/lib/Graphics/Drawable/Quad.hpp
+    src/lib/Graphics/Drawable/Quad.hpp
     src/lib/Receivers/Receiver.cpp
-	src/lib/Receivers/Receiver.hpp
+    src/lib/Receivers/Receiver.hpp
     src/lib/Receivers/Element.cpp
-	src/lib/Receivers/Element.hpp
+    src/lib/Receivers/Element.hpp
     src/lib/Receivers/Scene.cpp
-	src/lib/Receivers/Scene.hpp
+    src/lib/Receivers/Scene.hpp
     src/lib/Elements/Lines.cpp
-	src/lib/Elements/Lines.hpp
+    src/lib/Elements/Lines.hpp
     src/lib/Elements/Particles.cpp
-	src/lib/Elements/Particles.hpp
+    src/lib/Elements/Particles.hpp
     src/lib/Elements/ImageView.cpp
-	src/lib/Elements/ImageView.hpp
+    src/lib/Elements/ImageView.hpp
     src/lib/Elements/Sinusoids.cpp
-	src/lib/Elements/Sinusoids.hpp
+    src/lib/Elements/Sinusoids.hpp
     src/lib/Elements/CellularAutomaton.cpp
-	src/lib/Elements/CellularAutomaton.hpp
+    src/lib/Elements/CellularAutomaton.hpp
     src/lib/Elements/AlgoSynth.cpp
-	src/lib/Elements/AlgoSynth.hpp
+    src/lib/Elements/AlgoSynth.hpp
     src/lib/Elements/BlobTraces.cpp
-	src/lib/Elements/BlobTraces.hpp
+    src/lib/Elements/BlobTraces.hpp
     src/lib/Elements/Spiral.cpp
-	src/lib/Elements/Spiral.hpp
+    src/lib/Elements/Spiral.hpp
     src/lib/Elements/DomainWarp.cpp
-	src/lib/Elements/DomainWarp.hpp
+    src/lib/Elements/DomainWarp.hpp
     src/lib/Elements/Truchet.cpp
-	src/lib/Elements/Truchet.hpp
+    src/lib/Elements/Truchet.hpp
     src/lib/Elements/MultiFractal.cpp
-	src/lib/Elements/MultiFractal.hpp
+    src/lib/Elements/SimplexField.cpp
+    src/lib/Elements/MultiFractal.hpp
     src/lib/Elements/Clouds.cpp
-	src/lib/Elements/Clouds.hpp
+    src/lib/Elements/Clouds.hpp
     src/lib/Elements/Testbed.cpp
-	src/lib/Elements/Testbed.hpp
+    src/lib/Elements/Testbed.hpp
     )
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")

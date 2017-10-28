@@ -35,6 +35,7 @@
 #include <Elements/DomainWarp.hpp>
 #include <Elements/Truchet.hpp>
 #include <Elements/MultiFractal.hpp>
+#include <Elements/SimplexField.hpp>
 #include <Elements/Clouds.hpp>
 #include <Elements/Testbed.hpp>
 
@@ -59,6 +60,7 @@ namespace etudes {
         {"Truchet", ElementFactory::createElement<Truchet>},
         {"DomainWarp", ElementFactory::createElement<DomainWarp>},
         {"MultiFractal", ElementFactory::createElement<MultiFractal>},
+        {"SimplexField", ElementFactory::createElement<SimplexField>},
         {"Clouds", ElementFactory::createElement<Clouds>},
         {"Testbed", ElementFactory::createElement<Testbed>},
     };

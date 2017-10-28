@@ -1,0 +1,8 @@
+defaults:
+  background: [1, 0, 0, 1]
+
+elements:
+  simplex:
+    type: SimplexField
+
+order: [simplex]
