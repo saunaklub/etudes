@@ -3,7 +3,9 @@ set(CLIENT  etudes-host)
 
 set(PROJECT etudes)
 project(${PROJECT})
+
 cmake_minimum_required(VERSION 3.1)
+cmake_policy(SET CMP0072 NEW) # OpenGL GLVND preference
 
 set(LIBRARY_SOURCES
     src/lib/EtudesConfig.hpp
