@@ -354,11 +354,12 @@ namespace etudes {
         static int  framesFPS = 0;
         static long t0 = util::microSeconds();
 
-        long timeElapsed = (util::microSeconds() - t0);
+        long timeCurrent = util::microSeconds();
+        long timeElapsed = (timeCurrent - t0);
         if (timeElapsed >= 1000000) {
             log(LogLevel::info, "rendering at " +
                 std::to_string(framesFPS) + " fps");
-            t0 = util::microSeconds();
+            t0 = timeCurrent;
             framesFPS = 0;
         }
 
