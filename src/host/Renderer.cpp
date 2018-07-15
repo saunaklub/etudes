@@ -30,13 +30,13 @@ namespace etudes {
 
     void Renderer::setOutput(std::string name, int width, int height) {
 #if defined LINUX
-        output = std::make_unique<VideoOutputV4L2>(scene.get(), width, height);
+        output = std::make_unique<VideoOutputV4L2>(name, width, height);
 #elif defined DARWIN
-        output = std::make_unique<VideoOutputSyphon>(scene.get(), width, height);
+        output = std::make_unique<VideoOutputSyphon>(name, width, height);
 #elif defined WINDOWS
-        output = std::make_unique<VideoOutputSpout>(scene.get(), width, height);
+        output = std::make_unique<VideoOutputSpout>(name, width, height);
 #endif
-        output->createOutput(name);
+        output->create();
     }
 
     void Renderer::renderOutput() {

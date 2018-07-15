@@ -34,6 +34,8 @@
 #include <Utility/Logging.hpp>
 #include <Utility/Utility.hpp>
 
+#include <Receivers/Scene.hpp>
+
 #include "VideoOutputV4L2.hpp"
 
 namespace etudes {
@@ -43,9 +45,9 @@ namespace etudes {
     using logging::log;
     using logging::LogLevel;
 
-    VideoOutputV4L2::VideoOutputV4L2(Scene *scene,
+    VideoOutputV4L2::VideoOutputV4L2(std::string name,
                                      int width, int height) :
-        VideoOutput(scene, width, height),
+        VideoOutput(name, width, height),
         fd(-1) {
         data.resize(width*height*4);
         initFBO();
@@ -56,13 +58,13 @@ namespace etudes {
 
         log(LogLevel::debug, "V4L2 device capabilities:");
 
-        log(LogLevel::debug, "Driver: "s +
+        log(LogLevel::debug, std::string("Driver: ") +
             reinterpret_cast<char*>(caps->driver));
-        log(LogLevel::debug, "Card: "s +
+        log(LogLevel::debug, std::string("Card: ") +
             reinterpret_cast<char*>(caps->card));
-        log(LogLevel::debug, "Bus info: "s +
+        log(LogLevel::debug, std::string("Bus info: ") +
             reinterpret_cast<char*>(caps->bus_info));
-        log(LogLevel::debug, "Version: "s +
+        log(LogLevel::debug, std::string("Version: ") +
             to_string((caps->version >> 16) & 0xFF) + "." +
             to_string((caps->version >> 8) & 0xFF) + "." +
             to_string(caps->version & 0xFF));
@@ -102,7 +104,7 @@ namespace etudes {
         glTexParameteri(GL_TEXTURE_2D,
                         GL_TEXTURE_MAG_FILTER, GLint(GL_NEAREST));
         glTexImage2D(GL_TEXTURE_2D, 0, GLint(GL_SRGB8),
-                     width, height, 0, GL_BGR,
+                     getWidth(), getHeight(), 0, GL_BGR,
                      GL_UNSIGNED_BYTE, nullptr);
 
         glGenFramebuffers(1, &idFBO);
@@ -124,13 +126,14 @@ namespace etudes {
         glGetTexImage(GL_TEXTURE_2D, 0, GL_BGR, GL_UNSIGNED_BYTE, &data[0]);
     }
 
-    void VideoOutputV4L2::createOutput(std::string outputId) {
+    void VideoOutputV4L2::create() {
         using std::to_string;
 
-        fd = open(outputId.c_str(), O_RDWR);
+        const auto name = getName();
+        fd = open(name.c_str(), O_RDWR);
         if(fd <= 0) {
             log(LogLevel::error, "Cannot open v4l2 loopback device " +
-                outputId + ": " + strerror(errno));
+                name + ": " + strerror(errno));
         }
 
         struct v4l2_capability caps;
@@ -146,6 +149,9 @@ namespace etudes {
 
         printV4L2Capabilities(&caps);
         printV4L2Formats();
+
+        const auto width = getWidth();
+        const auto height = getHeight();
 
         format.type = V4L2_BUF_TYPE_VIDEO_OUTPUT;
         format.fmt.pix.width = width;
@@ -173,13 +179,14 @@ namespace etudes {
     void VideoOutputV4L2::render() {
         bindFBO();
 
-        drawScene();
+        getScene()->draw();
 
         readFBO();
 
         unbindFBO();
 
-        int res = write(fd, &data[0], width*height*4);
+        auto framebufferBytes = getWidth() * getHeight() * 4;
+        int res = write(fd, &data[0], framebufferBytes);
         if(res < 0) {
             log(LogLevel::error, "Failed to write video output!");
         }

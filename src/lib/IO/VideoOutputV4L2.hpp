@@ -29,9 +29,9 @@ namespace etudes {
 
     class VideoOutputV4L2 : public VideoOutput {
     public:
-        VideoOutputV4L2(Scene *scene, int width, int height);
+        VideoOutputV4L2(std::string name, int width, int height);
 
-        void createOutput(std::string outputId) override;
+        void create() override;
         void render() override;
 
     private:
