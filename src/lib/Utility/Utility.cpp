@@ -22,6 +22,8 @@
 #include <chrono>
 
 #include <glm/ext.hpp>
+
+#define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
 
 #include <Graphics/ShaderRegistry.hpp>
