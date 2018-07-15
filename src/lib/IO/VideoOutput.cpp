@@ -20,8 +20,6 @@
 
 #include <Utility/Logging.hpp>
 
-#include <Receivers/Scene.hpp>
-
 #include "VideoOutput.hpp"
 
 using namespace gl;
@@ -31,17 +29,30 @@ namespace etudes {
     using logging::log;
     using logging::LogLevel;
 
-    VideoOutput::VideoOutput(Scene *scene,
+    VideoOutput::VideoOutput(std::string name,
                              int width, int height) :
+        name(name),
         width(width),
         height(height),
-        scene(scene) {
+        scene(nullptr) {
     }
 
     VideoOutput::~VideoOutput() {}
 
-    void VideoOutput::drawScene() {
-        scene->draw();
+    std::string VideoOutput::getName() const {
+        return name;
+    }
+
+    int VideoOutput::getWidth() const {
+        return width;
+    }
+
+    int VideoOutput::getHeight() const {
+        return height;
+    }
+
+    Scene * VideoOutput::getScene() const {
+        return scene;
     }
 
 }

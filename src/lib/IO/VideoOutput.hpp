@@ -33,23 +33,56 @@ namespace etudes {
     class VideoOutput {
     public:
 
-        VideoOutput(Scene *scene, int width, int height);
+        /**
+         * Constructor.
+         *
+         * @param width Output width
+         * @param height Output height
+         */
+        VideoOutput(std::string name, int width, int height);
         virtual ~VideoOutput();
 
+        /**
+         * Create the video API output.
+         *
+         * @param name Output name
+         */
+        virtual void create() = 0;
+
+        /**
+         * Render scene and output via video API.
+         */
         virtual void render() = 0;
-        virtual void createOutput(std::string outputId) = 0;
 
     protected:
 
-        void drawScene();
+        // /**
+        //  * Create the specific video API output. Override this in
+        //  * subclasses.
+        //  *
+        //  * @param name Output name
+        //  */
+        // virtual void doCreate(std::string name) = 0;
+
+        /** Return the output name */
+        std::string getName() const;
+
+        /** Return output width */
+        int getWidth() const;
+
+        /** Return output height */
+        int getHeight() const;
+
+        /** Return currently active scene */
+        Scene * getScene() const;
+
+    private:
+        std::string name;
 
         int width;
         int height;
 
-    private:
-
         Scene *scene;
-
     };
 
 }
