@@ -72,7 +72,7 @@ namespace etudes {
         std::string type = config.getValue<std::string>("type");
         try {
             product = creationMap[type](config);
-        } catch(std::bad_function_call) {
+        } catch(std::bad_function_call&) {
             log(LogLevel::error,
                 "no factory method defined for element type: " + type);
         }
