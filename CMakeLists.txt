@@ -7,6 +7,8 @@ project(${PROJECT})
 cmake_minimum_required(VERSION 3.1)
 cmake_policy(SET CMP0072 NEW) # OpenGL GLVND preference
 
+add_subdirectory("extern/glow")
+
 set(LIBRARY_SOURCES
     src/lib/EtudesConfig.hpp
     src/lib/Utility/Utility.cpp
@@ -217,6 +219,7 @@ target_link_libraries(${LIBRARY}
     PUBLIC ${ADDITIONAL_LIBRARIES}
     glbinding::glbinding
     freeimageplus
+    glow
     )
 
 configure_file(

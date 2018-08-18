@@ -1,3 +1,6 @@
 [submodule "etudes-test"]
 	path = etudes-test
 	url = https://github.com/saunaklub/etudes-test
+[submodule "extern/glow"]
+	path = extern/glow
+	url = https://www.graphics.rwth-aachen.de:9000/Glow/glow.git

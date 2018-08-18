@@ -30,7 +30,6 @@ namespace etudes {
 
     class Scene : public Element {
     public:
-
         void registerInputs() override;
 
         void init() override;
@@ -53,8 +52,8 @@ namespace etudes {
         void setBlendFunc();
 
     private:
-        typedef std::vector<std::pair<std::string, std::unique_ptr<Element>>>
-                            element_vec_t;
+        using element_vec_t =
+            std::vector<std::pair<std::string, std::unique_ptr<Element>>>;
 
         template <typename T> bool
         dispatchValueT(std::string input, const T &value);

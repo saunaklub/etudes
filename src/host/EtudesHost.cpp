@@ -23,6 +23,8 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include <glow/glow.hh>
+
 #include <glbinding/gl/gl.h>
 #include <glbinding/Binding.h>
 using namespace gl;
@@ -169,7 +171,8 @@ namespace etudes {
         glfwSetWindowUserPointer(window, this);
 
         glfwMakeContextCurrent(window);
-        glbinding::Binding::initialize(glfwGetProcAddress);
+        glow::initGLOW();
+        glbinding::Binding::initialize();
 
         if(hostConfig.hasValue("window:vsync")) {
             vsync = hostConfig.getValue<bool>("window:vsync");
@@ -259,8 +262,8 @@ namespace etudes {
             }
 
             auto scene = SceneFactory::makeScene(sceneName, sceneConfig);
-            scene->init();
             scene->setContext(*context.get());
+            scene->init();
 
             checkGLError(sceneName + " init");
 
