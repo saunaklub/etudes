@@ -23,10 +23,13 @@ scenes:
   # - grid
   # - particles
   # - space
-  - sinusoids
+  # - sinusoids
   # - algosynth
   # - blobtraces
   # - spiral
   # - domainwarp
   # - multifractal
-  - truchet
+  # - truchet
+  # - ca
+  - shader
+  # - flowtrace
