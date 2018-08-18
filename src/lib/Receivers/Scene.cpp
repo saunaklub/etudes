@@ -62,7 +62,6 @@ namespace etudes {
     using logging::LogLevel;
     using namespace util;
 
-
     void
     Scene::registerInputs() {
         registerInput("background", vec_float_t{0.0f, 0.0f, 0.0f, 1.0f});
@@ -77,6 +76,7 @@ namespace etudes {
     void
     Scene::init() {
         for(auto &element : elements) {
+            element.second->setContext(getContext());
             element.second->init();
         }
     }
@@ -137,7 +137,6 @@ namespace etudes {
         setBlendFunc();
 
         for(auto &element : elements) {
-            element.second->setContext(getContext());
             element.second->draw();
         }
     }
