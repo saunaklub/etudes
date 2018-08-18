@@ -27,6 +27,8 @@
 
 #include <Receivers/Element.hpp>
 
+#include <Elements/Shader.hpp>
+
 namespace etudes {
     class Configuration;
     class Context;
@@ -56,6 +58,10 @@ namespace etudes {
         static std::unique_ptr<Element>
         createElementImageView(const Configuration &);
     };
+
+    template <>
+    std::unique_ptr<Element>
+    ElementFactory::createElement<Shader>(const Configuration &config);
 }
 
 #endif // ETUDES_ELEMENTFACTORY

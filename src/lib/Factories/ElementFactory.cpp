@@ -37,6 +37,8 @@
 #include <Elements/MultiFractal.hpp>
 #include <Elements/SimplexField.hpp>
 #include <Elements/Clouds.hpp>
+#include <Elements/Shader.hpp>
+#include <Elements/FlowTrace.hpp>
 #include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
@@ -62,6 +64,8 @@ namespace etudes {
         {"MultiFractal", ElementFactory::createElement<MultiFractal>},
         {"SimplexField", ElementFactory::createElement<SimplexField>},
         {"Clouds", ElementFactory::createElement<Clouds>},
+        {"Shader", ElementFactory::createElement<Shader>},
+        {"FlowTrace", ElementFactory::createElement<FlowTrace>},
         {"Testbed", ElementFactory::createElement<Testbed>},
     };
 
@@ -111,4 +115,17 @@ namespace etudes {
 
         return product;
     }
+
+    template <>
+    std::unique_ptr<Element>
+    ElementFactory::createElement<Shader>(const Configuration &config) {
+
+        auto filename = config.getValue<std::string>("filename");
+
+        std::unique_ptr<Element> product =
+            std::make_unique<Shader>(filename);
+
+        return product;
+    }
+
 }

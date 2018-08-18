@@ -85,6 +85,10 @@ set(LIBRARY_SOURCES
     src/lib/Elements/MultiFractal.hpp
     src/lib/Elements/Clouds.cpp
     src/lib/Elements/Clouds.hpp
+    src/lib/Elements/Shader.cpp
+    src/lib/Elements/Shader.hpp
+    src/lib/Elements/FlowTrace.cpp
+    src/lib/Elements/FlowTrace.hpp
     src/lib/Elements/Testbed.cpp
     src/lib/Elements/Testbed.hpp
     )
