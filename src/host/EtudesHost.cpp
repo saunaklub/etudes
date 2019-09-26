@@ -169,7 +169,7 @@ namespace etudes {
         glfwSetWindowUserPointer(window, this);
 
         glfwMakeContextCurrent(window);
-        glbinding::Binding::initialize();
+        glbinding::Binding::initialize(glfwGetProcAddress);
 
         if(hostConfig.hasValue("window:vsync")) {
             vsync = hostConfig.getValue<bool>("window:vsync");

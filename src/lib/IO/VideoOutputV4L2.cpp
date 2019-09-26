@@ -25,6 +25,7 @@
 #include <unistd.h>
 
 #include <cstring>
+#include <string>
 
 #include <linux/videodev2.h>
 
@@ -36,7 +37,7 @@
 #include "VideoOutputV4L2.hpp"
 
 namespace etudes {
-
+    using namespace std::string_literals;
     using namespace gl;
 
     using logging::log;
