@@ -43,6 +43,8 @@ set(LIBRARY_SOURCES
     src/lib/Graphics/Image.hpp
     src/lib/Graphics/SimplexNoise.cpp
     src/lib/Graphics/SimplexNoise.hpp
+    src/lib/Graphics/LookupTable.cpp
+    src/lib/Graphics/LookupTable.hpp
     #    src/lib/Graphics/TextureTiled.cpp
     src/lib/Graphics/PanZoom.cpp
     src/lib/Graphics/PanZoom.hpp

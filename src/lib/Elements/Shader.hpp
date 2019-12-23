@@ -25,6 +25,8 @@
 
 #include <Receivers/Element.hpp>
 
+#include <Graphics/LookupTable.hpp>
+
 namespace etudes {
     class Shader : public Element {
     public:
@@ -38,6 +40,8 @@ namespace etudes {
         std::string filename;
 
         Quad quad;
+        LookupTable lut;
+
         glow::SharedProgram program;
     };
 }
