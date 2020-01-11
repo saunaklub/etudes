@@ -55,7 +55,7 @@ namespace etudes {
         ETUDES_EXPORT long microSeconds();
         double seconds();
 
-        ETUDES_EXPORT void checkGLError(std::string context);
+        ETUDES_EXPORT bool checkGLError(std::string context);
         std::string getGLErrorMessage(const GLenum error);
 
         void registerDefaultShaders(ShaderRegistry & shaders);
