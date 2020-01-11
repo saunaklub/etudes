@@ -22,7 +22,7 @@
 
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
-#include <Utility/Configuration.hpp>
+#include <Utility/Config.hpp>
 
 #include <Elements/Lines.hpp>
 #include <Elements/Particles.hpp>
@@ -70,7 +70,7 @@ namespace etudes {
     };
 
     std::unique_ptr<Element>
-    ElementFactory::makeElement(const Configuration & config) {
+    ElementFactory::makeElement(const Config & config) {
         std::unique_ptr<Element> product;
 
         std::string type = config.getValue<std::string>("type");
@@ -86,9 +86,16 @@ namespace etudes {
         if(config.hasValue("defaults")) {
             log(LogLevel::debug, config);
             for(auto &child : config.getChildren("defaults")) {
-                product->setValue(
-                    child, config.getValue<std::vector<float>>(
-                        "defaults:" + child));
+                auto path = "defaults:" + child;
+
+                if(config.getType(path) == Config::Type::Scalar) {
+                    auto value = config.getValue<float>(path);
+                    product->setValue(child, std::vector<float>{value});
+                }
+                else if(config.getType(path) == Config::Type::Vector) {
+                    auto values = config.getValue<std::vector<float>>(path);
+                    product->setValue(child, values);
+                }
             }
         }
 
@@ -96,7 +103,7 @@ namespace etudes {
     }
 
     std::unique_ptr<Element>
-    ElementFactory::createElementImageView(const Configuration & config) {
+    ElementFactory::createElementImageView(const Config & config) {
         std::string image = config.getValue<std::string>("image");
         std::unique_ptr<PanZoom> panZoom;
 
@@ -118,9 +125,13 @@ namespace etudes {
 
     template <>
     std::unique_ptr<Element>
-    ElementFactory::createElement<Shader>(const Configuration &config) {
+    ElementFactory::createElement<Shader>(const Config &config) {
 
         auto filename = config.getValue<std::string>("filename");
+
+        // auto uniforms = config.getChildren("uniforms");
+        // for(auto & u : uniforms)
+        //     std::cout << u << std::endl;
 
         std::unique_ptr<Element> product =
             std::make_unique<Shader>(filename);

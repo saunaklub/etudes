@@ -31,7 +31,7 @@
 
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
-#include <Utility/Configuration.hpp>
+#include <Utility/Config.hpp>
 
 #include <Factories/SceneFactory.hpp>
 #include <Receivers/Scene.hpp>
@@ -248,7 +248,7 @@ namespace etudes {
             hostConfig.getValue<std::list<std::string>>("scenes");
 
         for(auto &sceneName : sceneList) {
-            Configuration sceneConfig;
+            Config sceneConfig;
 
             try {
                 sceneConfig.read("configuration/scenes/" + sceneName + ".yml");
@@ -294,7 +294,7 @@ namespace etudes {
         if(!hostConfig.hasValue("input"))
             return;
 
-        // Configuration inputConfig = hostConfig.getSubTree("input");
+        // Config inputConfig = hostConfig.getSubTree("input");
         // if(inputConfig.hasValue("mouse")) {
         //     if(inputConfig.hasValue("mouse:xy")) {
         //         for(auto &e : inputConfig.getValue<list<string>>("mouse:xy"))

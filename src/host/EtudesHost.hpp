@@ -27,7 +27,7 @@
 
 #include <IO/OSCInput.hpp>
 
-#include <Utility/Configuration.hpp>
+#include <Utility/Config.hpp>
 
 #include <Graphics/Context.hpp>
 #include <Graphics/Painter.hpp>
@@ -85,7 +85,7 @@ namespace etudes {
         void renderOutputs();
         void renderScreen();
 
-        Configuration hostConfig;
+        Config hostConfig;
 
         bool logFramerate;
         bool vsync;

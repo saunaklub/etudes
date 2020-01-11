@@ -30,24 +30,24 @@
 #include <Elements/Shader.hpp>
 
 namespace etudes {
-    class Configuration;
+    class Config;
     class Context;
     class Painter;
 
     class ElementFactory {
     public:
         static std::unique_ptr<Element>
-        makeElement(const Configuration &config);
+        makeElement(const Config &config);
 
     private:
         typedef std::function<
-        std::unique_ptr<Element>(const Configuration &)> creation_t;
+        std::unique_ptr<Element>(const Config &)> creation_t;
 
         static std::map<std::string, creation_t> creationMap;
 
         template <typename T> static
         std::unique_ptr<Element>
-        createElement(const Configuration &config) {
+        createElement(const Config &config) {
 
             std::unique_ptr<Element> product =
                 std::make_unique<T>();
@@ -56,12 +56,12 @@ namespace etudes {
         }
 
         static std::unique_ptr<Element>
-        createElementImageView(const Configuration &);
+        createElementImageView(const Config &);
     };
 
     template <>
     std::unique_ptr<Element>
-    ElementFactory::createElement<Shader>(const Configuration &config);
+    ElementFactory::createElement<Shader>(const Config &config);
 }
 
 #endif // ETUDES_ELEMENTFACTORY

@@ -23,7 +23,7 @@
 
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
-#include <Utility/Configuration.hpp>
+#include <Utility/Config.hpp>
 
 #include <Factories/ElementFactory.hpp>
 
@@ -37,7 +37,7 @@ namespace etudes {
 
     std::unique_ptr<Scene>
     SceneFactory::makeScene(std::string name,
-                            const Configuration &config) {
+                            const Config &config) {
         std::unique_ptr<Scene> product;
 
         if(config.hasValue("type")) {
@@ -71,7 +71,7 @@ namespace etudes {
     }
 
     std::unique_ptr<Scene>
-    SceneFactory::makeSceneDefault(const Configuration & config) {
+    SceneFactory::makeSceneDefault(const Config & config) {
         log(LogLevel::excessive, config);
         std::unique_ptr<Scene> product = std::make_unique<Scene>();
         return product;

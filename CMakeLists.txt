@@ -17,8 +17,8 @@ set(LIBRARY_SOURCES
     src/lib/Utility/Utility.hpp
     src/lib/Utility/Logging.cpp
     src/lib/Utility/Logging.hpp
-    src/lib/Utility/Configuration.cpp
-    src/lib/Utility/Configuration.hpp
+    src/lib/Utility/Config.cpp
+    src/lib/Utility/Config.hpp
     src/lib/Utility/ScopedProfiler.cpp
     src/lib/Utility/ScopedProfiler.hpp
     src/lib/Utility/AccumulativeProfiler.cpp

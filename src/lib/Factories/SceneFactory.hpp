@@ -28,17 +28,17 @@
 namespace etudes {
 
     class Scene;
-    class Configuration;
+    class Config;
 
     class ETUDES_EXPORT SceneFactory {
     public:
         static std::unique_ptr<Scene>
         makeScene(std::string name,
-                  const Configuration &config);
+                  const Config &config);
 
     private:
         static std::unique_ptr<Scene>
-        makeSceneDefault(const Configuration &config);
+        makeSceneDefault(const Config &config);
     };
 
 }
