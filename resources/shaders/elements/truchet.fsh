@@ -347,7 +347,8 @@ void main() {
 
     // Edge and curve value. Passed into, and set, during the normal
     // calculation.
-    float edge, crv;
+    float edge = 0.0;
+    float crv = 0.0;
 
     // Surface postion, surface normal and light direction.
     vec3 sp = ro + rd*t;

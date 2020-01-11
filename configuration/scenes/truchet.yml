@@ -3,9 +3,11 @@ defaults:
 
 elements:
   truchet:
-    type: Truchet
+    type: Shader
+    filename: "resources/shaders/elements/truchet.fsh"
+    uniforms:
+      glow: glow
     defaults:
-      fold: [10.0]
-      speed: [0.6]
+      glow: 1.0
 
 order: [truchet]
