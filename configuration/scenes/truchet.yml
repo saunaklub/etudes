@@ -4,5 +4,8 @@ defaults:
 elements:
   truchet:
     type: Truchet
+    defaults:
+      fold: [10.0]
+      speed: [0.6]
 
 order: [truchet]

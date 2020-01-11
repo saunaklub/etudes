@@ -29,7 +29,7 @@ scenes:
   # - spiral
   # - domainwarp
   # - multifractal
-  # - truchet
+  - truchet
   # - ca
-  - shader
+  # - shader
   # - flowtrace

@@ -25,12 +25,12 @@
 #include <list>
 #include <iostream>
 
+#include <glad/glad.h>
+
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 #include <glm/matrix.hpp>
-
-#include <glbinding/gl/gl.h>
 
 #include <EtudesConfig.hpp>
 
@@ -56,7 +56,7 @@ namespace etudes {
         double seconds();
 
         ETUDES_EXPORT void checkGLError(std::string context);
-        std::string getGLErrorMessage(const gl::GLenum error);
+        std::string getGLErrorMessage(const GLenum error);
 
         void registerDefaultShaders(ShaderRegistry & shaders);
 

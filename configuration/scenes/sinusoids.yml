@@ -27,7 +27,7 @@ elements:
       color-amp: [0, 0, 0, 0]
   background:
     type: ImageView
-    image: resources/images/nml.png
+    image: resources/images/background.jpg
     defaults:
       alpha: [1]
       shift-hue: [0]

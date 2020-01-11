@@ -18,12 +18,13 @@
 
 */
 
+#include <array>
+
 #include <Utility/Logging.hpp>
 
 #include "Quad.hpp"
 
 namespace etudes {
-    using namespace gl;
 
     Quad::Quad() {
         createGeometry(-1, 1, 1, -1);

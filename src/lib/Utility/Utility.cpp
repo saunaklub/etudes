@@ -21,9 +21,10 @@
 #include <map>
 #include <chrono>
 
-#include <glm/ext.hpp>
+#include <glad/glad.h>
 
 #define GLM_ENABLE_EXPERIMENTAL
+#include <glm/ext.hpp>
 #include <glm/gtx/string_cast.hpp>
 
 #include <Graphics/ShaderRegistry.hpp>
@@ -38,8 +39,6 @@ namespace etudes {
         using std::chrono::duration_cast;
         using std::chrono::duration;
         using std::chrono::microseconds;
-
-        using namespace gl;
 
         using logging::LogLevel;
 

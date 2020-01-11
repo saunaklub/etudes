@@ -19,8 +19,8 @@
 */
 
 #include <string>
+#include <functional>
 
-#include <glbinding/gl/gl.h>
 #include <glm/ext.hpp>
 
 #include <Utility/Utility.hpp>
@@ -29,7 +29,6 @@
 #include "Context.hpp"
 
 namespace etudes {
-    using namespace gl;
 
     using std::function;
     using std::pair;

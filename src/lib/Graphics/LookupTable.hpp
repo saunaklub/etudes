@@ -13,7 +13,7 @@ namespace etudes
     public:
         using Node = std::pair<glm::vec4, float>;
         struct Compare {
-            bool operator()(const Node& lhs, const Node& rhs) {
+            bool operator()(const Node& lhs, const Node& rhs) const {
                 return lhs.second < rhs.second;
             }
         };

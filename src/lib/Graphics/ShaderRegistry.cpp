@@ -23,9 +23,6 @@
 #include <iostream>
 #include <fstream>
 
-#include <glbinding/gl/gl.h>
-using namespace gl;
-
 #include <Utility/Logging.hpp>
 #include "ShaderRegistry.hpp"
 

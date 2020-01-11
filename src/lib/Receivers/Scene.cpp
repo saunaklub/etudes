@@ -21,17 +21,14 @@
 #include <algorithm>
 #include <string>
 
-#include <glbinding/gl/gl.h>
-
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 
 #include "Scene.hpp"
 
 namespace  {
-    using namespace gl;
 
-    const std::vector<gl::GLenum> blendingFactors =  {
+    const std::vector<GLenum> blendingFactors =  {
         GL_ZERO, GL_ONE, GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR,
         GL_DST_COLOR, GL_ONE_MINUS_DST_COLOR, GL_SRC_ALPHA,
         GL_ONE_MINUS_SRC_ALPHA, GL_DST_ALPHA, GL_ONE_MINUS_DST_ALPHA,
@@ -39,11 +36,11 @@ namespace  {
         GL_ONE_MINUS_CONSTANT_ALPHA, GL_SRC_ALPHA_SATURATE
     };
 
-    gl::GLenum getBlendFactorByNormalizedFloat(float f) {
+    GLenum getBlendFactorByNormalizedFloat(float f) {
         return blendingFactors[size_t(f * (blendingFactors.size()-1))];
     }
 
-    float getNormalizedFloatByBlendFactor(gl::GLenum factor) {
+    float getNormalizedFloatByBlendFactor(GLenum factor) {
         for(size_t i = 0 ; i < blendingFactors.size() ; i++) {
             if(factor == blendingFactors[i]) {
                 return i / float(blendingFactors.size() - 1);
@@ -57,7 +54,6 @@ namespace  {
 namespace etudes {
 
     using std::string;
-    using namespace gl;
 
     using logging::LogLevel;
     using namespace util;

@@ -1,4 +1,5 @@
-#include <glbinding/gl/gl.h>
+#include <string_view>
+
 #include <glow/objects/Texture1D.hh>
 
 #include <Utility/Utility.hpp>

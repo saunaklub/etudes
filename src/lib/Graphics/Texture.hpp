@@ -21,7 +21,6 @@
 #ifndef ETUDES_TEXTURE
 #define ETUDES_TEXTURE
 
-#include <glbinding/gl/gl.h>
 #include <glm/matrix.hpp>
 
 #include <Graphics/Drawable/Quad.hpp>
@@ -67,8 +66,8 @@ namespace etudes {
         bool mipmaps;
         bool useAlpha;
 
-        gl::GLuint idTexture;
-        gl::GLuint pboTexture;
+        GLuint idTexture;
+        GLuint pboTexture;
         unsigned char *texture;
     };
 }

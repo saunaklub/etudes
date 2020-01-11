@@ -30,7 +30,6 @@
 
 namespace etudes {
 
-    using namespace gl;
     using logging::LogLevel;
     using util::checkGLError;
 

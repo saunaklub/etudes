@@ -40,6 +40,7 @@ namespace etudes {
         glm::vec3 colorSurface;
 
         float foldFactor;
+        float speed;
     };
 }
 

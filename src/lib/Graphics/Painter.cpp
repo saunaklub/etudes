@@ -20,9 +20,6 @@
 
 #include <functional>
 
-#include <glbinding/gl/gl.h>
-using namespace gl;
-
 #include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 

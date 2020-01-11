@@ -18,16 +18,12 @@
 
 */
 
-#include <glbinding/gl/gl.h>
-
 #include <Utility/Utility.hpp>
 #include <Graphics/Context.hpp>
 
 #include "Truchet.hpp"
 
 namespace etudes {
-
-    using namespace gl;
 
     Truchet::Truchet() :
         quad(-1, -1, 1, 1)
@@ -51,11 +47,13 @@ namespace etudes {
     void Truchet::registerInputs() {
         registerInput("color-surface", vec_float_t{1.f, .05f, 1.f});
         registerInput("fold", vec_float_t{6.3f});
+        registerInput("speed", vec_float_t{1.0f});
     }
 
     void Truchet::update() {
         colorSurface = getValue<glm::vec3>("color-surface");
         foldFactor = getValue<float>("fold");
+        speed = getValue<float>("speed");
     }
 
     void Truchet::draw() {
@@ -63,13 +61,15 @@ namespace etudes {
         ShaderRegistry & shaders = getShaderRegistry();
 
         glUseProgram(shaders.getProgram("truchet"));
+
         glUniform2f(shaders.getUniform("truchet", "resolution"),
                     viewport.getWidth(), viewport.getHeight());
-        glUniform1f(shaders.getUniform("truchet", "time"), util::seconds());
+
+        glUniform1f(shaders.getUniform("truchet", "time"),
+                    util::seconds()*speed);
 
         glUniform3f(shaders.getUniform("truchet", "colorSurface"),
                     colorSurface[0], colorSurface[1], colorSurface[2]);
-
         glUniform1f(shaders.getUniform("truchet", "foldFactor"),
                     foldFactor);
 

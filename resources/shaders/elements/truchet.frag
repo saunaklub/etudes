@@ -42,6 +42,20 @@ uniform float foldFactor;
 
 out vec4 fragColor;
 
+mat4 rotationMatrix(vec3 axis, float angle)
+{
+    axis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+
+    return mat4(oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,
+                oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,
+                oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,
+                0.0,                                0.0,                                0.0,                                1.0);
+}
+
+
 // Using a 2D Hexagonal Truchet pattern as the source of the height
 // map. This is based on Fabrice's example which in turn was based on
 // one by Mattz. I tailored it to suit my needs - and hopefully, sped
@@ -107,7 +121,7 @@ float map(vec3 p){
     float c = heightMap(p.xy); // Height map.
     // Wrapping, or folding the height map values over, to produce the
     // nicely lined-up, wavy patterns.
-    c = cos(c*6.283*1.) + cos(c*6.283*2.);
+    c = cos(c*foldFactor*6.283*1.) + cos(c*6.283*2.);
     c = (clamp(c*.6+.5, 0., 1.));
 
 
@@ -298,7 +312,11 @@ float Voronoi(in vec2 p){
 void main() {
     // Unit directional ray - Coyote's observation.
     vec3 rd = normalize(vec3(2.*gl_FragCoord.xy - resolution.xy, resolution.y));
+    mat4 rot = rotationMatrix(vec3(1, 0, 0), radians(-30.0));
 
+    vec4 dir = vec4(rd, 0);
+    dir = dir * rot;
+    rd = dir.xyz;
 
     // Rotate the XY-plane back and forth. Note that sine and cosine
     // are kind of rolled into one.
@@ -308,7 +326,7 @@ void main() {
 
 
     // Ray origin. Moving in the X-direction to the right.
-    vec3 ro = vec3(time, cos(time/4.), 0.);
+    vec3 ro = vec3(0, cos(time/4.), 0.8);
 
 
     // Light position, hovering around behind the camera.
@@ -346,7 +364,7 @@ void main() {
     // Folding, or wrapping, the values above to produce the
     // snake-like pattern that lines up with the randomly flipped hex
     // cells produced by the height map.
-    vec3 fold = cos(vec3(1, 2, 4)*c*foldFactor);
+    vec3 fold = cos(vec3(1, 2, 4)*c*6.3);
 
     // Using the height map value, then wrapping it, to produce a
     // finer grain Truchet pattern for the overlay.
@@ -397,11 +415,13 @@ void main() {
     ld /= lDist; // Normalizing the light direction vector.
 
     float diff = max(dot(ld, sn), 0.); // Diffuse.
-    float spec = pow(max( dot( reflect(-ld, sn), -rd ), 0.0 ), 16.); // Specular.
-    float fre = pow(clamp(dot(sn, rd) + 1., .0, 1.), 3.); // Fresnel,
-                                                          // for some
-                                                          // mild
-                                                          // glow.
+    diff=0.0;
+
+    float spec = pow(max( dot( reflect(-ld, sn), -rd ), 0.0 ), 4.); // Specular.
+    spec = 0.0;
+
+    float fre = pow(clamp(dot(sn, rd) + 1., .0, 1.), 3.);
+    fre = 0.0;
 
     // Shading. Note, there are no actual shadows. The camera is front
     // on, so the following two functions are enough to give a shadowy
@@ -412,10 +432,11 @@ void main() {
 
 
     // Combining the terms above to light the texel.
+    // vec3 col = oC*(diff + .5) + vec3(1., .7, .4)*spec*2. + vec3(.4, .7, 1)*fre;
     vec3 col = oC*(diff + .5) + vec3(1., .7, .4)*spec*2. + vec3(.4, .7, 1)*fre;
 
     // Fake environment mapping.
-    col += (oC*.5+.5)*envMap(reflect(rd, sn), sn)*6.;
+    // col += (oC*.5+.5)*envMap(reflect(rd, sn), sn)*6.;
 
 
     // Edges.

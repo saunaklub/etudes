@@ -18,16 +18,12 @@
 
 */
 
-#include <glbinding/gl/gl.h>
-
 #include <Utility/Utility.hpp>
 #include <Graphics/Context.hpp>
 
 #include "Spiral.hpp"
 
 namespace etudes {
-
-    using namespace gl;
 
     Spiral::Spiral() :
         quad(-1, -1, 1, 1)

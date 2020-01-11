@@ -18,8 +18,6 @@
 
 */
 
-#include <glbinding/gl/gl.h>
-
 #include <glm/ext.hpp>
 
 #include <Utility/Utility.hpp>
@@ -28,8 +26,6 @@
 #include "DomainWarp.hpp"
 
 namespace etudes {
-
-    using namespace gl;
 
     DomainWarp::DomainWarp() :
         quad(-1, -1, 1, 1)

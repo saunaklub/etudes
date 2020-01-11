@@ -21,9 +21,10 @@
 #ifndef ETUDES_QUAD
 #define ETUDES_QUAD
 
-#include <glbinding/gl/gl.h>
+#include <glad/glad.h>
 
 namespace etudes {
+
     class Quad {
     public:
         Quad();
@@ -35,9 +36,9 @@ namespace etudes {
         void createGeometry(float left, float top, float right, float bottom);
 
         // @todo: make static?
-        gl::GLuint idVertexArray;
-        gl::GLuint vboVertex;
-        gl::GLuint vboUV;
+        GLuint idVertexArray;
+        GLuint vboVertex;
+        GLuint vboUV;
     };
 }
 

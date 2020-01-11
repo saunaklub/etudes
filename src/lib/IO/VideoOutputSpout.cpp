@@ -1,13 +1,9 @@
-#include <glbinding/gl/gl.h>
-
 #include <Utility/Logging.hpp>
 #include <Utility/Utility.hpp>
 
 #include "VideoOutputSpout.hpp"
 
 namespace etudes {
-
-    using namespace gl;
 
     VideoOutputSpout::VideoOutputSpout(Scene *scene,
                                        int width, int height) :
@@ -48,7 +44,7 @@ namespace etudes {
         drawScene();
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-        spoutptr->SendTexture(idTexture, gl::GLuint(GL_TEXTURE_2D), width, height);
+        spoutptr->SendTexture(idTexture, GLuint(GL_TEXTURE_2D), width, height);
     }
 
 }

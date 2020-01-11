@@ -7,6 +7,8 @@ project(${PROJECT})
 cmake_minimum_required(VERSION 3.1)
 cmake_policy(SET CMP0072 NEW) # OpenGL GLVND preference
 
+set(CMAKE_CXX_STANDARD 17)
+add_subdirectory("extern/typed-geometry")
 add_subdirectory("extern/glow")
 
 set(LIBRARY_SOURCES
@@ -167,7 +169,6 @@ endif()
 option(Test "Build tests" OFF)
 
 find_package(OpenGL REQUIRED)
-find_package(glbinding REQUIRED)
 find_package(glm REQUIRED)
 find_package(yaml-cpp REQUIRED)
 find_package(liblo REQUIRED)
@@ -183,9 +184,6 @@ link_directories(${FREEIMAGEPLUS_LIBRARY_DIR})
 
 add_library(${LIBRARY} SHARED ${LIBRARY_SOURCES})
 add_executable(${CLIENT} ${CLIENT_SOURCES})
-
-set_property(TARGET ${LIBRARY} PROPERTY CXX_STANDARD 14)
-set_property(TARGET ${CLIENT} PROPERTY CXX_STANDARD 14)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
 	target_compile_definitions(${LIBRARY} PRIVATE "-DDLLEXPORT")
@@ -204,7 +202,6 @@ target_include_directories(${CLIENT}
 target_include_directories(${LIBRARY}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src/lib
     PUBLIC ${GLM_INCLUDE_DIRS}
-    PUBLIC ${GLBINDING_INCLUDES}
     PUBLIC ${LIBLO_INCLUDE_DIRS}
     PUBLIC ${YAML_CPP_INCLUDE_DIRS}
 	PUBLIC ${FREEIMAGE_INCLUDE_DIR}
@@ -212,20 +209,19 @@ target_include_directories(${LIBRARY}
     PUBLIC ${ADDITIONAL_DIRS}
     )
 
-target_link_libraries(${CLIENT}
-    PUBLIC ${LIBLO_LIBRARIES}
-    PUBLIC ${LIBRARY}
-    PUBLIC ${GLFW}
-    )
-
 target_link_libraries(${LIBRARY}
     PUBLIC ${LIBLO_LIBRARIES}
     PUBLIC ${OPENGL_LIBRARIES}
     PUBLIC ${YAML_CPP_LIBRARIES}
     PUBLIC ${ADDITIONAL_LIBRARIES}
-    glbinding::glbinding
-    freeimageplus
-    glow
+    PRIVATE freeimageplus
+    PUBLIC glow
+    )
+
+target_link_libraries(${CLIENT}
+    PUBLIC ${LIBLO_LIBRARIES}
+    PUBLIC ${LIBRARY}
+    PUBLIC ${GLFW}
     )
 
 configure_file(

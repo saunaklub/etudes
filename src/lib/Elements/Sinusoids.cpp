@@ -18,8 +18,6 @@
 
 */
 
-#include <glbinding/gl/gl.h>
-
 #include <glm/vec2.hpp>
 #include <glm/gtc/constants.hpp>
 
@@ -33,7 +31,6 @@
 
 namespace etudes {
 
-    using namespace gl;
     using logging::LogLevel;
 
     std::map<std::string, Sinusoids::DrawMode> mapDrawMode {

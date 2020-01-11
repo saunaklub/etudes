@@ -21,7 +21,8 @@
 #ifndef ETUDES_PAINTER
 #define ETUDES_PAINTER
 
-#include <glbinding/gl/gl.h>
+#include <functional>
+
 #include <glm/glm.hpp>
 
 #include <EtudesConfig.hpp>
@@ -31,7 +32,9 @@
 #include <Graphics/Drawable/Quad.hpp>
 
 namespace etudes {
+
     class Context;
+
     class ETUDES_EXPORT Painter {
     public:
 
@@ -82,26 +85,26 @@ namespace etudes {
 
         ShaderRegistry shaders;
 
-        gl::GLuint programLine;
-        gl::GLuint programRect;
-        gl::GLuint programSinusoid;
+        GLuint programLine;
+        GLuint programRect;
+        GLuint programSinusoid;
 
-        gl::GLint uniformLineColor;
-        gl::GLint uniformRectColor;
-        gl::GLint uniformRectMVP;
+        GLint uniformLineColor;
+        GLint uniformRectColor;
+        GLint uniformRectMVP;
 
-        gl::GLint uniformSinusoidMode;
-        gl::GLint uniformSinusoidOrder;
+        GLint uniformSinusoidMode;
+        GLint uniformSinusoidOrder;
 
-        gl::GLint uniformSinusoidLambda;
-        gl::GLint uniformSinusoidPhase;
-        gl::GLint uniformSinusoidPhaseCircular;
+        GLint uniformSinusoidLambda;
+        GLint uniformSinusoidPhase;
+        GLint uniformSinusoidPhaseCircular;
 
-        gl::GLint uniformSinusoidCircleWidth;
-        gl::GLint uniformSinusoidStrokeWidth;
-        gl::GLint uniformSinusoidStrokeBlur;
+        GLint uniformSinusoidCircleWidth;
+        GLint uniformSinusoidStrokeWidth;
+        GLint uniformSinusoidStrokeBlur;
 
-        gl::GLint uniformSinusoidColor;
+        GLint uniformSinusoidColor;
     };
 }
 

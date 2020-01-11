@@ -23,11 +23,8 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include <glad/glad.h>
 #include <glow/glow.hh>
-
-#include <glbinding/gl/gl.h>
-#include <glbinding/Binding.h>
-using namespace gl;
 
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
@@ -172,7 +169,6 @@ namespace etudes {
 
         glfwMakeContextCurrent(window);
         glow::initGLOW();
-        glbinding::Binding::initialize();
 
         if(hostConfig.hasValue("window:vsync")) {
             vsync = hostConfig.getValue<bool>("window:vsync");

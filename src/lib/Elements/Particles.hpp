@@ -24,13 +24,12 @@
 #include <vector>
 #include <random>
 
-#include <glbinding/gl/gl.h>
-
 #include <glm/glm.hpp>
 
 #include <Receivers/Element.hpp>
 
 namespace etudes {
+
     class Particles : public Element {
     public:
         Particles();
@@ -46,7 +45,7 @@ namespace etudes {
 
         void updateBest();
 
-        gl::GLuint vao, vbo;
+        GLuint vao, vbo;
 
         int count;
         glm::vec2 center;

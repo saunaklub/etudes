@@ -21,8 +21,6 @@
 #ifndef ETUDES_TEXTURETILED
 #define ETUDES_TEXTURETILED
 
-#include <glbinding/gl/gl.h>
-
 namespace etudes {
     class TextureTiled {
     public:
@@ -45,11 +43,11 @@ namespace etudes {
 
         bool mipmaps;
 
-        gl::GLuint idVertexArray;
-        gl::GLuint idVertex;
-        gl::GLuint idUV;
+        GLuint idVertexArray;
+        GLuint idVertex;
+        GLuint idUV;
 
-        gl::GLuint idTexture;
+        GLuint idTexture;
     };
 }
 

@@ -18,8 +18,6 @@
 
 */
 
-#include <glbinding/gl/gl.h>
-
 #include <glm/ext.hpp>
 
 #include <Utility/Utility.hpp>
@@ -37,7 +35,6 @@ namespace {
 
 namespace etudes {
 
-    using namespace gl;
     using util::checkGLError;
 
     void SimplexField::registerInputs()

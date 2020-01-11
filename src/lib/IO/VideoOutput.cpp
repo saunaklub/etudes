@@ -22,8 +22,6 @@
 
 #include "VideoOutput.hpp"
 
-using namespace gl;
-
 namespace etudes {
 
     using logging::log;

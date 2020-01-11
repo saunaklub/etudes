@@ -80,7 +80,7 @@ namespace etudes {
 
         mNoise = Texture3D::create(128, 128, 128, GL_RGBA32F);
         pcg32_random_t s = {17, 17};
-        std::vector<glm::vec4> data;
+        std::vector<tg::vec4> data;
         while (data.size() < 128 * 128 * 128) {
             // float val = pcg32_random_r(&s) / (float)std::numeric_limits<uint32_t>::max();
             // data.push_back({val, val, val, 1});

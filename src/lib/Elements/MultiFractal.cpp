@@ -18,8 +18,6 @@
 
 */
 
-#include <glbinding/gl/gl.h>
-
 #include <glm/ext.hpp>
 
 #include <Utility/Utility.hpp>
@@ -28,8 +26,6 @@
 #include "MultiFractal.hpp"
 
 namespace etudes {
-
-    using namespace gl;
 
     MultiFractal::MultiFractal() :
         quad(-1, -1, 1, 1)

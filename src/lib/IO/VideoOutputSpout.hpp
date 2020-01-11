@@ -21,7 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef ETUDES_VIDEOOUTPUTSPOUT
 #define ETUDES_VIDEOOUTPUTSPOUT
 
-#include <glbinding/gl/gl.h>
 #include <SpoutLibrary.h>
 
 #include <EtudesConfig.hpp>
@@ -35,12 +34,12 @@ namespace etudes {
 
         void createOutput(std::string outputId) override;
         void render() override;
-        
+
     private:
         void initFBO();
 
-        gl::GLuint idFBO;
-        gl::GLuint idTexture;
+        GLuint idFBO;
+        GLuint idTexture;
 
         SPOUTHANDLE spoutptr;
     };

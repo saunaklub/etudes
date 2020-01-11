@@ -45,7 +45,7 @@ namespace etudes {
         int width;
         int height;
 
-        gl::GLuint idFBO;
+        GLuint idFBO;
     };
 }
 

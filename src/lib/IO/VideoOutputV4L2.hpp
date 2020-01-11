@@ -21,6 +21,10 @@
 #ifndef ETUDES_VIDEOOUTPUTV4L2
 #define ETUDES_VIDEOOUTPUTV4L2
 
+#include <vector>
+
+#include <glad/glad.h>
+
 #include "VideoOutput.hpp"
 
 struct v4l2_capability;
@@ -45,8 +49,8 @@ namespace etudes {
 
         std::vector<char> data;
 
-        gl::GLuint idFBO;
-        gl::GLuint idTexture;
+        GLuint idFBO;
+        GLuint idTexture;
 
         int fd;
     };

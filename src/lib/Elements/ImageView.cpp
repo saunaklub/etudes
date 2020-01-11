@@ -18,8 +18,6 @@
 
 */
 
-#include <glbinding/gl/gl.h>
-
 #include <glm/vec2.hpp>
 #include <glm/ext.hpp>
 
@@ -31,7 +29,6 @@
 
 namespace etudes {
 
-    using namespace gl;
     using glm::vec2;
     using logging::LogLevel;
 

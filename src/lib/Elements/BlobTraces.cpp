@@ -18,7 +18,6 @@
 
 */
 
-#include <glbinding/gl/gl.h>
 #include <glm/ext.hpp>
 
 #include <Utility/Utility.hpp>
@@ -31,7 +30,6 @@
 
 namespace etudes {
 
-    using namespace gl;
     using logging::LogLevel;
 
     BlobTraces::BlobTraces() {

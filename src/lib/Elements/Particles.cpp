@@ -24,7 +24,6 @@
 
 namespace etudes {
 
-    using namespace gl;
     using glm::vec2;
 
     Particles::Particles() :

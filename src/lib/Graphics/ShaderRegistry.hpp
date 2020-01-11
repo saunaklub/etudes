@@ -25,27 +25,27 @@
 #include <map>
 #include <string>
 
-#include <glbinding/gl/gl.h>
+#include <glad/glad.h>
 
 namespace etudes {
 
     class ShaderRegistry {
-        std::map<std::string, gl::GLuint> m_mapShader;
-        std::map<std::string, gl::GLuint> m_mapProgram;
-        std::map<std::string, std::map<std::string, gl::GLint> > m_mapUniform;
+        std::map<std::string, GLuint> m_mapShader;
+        std::map<std::string, GLuint> m_mapProgram;
+        std::map<std::string, std::map<std::string, GLint> > m_mapUniform;
 
     public:
-        gl::GLuint registerShader(std::string name,
-                                  gl::GLenum type,
+        GLuint registerShader(std::string name,
+                                  GLenum type,
                                   std::vector<std::string> paths);
 
-        gl::GLuint registerProgram(std::string name,
+        GLuint registerProgram(std::string name,
                                    std::vector<std::string> shader_names);
-        gl::GLuint getProgram(std::string name) const;
+        GLuint getProgram(std::string name) const;
 
-        gl::GLint registerUniform(std::string program_name,
+        GLint registerUniform(std::string program_name,
                                   std::string uniform_name);
-        gl::GLint getUniform(std::string program_name,
+        GLint getUniform(std::string program_name,
                              std::string uniform_name) const;
 
     };

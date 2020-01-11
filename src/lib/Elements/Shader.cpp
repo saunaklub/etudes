@@ -18,7 +18,7 @@
 
 */
 
-#include <glbinding/gl/gl.h>
+#include <glm/glm.hpp>
 
 #include <glow/common/str_utils.hh>
 
@@ -31,8 +31,6 @@
 #include "Shader.hpp"
 
 namespace etudes {
-
-    using namespace gl;
 
     Shader::Shader(std::string filename) :
         filename(filename),
@@ -70,20 +68,20 @@ namespace etudes {
         auto shader = program->use();
         auto resolution = glm::vec2(viewport.getWidth(),
                                     viewport.getHeight());
-        shader.setUniform("resolution", resolution);
-        shader.setUniform("time", float(util::seconds()));
+        // shader.setUniform("resolution", resolution);
+        // shader.setUniform("time", float(util::seconds()));
 
-        shader.setUniform("in1", getValue<float>("in1"));
-        shader.setUniform("in2", getValue<float>("in2"));
-        shader.setUniform("in3", getValue<float>("in3"));
-        shader.setUniform("in4", getValue<float>("in4"));
-        shader.setUniform("in5", getValue<float>("in5"));
-        shader.setUniform("in6", getValue<float>("in6"));
-        shader.setUniform("in7", getValue<float>("in7"));
-        shader.setUniform("in8", getValue<float>("in8"));
-        shader.setUniform("env", getValue<float>("env"));
-        shader.setUniform("brightness", getValue<float>("brightness"));
-        shader.setUniform("invert", getValue<float>("invert"));
+        // shader.setUniform("in1", getValue<float>("in1"));
+        // shader.setUniform("in2", getValue<float>("in2"));
+        // shader.setUniform("in3", getValue<float>("in3"));
+        // shader.setUniform("in4", getValue<float>("in4"));
+        // shader.setUniform("in5", getValue<float>("in5"));
+        // shader.setUniform("in6", getValue<float>("in6"));
+        // shader.setUniform("in7", getValue<float>("in7"));
+        // shader.setUniform("in8", getValue<float>("in8"));
+        // shader.setUniform("env", getValue<float>("env"));
+        // shader.setUniform("brightness", getValue<float>("brightness"));
+        // shader.setUniform("invert", getValue<float>("invert"));
 
         quad.draw();
     }

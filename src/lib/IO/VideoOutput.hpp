@@ -23,9 +23,6 @@
 
 #include <string>
 
-#include <glbinding/gl/gl.h>
-#include <glbinding/Binding.h>
-
 namespace etudes {
 
     class Scene;
