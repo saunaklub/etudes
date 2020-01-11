@@ -40,8 +40,6 @@ namespace etudes {
         std::string filename;
 
         Quad quad;
-        LookupTable lut;
-
         glow::SharedProgram program;
     };
 }

@@ -38,14 +38,8 @@ namespace etudes {
     {}
 
     void Shader::init() {
-        program = glow::Program::createFromFile
-            (glow::util::pathOf(__FILE__) + "/shader/" + filename);
-
-        lut.addControlPoint({1, 0, 0, 1}, 0.0);
-        lut.addControlPoint({0, 1, 0, 1}, 0.5);
-        lut.addControlPoint({1, 0, 1, 1}, 1.0);
-
-        lut.generate();
+        program = glow::Program::createFromFiles(
+            {filename, glow::util::pathOf(__FILE__) + "/shader/shader.vsh"});
     }
 
     void Shader::registerInputs() {
@@ -66,22 +60,22 @@ namespace etudes {
         Rect viewport = getContext().getViewport2D();
 
         auto shader = program->use();
-        auto resolution = glm::vec2(viewport.getWidth(),
-                                    viewport.getHeight());
-        // shader.setUniform("resolution", resolution);
-        // shader.setUniform("time", float(util::seconds()));
+        auto resolution = tg::vec2(viewport.getWidth(),
+                                   viewport.getHeight());
+        shader.setUniform("resolution", resolution);
+        shader.setUniform("time", float(util::seconds()));
 
-        // shader.setUniform("in1", getValue<float>("in1"));
-        // shader.setUniform("in2", getValue<float>("in2"));
-        // shader.setUniform("in3", getValue<float>("in3"));
-        // shader.setUniform("in4", getValue<float>("in4"));
-        // shader.setUniform("in5", getValue<float>("in5"));
-        // shader.setUniform("in6", getValue<float>("in6"));
-        // shader.setUniform("in7", getValue<float>("in7"));
-        // shader.setUniform("in8", getValue<float>("in8"));
-        // shader.setUniform("env", getValue<float>("env"));
-        // shader.setUniform("brightness", getValue<float>("brightness"));
-        // shader.setUniform("invert", getValue<float>("invert"));
+        shader.setUniform("in1", getValue<float>("in1"));
+        shader.setUniform("in2", getValue<float>("in2"));
+        shader.setUniform("in3", getValue<float>("in3"));
+        shader.setUniform("in4", getValue<float>("in4"));
+        shader.setUniform("in5", getValue<float>("in5"));
+        shader.setUniform("in6", getValue<float>("in6"));
+        shader.setUniform("in7", getValue<float>("in7"));
+        shader.setUniform("in8", getValue<float>("in8"));
+        shader.setUniform("env", getValue<float>("env"));
+        shader.setUniform("brightness", getValue<float>("brightness"));
+        shader.setUniform("invert", getValue<float>("invert"));
 
         quad.draw();
     }
