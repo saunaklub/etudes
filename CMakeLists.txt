@@ -82,8 +82,6 @@ set(LIBRARY_SOURCES
     src/lib/Elements/Spiral.hpp
     src/lib/Elements/DomainWarp.cpp
     src/lib/Elements/DomainWarp.hpp
-    src/lib/Elements/Truchet.cpp
-    src/lib/Elements/Truchet.hpp
     src/lib/Elements/MultiFractal.cpp
     src/lib/Elements/SimplexField.cpp
     src/lib/Elements/MultiFractal.hpp

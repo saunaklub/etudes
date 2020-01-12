@@ -32,7 +32,8 @@ namespace etudes {
     public:
         using MapType = std::vector<std::pair<std::string, std::string>>;
 
-        Shader(std::string filename,
+        Shader(std::string shaderFragment,
+               std::string shaderVertex,
                MapType uniformMap);
 
         void init() override;
@@ -40,7 +41,8 @@ namespace etudes {
         void draw() override;
 
     private:
-        std::string filename;
+        std::string shaderFragment;
+        std::string shaderVertex;
 
         MapType uniformMap;
 

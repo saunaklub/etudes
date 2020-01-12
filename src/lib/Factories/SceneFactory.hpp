@@ -34,11 +34,10 @@ namespace etudes {
     public:
         static std::unique_ptr<Scene>
         makeScene(std::string name,
-                  const Config &config);
+                  const Config &configScene,
+                  const Config &configGlobal);
 
     private:
-        static std::unique_ptr<Scene>
-        makeSceneDefault(const Config &config);
     };
 
 }

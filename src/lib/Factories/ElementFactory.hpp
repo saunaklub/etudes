@@ -37,17 +37,20 @@ namespace etudes {
     class ElementFactory {
     public:
         static std::unique_ptr<Element>
-        makeElement(const Config &config);
+        makeElement(const Config &configElement,
+                    const Config &configGlobal);
 
     private:
-        typedef std::function<
-        std::unique_ptr<Element>(const Config &)> creation_t;
+        using creation_t =
+            std::function<std::unique_ptr<Element>
+                          (const Config &, const Config &)> ;
 
         static std::map<std::string, creation_t> creationMap;
 
         template <typename T> static
         std::unique_ptr<Element>
-        createElement(const Config &config) {
+        createElement(const Config &configElement,
+                      const Config &configGlobal) {
 
             std::unique_ptr<Element> product =
                 std::make_unique<T>();
@@ -56,12 +59,14 @@ namespace etudes {
         }
 
         static std::unique_ptr<Element>
-        createElementImageView(const Config &);
+        createElementImageView(const Config &configElement,
+                               const Config &configGlobal);
     };
 
     template <>
     std::unique_ptr<Element>
-    ElementFactory::createElement<Shader>(const Config &config);
+    ElementFactory::createElement<Shader>(const Config &configElement,
+                                          const Config &configGlobal);
 }
 
 #endif // ETUDES_ELEMENTFACTORY

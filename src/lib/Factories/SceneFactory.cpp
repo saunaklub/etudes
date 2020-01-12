@@ -37,43 +37,53 @@ namespace etudes {
 
     std::unique_ptr<Scene>
     SceneFactory::makeScene(std::string name,
-                            const Config &config) {
-        std::unique_ptr<Scene> product;
+                            const Config &configScene,
+                            const Config &configGlobal) {
 
-        if(config.hasValue("type")) {
-            std::string type = config.getValue<std::string>("type");
-        }
-        else {
-            log(LogLevel::info, "Creating default scene '" + name + "'");
-            product = makeSceneDefault(config);
-        }
+        log(LogLevel::excessive, configScene);
+        std::unique_ptr<Scene> product = std::make_unique<Scene>();
 
-        auto order = config.getValue<std::list<std::string>>("order");
+        auto order = configScene.getValue<std::list<std::string>>("order");
         for(auto &element : order) {
             product->addElement(
                 element, ElementFactory::makeElement(
-                    config.getSubTree("elements:" + element)));
+                    configScene.getSubTree("elements:" + element),
+                    configGlobal));
             log(LogLevel::excessive, "added element " + element);
         }
 
         product->registerInputs();
 
-        if(config.hasValue("defaults")) {
-            log(LogLevel::debug, config);
-            for(auto &child : config.getChildren("defaults")) {
-                product->setValue(
-                    child, config.getValue<std::vector<float>>(
-                        "defaults:" + child));
+        if(configScene.hasValue("defaults")) {
+            log(LogLevel::debug, configScene);
+            for(auto &child : configScene.getChildren("defaults")) {
+                auto path = "defaults:" + child;
+                auto type = configScene.getType(path);
+
+                switch(type) {
+                case Config::Type::Scalar: {
+                    auto value =
+                        configScene.getValue<float>(path);
+                    product->setValue(child, std::vector<float>{value});
+                    break;
+                }
+                case Config::Type::Vector: {
+                    auto values =
+                        configScene.getValue<std::vector<float>>(path);
+                    product->setValue(child, values);
+                    break;
+                }
+                case Config::Type::Map:
+                case Config::Type::Invalid: {
+                    log(LogLevel::warning, "setting defaults for scene "
+                        + name + ": default " + child +
+                        " is not scalar or vector.");
+                    break;
+                }
+                }
             }
         }
 
-        return product;
-    }
-
-    std::unique_ptr<Scene>
-    SceneFactory::makeSceneDefault(const Config & config) {
-        log(LogLevel::excessive, config);
-        std::unique_ptr<Scene> product = std::make_unique<Scene>();
         return product;
     }
 

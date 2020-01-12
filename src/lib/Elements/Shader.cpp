@@ -32,16 +32,18 @@
 
 namespace etudes {
 
-    Shader::Shader(std::string filename,
+    Shader::Shader(std::string shaderFragment,
+                   std::string shaderVertex,
                    Shader::MapType uniformMap) :
-        filename(filename),
+        shaderFragment(shaderFragment),
+        shaderVertex(shaderVertex),
         uniformMap(uniformMap),
         quad(-1, -1, 1, 1)
     {}
 
     void Shader::init() {
-        program = glow::Program::createFromFiles(
-            {filename, glow::util::pathOf(__FILE__) + "/shader/shader.vsh"});
+        program = glow::Program::createFromFiles({shaderFragment,
+                                                  shaderVertex});
     }
 
     void Shader::registerInputs() {

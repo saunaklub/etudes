@@ -4,10 +4,12 @@ defaults:
 elements:
   truchet:
     type: Shader
-    filename: "resources/shaders/elements/truchet.fsh"
+    fragment: elements/truchet.fsh
     uniforms:
       glow: glow
+      freq: freq
     defaults:
-      glow: 1.0
+      glow: 0.0
+      freq: 1.0
 
 order: [truchet]

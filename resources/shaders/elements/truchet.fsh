@@ -40,6 +40,10 @@ uniform vec2 resolution;
 uniform vec3 colorSurface;
 uniform float foldFactor;
 
+uniform float freq;
+
+uniform float glow;
+
 out vec4 fragColor;
 
 mat4 rotationMatrix(vec3 axis, float angle)
@@ -83,7 +87,7 @@ float heightMap(in vec2 p) {
     float c = fract((h.x + h.y)/3.);
     h =  c<.666 ?   c<.333 ?  h  :  h + 1.  :  h  + step(f.yx, f);
 
-    p -= vec2(h.x - h.y*.5, h.y*.866);
+    p -= vec2(h.x - h.y*.5/**glow*/, h.y*.866);
 
     // Rotate (flip, in this case) random hexagons. Otherwise, you'd
     // hava a bunch of circles only.  Note that "h" is unique to each
@@ -128,7 +132,7 @@ float map(vec3 p){
     // Back plane, placed at vec3(0., 0., 1.), with plane normal
     // vec3(0., 0., -1).  Adding some height to the plane from the
     // heightmap. Not much else to it.
-    return 1. - p.z - c*.025;
+    return 1. - p.z - c*.06*sqrt(freq) + 0.1;
 
 
 }
@@ -387,7 +391,8 @@ void main() {
 
     // Lighter lined borders.
     if(fold.x<0.05 && (fold.y)<0.) oC = vec3(1, .7, .45)*(c2*.25 + .75);
-    else if(fold.x<0.) oC = vec3(1, .8, .4)*c2; // Gold, with overlay.
+    else if(fold.x<0.8)
+        oC = vec3(.1, .8, .4)*c2; // Gold, with overlay.
 
     //oC *= n3D(sp*128.)*.35 + .65; // Extra fine grained noisy texturing.
 
@@ -397,14 +402,14 @@ void main() {
     // little on the subtle side.
 
     // Restrict to the snake-like path.
-    float p1 = 1.0 - smoothstep(0., .1, fold.x*.5+.5); 
+    float p1 = 1.0 - smoothstep(0., .1, fold.x*.5+.1); 
 
     // Other path.
     //float p2 = 1.0 - smoothstep(0., .1, cos(heightMap(sp.xy + 1. + time/4.)*6.283)*.5+.5);
     float p2 = 1.0 - smoothstep(
-        0., .1, Voronoi(sp.xy*4. + vec2(time, cos(time/4.))));
+        0., .1, Voronoi(sp.xy*8*4. + vec2(time, cos(time/4.))));
     p1 = (p2 + .25)*p1; // Overlap the paths.
-    oC += oC.yxz*p1*p1; // Gives a kind of electron effect. Works
+    oC += oC.xyz*p1; // Gives a kind of electron effect. Works
                         // better with just Voronoi, but it'll do.
 
 
@@ -446,7 +451,14 @@ void main() {
     // Applying the shades.
     col *= (atten*crv*ao);
 
+//    col.r = pow(glow, 3);
+    col = sqrt(clamp(col, 0., 1.));
+
+    float power = 100;
+    col = col + glow*pow(vec3(0.99,0.5,0.96)-col, vec3(50, 100, 40));
+
+    col = col*3;
 
     // Rough gamma correction, then present to the screen.
-    fragColor = vec4(sqrt(clamp(col, 0., 1.)), 1.);
+    fragColor = vec4(col, 1.);
 }

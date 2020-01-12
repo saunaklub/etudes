@@ -89,7 +89,7 @@ namespace etudes {
     }
 
     void EtudesHost::initialise() {
-        hostConfig.read("configuration/host.yml");
+        hostConfig.read("config/host.yml");
 
         std::string logLevel =
             hostConfig.getValue<std::string>("logging:logLevel");
@@ -251,13 +251,15 @@ namespace etudes {
             Config sceneConfig;
 
             try {
-                sceneConfig.read("configuration/scenes/" + sceneName + ".yml");
+                sceneConfig.read("config/scenes/" + sceneName + ".yml");
             }
             catch(std::runtime_error &e) {
                 continue;
             }
 
-            auto scene = SceneFactory::makeScene(sceneName, sceneConfig);
+            auto scene = SceneFactory::makeScene(sceneName,
+                                                 sceneConfig,
+                                                 hostConfig);
             scene->setContext(*context.get());
             scene->init();
 

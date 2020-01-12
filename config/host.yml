@@ -1,8 +1,11 @@
+paths:
+  shaders: resources/shaders
+
 network:
   port: 6666
 
 window:
-  vsync: false
+  vsync: true
   cursor: false
   fullscreen: true
   multisampling: 1
@@ -23,7 +26,7 @@ scenes:
   # - grid
   # - particles
   # - space
-  # - sinusoids
+  - sinusoids
   # - algosynth
   # - blobtraces
   # - spiral

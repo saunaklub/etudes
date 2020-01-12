@@ -33,7 +33,6 @@
 #include <Elements/BlobTraces.hpp>
 #include <Elements/Spiral.hpp>
 #include <Elements/DomainWarp.hpp>
-#include <Elements/Truchet.hpp>
 #include <Elements/MultiFractal.hpp>
 #include <Elements/SimplexField.hpp>
 #include <Elements/Clouds.hpp>
@@ -59,7 +58,6 @@ namespace etudes {
         {"AlgoSynth", ElementFactory::createElement<AlgoSynth>},
         {"BlobTraces", ElementFactory::createElement<BlobTraces>},
         {"Spiral", ElementFactory::createElement<Spiral>},
-        {"Truchet", ElementFactory::createElement<Truchet>},
         {"DomainWarp", ElementFactory::createElement<DomainWarp>},
         {"MultiFractal", ElementFactory::createElement<MultiFractal>},
         {"SimplexField", ElementFactory::createElement<SimplexField>},
@@ -70,32 +68,47 @@ namespace etudes {
     };
 
     std::unique_ptr<Element>
-    ElementFactory::makeElement(const Config & config) {
+    ElementFactory::makeElement(const Config & configElement,
+                                const Config & configGlobal) {
 
         std::unique_ptr<Element> product;
 
-        std::string type = config.getValue<std::string>("type");
+        std::string typeElement = configElement.getValue<std::string>("type");
         try {
-            product = creationMap[type](config);
+            product = creationMap[typeElement](configElement, configGlobal);
         } catch(std::bad_function_call&) {
             log(LogLevel::error,
-                "no factory method defined for element type: " + type);
+                "no factory method defined for element type: " + typeElement);
         }
 
         product->registerInputs();
 
-        if(config.hasValue("defaults")) {
-            log(LogLevel::debug, config);
-            for(auto &child : config.getChildren("defaults")) {
+        if(configElement.hasValue("defaults")) {
+            log(LogLevel::debug, configElement);
+            for(auto &child : configElement.getChildren("defaults")) {
                 auto path = "defaults:" + child;
+                auto type = configElement.getType(path);
 
-                if(config.getType(path) == Config::Type::Scalar) {
-                    auto value = config.getValue<float>(path);
+                switch(type) {
+                case Config::Type::Scalar: {
+                    auto value =
+                        configElement.getValue<float>(path);
                     product->setValue(child, std::vector<float>{value});
+                    break;
                 }
-                else if(config.getType(path) == Config::Type::Vector) {
-                    auto values = config.getValue<std::vector<float>>(path);
+                case Config::Type::Vector: {
+                    auto values =
+                        configElement.getValue<std::vector<float>>(path);
                     product->setValue(child, values);
+                    break;
+                }
+                case Config::Type::Map:
+                case Config::Type::Invalid: {
+                    log(LogLevel::warning, "setting defaults for element type "
+                        + typeElement + ": default " + child +
+                        " is not scalar or vector.");
+                    break;
+                }
                 }
             }
         }
@@ -104,12 +117,14 @@ namespace etudes {
     }
 
     std::unique_ptr<Element>
-    ElementFactory::createElementImageView(const Config & config) {
-        std::string image = config.getValue<std::string>("image");
+    ElementFactory::createElementImageView(const Config &configElement,
+                                           const Config &configGlobal) {
+        std::string image = configElement.getValue<std::string>("image");
         std::unique_ptr<PanZoom> panZoom;
 
-        if(config.hasValue("panZoom")) {
-            std::string panZoomName = config.getValue<std::string>("panZoom");
+        if(configElement.hasValue("panZoom")) {
+            std::string panZoomName =
+                configElement.getValue<std::string>("panZoom");
             if(panZoomName == "parallel") {
                 panZoom = std::make_unique<PanZoomParallel>();
             }
@@ -126,18 +141,26 @@ namespace etudes {
 
     template <>
     std::unique_ptr<Element>
-    ElementFactory::createElement<Shader>(const Config &config) {
+    ElementFactory::createElement<Shader>(const Config &configElement,
+                                          const Config &configGlobal) {
+        auto shaderPath = configGlobal.getValue<std::string>("paths:shaders");
+        auto shaderFragment = shaderPath + "/" +
+            configElement.getValue<std::string>("fragment");
+        auto shaderVertex = shaderPath + "/shader.vsh";
 
-        auto filename = config.getValue<std::string>("filename");
+        if(configElement.hasValue("vertex")) {
+            shaderVertex = shaderPath + "/" +
+                configElement.getValue<std::string>("vertex");
+        }
 
         auto uniformMappings = Shader::MapType{};
-        if(config.hasValue("uniforms")) {
-            log(LogLevel::debug, config);
-            for(auto &child : config.getChildren("uniforms")) {
+        if(configElement.hasValue("uniforms")) {
+            log(LogLevel::debug, configElement);
+            for(auto &child : configElement.getChildren("uniforms")) {
                 auto path = "uniforms:" + child;
 
                 auto inputName = child;
-                auto uniformName = config.getValue<std::string>(path);
+                auto uniformName = configElement.getValue<std::string>(path);
 
                 std::cout << "adding {" << child << ", " << uniformName << "}"
                           << std::endl;
@@ -147,7 +170,8 @@ namespace etudes {
         }
 
         std::unique_ptr<Element> product =
-            std::make_unique<Shader>(filename, uniformMappings);
+            std::make_unique<Shader>(shaderFragment, shaderVertex,
+                                     uniformMappings);
 
         return product;
     }
