@@ -1,6 +1,6 @@
 elements:
   lines:
-    type: Line
+    type: Lines
     defaults:
       color/base: [1.0, 0.5, 0.5, 1.0]
       color/amplitude: [0.0, 0.5, 0.0, 0.0]

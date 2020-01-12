@@ -111,7 +111,7 @@ namespace etudes {
             shaders.registerShader("white", GL_FRAGMENT_SHADER,
                                    {"resources/shaders/white.fsh"});
             shaders.registerShader("solid", GL_FRAGMENT_SHADER,
-                                   {"resources/shaders/solid.fsh"});
+                                   {"resources/shaders/solid-color.fsh"});
             shaders.registerShader("textured", GL_FRAGMENT_SHADER,
                                    {"resources/shaders/textured-hueshift.fsh"});
 

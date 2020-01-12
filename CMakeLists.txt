@@ -172,6 +172,8 @@ set(FREEIMAGEPLUS_INCLUDE_DIR "" CACHE PATH "FreeImagePlus include directory")
 link_directories(${YAML_CPP_LIBRARY_DIRS})
 link_directories(${FREEIMAGEPLUS_LIBRARY_DIR})
 
+add_compile_definitions(GLOW_HAS_GLM)
+
 add_library(${LIBRARY} SHARED ${LIBRARY_SOURCES})
 add_executable(${CLIENT} ${CLIENT_SOURCES})
 

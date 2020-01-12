@@ -21,6 +21,8 @@
 #include <algorithm>
 #include <string>
 
+#include <glm/gtx/string_cast.hpp>
+
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 

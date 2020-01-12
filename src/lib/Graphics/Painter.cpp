@@ -23,6 +23,10 @@
 #include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <glow/common/str_utils.hh>
+#include <glow/objects/Program.hh>
+#include <glow/objects/Shader.hh>
+
 #include <Utility/Utility.hpp>
 #include <Utility/Logging.hpp>
 
@@ -36,43 +40,17 @@ namespace etudes {
     using logging::LogLevel;
 
     const std::string shaderLine = "solid";
-    const std::string shaderRect = "solid";
     const std::string shaderSinusoid = "sinusoid";
 
     Painter::Painter() {
         util::registerDefaultShaders(shaders);
 
-        programLine = shaders.getProgram(shaderLine);
-        uniformLineColor = shaders.getUniform(shaderLine, "color");
-
-        programRect = shaders.getProgram(shaderRect);
-        uniformRectColor = shaders.getUniform(shaderRect, "color");
-        uniformRectMVP = shaders.getUniform(shaderRect, "mvp");
-
-        shaders.registerShader("sinusoid", GL_FRAGMENT_SHADER,
-                               {"resources/shaders/elements/sinusoid.frag"});
-
-        programSinusoid =
-            shaders.registerProgram("sinusoid", {"mvp-uv", "sinusoid"});
-
-        shaders.registerUniform("sinusoid", "mvp");
-
-        uniformSinusoidMode   = shaders.registerUniform("sinusoid", "mode");
-        uniformSinusoidOrder  = shaders.registerUniform("sinusoid", "order");
-
-        uniformSinusoidLambda = shaders.registerUniform("sinusoid", "lambda");
-        uniformSinusoidPhase  = shaders.registerUniform("sinusoid", "phase");
-        uniformSinusoidPhaseCircular =
-            shaders.registerUniform("sinusoid", "phaseCircular");
-
-        uniformSinusoidCircleWidth = shaders.registerUniform("sinusoid",
-                                                             "circleWidth");
-        uniformSinusoidStrokeWidth = shaders.registerUniform("sinusoid",
-                                                             "strokeWidth");
-        uniformSinusoidStrokeBlur = shaders.registerUniform("sinusoid",
-                                                            "strokeBlur");
-
-        uniformSinusoidColor = shaders.registerUniform("sinusoid", "color");
+        programSolid = glow::Program::createFromFiles(
+            {"resources/shaders/mvp-uv.vsh",
+             "resources/shaders/solid-color.fsh"});
+        programSinusoid = glow::Program::createFromFiles(
+            {"resources/shaders/mvp-uv.vsh",
+             "resources/shaders/elements/sinusoid.fsh"});
 
         reset();
     }
@@ -105,9 +83,8 @@ namespace etudes {
 #endif
         assert(context);
 
-        glUseProgram(programLine);
-        glUniform4f(uniformLineColor,
-                    color.r, color.g, color.b, color.a);
+        auto shader = programSolid->use();
+        shader.setUniform("color", color);
 
         const Rect & viewport = context->getViewport2D();
         if(normalizedInput) {
@@ -115,42 +92,34 @@ namespace etudes {
             p1 = denormalize(p1, viewport);
         }
 
-        drawLineGeometry(p0, p1, width, shaderLine);
+        drawLineGeometry(p0, p1, width, shader);
+    }
+
+    void Painter::drawLineGeometry(glm::vec2 p0, glm::vec2 p1, float width,
+                                   glow::UsedProgram &shader) const {
+        assert(context);
+
+        glm::vec2 line = p1 - p0;
+
+        auto model = glm::mat4(1.f);
+        model = glm::translate(model, glm::vec3{p0[0], p0[1], 0.f});
+        model = glm::rotate(model, std::atan2(line[1], line[0]),
+                            glm::vec3{0, 0, 1});
+        model = glm::scale(model,
+                           glm::vec3(glm::length(line), width, 1));
+        model = glm::translate(model, glm::vec3{0.5f, 0.f, 0.f});
+
+        glm::mat4 proj = context->getProjection2D();
+        glm::mat4 mvp = proj * model;
+
+        shader.setUniform("mvp", mvp);
+
+        quad.draw();
     }
 
     void Painter::drawRect(Rect rect) {
         drawRect(glm::vec2(rect.getX(), rect.getY() + rect.getHeight()),
              glm::vec2(rect.getX() + rect.getWidth(), rect.getY()));
-    }
-
-    void Painter::drawRect(glm::vec2 topLeft, glm::vec2 bottomRight) {
-        assert(context);
-
-        glUseProgram(programRect);
-        glUniform4f(uniformRectColor, color.r, color.g, color.b, color.a);
-
-        const Rect & viewport = context->getViewport2D();
-        if(normalizedInput) {
-            topLeft = denormalize(topLeft, viewport);
-            bottomRight = denormalize(bottomRight, viewport);
-        }
-
-        auto diag = bottomRight - topLeft;
-
-        glm::mat4 model;
-        model = glm::translate(model, glm::vec3(topLeft[0], topLeft[1], 0));
-        model = glm::scale(model, glm::vec3(diag[0], diag[1], 1));
-        model = glm::translate(model, glm::vec3(0.5, 0.5, 0));
-
-        // EDB(model);
-
-        glm::mat4 proj = context->getProjection2D();
-        glm::mat4 mvp = proj * model;
-        glUniformMatrix4fv(
-            uniformRectMVP,
-            1, GLboolean(false), glm::value_ptr(mvp));
-
-        quad.draw();
     }
 
     void Painter::drawRect(glm::vec2 center, float size) {
@@ -159,25 +128,52 @@ namespace etudes {
         drawRect(topLeft, bottomRight);
     }
 
+    void Painter::drawRect(glm::vec2 topLeft, glm::vec2 bottomRight) {
+        assert(context);
+
+        Rect viewport = context->getViewport2D();
+        if(normalizedInput) {
+            topLeft = denormalize(topLeft, viewport);
+            bottomRight = denormalize(bottomRight, viewport);
+        }
+
+        auto model = glm::mat4(1.f);
+        auto diag = bottomRight - topLeft;
+
+        model = glm::translate(model, glm::vec3(topLeft[0], topLeft[1], 0));
+        model = glm::scale(model, glm::vec3(diag[0], diag[1], 1));
+        model = glm::translate(model, glm::vec3(0.5, 0.5, 0));
+
+        glm::mat4 proj = context->getProjection2D();
+        glm::mat4 mvp = proj * model;
+
+        auto shader = programSolid->use();
+
+        shader.setUniform("mvp", mvp);
+        shader.setUniform("color", color);
+
+        quad.draw();
+    }
+
     void Painter::drawSinusoidStraight(
         glm::vec2 p0, glm::vec2 p1, int order, float width,
         float lambda, float phase,
         float strokeWidth, float strokeBlur) const {
 
-        glUseProgram(shaders.getProgram(shaderSinusoid));
+        auto shader = programSinusoid->use();
 
-        glUniform1i(uniformSinusoidMode, 0);
-        glUniform1i(uniformSinusoidOrder, order);
+        shader.setUniform("mode", 0);
+        shader.setUniform("order", order);
 
-        glUniform1f(uniformSinusoidLambda, lambda);
-        glUniform1f(uniformSinusoidPhase, phase);
+        shader.setUniform("lambda", lambda);
+        shader.setUniform("phase", phase);
 
-        glUniform1f(uniformSinusoidStrokeWidth, strokeWidth);
-        glUniform1f(uniformSinusoidStrokeBlur, strokeBlur);
+        shader.setUniform("strokeWidth", strokeWidth);
+        shader.setUniform("strokeBlur", strokeBlur);
 
-        glUniform4f(uniformSinusoidColor, color.r, color.g, color.b, color.a);
+        shader.setUniform("color", color);
 
-        drawLineGeometry(p0, p1, width, shaderSinusoid);
+        drawLineGeometry(p0, p1, width, shader);
     }
 
     void Painter::drawSinusoidCircular(
@@ -185,22 +181,22 @@ namespace etudes {
         float lambda, float phase, float phaseCircular,
         float circleWidth, float strokeWidth, float strokeBlur) const {
 
-        glUseProgram(shaders.getProgram(shaderSinusoid));
+        auto shader = programSinusoid->use();
 
-        glUniform1i(uniformSinusoidMode, 1);
-        glUniform1i(uniformSinusoidOrder, order);
+        shader.setUniform("mode", 1);
+        shader.setUniform("order", order);
 
-        glUniform1f(uniformSinusoidLambda, lambda);
-        glUniform1f(uniformSinusoidPhase, phase);
-        glUniform1f(uniformSinusoidPhaseCircular, phaseCircular);
+        shader.setUniform("lambda", lambda);
+        shader.setUniform("phase", phase);
+        shader.setUniform("phaseCircular", phaseCircular);
 
-        glUniform1f(uniformSinusoidCircleWidth, circleWidth);
-        glUniform1f(uniformSinusoidStrokeWidth, strokeWidth);
-        glUniform1f(uniformSinusoidStrokeBlur, strokeBlur);
+        shader.setUniform("circleWidth", circleWidth);
+        shader.setUniform("strokeWidth", strokeWidth);
+        shader.setUniform("strokeBlur", strokeBlur);
 
-        glUniform4f(uniformSinusoidColor, color.r, color.g, color.b, color.a);
+        shader.setUniform("color", color);
 
-        drawCircleGeometry(center, width, height, shaderSinusoid);
+        drawCircleGeometry(center, width, height, shader);
     }
 
     void Painter::drawParallels(
@@ -248,42 +244,19 @@ namespace etudes {
         }
     }
 
-    void Painter::drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
-                                   float width, std::string shader) const {
-        assert(context);
-
-        glm::vec2 line = p1 - p0;
-
-        glm::mat4 model;
-        model = glm::translate(model, glm::vec3{p0[0], p0[1], 0.f});
-        model = glm::rotate(model, std::atan2(line[1], line[0]),
-                            glm::vec3{0, 0, 1});
-        model = glm::scale(model,
-                           glm::vec3(glm::length(line), width, 1));
-        model = glm::translate(model, glm::vec3{0.5f, 0.f, 0.f});
-
-        glm::mat4 proj = context->getProjection2D();
-        glm::mat4 mvp = proj * model;
-
-        glUniformMatrix4fv(shaders.getUniform(shader, "mvp"),
-                           1, GLboolean(false), glm::value_ptr(mvp));
-
-        quad.draw();
-    }
-
     void Painter::drawCircleGeometry(
-        glm::vec2 center, float width, float height, std::string shader) const {
+        glm::vec2 center, float width, float height,
+        glow::UsedProgram &shader) const {
         assert(context);
 
-        glm::mat4 model;
+        auto model = glm::mat4(1.f);
         model = glm::translate(model, glm::vec3{center[0], center[1], 0.f});
         model = glm::scale(model, glm::vec3(width, height, 1.0f));
 
         glm::mat4 proj = context->getProjection2D();
         glm::mat4 mvp = proj * model;
 
-        glUniformMatrix4fv(shaders.getUniform(shader, "mvp"),
-                           1, GLboolean(false), glm::value_ptr(mvp));
+        shader.setUniform("mvp", mvp);
 
         quad.draw();
     }

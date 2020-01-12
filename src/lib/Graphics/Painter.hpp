@@ -25,6 +25,8 @@
 
 #include <glm/glm.hpp>
 
+#include <glow/fwd.hh>
+
 #include <EtudesConfig.hpp>
 
 #include <Graphics/ShaderRegistry.hpp>
@@ -38,73 +40,55 @@ namespace etudes {
     class ETUDES_EXPORT Painter {
     public:
 
-        Painter();
+    Painter();
 
-        void reset();
+    void reset();
 
-        void setContext(const Context & context);
+    void setContext(const Context & context);
 
-        void setColor(glm::vec4 color);
-        void setInputNormalized(bool normalized);
+    void setColor(glm::vec4 color);
+    void setInputNormalized(bool normalized);
 
-        void drawLine(glm::vec2 p0, glm::vec2 p1, float width);
+    void drawLine(glm::vec2 p0, glm::vec2 p1, float width);
 
-        void drawRect(Rect rect);
-        void drawRect(glm::vec2 topLeft, glm::vec2 bottomRight);
-        void drawRect(glm::vec2 center, float size);
+    void drawRect(Rect rect);
+    void drawRect(glm::vec2 topLeft, glm::vec2 bottomRight);
+    void drawRect(glm::vec2 center, float size);
 
-        void drawSinusoidStraight(
-            glm::vec2 p0, glm::vec2 p1, int order, float width,
-            float lambda, float phase,
-            float strokeWidth, float strokeBlur) const;
+    void drawSinusoidStraight(
+        glm::vec2 p0, glm::vec2 p1, int order, float width,
+        float lambda, float phase,
+        float strokeWidth, float strokeBlur) const;
 
-        void drawSinusoidCircular(
-            glm::vec2 center, int order, float width, float height,
-            float lambda, float phase, float phaseCircular,
-            float circleWidth, float strokeWidth, float strokeBlur) const;
+    void drawSinusoidCircular(
+        glm::vec2 center, int order, float width, float height,
+        float lambda, float phase, float phaseCircular,
+        float circleWidth, float strokeWidth, float strokeBlur) const;
 
-        void drawParallels(
-            glm::vec2 centerp0, glm::vec2 centerp1,
-            int leftRepeat, int rightRepeat,
-            std::function<float(int)> funcWidth,
-            std::function<float(int)> funcDistance,
-            std::function<glm::vec4(int)> funcColor);
+    void drawParallels(
+        glm::vec2 centerp0, glm::vec2 centerp1,
+        int leftRepeat, int rightRepeat,
+        std::function<float(int)> funcWidth,
+        std::function<float(int)> funcDistance,
+        std::function<glm::vec4(int)> funcColor);
 
     private:
 
-        void drawLineGeometry(glm::vec2 p0, glm::vec2 p1,
-                              float width, std::string shader) const;
-        void drawCircleGeometry(glm::vec2 center, float width, float height,
-                                std::string shader) const;
+    void drawLineGeometry(glm::vec2 p0, glm::vec2 p1, float width,
+                          glow::UsedProgram &shader) const;
+    void drawCircleGeometry(glm::vec2 center, float width, float height,
+                            glow::UsedProgram &shader) const;
 
-        const Context * context;
-        Quad quad;
+    const Context * context;
+    Quad quad;
 
-        glm::vec4 color;
-        bool normalizedInput;
+    glm::vec4 color;
+    bool normalizedInput;
 
-        ShaderRegistry shaders;
+    ShaderRegistry shaders;
 
-        GLuint programLine;
-        GLuint programRect;
-        GLuint programSinusoid;
-
-        GLint uniformLineColor;
-        GLint uniformRectColor;
-        GLint uniformRectMVP;
-
-        GLint uniformSinusoidMode;
-        GLint uniformSinusoidOrder;
-
-        GLint uniformSinusoidLambda;
-        GLint uniformSinusoidPhase;
-        GLint uniformSinusoidPhaseCircular;
-
-        GLint uniformSinusoidCircleWidth;
-        GLint uniformSinusoidStrokeWidth;
-        GLint uniformSinusoidStrokeBlur;
-
-        GLint uniformSinusoidColor;
+    glow::SharedProgram programSolid;
+    glow::SharedProgram programSinusoid;
     };
 }
 

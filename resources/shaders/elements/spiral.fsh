@@ -1,0 +1,53 @@
+/*
+The MIT License (MIT)
+
+Copyright (c) 2016 Fabio Arnold
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+#version 330 core
+
+uniform vec2 resolution = vec2(800, 600);
+uniform float time = 0;
+uniform int stripe_count = 8;
+uniform float speed = 12;
+uniform float curl = 12;
+uniform float blur = 1;
+uniform vec4 color0 = vec4(0, 0, 0, 1);
+uniform vec4 color1 = vec4(1, 1, 1, 1);
+
+out vec4 color;
+
+void main() {
+    float aspect_x = max(1.0, resolution.x / resolution.y);
+    float aspect_y = max(1.0, resolution.y / resolution.x);
+
+    vec2 p = 2.0 * gl_FragCoord.xy / min(resolution.x, resolution.y)
+        - vec2(aspect_x, aspect_y);
+
+    float distSqr = 0.25*dot(p, p);
+    float vignette = 1.0 - distSqr;
+    float angle = atan(p.y, p.x);
+    float stripes = smoothstep(-blur, blur,
+        sin(float(stripe_count)*angle + speed*time - curl*sqrt(distSqr)));
+
+    color = vignette * mix(color0, color1, stripes);
+}

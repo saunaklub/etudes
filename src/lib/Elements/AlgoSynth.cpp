@@ -64,7 +64,7 @@ namespace etudes {
         ShaderRegistry & shaders = getShaderRegistry();
 
         shaders.registerShader("algosynth", GL_FRAGMENT_SHADER,
-                               {"resources/shaders/elements/algosynth.frag"});
+                               {"resources/shaders/elements/algosynth.fsh"});
         shaders.registerProgram("algosynth", {"ident", "algosynth"});
 
         shaders.registerUniform("algosynth", "programValues");

@@ -54,7 +54,7 @@ namespace etudes {
         ShaderRegistry & shaders = getShaderRegistry();
 
         shaders.registerShader("clouds", GL_FRAGMENT_SHADER,
-                               {"resources/shaders/elements/clouds.frag"});
+                               {"resources/shaders/elements/clouds.fsh"});
         shaders.registerProgram("clouds", {"mvp-uv", "clouds"});
 
         shaders.registerUniform("clouds", "mvp");

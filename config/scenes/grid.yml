@@ -6,7 +6,7 @@ output:
 
 elements:
   lines1:
-    type: Line
+    type: Lines
     defaults:
       width/base: [10]
       distance/base: [0.1]
@@ -18,15 +18,15 @@ elements:
       color/omega: [0.0]
       color/lambda: [0.0]
   lines2:
-    type: Line
+    type: Lines
     defaults:
-      angle: [1.57079632679489661922]
+      angle: [90]
       width/base: [10]
       distance/base: [0.08]
       distance/amplitude: [0.05]
       distance/omega: [1]
       distance/lambda: [.1]
-      color/base: [0.0, 0.0, 0.0, 0.0]
+      color/base: [1.0, 0.0, 0.0, 0.5]
       color/amplitude: [0.0, 0.0, 0.0, 0.0]
       color/omega: [1.0]
 

@@ -71,12 +71,10 @@ namespace etudes {
     }
 
     void Particles::update() {
-        float phi_cognitive = 4.05;
+        float phi_cognitive = 0.05;
         float phi_social = 4.1 - phi_cognitive;
         float w = 0.72984f;
-//        float w = 0.5;
-//        float w = 1;
-        float minDot = 0.2;
+        float minDot = 1.f;
 //        float minDim = 0.1;
 
         updateBest();

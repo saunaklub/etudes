@@ -5,26 +5,26 @@ elements:
   sinusoids:
     type: Sinusoids
     defaults:
-      amplitudes: [0.8, 0.6, 0.3, 0.1]
+      amplitudes: [.8, .7, .6, .4, .3, .2, .1]
       # mode: [straight]
 
-      width: [0.5]
-      width-amp: [0]
+      width: [1.0]
+      width-amp: [1.0]
 
-      freq: [0.2]
+      freq: [0.1]
       lambda: [0.1]
       phase-amp: [0.0]
 
-      stroke-width: [0.1]
-      stroke-blur: [0]
+      stroke-width: [0.5]
+      stroke-blur: [0.1]
 
       center: [0.5, 0.5]
 
       # offset-mode: absolute
-      offset-scale: [1.0]
+      offset-scale: [.3]
 
-      color: [1, 1, 1, 1]
-      color-amp: [0, 0, 0, 0]
+      color: [0, 0.2, 0.6, 1]
+      color-amp: [0.1, 1.0, 0.2, 1.0]
   background:
     type: ImageView
     image: resources/images/background.jpg
