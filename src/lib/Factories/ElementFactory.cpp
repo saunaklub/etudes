@@ -71,6 +71,7 @@ namespace etudes {
 
     std::unique_ptr<Element>
     ElementFactory::makeElement(const Config & config) {
+
         std::unique_ptr<Element> product;
 
         std::string type = config.getValue<std::string>("type");
@@ -129,12 +130,24 @@ namespace etudes {
 
         auto filename = config.getValue<std::string>("filename");
 
-        // auto uniforms = config.getChildren("uniforms");
-        // for(auto & u : uniforms)
-        //     std::cout << u << std::endl;
+        auto uniformMappings = Shader::MapType{};
+        if(config.hasValue("uniforms")) {
+            log(LogLevel::debug, config);
+            for(auto &child : config.getChildren("uniforms")) {
+                auto path = "uniforms:" + child;
+
+                auto inputName = child;
+                auto uniformName = config.getValue<std::string>(path);
+
+                std::cout << "adding {" << child << ", " << uniformName << "}"
+                          << std::endl;
+
+                uniformMappings.push_back({inputName, uniformName});
+            }
+        }
 
         std::unique_ptr<Element> product =
-            std::make_unique<Shader>(filename);
+            std::make_unique<Shader>(filename, uniformMappings);
 
         return product;
     }

@@ -30,7 +30,10 @@
 namespace etudes {
     class Shader : public Element {
     public:
-        Shader(std::string filename);
+        using MapType = std::vector<std::pair<std::string, std::string>>;
+
+        Shader(std::string filename,
+               MapType uniformMap);
 
         void init() override;
         void registerInputs() override;
@@ -38,6 +41,8 @@ namespace etudes {
 
     private:
         std::string filename;
+
+        MapType uniformMap;
 
         Quad quad;
         glow::SharedProgram program;
