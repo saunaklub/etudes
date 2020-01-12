@@ -2,7 +2,7 @@
 
 #version 330 core
 
-uniform ivec2 resolution;
+uniform vec2 resolution;
 uniform float time;
 
 uniform float zoom;

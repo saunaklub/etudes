@@ -21,18 +21,17 @@ logging:
   framerate: false
 
 scenes:
+  - spiral
+  - multifractal
+  - domainwarp
+  - truchet
   # - testbed
   # - parallels
   # - grid
   # - particles
   # - space
-  - sinusoids
   # - algosynth
-  # - blobtraces
-  # - spiral
-  # - domainwarp
-  # - multifractal
-  - truchet
+  # - sinusoids
   # - ca
   # - shader
   # - flowtrace

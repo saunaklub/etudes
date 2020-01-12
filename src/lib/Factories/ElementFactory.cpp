@@ -24,20 +24,16 @@
 #include <Utility/Logging.hpp>
 #include <Utility/Config.hpp>
 
+#include <Elements/AlgoSynth.hpp>
+#include <Elements/CellularAutomaton.hpp>
+#include <Elements/Clouds.hpp>
+#include <Elements/FlowTrace.hpp>
+#include <Elements/ImageView.hpp>
 #include <Elements/Lines.hpp>
 #include <Elements/Particles.hpp>
-#include <Elements/ImageView.hpp>
-#include <Elements/Sinusoids.hpp>
-#include <Elements/CellularAutomaton.hpp>
-#include <Elements/AlgoSynth.hpp>
-#include <Elements/BlobTraces.hpp>
-#include <Elements/Spiral.hpp>
-#include <Elements/DomainWarp.hpp>
-#include <Elements/MultiFractal.hpp>
-#include <Elements/SimplexField.hpp>
-#include <Elements/Clouds.hpp>
 #include <Elements/Shader.hpp>
-#include <Elements/FlowTrace.hpp>
+#include <Elements/SimplexField.hpp>
+#include <Elements/Sinusoids.hpp>
 #include <Elements/Testbed.hpp>
 
 #include <Graphics/PanZoomParallel.hpp>
@@ -50,20 +46,16 @@ namespace etudes {
 
     std::map<std::string, ElementFactory::creation_t>
     ElementFactory::creationMap = {
-        {"Line", ElementFactory::createElement<Lines>},
-        {"Particles", ElementFactory::createElement<Particles>},
-        {"ImageView", ElementFactory::createElementImageView},
-        {"Sinusoids", ElementFactory::createElement<Sinusoids>},
-        {"CellularAutomaton", ElementFactory::createElement<CellularAutomaton>},
         {"AlgoSynth", ElementFactory::createElement<AlgoSynth>},
-        {"BlobTraces", ElementFactory::createElement<BlobTraces>},
-        {"Spiral", ElementFactory::createElement<Spiral>},
-        {"DomainWarp", ElementFactory::createElement<DomainWarp>},
-        {"MultiFractal", ElementFactory::createElement<MultiFractal>},
-        {"SimplexField", ElementFactory::createElement<SimplexField>},
+        {"CellularAutomaton", ElementFactory::createElement<CellularAutomaton>},
         {"Clouds", ElementFactory::createElement<Clouds>},
-        {"Shader", ElementFactory::createElement<Shader>},
         {"FlowTrace", ElementFactory::createElement<FlowTrace>},
+        {"ImageView", ElementFactory::createElementImageView},
+        {"Lines", ElementFactory::createElement<Lines>},
+        {"Particles", ElementFactory::createElement<Particles>},
+        {"Shader", ElementFactory::createElement<Shader>},
+        {"SimplexField", ElementFactory::createElement<SimplexField>},
+        {"Sinusoids", ElementFactory::createElement<Sinusoids>},
         {"Testbed", ElementFactory::createElement<Testbed>},
     };
 

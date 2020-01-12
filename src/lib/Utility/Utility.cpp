@@ -104,16 +104,16 @@ namespace etudes {
 
         void registerDefaultShaders(ShaderRegistry & shaders) {
             shaders.registerShader("mvp-uv", GL_VERTEX_SHADER,
-                                   {"resources/shaders/mvp-uv.vert"});
+                                   {"resources/shaders/mvp-uv.vsh"});
             shaders.registerShader("ident", GL_VERTEX_SHADER,
-                                   {"resources/shaders/ident.vert"});
+                                   {"resources/shaders/ident.vsh"});
 
             shaders.registerShader("white", GL_FRAGMENT_SHADER,
-                                   {"resources/shaders/white.frag"});
+                                   {"resources/shaders/white.fsh"});
             shaders.registerShader("solid", GL_FRAGMENT_SHADER,
-                                   {"resources/shaders/solid.frag"});
+                                   {"resources/shaders/solid.fsh"});
             shaders.registerShader("textured", GL_FRAGMENT_SHADER,
-                                   {"resources/shaders/textured-hueshift.frag"});
+                                   {"resources/shaders/textured-hueshift.fsh"});
 
             shaders.registerProgram("simple", {"ident", "white"});
 

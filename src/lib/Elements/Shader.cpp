@@ -32,6 +32,8 @@
 
 namespace etudes {
 
+    using namespace logging;
+
     Shader::Shader(std::string shaderFragment,
                    std::string shaderVertex,
                    Shader::MapType uniformMap) :
@@ -62,7 +64,32 @@ namespace etudes {
         shader.setUniform("time", float(util::seconds()));
 
         for(auto & entry : uniformMap) {
-            shader.setUniform(entry.second, getValue<float>(entry.first));
+            auto values = getValue<std::vector<float>>(entry.first);
+
+            switch(values.size()) {
+            case 1:
+                shader.setUniform(entry.second, values[0]);
+                break;
+            case 2:
+                shader.setUniform
+                    (entry.second,
+                     tg::vec2(values[0], values[1]));
+                break;
+            case 3:
+                shader.setUniform
+                    (entry.second,
+                     tg::vec3(values[0], values[1], values[2]));
+                break;
+            case 4:
+                shader.setUniform
+                    (entry.second,
+                     tg::vec4(values[0], values[1], values[2], values[3]));
+                break;
+            default:
+                log(LogLevel::error,
+                    "generic uniform values need length 1, 2, 3 or 4");
+                break;
+            }
         }
 
         quad.draw();

@@ -2,7 +2,14 @@ defaults:
   background: [0, 0, 0, 1]
 
 elements:
-  main:
-    type: DomainWarp
+  domainwarp:
+    type: Shader
+    fragment: elements/domainwarp.fsh
+    uniforms:
+      lacunarity: lacunarity
+      H: H
+    defaults:
+      lacunarity: 2
+      H: 0.26
 
-order: [main]
+order: [domainwarp]

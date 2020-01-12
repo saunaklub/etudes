@@ -64,33 +64,25 @@ set(LIBRARY_SOURCES
     src/lib/Receivers/Element.hpp
     src/lib/Receivers/Scene.cpp
     src/lib/Receivers/Scene.hpp
+    src/lib/Elements/AlgoSynth.cpp
+    src/lib/Elements/AlgoSynth.hpp
+    src/lib/Elements/CellularAutomaton.cpp
+    src/lib/Elements/CellularAutomaton.hpp
+    src/lib/Elements/Clouds.cpp
+    src/lib/Elements/Clouds.hpp
+    src/lib/Elements/FlowTrace.cpp
+    src/lib/Elements/FlowTrace.hpp
+    src/lib/Elements/ImageView.cpp
+    src/lib/Elements/ImageView.hpp
     src/lib/Elements/Lines.cpp
     src/lib/Elements/Lines.hpp
     src/lib/Elements/Particles.cpp
     src/lib/Elements/Particles.hpp
-    src/lib/Elements/ImageView.cpp
-    src/lib/Elements/ImageView.hpp
-    src/lib/Elements/Sinusoids.cpp
-    src/lib/Elements/Sinusoids.hpp
-    src/lib/Elements/CellularAutomaton.cpp
-    src/lib/Elements/CellularAutomaton.hpp
-    src/lib/Elements/AlgoSynth.cpp
-    src/lib/Elements/AlgoSynth.hpp
-    src/lib/Elements/BlobTraces.cpp
-    src/lib/Elements/BlobTraces.hpp
-    src/lib/Elements/Spiral.cpp
-    src/lib/Elements/Spiral.hpp
-    src/lib/Elements/DomainWarp.cpp
-    src/lib/Elements/DomainWarp.hpp
-    src/lib/Elements/MultiFractal.cpp
-    src/lib/Elements/SimplexField.cpp
-    src/lib/Elements/MultiFractal.hpp
-    src/lib/Elements/Clouds.cpp
-    src/lib/Elements/Clouds.hpp
     src/lib/Elements/Shader.cpp
     src/lib/Elements/Shader.hpp
-    src/lib/Elements/FlowTrace.cpp
-    src/lib/Elements/FlowTrace.hpp
+    src/lib/Elements/SimplexField.cpp
+    src/lib/Elements/Sinusoids.cpp
+    src/lib/Elements/Sinusoids.hpp
     src/lib/Elements/Testbed.cpp
     src/lib/Elements/Testbed.hpp
     )

@@ -1,12 +1,28 @@
 defaults:
-  background: [0, 0, 0, 1]
+  background: [1, 0, 0, 1]
 
 elements:
   spiral1:
-    type: Spiral
-  spiral2:
-    type: Spiral
+    type: Shader
+    fragment: elements/spiral.fsh
+    uniforms:
+      curl: curl
+      foreground: color0
+      background: color1
     defaults:
-      curl: [-20.0]
+      curl: 0
+      foreground: [1., 0., 0., .2]
+      background: [0., 1., 0., .2]
+  spiral2:
+    type: Shader
+    fragment: elements/spiral.fsh
+    uniforms:
+      curl: curl
+      foreground: color0
+      background: color1
+    defaults:
+      curl: 20
+      foreground: [0., 0., 1., .2]
+      background: [1., 1., 0., .2]
 
 order: [spiral1, spiral2]

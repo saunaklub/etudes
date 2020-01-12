@@ -2,7 +2,14 @@ defaults:
   background: [0, 0, 0, 1]
 
 elements:
-  mf:
-    type: MultiFractal
+  multifractal:
+    type: Shader
+    fragment: elements/multifractal.fsh
+    uniforms:
+      zoom: zoom
+      color-base: colorBase
+    defaults:
+      zoom: 1
+      color-base: [.1, .6, .5, 1.]
 
-order: [mf]
+order: [multifractal]
