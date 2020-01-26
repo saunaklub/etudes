@@ -21,6 +21,10 @@
 #include <glm/vec2.hpp>
 #include <glm/ext.hpp>
 
+#include <glow/objects/Program.hh>
+#include <glow/objects/Shader.hh>
+#include <glow/objects/Texture2D.hh>
+
 #include <Utility/Logging.hpp>
 
 #include <Graphics/Geometry/Rect.hpp>
@@ -65,8 +69,17 @@ namespace etudes {
         log(LogLevel::debug, "texture size: " +
             std::to_string(texWidth) + " x " + std::to_string(texHeight));
 
-        texture = std::make_unique<Texture>(texWidth, texHeight);
-        texture->setFilter(Texture::Filter::LINEAR);
+        program = glow::Program::createFromFiles(
+            {"resources/shaders/ident.vsh",
+             "resources/shaders/textured.fsh"});
+
+        texture = glow::Texture2D::create
+            (texWidth, texHeight, GL_RGB);
+        texture->setMipmapsGenerated(false);
+
+        auto tex = texture->bind();
+        tex.setFilter(GL_LINEAR, GL_LINEAR);
+        tex.setWrap(GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE);
     }
 
     void ImageView::update() {
@@ -85,29 +98,24 @@ namespace etudes {
         }
 
         image->setSourceArea(sourceArea);
-        image->uploadToTexture(texture.get());
+//        image->uploadToTexture(texture.get());
     }
 
     void ImageView::draw() {
-        ShaderRegistry & shaders = getShaderRegistry();
+        auto shiftHue = getValue<float>("shift-hue");
+        auto shiftSaturation = getValue<float>("shift-saturation");
+        auto shiftValue = getValue<float>("shift-value");
+        auto alpha = getValue<float>("alpha");
 
-        glUseProgram(shaders.getProgram("textured"));
-
-        float shiftHue = getValue<float>("shift-hue");
-        float shiftSaturation = getValue<float>("shift-saturation");
-        float shiftValue = getValue<float>("shift-value");
-        float alpha = getValue<float>("alpha");
-        glUniform1f(
-            shaders.getUniform("textured", "shiftHue"), shiftHue);
-        glUniform1f(
-            shaders.getUniform("textured", "shiftSaturation"), shiftSaturation);
-        glUniform1f(
-            shaders.getUniform("textured", "shiftValue"), shiftValue);
-        glUniform1f(shaders.getUniform("textured", "alpha"), alpha);
+        auto shader = program->use();
+        shader.setUniform("shiftHue", shiftHue);
+        shader.setUniform("shiftSaturation", shiftSaturation);
+        shader.setUniform("shiftValue", shiftValue);
+        shader.setUniform("alpha", alpha);
 
         Rect area(0, 0, image->getWidth(), image->getHeight());
         area = area.resizedTo(getContext().getViewport2D(),
-                                Rect::Scaling::CROP);
+                              Rect::Scaling::CROP);
 
         glm::mat4 model(
             area.getWidth(),  0, 0, 0,
@@ -115,14 +123,12 @@ namespace etudes {
             0, 0, 1, 0,
             area.getX(), area.getY(), 0, 1);
         model = glm::translate(model, glm::vec3{0.5f, 0.5f, 0.f});
+
         glm::mat4 mvp = getContext().getProjection2D() * model;
+        shader.setUniform("mvp", mvp);
 
-        GLint locMVP = shaders.getUniform("textured", "mvp");
-        glUniformMatrix4fv(locMVP, 1, GLboolean(false),
-                           glm::value_ptr(mvp));
-
-        texture->uploadData();
-        texture->draw();
+        // texture->uploadData();
+        // texture->draw();
     }
 
 }

@@ -1,9 +1,0 @@
-defaults:
-  background: [0, 0, 0, 1]
-
-elements:
-  shader:
-    type: Shader
-    filename: shader
-
-order: [shader]

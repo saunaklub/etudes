@@ -23,6 +23,8 @@
 
 #include <glad/glad.h>
 
+#include <glow/fwd.hh>
+
 namespace etudes {
 
     class Quad {
@@ -35,10 +37,7 @@ namespace etudes {
     private:
         void createGeometry(float left, float top, float right, float bottom);
 
-        // @todo: make static?
-        GLuint idVertexArray;
-        GLuint vboVertex;
-        GLuint vboUV;
+        glow::SharedVertexArray vertexArray;
     };
 }
 

@@ -18,7 +18,10 @@
 
 */
 
-#include <array>
+#include <typed-geometry/types/vec.hh>
+
+#include <glow/objects/VertexArray.hh>
+#include <glow/objects/ArrayBuffer.hh>
 
 #include <Utility/Logging.hpp>
 
@@ -37,48 +40,27 @@ namespace etudes {
 
     void Quad::createGeometry(float left, float top,
                               float right, float bottom) {
-        glGenVertexArrays(1, &idVertexArray);
-        glBindVertexArray(idVertexArray);
+        struct Vertex
+        {
+            tg::vec3 pos;
+            tg::vec2 uv;
+        };
 
-        std::array<float, 12> aCoords = {{
-                left, top, 0.0f,
-                left, bottom, 0.0f,
-                right, top, 0.0f,
-                right, bottom, 0.0f,
-            }};
+        std::vector<Vertex> vertices;
+        vertices.push_back({tg::vec3(left, top, 0.0f), tg::vec2(0, 1)});
+        vertices.push_back({tg::vec3(left, bottom, 0.0f), tg::vec2(0, 0)});
+        vertices.push_back({tg::vec3(right, top, 0.0f), tg::vec2(1, 1)});
+        vertices.push_back({tg::vec3(right, top, 0.0f), tg::vec2(1, 1)});
+        vertices.push_back({tg::vec3(left, bottom, 0.0f), tg::vec2(0, 0)});
+        vertices.push_back({tg::vec3(right, bottom, 0.0f), tg::vec2(1, 0)});
 
-        glGenBuffers(1, &vboVertex);
-        glBindBuffer(GL_ARRAY_BUFFER, vboVertex);
-        glBufferData(GL_ARRAY_BUFFER,
-                     aCoords.size()*sizeof(GLfloat),
-                     aCoords.data(), GL_STATIC_DRAW);
-
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-        std::array<float, 12> aUV = {{
-                0.0f, 1.0f,
-                0.0f, 0.0f,
-                1.0f, 1.0f,
-                1.0f, 0.0f,
-            }};
-
-        glGenBuffers(1, &vboUV);
-        glBindBuffer(GL_ARRAY_BUFFER, vboUV);
-        glBufferData(GL_ARRAY_BUFFER,
-                     aUV.size()*sizeof(GLfloat),
-                     aUV.data(),
-                     GL_STATIC_DRAW);
-
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-        glBindVertexArray(0);
+        auto ab = glow::ArrayBuffer::create({{&Vertex::pos, "aPos"},
+                                             {&Vertex::uv, "aUV"}});
+        ab->bind().setData(vertices);
+        vertexArray = glow::VertexArray::create(ab);
     }
 
     void Quad::draw() const {
-        glBindVertexArray(idVertexArray);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-        glBindVertexArray(0);
+        vertexArray->bind().draw();
     }
 }

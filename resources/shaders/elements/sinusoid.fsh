@@ -27,7 +27,7 @@ void main() {
     float x;
     float y;
     float sinusoid;
-    float dist;
+    float dist = 0.f;
 
     switch(mode) {
     case 0:

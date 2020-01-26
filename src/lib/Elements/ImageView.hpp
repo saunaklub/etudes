@@ -23,6 +23,8 @@
 
 #include <memory>
 
+#include <glow/fwd.hh>
+
 #include <Receivers/Element.hpp>
 
 #include <Graphics/Image.hpp>
@@ -46,9 +48,10 @@ namespace etudes {
         std::string filename;
 
         std::unique_ptr<Image> image;
-        std::unique_ptr<Texture> texture;
-
         std::unique_ptr<PanZoom> panZoom;
+
+        glow::SharedProgram program;
+        glow::SharedTexture2D texture;
     };
 }
 

@@ -23,6 +23,10 @@
 
 #include <memory>
 
+#include <typed-geometry/tg-lean.hh>
+
+#include <glow/fwd.hh>
+
 #include <Graphics/Texture.hpp>
 #include <Graphics/Drawable/Quad.hpp>
 
@@ -42,10 +46,16 @@ namespace etudes {
         void advanceCA();
 
     private:
-        std::unique_ptr<Texture> texture;
-        std::unique_ptr<Quad> quad;
+        const int texWidth = 100;
+        const int texHeight = 100;
+        std::vector<tg::vec3> texData;
 
         double updateLast;
+        tg::rng rng;
+
+        glow::SharedProgram program;
+        glow::SharedTexture2D texture;
+        std::unique_ptr<Quad> quad;
     };
 }
 
