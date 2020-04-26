@@ -6,6 +6,7 @@ project(${PROJECT})
 
 cmake_minimum_required(VERSION 3.1)
 cmake_policy(SET CMP0072 NEW) # OpenGL GLVND preference
+cmake_policy(SET CMP0074 NEW) # use *_ROOT variables
 
 set(CMAKE_CXX_STANDARD 17)
 add_subdirectory("extern/typed-geometry")
